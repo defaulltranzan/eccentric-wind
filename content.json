@@ -1,0 +1,227 @@
+{
+  "hero": {
+    "badge": "EST. 1993 \u00b7 30+ YEARS OF HIMALAYAN EXCELLENCE",
+    "location": "Everest Basecamp",
+    "title_top": "HIMALAYAN",
+    "title_bottom": "MAGIC ADVENTURE",
+    "description": "A pilgrimage of endurance across Nepal's sacred peaks and high corridors since 1993. Guided by veteran IFMGA/NMA Sherpa masters with zero safety compromise.",
+    "bg_image": "/images/hero-mountain.jpg"
+  },
+  "stats": [
+    {
+      "value": "30+",
+      "label": "Years of Safety Legacy"
+    },
+    {
+      "value": "100%",
+      "label": "Local Sherpa Guides"
+    },
+    {
+      "value": "Guaranteed",
+      "label": "Group Departures"
+    },
+    {
+      "value": "Eco-Safe",
+      "label": "Sustainable Trekking"
+    }
+  ],
+  "about": {
+    "badge": "01 \u2014 The Philosophy",
+    "title": "We do not sell holidays.",
+    "description": "We orchestrate passages through the highest corridors on Earth\u2014where the air thins, the noise dies, and what remains is raw clarity. Every step above 4,000 meters is a negotiation between the body and the mountain, and the mountain always remembers.",
+    "image": "/images/itinerary.png",
+    "floating_stat": "30+",
+    "floating_label": "Years guiding Himalayan paths without a single major safety compromise.",
+    "features": [
+      {
+        "title": "Professional Acclimatization",
+        "desc": "Paced spacing for safety."
+      },
+      {
+        "title": "Sustainable Tourism",
+        "desc": "100% locally-owned operations."
+      }
+    ]
+  },
+  "contact": {
+    "badge": "Get in Touch",
+    "title": "Visit our Kathmandu HQ",
+    "description": "Drop by our Thamel headquarters or ring our certified support desk around the clock.",
+    "address": "318 Thamel Marg, Kathmandu, Nepal",
+    "phones": "+977 01-5361254 | 5363308 | 5362524",
+    "emergency": "+977 9841 45 45 99",
+    "email": "info@himalayanmagic.com",
+    "regions": "Nepal Himalayas, Tibet Sacred Circuits, Bhutan cultural tours."
+  },
+  "departures": [
+    {
+      "title": "Everest Base Camp Trek",
+      "date": "September 12, 2026",
+      "days": 12,
+      "availability": "Only 2 Seats Left!",
+      "is_limited": true,
+      "price": 1300
+    },
+    {
+      "title": "Annapurna Circuit Trek",
+      "date": "September 25, 2026",
+      "days": 16,
+      "availability": "Guaranteed (4 Open)",
+      "is_limited": false,
+      "price": 1500
+    },
+    {
+      "title": "Manaslu Circuit Trek",
+      "date": "October 05, 2026",
+      "days": 18,
+      "availability": "Only 3 Seats Left!",
+      "is_limited": true,
+      "price": 1700
+    }
+  ],
+  "packages": [
+    {
+      "id": "ebc-12",
+      "title": "Everest Base Camp",
+      "name": "Everest Base Camp",
+      "altitude": 5364,
+      "summary": "The classic pilgrimage to the foot of Sagarmatha.",
+      "dest": "nepal",
+      "days": 12,
+      "grade": "IV",
+      "region": "Khumbu",
+      "gps": "27.99\u00b0N \u00b7 86.82\u00b0E",
+      "difficulty": "Challenging",
+      "price": 1300,
+      "rating": 4.9,
+      "reviews": 124,
+      "img": "/images/ebc.png",
+      "maxAlt": "5,364m (EBC) / 5,545m (Kala Patthar)",
+      "itinerary": [
+        "Day 1: Scenic flight to Lukla (2,860m) & Trek to Phakding (2,610m)",
+        "Day 2: Trek from Phakding to the legendary Namche Bazaar (3,440m)",
+        "Day 3: Acclimatization rest day in Namche Bazaar; hike to Everest View Hotel",
+        "Day 4: Trek from Namche to Tengboche Monastery (3,860m)",
+        "Day 5: Trek to Dingboche (4,410m) - beautiful views of Ama Dablam",
+        "Day 6: Second Acclimatization Day in Dingboche; peak trek preparation",
+        "Day 7: Dingboche to Lobuche (4,910m) along the lateral moraine",
+        "Day 8: Lobuche to Gorakshep (5,140m), Trek to Everest Base Camp (5,364m) & return",
+        "Day 9: Hike Kala Patthar (5,545m) for sunrise, then descend to Pheriche (4,240m)",
+        "Day 10: Descend from Pheriche back down to Namche Bazaar",
+        "Day 11: Namche Bazaar to Lukla",
+        "Day 12: Scenic flight Lukla to Kathmandu; celebration dinner"
+      ],
+      "included": [
+        "Lukla flight round-trip ticket with cargo allowance",
+        "Government certified expert local Sherpa guide",
+        "All required TIMS card and Sagarmatha national park permits",
+        "Teahouse accommodation with three meals daily during the trek",
+        "Emergency first-aid medical kit and oximeter monitoring",
+        "Porter service (1 porter for every 2 trekkers)"
+      ],
+      "excluded": [
+        "Nepal tourist visa fees and international flights",
+        "Travel and emergency evacuation insurance",
+        "Personal gear and high-altitude gear hire",
+        "Hot showers, Wi-Fi, and electronic charging fees on-trail",
+        "Tips for guides and local support crew"
+      ]
+    },
+    {
+      "id": "annapurna-16",
+      "title": "Annapurna Circuit",
+      "name": "Annapurna Circuit",
+      "altitude": 5416,
+      "summary": "A circular traverse crossing the Thorong La pass.",
+      "dest": "nepal",
+      "days": 16,
+      "grade": "III",
+      "region": "Annapurna",
+      "gps": "28.77\u00b0N \u00b7 83.94\u00b0E",
+      "difficulty": "Moderate",
+      "price": 1500,
+      "rating": 4.95,
+      "reviews": 98,
+      "img": "/images/annapurna.png",
+      "maxAlt": "5,416m (Thorong La Pass)",
+      "itinerary": [
+        "Day 1: Drive from Kathmandu to Besisahar & Chame (2,670m)",
+        "Day 2: Trek from Chame to Pisang (3,200m)",
+        "Day 3: Trek from Pisang to Manang (3,540m) via upper trail",
+        "Day 4: Acclimatization and exploration in Manang",
+        "Day 5: Trek from Manang to Yak Kharka (4,050m)",
+        "Day 6: Trek to Thorong Phedi / High Camp (4,800m)",
+        "Day 7: Cross Thorong La Pass (5,416m) to sacred Muktinath (3,760m)",
+        "Day 8: Muktinath to Marpha village",
+        "Day 9: Marpha to Kalopani through Kali Gandaki gorge",
+        "Day 10: Kalopani to Tatopani hot springs",
+        "Day 11: Tatopani to Ghorepani (2,860m)",
+        "Day 12: Sunrise hike to Poon Hill (3,210m) & trek to Tadapani",
+        "Day 13: Tadapani to Ghandruk village",
+        "Day 14: Ghandruk to Nayapul and scenic drive to Pokhara",
+        "Day 15: Rest day in lakeside Pokhara",
+        "Day 16: Return scenic drive/flight to Kathmandu"
+      ],
+      "included": [
+        "All land transportation and permits (ACAP & TIMS)",
+        "Certified Annapurna mountain guide and porters",
+        "All teahouse lodges and wholesome mountain meals",
+        "Emergency oxygen and first aid kit"
+      ],
+      "excluded": [
+        "International airfare and travel insurance",
+        "Hot springs fee, personal beverages and snacks",
+        "Guide and porter gratuities"
+      ]
+    },
+    {
+      "id": "manaslu-18",
+      "title": "Manaslu Circuit",
+      "name": "Manaslu Circuit",
+      "altitude": 5106,
+      "summary": "A remote restricted-zone loop around the spirit mountain.",
+      "dest": "nepal",
+      "days": 18,
+      "grade": "IV",
+      "region": "Manaslu",
+      "gps": "28.55\u00b0N \u00b7 84.56\u00b0E",
+      "difficulty": "Strenuous",
+      "price": 1700,
+      "rating": 5.0,
+      "reviews": 56,
+      "img": "/images/manaslu.png",
+      "maxAlt": "5,106m (Larkya La Pass)",
+      "itinerary": [
+        "Day 1: Drive from Kathmandu to Machha Khola (900m)",
+        "Day 2: Trek from Machha Khola to Jagat (1,340m)",
+        "Day 3: Jagat to Deng (1,860m)",
+        "Day 4: Deng to Namrung (2,630m)",
+        "Day 5: Namrung to Lho (3,180m) - first close view of Mount Manaslu",
+        "Day 6: Lho to Samagaon (3,530m)",
+        "Day 7: Acclimatization day at Samagaon, hike to Manaslu Base Camp (4,400m)",
+        "Day 8: Samagaon to Samdo (3,860m)",
+        "Day 9: Acclimatization hike towards Tibetan border from Samdo",
+        "Day 10: Samdo to Dharamsala / Larkya Phedi (4,460m)",
+        "Day 11: Cross the dramatic Larkya La Pass (5,106m) to Bimthang (3,590m)",
+        "Day 12: Bimthang to Tilije (2,300m)",
+        "Day 13: Tilije to Tal (1,700m)",
+        "Day 14: Tal to Syange",
+        "Day 15: Syange to Besisahar",
+        "Day 16: Drive to Pokhara",
+        "Day 17: Pokhara exploration",
+        "Day 18: Drive / flight back to Kathmandu"
+      ],
+      "included": [
+        "Manaslu Restricted Area Special Permit (RAP) & MCAP",
+        "Government-licensed mountain guide with high-altitude satellite link",
+        "All teahouse stays and complete 3-meal plan",
+        "Porter service and baggage handling"
+      ],
+      "excluded": [
+        "Personal travel and evacuation insurance",
+        "Tips for guides and porters",
+        "Bar tabs and personal gear"
+      ]
+    }
+  ]
+}

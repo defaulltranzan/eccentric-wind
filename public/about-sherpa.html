@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherpa Heritage & Guide Masters — Himalayan Magic Adventure</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'var(--background)',
+                        foreground: 'var(--foreground)',
+                        card: 'var(--card)',
+                        border: 'var(--border)',
+                        accent: {
+                            DEFAULT: '#f06225',
+                            hover: '#d04e1b'
+                        },
+                        muted: {
+                            DEFAULT: '#272b32',
+                            foreground: '#9ca3af'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                        display: ['Oswald', 'sans-serif']
+                    },
+                    letterSpacing: {
+                        tightest: '-.04em',
+                        widest: '.15em'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --background: #1b1e22;
+            --foreground: #f3f4f6;
+            --card: #22252a;
+            --border: #2e3239;
+            --accent: #f06225;
+            --accent-hover: #d04e1b;
+            --muted: #272b32;
+            --muted-foreground: #9ca3af;
+        }
+        .light-mode {
+            --background: #f9fafb;
+            --foreground: #111827;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --accent: #e04f1a;
+            --accent-hover: #c23e11;
+            --muted: #f3f4f6;
+            --muted-foreground: #4b5563;
+        }
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- TOP BAR -->
+    <header class="relative z-40 border-b border-border bg-[#16181b]">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-4 group">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-12 w-auto object-contain transition-transform group-hover:scale-105">
+                <div>
+                    <span class="block font-heading text-base font-light tracking-widest text-white uppercase">Himalayan Magic Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.3em] uppercase">SHERPA GUARDIANS</span>
+                </div>
+            </a>
+            <nav class="hidden lg:flex items-center gap-8 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <a href="/" class="hover:text-accent transition-colors">Home</a>
+                <a href="/about" class="hover:text-accent transition-colors">About</a>
+                <a href="/services" class="hover:text-accent transition-colors">Services</a>
+                <a href="/treks" class="hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="hover:text-accent transition-colors">Expeditions</a>
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Safety</a>
+                <a href="/dispatches" class="hover:text-accent transition-colors">Stories</a>
+            </nav>
+            <a href="/#trek-finder" class="hidden sm:inline-flex items-center justify-center border border-accent hover:bg-accent hover:text-background text-[10px] font-mono uppercase tracking-widest px-4 py-2 transition-all">
+                Find Your Route
+            </a>
+        </div>
+    </header>
+
+    <!-- FULLSCREEN OVERLAY MENU TRIGGER -->
+    <button onclick="toggleMenu()" id="menu-trigger" class="fixed right-6 top-28 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-accent/40 bg-background/80 backdrop-blur-md transition-all hover:border-accent hover:bg-accent/10 shadow-2xl">
+        <div class="relative flex h-8 w-8 items-center justify-center">
+            <span id="menu-dot" class="h-1.5 w-1.5 rounded-full bg-accent transition-all duration-300"></span>
+        </div>
+    </button>
+
+    <!-- FULLSCREEN OVERLAY MENU -->
+    <div id="fullscreen-menu" class="fixed inset-0 z-40 flex items-center justify-center bg-background/95 backdrop-blur-xl transition-all duration-500 transform translate-x-full">
+        <div class="pointer-events-none absolute left-1/2 top-1/2 h-[72vh] w-px -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-accent/60 via-accent/20 to-transparent"></div>
+        <div class="relative flex flex-col items-start gap-6 px-6">
+            <span class="mb-2 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Himalayan Magic Adventure Route</span>
+            <a href="/" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">01</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Home</span></a>
+            <a href="/expeditions" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">02</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Expeditions</span></a>
+            <a href="/altitude-safety" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">03</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Altitude Safety</span></a>
+            <a href="/about-sherpa" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-accent">04</span><span class="font-heading text-4xl uppercase tracking-tightest text-accent md:text-6xl">Sherpa Heritage</span></a>
+            <a href="/dispatches" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">05</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Dispatches</span></a>
+            <a href="/#trek-finder" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">06</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Find Your Route</span></a>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="relative px-6 py-20 md:px-20 md:py-28 border-b border-border bg-[#191b1f]">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <span class="font-mono text-[10px] uppercase tracking-[0.4em] text-accent">[ LEGENDARY MOUNTAINEERING LINEAGE ]</span>
+            <h1 class="font-heading text-5xl md:text-7xl font-light uppercase tracking-tightest text-foreground">
+                SHERPA HERITAGE & <span class="font-semibold text-accent">CERTIFIED LEADERSHIP</span>
+            </h1>
+            <p class="max-w-3xl font-mono text-xs md:text-sm text-muted-foreground leading-relaxed">
+                To climb in the Himalayas is to walk beside the people who revere the sacred peaks as the abodes of deities. We are 100% locally-owned, employing certified IFMGA/UIAGM guides from Solukhumbu and Rolwaling.
+            </p>
+        </div>
+    </section>
+
+    <!-- GUIDE MASTERS ROSTER -->
+    <section class="px-6 py-20 md:px-20 border-b border-border bg-background">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div>
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">04.1 — EXPEDITION DIRECTORS</span>
+                <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white mt-2">
+                    OUR LEAD <span class="font-semibold text-accent">MOUNTAIN MASTERS</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Guide 1 -->
+                <div class="group border border-border bg-card overflow-hidden hover:border-accent transition-colors flex flex-col">
+                    <div class="h-80 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=600" class="h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" alt="Dawa Tenzing Sherpa">
+                        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-[#1b1e22]/90 border border-accent/40 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-widest">IFMGA / UIAGM</span>
+                    </div>
+                    <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Pangboche, Khumbu Valley</span>
+                            <h3 class="font-heading text-2xl uppercase tracking-tight text-white group-hover:text-accent transition-colors mt-1">Dawa Tenzing Sherpa</h3>
+                            <p class="font-mono text-xs text-muted-foreground mt-2 leading-relaxed">
+                                14x Everest summits, 3x K2 summits. Lead high-altitude technical consultant and expedition safety director for Himalayan Magic Adventure.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-border flex justify-between font-mono text-[10px] text-accent uppercase tracking-widest">
+                            <span>22 Yrs Guiding</span>
+                            <span>Wilderness EMT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guide 2 -->
+                <div class="group border border-border bg-card overflow-hidden hover:border-accent transition-colors flex flex-col">
+                    <div class="h-80 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=600" class="h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" alt="Pasang Lhamu Sherpa">
+                        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-[#1b1e22]/90 border border-accent/40 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-widest">NNMGA Senior Lead</span>
+                    </div>
+                    <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Namche Bazaar, Solukhumbu</span>
+                            <h3 class="font-heading text-2xl uppercase tracking-tight text-white group-hover:text-accent transition-colors mt-1">Pasang Lhamu Sherpa</h3>
+                            <p class="font-mono text-xs text-muted-foreground mt-2 leading-relaxed">
+                                Specialist in Annapurna and Manaslu high circuits. Certified Wilderness First Responder and mountain ecology advocate.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-border flex justify-between font-mono text-[10px] text-accent uppercase tracking-widest">
+                            <span>16 Yrs Guiding</span>
+                            <span>Rescue Diver</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guide 3 -->
+                <div class="group border border-border bg-card overflow-hidden hover:border-accent transition-colors flex flex-col">
+                    <div class="h-80 overflow-hidden relative">
+                        <img src="/images/itinerary.png" class="h-full w-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" alt="Mingma Dorje Sherpa">
+                        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-[#1b1e22]/90 border border-accent/40 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-widest">Technical Pass Master</span>
+                    </div>
+                    <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Beding, Rolwaling Valley</span>
+                            <h3 class="font-heading text-2xl uppercase tracking-tight text-white group-hover:text-accent transition-colors mt-1">Mingma Dorje Sherpa</h3>
+                            <p class="font-mono text-xs text-muted-foreground mt-2 leading-relaxed">
+                                Renowned for technical high-pass routes including Cho La, Amphu Lapcha, and Tashi Laptsa pass crossings.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-border flex justify-between font-mono text-[10px] text-accent uppercase tracking-widest">
+                            <span>18 Yrs Guiding</span>
+                            <span>Crevasse Rescue</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTER WELFARE CHARTER & SUSTAINABILITY -->
+    <section class="px-6 py-20 md:px-20 border-b border-border bg-[#191b1f]">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div>
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">04.2 — ETHICAL EXPEDITIONS</span>
+                <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white mt-2">
+                    THE IPPG <span class="font-semibold text-accent">PORTER WELFARE CHARTER</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-8 border border-border bg-card space-y-4">
+                    <span class="font-heading text-4xl text-accent block">20 KG</span>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Strict Weight Limitation</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        We strictly limit porter loads to 20 kilograms maximum, weighed and calibrated with electronic scales before leaving every trailhead.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-border bg-card space-y-4">
+                    <span class="font-heading text-4xl text-accent block">100%</span>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Comprehensive Medical & Heli Insurance</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        Every porter and guide is fully covered with emergency medical insurance and guaranteed helicopter rescue coverage on every trek.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-border bg-card space-y-4">
+                    <span class="font-heading text-4xl text-accent block">+35%</span>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Fair Living Wage Standards</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        Our crew members earn 35% above the Nepal government and TAAN recommended minimum baseline, directly empowering local mountain communities.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-border bg-card space-y-4">
+                    <span class="font-heading text-4xl text-accent block">ZERO</span>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Leave No Trace & Clean Mountain Policy</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        All non-biodegradable waste generated by our expeditions is audited, packed out, and recycled in Kathmandu to protect fragile alpine ecology.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+        <div class="mt-10 text-center">
+            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#4a4d54] select-none" style="filter:blur(1.3px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
+        </div>
+    </div>
+</footer>
+
+    <!-- BOTTOM-RIGHT FLOATING LANGUAGE DROPDOWN & THEME CONTROLS -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        <button onclick="toggleTheme()" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all transform hover:scale-105">
+            <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+        </button>
+        <div class="relative" id="lang-dropdown-wrapper">
+            <button onclick="toggleLangDropdown()" id="lang-dropdown-btn" class="h-11 px-4 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground font-mono text-xs flex items-center gap-2.5 shadow-2xl hover:border-accent transition-all group">
+                <i class="fa-solid fa-globe text-accent text-sm"></i>
+                <span id="current-lang-label" class="font-medium tracking-wider">English</span>
+                <i class="fa-solid fa-chevron-up text-[10px] text-muted-foreground group-hover:text-foreground transition-transform duration-200" id="lang-chevron"></i>
+            </button>
+            <div id="lang-dropdown-menu" class="absolute right-0 bottom-14 w-44 rounded-xl border border-border bg-card/95 backdrop-blur-xl p-1.5 shadow-2xl space-y-1 hidden">
+                <button onclick="selectLanguage('en')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors">
+                    <span class="flex items-center gap-2"><span>🇺🇸</span> English</span>
+                </button>
+                <button onclick="selectLanguage('np')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors">
+                    <span class="flex items-center gap-2"><span>🇳🇵</span> नेपाली</span>
+                </button>
+                <button onclick="selectLanguage('zh')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors">
+                    <span class="flex items-center gap-2"><span>🇨🇳</span> 中文</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // Fullscreen Menu Toggle
+        let isMenuOpen = false;
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            const menu = document.getElementById('fullscreen-menu');
+            const dot = document.getElementById('menu-dot');
+            if (isMenuOpen) {
+                menu.classList.remove('translate-x-full');
+                dot.classList.add('scale-[3]', 'bg-accent');
+            } else {
+                menu.classList.add('translate-x-full');
+                dot.classList.remove('scale-[3]');
+            }
+        }
+
+        // Theme Toggle
+        let currentTheme = localStorage.getItem('vo_theme') || 'dark';
+        function initTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            if (currentTheme === 'light') {
+                body.classList.add('light-mode');
+                if (icon) icon.className = "fa-solid fa-sun text-sm text-accent";
+            } else {
+                body.classList.remove('light-mode');
+                if (icon) icon.className = "fa-solid fa-moon text-sm";
+            }
+        }
+        function toggleTheme() {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('vo_theme', currentTheme);
+            initTheme();
+        }
+
+        // Language Dropdown
+        let currentLang = localStorage.getItem('vo_lang') || 'en';
+        let isLangDropdownOpen = false;
+        function toggleLangDropdown() {
+            isLangDropdownOpen = !isLangDropdownOpen;
+            const menu = document.getElementById('lang-dropdown-menu');
+            const chevron = document.getElementById('lang-chevron');
+            if (isLangDropdownOpen) {
+                menu.classList.remove('hidden');
+                chevron.classList.add('rotate-180');
+            } else {
+                menu.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+            }
+        }
+        function selectLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('vo_lang', lang);
+            if (isLangDropdownOpen) toggleLangDropdown();
+            const label = document.getElementById('current-lang-label');
+            if (lang === 'np') label.innerText = 'नेपाली';
+            else if (lang === 'zh') label.innerText = '中文';
+            else label.innerText = 'English';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            selectLanguage(currentLang);
+        });
+    </script>
+</body>
+</html>
