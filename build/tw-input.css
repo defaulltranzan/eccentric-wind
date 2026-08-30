@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Button / CTA micro-interactions  (bug-fix list · item 1)
+   Adds a subtle hover-lift on pointer devices and a press
+   response on touch, for the pill buttons used across the
+   site. Scoped to elements that are already styled as
+   buttons (padded + uppercase mono label, or a real
+   <button>) so ordinary links and text are untouched.
+   Fully disabled under prefers-reduced-motion.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+
+  a[class*="uppercase"][class*="tracking-"][class*="px-"],
+  button[class*="uppercase"],
+  .btn-zoom,
+  .hme-nav,
+  #hme-menu-btn {
+    transition: transform .18s cubic-bezier(.2, .7, .3, 1),
+                box-shadow .18s ease,
+                background-color .2s ease,
+                border-color .2s ease,
+                color .2s ease;
+    will-change: transform;
+  }
+
+  /* Desktop / mouse: lift + gentle zoom on hover */
+  @media (hover: hover) and (pointer: fine) {
+    a[class*="uppercase"][class*="tracking-"][class*="px-"]:hover,
+    button[class*="uppercase"]:not([disabled]):hover,
+    .btn-zoom:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+  }
+
+  /* Everyone (incl. touch): press-down feedback on tap/click */
+  a[class*="uppercase"][class*="tracking-"][class*="px-"]:active,
+  button[class*="uppercase"]:not([disabled]):active,
+  .btn-zoom:active {
+    transform: translateY(0) scale(.96);
+  }
+
+  /* Touch devices with no hover: give a quick tap pop */
+  @media (hover: none) {
+    a[class*="uppercase"][class*="tracking-"][class*="px-"]:active,
+    button[class*="uppercase"]:not([disabled]):active,
+    .btn-zoom:active {
+      transform: scale(.94);
+    }
+  }
+}
+
+/* Keep disabled buttons inert-looking */
+button[disabled],
+button[aria-disabled="true"] {
+  cursor: not-allowed;
+}

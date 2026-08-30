@@ -4,39 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dispatches From The Trail — Himalayan Magic Adventure</title>
+    <link rel="canonical" href="https://himalayanmagic.com/dispatches">
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        background: 'var(--background)',
-                        foreground: 'var(--foreground)',
-                        card: 'var(--card)',
-                        border: 'var(--border)',
-                        accent: {
-                            DEFAULT: '#f06225',
-                            hover: '#d04e1b'
-                        },
-                        muted: {
-                            DEFAULT: '#272b32',
-                            foreground: '#9ca3af'
-                        }
-                    },
-                    fontFamily: {
-                        heading: ['Oswald', 'sans-serif'],
-                        mono: ['"IBM Plex Mono"', 'monospace'],
-                        display: ['Oswald', 'sans-serif']
-                    },
-                    letterSpacing: {
-                        tightest: '-.04em',
-                        widest: '.15em'
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="/tailwind.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -67,7 +37,7 @@
             color: var(--foreground);
             font-family: 'IBM Plex Mono', monospace;
             line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: color 0.3s ease;
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -232,8 +202,8 @@
                 <!-- Article 1 -->
                 <article class="group border border-border bg-card flex flex-col justify-between hover:border-accent transition-colors overflow-hidden">
                     <div class="h-60 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=600" class="h-full w-full object-cover opacity-75 group-hover:scale-105 transition-transform duration-500" alt="Namche Acclimatization">
-                        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
+                        <img src="/images/blog-1.jpg" class="h-full w-full object-cover object-center opacity-70 [filter:saturate(.88)_contrast(1.04)_brightness(.82)] group-hover:scale-105 transition-transform duration-500" alt="Illustration of an alpine valley at sunrise">
+                        <div class="absolute inset-0 bg-gradient-to-t from-card via-[#22252a]/55 to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-[#1b1e22]/90 border border-accent/40 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-widest">Medical Guide</span>
                     </div>
                     <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
@@ -254,8 +224,8 @@
                 <!-- Article 2 -->
                 <article class="group border border-border bg-card flex flex-col justify-between hover:border-accent transition-colors overflow-hidden">
                     <div class="h-60 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1585938389612-a552a28d6914?auto=format&fit=crop&q=80&w=600" class="h-full w-full object-cover opacity-75 group-hover:scale-105 transition-transform duration-500" alt="Thorong La Pass">
-                        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
+                        <img src="/images/blog-3.jpg" class="h-full w-full object-cover object-top opacity-70 [filter:saturate(.88)_contrast(1.04)_brightness(.82)] group-hover:scale-105 transition-transform duration-500" alt="Poster illustration of the Annapurna massif">
+                        <div class="absolute inset-0 bg-gradient-to-t from-card via-[#22252a]/55 to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-[#1b1e22]/90 border border-accent/40 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-widest">Expedition Log</span>
                     </div>
                     <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
@@ -276,8 +246,8 @@
                 <!-- Article 3 -->
                 <article class="group border border-border bg-card flex flex-col justify-between hover:border-accent transition-colors overflow-hidden">
                     <div class="h-60 overflow-hidden relative">
-                        <img src="/images/hero-mountain.jpg" class="h-full w-full object-cover opacity-75 group-hover:scale-105 transition-transform duration-500" alt="Gokyo Ri Sunset">
-                        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent"></div>
+                        <img src="/images/blog-2.jpg" class="h-full w-full object-cover object-top opacity-70 [filter:saturate(.88)_contrast(1.04)_brightness(.82)] group-hover:scale-105 transition-transform duration-500" alt="Illustration of a snow leopard on a Himalayan ridge">
+                        <div class="absolute inset-0 bg-gradient-to-t from-card via-[#22252a]/55 to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-[#1b1e22]/90 border border-accent/40 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-widest">Alpine Essay</span>
                     </div>
                     <div class="p-6 space-y-3 flex-grow flex flex-col justify-between">
@@ -349,7 +319,7 @@
             </div>
         </div>
         <div class="mt-10 text-center">
-            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#4a4d54] select-none" style="filter:blur(1.3px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
+            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
         </div>
     </div>
 </footer>
@@ -445,5 +415,6 @@
             selectLanguage(currentLang);
         });
     </script>
+<script src="/menu.js?v=4"></script>
 </body>
 </html>

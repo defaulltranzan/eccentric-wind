@@ -1,0 +1,36 @@
+REVERT: to go back to the Tailwind Play CDN, in EACH public/*.html replace
+    <link rel="stylesheet" href="/tailwind.css">
+with this block (index.html’s version shown; other pages had the same CDN line and their own config):
+
+<script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'var(--background)',
+                        foreground: 'var(--foreground)',
+                        card: 'var(--card)',
+                        border: 'var(--border)',
+                        accent: {
+                            DEFAULT: 'var(--accent)',
+                            hover: 'var(--accent-hover)'
+                        },
+                        muted: {
+                            DEFAULT: 'var(--muted)',
+                            foreground: 'var(--muted-foreground)'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Oswald', 'sans-serif'],
+                        mono: ['"IBM Plex Mono"', 'monospace'],
+                        display: ['Oswald', 'sans-serif']
+                    },
+                    letterSpacing: {
+                        tightest: '-.04em',
+                        widest: '.15em'
+                    }
+                }
+            }
+        }
+    </script>

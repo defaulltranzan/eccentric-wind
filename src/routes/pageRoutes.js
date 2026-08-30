@@ -15,6 +15,8 @@ router.get('/expeditions/:slug', (req, res) => res.sendFile(path.join(PUBLIC_DIR
 // Trekking Trails — directory + reusable individual-trail template
 router.get('/treks', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'treks.html')));
 router.get('/treks/:slug', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'trek.html')));
+router.get('/compare', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'compare.html')));
+router.get('/gear', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'gear.html')));
 router.get('/altitude-safety', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'altitude-safety.html')));
 router.get('/about-sherpa', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'about-sherpa.html')));
 router.get('/dispatches', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'dispatches.html')));

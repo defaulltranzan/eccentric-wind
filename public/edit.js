@@ -105,7 +105,7 @@ const i18n = {
     
     // 06 Dispatches
     sec06Label: "06 — DISPATCHES FROM THE TRAIL",
-    sec06Heading: "STORIES FROM THE HIGH PLACES",
+    sec06Heading: "Stories From The <span class='font-semibold text-accent'>High Places</span>",
     btnWriteDispatch: "+ Write Dispatch",
     readJournal: "READ JOURNAL",
     noDispatches: "NO HISTORICAL DISPATCHES LOGGED YET.",
@@ -216,7 +216,7 @@ const i18n = {
     
     // 06 Dispatches
     sec06Label: "०६ — पदयात्राका रिपोर्टहरू",
-    sec06Heading: "उच्च हिमालका कथाहरू",
+    sec06Heading: "उच्च हिमालका <span class='font-semibold text-accent'>कथाहरू</span>",
     btnWriteDispatch: "+ नयाँ रिपोर्ट लेख्नुहोस्",
     readJournal: "विवरण पढ्नुहोस्",
     noDispatches: "हालसम्म कुनै रिपोर्टहरू प्रकाशित भएका छैनन्।",
@@ -327,7 +327,7 @@ const i18n = {
     
     // 06 Dispatches
     sec06Label: "06 — 探险前线简报",
-    sec06Heading: "来自群山之巅的纪实故事",
+    sec06Heading: "来自<span class='font-semibold text-accent'>群山之巅</span>的纪实故事",
     btnWriteDispatch: "+ 撰写探险简报",
     readJournal: "阅读日志",
     noDispatches: "暂无历史简报发布。",
@@ -580,7 +580,7 @@ function applyLanguageUI() {
   const dispLabel = document.getElementById('dispatches-label');
   if (dispLabel) dispLabel.innerText = t.sec06Label;
   const dispHeading = document.querySelector('#dispatches h2');
-  if (dispHeading) dispHeading.innerHTML = `STORIES FROM THE <span class="font-semibold text-accent">${t.sec06Heading}</span>`;
+  if (dispHeading) dispHeading.innerHTML = t.sec06Heading;
   const btnWriteDisp = document.getElementById('btn-add-dispatch');
   if (btnWriteDisp) btnWriteDisp.innerText = t.btnWriteDispatch;
 
@@ -602,19 +602,7 @@ function applyLanguageUI() {
   const ftRegions = document.getElementById('footer-regions-title');
   if (ftRegions) ftRegions.innerText = t.regionsTitle;
 
-  // 11. Fullscreen Menu
-  const menuAscent = document.querySelector('#fullscreen-menu span.text-muted-foreground');
-  if (menuAscent) menuAscent.innerText = t.menuAscentRoute;
-  
-  const menuLinks = document.querySelectorAll('#fullscreen-menu a');
-  if (menuLinks.length >= 6) {
-    menuLinks[0].querySelector('.font-heading').innerText = t.menu01;
-    menuLinks[1].querySelector('.font-heading').innerText = t.menu02;
-    menuLinks[2].querySelector('.font-heading').innerText = t.menu03;
-    menuLinks[3].querySelector('.font-heading').innerText = t.menu04;
-    menuLinks[4].querySelector('.font-heading').innerText = t.menu05;
-    menuLinks[5].querySelector('.font-heading').innerText = t.menu06;
-  }
+  // 11. Navigation menu is now shared (menu.js) — no per-language overwrite.
 
   // Re-render dynamic lists with active language
   renderStats();
@@ -642,29 +630,79 @@ function renderFlagshipPeaks() {
   if (!peaks.length) { grid.classList.add('hidden'); return; }
   grid.classList.remove('hidden');
 
-  grid.innerHTML = peaks.map(m => {
-    const elev = (m.elevationM || 0).toLocaleString();
+  grid.innerHTML = peaks.map((m, i) => {
+    const elev = m.elevationLabel || ((m.elevationM || 0).toLocaleString() + ' m');
+    const season = (m.season && m.season.primary) || '';
+    const seasonWin = (m.season && m.season.window) || '';
+    const firstYear = (m.firstAscent && m.firstAscent.year) || '—';
+    // A 1–5 "commitment" read, averaged from the comparative difficulty profile.
+    const d = m.difficulty || {};
+    const dvals = ['technical', 'altitude', 'exposure', 'weather', 'objectiveHazard']
+      .map(k => d[k]).filter(v => typeof v === 'number');
+    const commit = dvals.length ? Math.round(dvals.reduce((a, b) => a + b, 0) / dvals.length) : 0;
+    const pips = commit
+      ? '<span class="tracking-[0.15em] text-accent">' + '●'.repeat(commit) +
+        '<span class="text-muted-foreground/40">' + '○'.repeat(5 - commit) + '</span></span>'
+      : '<span class="text-muted-foreground">—</span>';
+    // Show only the first three on mobile — a six-card swipe gets tedious on a phone.
+    const extra = i >= 3 ? ' hme-flag-extra' : '';
+
     return `
-    <a href="/expeditions/${escapeHtml(m.slug)}" aria-label="${escapeHtml(m.name + ' expedition — ' + m.elevationLabel + ', ' + m.countryLabel)}"
-       class="hme-flag group relative block h-[420px] md:h-[440px] overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl focus:outline-none focus-visible:border-accent">
-      <div class="absolute inset-0 z-0 bg-cover bg-center opacity-40 group-hover:opacity-25 scale-100 group-hover:scale-105 transition-all duration-700 ease-out" style="background-image:url('${escapeHtml(m.heroImage)}')"></div>
-      <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/72 to-[#181a1e]/25"></div>
-      <span class="absolute top-4 left-4 z-10 bg-black/40 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">#${m.rank} of 14</span>
-      <div class="relative z-10 flex h-full flex-col justify-end p-6 md:p-7">
+    <a href="/expeditions/${escapeHtml(m.slug)}" aria-label="${escapeHtml(m.name + ' expedition — ' + elev + ', ' + m.countryLabel)}"
+       class="hme-flag${extra} group relative block h-[440px] w-[290px] sm:w-[320px] shrink-0 snap-start overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:border-accent">
+      <div class="absolute inset-0 z-0 bg-cover bg-center opacity-45 group-hover:opacity-30 scale-100 group-hover:scale-105 transition-all duration-700 ease-out" style="background-image:url('${escapeHtml(m.heroImage)}')"></div>
+      <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/78 to-[#181a1e]/20"></div>
+      <span class="absolute top-4 left-4 z-10 bg-black/45 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">#${m.rank} <span class="text-white/50">/ 14</span></span>
+      ${season ? `<span class="absolute top-4 right-4 z-10 bg-accent/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-background">${escapeHtml(season)}</span>` : ''}
+      <div class="relative z-10 flex h-full flex-col justify-end p-6">
         <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">${escapeHtml(m.range)}</span>
-        <div class="mt-1 flex items-end gap-2">
-          <span class="font-heading text-6xl md:text-7xl font-normal leading-none tracking-tightest text-accent">${elev}</span>
-          <span class="mb-1.5 font-mono text-[10px] font-medium uppercase tracking-widest text-muted-foreground leading-tight">M</span>
+        <div class="mt-1 flex items-end gap-1.5">
+          <span class="font-heading text-[2.9rem] md:text-5xl font-normal leading-none tracking-tightest text-accent">${escapeHtml(elev.replace(/\s*m$/i, ''))}</span>
+          <span class="mb-1 font-mono text-[10px] font-medium uppercase tracking-widest text-muted-foreground leading-tight">m</span>
         </div>
-        <h3 class="mt-1 font-heading text-3xl md:text-4xl font-medium uppercase tracking-tightest text-foreground group-hover:text-accent transition-colors leading-[0.95]">${escapeHtml(m.name)}</h3>
-        <p class="hme-flag-blurb mt-2 max-h-16 opacity-100 lg:max-h-0 lg:opacity-0 overflow-hidden lg:group-hover:max-h-16 lg:group-hover:opacity-100 transition-all duration-500 font-mono text-[11px] leading-relaxed text-muted-foreground">${escapeHtml(m.tagline)}</p>
-        <div class="mt-4 flex items-center justify-between gap-3 border-t border-border/70 pt-4">
-          <span class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground truncate">${escapeHtml(m.countryLabel)} · ${escapeHtml((m.season && m.season.primary) || '')}</span>
+        <h3 class="mt-1.5 font-heading text-3xl md:text-[2rem] font-medium uppercase tracking-tightest text-foreground group-hover:text-accent transition-colors leading-[0.95]">${escapeHtml(m.name)}</h3>
+        ${m.aka ? `<span class="mt-1 block font-mono text-[10px] tracking-wide text-muted-foreground/80">${escapeHtml(m.aka)}</span>` : ''}
+        <p class="mt-2 font-mono text-[11px] leading-relaxed text-muted-foreground line-clamp-2">${escapeHtml(m.tagline || '')}</p>
+        <div class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-border/70 pt-3 font-mono text-[9px] uppercase tracking-[0.12em]">
+          <span class="text-muted-foreground/70">First climbed</span>
+          <span class="text-right text-foreground/90">${escapeHtml(String(firstYear))}</span>
+          <span class="text-muted-foreground/70">Commitment</span>
+          <span class="text-right">${pips}</span>
+          <span class="text-muted-foreground/70">Window</span>
+          <span class="text-right text-foreground/90 truncate">${escapeHtml(seasonWin || '—')}</span>
+        </div>
+        <div class="mt-3 flex items-center justify-between gap-3 border-t border-border/70 pt-3">
+          <span class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground truncate">${escapeHtml(m.countryLabel)}</span>
           <span class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent shrink-0">Explore <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i></span>
         </div>
       </div>
     </a>`;
   }).join('');
+
+  updateFlagshipNav();
+  grid.removeEventListener('scroll', updateFlagshipNav);
+  grid.addEventListener('scroll', updateFlagshipNav, { passive: true });
+}
+
+function scrollFlagship(dir) {
+  const g = document.getElementById('flagship-grid');
+  if (!g) return;
+  const card = g.querySelector('a.hme-flag');
+  const step = (card ? card.getBoundingClientRect().width + 20 : 340) * dir;
+  const target = Math.max(0, Math.min(g.scrollLeft + step, g.scrollWidth - g.clientWidth));
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  g.scrollTo({ left: target, behavior: reduce ? 'auto' : 'smooth' });
+  setTimeout(updateFlagshipNav, 400);
+}
+
+function updateFlagshipNav() {
+  const g = document.getElementById('flagship-grid');
+  if (!g) return;
+  const prev = document.querySelector('.hme-flag-nav[aria-label="Previous peaks"]');
+  const next = document.querySelector('.hme-flag-nav[aria-label="More peaks"]');
+  const max = g.scrollWidth - g.clientWidth - 4;
+  if (prev) prev.toggleAttribute('disabled', g.scrollLeft <= 4);
+  if (next) next.toggleAttribute('disabled', g.scrollLeft >= max);
 }
 
 // ==========================================
@@ -932,56 +970,74 @@ function filterTreks() {
   renderItinerary();
 }
 
-// Trek Finder — Interactive Expedition Matchmaker
-// experience -> maps to trek.difficulty (hard filter)
-// duration   -> maps to trek.days bucket (hard filter)
-// season     -> captured as a preference for the personalized brief (not a hard
-//               filter — the CMS doesn't track per-route seasonal suitability,
-//               so we avoid asserting a match/no-match we can't back reliably)
-const finderState = { experience: null, season: null, duration: null, budget: null };
+// ===========================================================================
+// FIND YOUR TREK — rules-based recommender (no AI).
+// Scores every trail in window.TREKS against the visitor's answers and shows
+// the top matches with a % and a plain explanation of the reasoning.
+// ===========================================================================
+const finderState = { experience: null, region: null, season: null, duration: null, budget: null, style: [] };
 
 const FINDER_CONTAINERS = {
   experience: 'finder-experience-cards',
+  region: 'finder-region-cards',
   season: 'finder-season-cards',
   duration: 'finder-duration-cards',
-  budget: 'finder-budget-cards'
+  budget: 'finder-budget-cards',
+  style: 'finder-style-cards'
 };
 
 function selectFinderCard(group, value) {
-  const containerId = FINDER_CONTAINERS[group] || 'finder-duration-cards';
-  const container = document.getElementById(containerId);
+  const container = document.getElementById(FINDER_CONTAINERS[group]);
   if (!container) return;
 
-  finderState[group] = (finderState[group] === value) ? null : value;
+  if (group === 'style') {
+    const i = finderState.style.indexOf(value);
+    if (i > -1) finderState.style.splice(i, 1); else finderState.style.push(value);
+  } else {
+    finderState[group] = (finderState[group] === value) ? null : value;
+  }
 
-  container.querySelectorAll('.finder-card').forEach(btn => {
-    const isSelected = btn.dataset.value === finderState[group];
-    btn.classList.toggle('border-accent', isSelected);
-    btn.classList.toggle('ring-1', isSelected);
-    btn.classList.toggle('ring-accent', isSelected);
-    btn.classList.toggle('bg-accent/5', isSelected);
+  container.querySelectorAll('.finder-card').forEach((btn) => {
+    const on = group === 'style'
+      ? finderState.style.indexOf(btn.dataset.value) > -1
+      : btn.dataset.value === finderState[group];
+    btn.classList.toggle('border-accent', on);
+    btn.classList.toggle('ring-1', on);
+    btn.classList.toggle('ring-accent', on);
+    btn.classList.toggle('bg-accent/5', on);
+    btn.classList.toggle('text-foreground', on && !btn.querySelector('.finder-card-title'));
     const title = btn.querySelector('.finder-card-title');
-    if (title) title.classList.toggle('text-accent', isSelected);
+    if (title) title.classList.toggle('text-accent', on);
   });
 
   filterTrekFinder();
 }
 
-// ---------------------------------------------------------------------------
-// Trek Finder — matches the visitor's profile against the full Trekking Trails
-// directory (window.TREKS, 28 trails) and surfaces both direct matches and
-// near-miss alternatives. Every result links to its /treks/<slug> guide.
-// ---------------------------------------------------------------------------
+const FINDER_CULTURAL = ['upper-mustang', 'tsum-valley', 'tamang-heritage-trail', 'helambu-circuit',
+  'lumbini-pilgrimage-circuit', 'janakpur-temple-circuit', 'rolpa-rukum-hill-trail', 'bardiya-national-park-safari'];
+
 function finderTrailModel() {
   const T = window.TREKS || {};
   const P = window.TREK_PROVINCES || {};
   const firstInt = (s) => { const m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
   return Object.keys(T).map((slug) => {
-    const t = T[slug], s = t.stats || {};
+    const t = T[slug], s = t.stats || {}, su = t.suitability || {};
     const bs = (s.bestSeason || '').toLowerCase();
     const ovr = (t.overview || []).join(' ').toLowerCase();
+    const region = (t.region || (P[t.province] && P[t.province].name) || '').toLowerCase();
+    const hi = (t.highlights || []).join(' ').toLowerCase();
     const pr = (t.cost && t.cost.tiers && t.cost.tiers[0] && t.cost.tiers[0].rangeUSD) || '';
     const pm = pr.match(/\$[\d,]+/);
+    const diff = (s.difficulty || '').toLowerCase();
+    const tags = {
+      everest: /khumbu|everest/.test(region),
+      annapurna: /annapurna/.test(region),
+      langtang: /langtang|helambu|gosaikunda/.test(region) || ['langtang-valley', 'gosaikunda', 'helambu-circuit', 'tamang-heritage-trail'].indexOf(slug) > -1,
+      manaslu: /manaslu|mansiri|tsum|ganesh/.test(region) || ['manaslu-circuit', 'tsum-valley', 'ganesh-himal-trek'].indexOf(slug) > -1,
+      mustang: /mustang/.test(region) || slug === 'upper-mustang',
+      dolpo: /dolpo|phoksundo/.test(region) || ['upper-dolpo', 'lower-dolpo', 'shey-phoksundo-lake'].indexOf(slug) > -1,
+      farwest: /humla|far.?west|api|saipal|khaptad|rara|limi/.test(region) || ['rara-lake-trek', 'limi-valley'].indexOf(slug) > -1
+    };
     return {
       slug: slug,
       name: t.name.replace(/ Trek$/, ''),
@@ -990,213 +1046,220 @@ function finderTrailModel() {
       difficulty: s.difficulty || '',
       days: firstInt(s.duration),
       maxAlt: s.maxAltitude || '',
+      maxAltM: firstInt(s.maxAltitude),
+      img: t.heroImage || '/images/hero-mountain.jpg',
       priceFrom: pm ? +pm[0].replace(/[$,]/g, '') : null,
       perDay: /per day/i.test(pr),
+      tags: tags,
+      remoteness: su.remoteness || 0,
+      physical: su.physical || 0,
+      technical: su.technical || 0,
+      altitudeScore: su.altitude || 0,
+      popular: !!t.popular,
+      hasPass: Array.isArray(t.passes) && t.passes.length > 0,
+      cultural: FINDER_CULTURAL.indexOf(slug) > -1 || /pilgrimage|heritage|monaster|walled city|mustang|tsum/.test(hi + ' ' + ovr),
+      scenic: !!t.popular || (firstInt(s.maxAltitude) || 0) >= 4500 || /lake|glacier|panorama|viewpoint|amphitheat|sanctuary/.test(hi),
       season: {
         Spring: /(mar|apr|may)/.test(bs),
+        Summer: /(jun|jul|aug|monsoon|mid-may)/.test(bs) || /rain-shadow/.test(ovr),
         Autumn: /(sep|oct|nov)/.test(bs),
         Winter: /(dec|jan|feb|year-round|oct.?may)/.test(bs)
-      }
+      },
+      diffLc: diff
     };
   });
 }
 
 function finderCriteria() {
-  const c = [];
-  if (finderState.experience) {
-    const sets = {
-      Moderate: ['easy', 'moderate'],
-      Challenging: ['moderate', 'challenging'],
-      Strenuous: ['challenging', 'strenuous']
-    };
-    const allow = sets[finderState.experience] || [];
-    c.push({ key: 'experience', test: (t) => allow.some((d) => t.difficulty.toLowerCase().indexOf(d) > -1) });
+  const st = finderState, c = [];
+  if (st.experience) {
+    c.push({ key: 'experience', w: 1.0, test: (m) => {
+      if (st.experience === 'first') return /easy|moderate/.test(m.diffLc) && !/challenging|strenuous/.test(m.diffLc) && m.altitudeScore <= 8 && m.technical <= 2;
+      if (st.experience === 'experienced') return /moderate|challenging/.test(m.diffLc);
+      return /challenging|strenuous/.test(m.diffLc) || m.technical >= 3 || m.hasPass;
+    }});
   }
-  if (finderState.season) c.push({ key: 'season', test: (t) => !!t.season[finderState.season] });
-  if (finderState.duration) {
-    const d = finderState.duration;
-    c.push({
-      key: 'duration', test: (t) => t.days != null && (
-        d === 'short' ? t.days < 10 :
-        d === 'mid' ? t.days >= 10 && t.days <= 15 :
-        d === 'long' ? t.days >= 16 && t.days <= 20 :
-        d === 'epic' ? t.days > 20 : true)
-    });
+  if (st.region) c.push({ key: 'region', w: 1.3, hard: true, test: (m) => !!m.tags[st.region] });
+  if (st.season) c.push({ key: 'season', w: 0.8, hard: true, test: (m) => !!m.season[st.season] });
+  if (st.duration) {
+    const d = st.duration;
+    c.push({ key: 'duration', w: 1.0, hard: true, test: (m) => m.days != null && (
+      d === 'short' ? m.days <= 10 :
+      d === 'mid' ? m.days >= 10 && m.days <= 15 :
+      d === 'long' ? m.days >= 15 && m.days <= 20 :
+      m.days >= 20) });
   }
-  if (finderState.budget) {
-    const b = finderState.budget;
-    c.push({
-      key: 'budget', test: (t) => {
-        const v = t.perDay ? (t.priceFrom || 0) * (t.days || 7) : t.priceFrom;
-        if (v == null) return false;
-        return b === 'b1' ? v < 1000 :
-          b === 'b2' ? v >= 1000 && v < 2000 :
-          b === 'b3' ? v >= 2000 && v < 3500 :
-          b === 'b4' ? v >= 3500 : true;
-      }
-    });
+  if (st.budget) {
+    const b = st.budget;
+    c.push({ key: 'budget', w: 0.9, hard: true, test: (m) => {
+      const v = m.perDay ? (m.priceFrom || 0) * (m.days || 7) : m.priceFrom;
+      if (v == null) return false;
+      return b === 'b1' ? v < 1000 : b === 'b2' ? v >= 1000 && v < 2000 : b === 'b3' ? v >= 2000 && v < 3500 : v >= 3500;
+    }});
   }
+  (st.style || []).forEach((s) => {
+    c.push({ key: 'style:' + s, w: 1.1, test: (m) => {
+      if (s === 'iconic') return m.popular;
+      if (s === 'remote') return m.remoteness >= 7;
+      if (s === 'culture') return m.cultural;
+      if (s === 'challenge') return /challenging|strenuous/.test(m.diffLc) || m.hasPass || m.physical >= 8;
+      if (s === 'photo') return m.scenic;
+      if (s === 'slow') return m.physical <= 6 && !/strenuous/.test(m.diffLc) && (m.days || 0) >= 7 && m.remoteness <= 7;
+      return false;
+    }});
+  });
   return c;
+}
+
+const FINDER_LABELS = {
+  experience: { first: 'a first Himalayan trek', experienced: 'trekking experience', alpinist: 'technical comfort' },
+  region: { everest: 'the Everest region', annapurna: 'the Annapurna region', langtang: 'the Langtang region', manaslu: 'the Manaslu region', mustang: 'Mustang', dolpo: 'Dolpo', farwest: 'the Far West' },
+  duration: { short: '5–10 days', mid: '10–15 days', long: '15–20 days', epic: '20+ days' },
+  budget: { b1: 'a budget under $1,000', b2: 'a $1,000–$2,000 budget', b3: 'a $2,000–$3,500 budget', b4: 'a $3,500+ budget' },
+  style: { iconic: 'iconic Himalayan scenery', remote: 'remote wilderness', culture: 'cultural depth', challenge: 'a challenging adventure', photo: 'photography', slow: 'a slower pace' }
+};
+function finderCritLabel(key) {
+  if (key === 'season') return 'a ' + (finderState.season || '').toLowerCase() + ' departure';
+  if (key.indexOf('style:') === 0) return FINDER_LABELS.style[key.slice(6)];
+  var g = key;
+  return (FINDER_LABELS[g] || {})[finderState[g]] || g;
 }
 
 function filterTrekFinder() {
   const resultsEl = document.getElementById('finder-results');
   const countEl = document.getElementById('finder-count');
+  const resetBtn = document.getElementById('finder-reset-btn');
   if (!resultsEl) return;
 
-  const trails = finderTrailModel();
-  if (!trails.length) {
-    resultsEl.innerHTML = `<div class="py-10 text-center font-mono text-xs text-muted-foreground">Trail directory unavailable. <a href="/treks" class="text-accent underline">Browse all trekking trails →</a></div>`;
+  const model = finderTrailModel();
+  const crit = finderCriteria();
+  const active = crit.length;
+
+  if (resetBtn) resetBtn.classList.toggle('hidden', active === 0);
+
+  if (!model.length) {
+    resultsEl.innerHTML = '<div class="py-10 text-center font-mono text-xs text-muted-foreground">Trail directory unavailable. <a href="/treks" class="text-accent underline">Browse all trekking trails →</a></div>';
     if (countEl) countEl.innerText = 'BROWSE ALL TRAILS';
     return;
   }
 
-  const crit = finderCriteria();
-  const scored = trails.map((t) => ({ t, hits: crit.filter((c) => c.test(t)).length }));
-  const total = crit.length;
-
-  let heading, list;
-  if (total === 0) {
-    heading = 'Set your filters above to see matched trails';
-    list = scored.slice().sort((a, b) => (b.t.priceFrom ? 1 : 0) - (a.t.priceFrom ? 1 : 0)).slice(0, 5);
-  } else {
-    const exact = scored.filter((s) => s.hits === total);
-    const near = scored.filter((s) => s.hits === total - 1);
-    if (exact.length) {
-      heading = `${exact.length} trail${exact.length === 1 ? '' : 's'} match your profile`;
-      list = exact.concat(near.slice(0, Math.max(0, 4 - exact.length)).map((s) => Object.assign({ alt: true }, s)));
-    } else if (near.length) {
-      heading = `No exact match — ${near.length} close alternative${near.length === 1 ? '' : 's'}`;
-      list = near.map((s) => Object.assign({ alt: true }, s)).slice(0, 6);
-    } else {
-      heading = 'Nothing close — showing our most popular trails';
-      list = scored.sort((a, b) => b.hits - a.hits).slice(0, 5).map((s) => Object.assign({ alt: true }, s));
-    }
+  if (active === 0) {
+    resultsEl.innerHTML = '<div class="border border-dashed border-border/70 py-12 px-6 text-center">' +
+      '<span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70">No answers yet</span>' +
+      '<p class="mt-3 font-mono text-xs text-muted-foreground max-w-sm mx-auto leading-relaxed">Pick an answer to any question above and your top matches appear here, scored and explained.</p>' +
+      '</div>';
+    if (countEl) countEl.innerText = 'Answer a question above to see your matches';
+    return;
   }
 
-  if (countEl) countEl.innerText = heading.toUpperCase();
+  const totalW = crit.reduce((a, c) => a + c.w, 0);
+  // Denominator floor: with only one or two answers a perfect pass should
+  // not read as "100% match" — spread the scale so a full match lands high
+  // (mid-80s to mid-90s) rather than pinned at 100.
+  const denom = Math.max(totalW + 0.7, 2.4);
+  const scored = model.map((m) => {
+    let got = 0, hardFail = 0; const passed = [];
+    crit.forEach((c) => {
+      if (c.test(m)) { got += c.w; passed.push(c.key); }
+      else if (c.hard) hardFail++;
+    });
+    let pct = Math.round(got / denom * 100);
+    if (pct > 97) pct = 97;
+    return { m: m, pct: pct, hardFail: hardFail, passed: passed };
+  }).sort((a, b) =>
+    a.hardFail - b.hardFail ||
+    b.pct - a.pct ||
+    (b.m.popular ? 1 : 0) - (a.m.popular ? 1 : 0) ||
+    (a.m.days || 99) - (b.m.days || 99)
+  );
 
-  const priceLabel = (t) => t.priceFrom == null ? '—' : ('From $' + t.priceFrom.toLocaleString() + (t.perDay ? '/day' : ''));
-  const missLabel = (t) => {
-    const missed = crit.filter((c) => !c.test(t)).map((c) => c.key);
-    return missed.length ? missed.join(' · ') : '';
-  };
+  // Prefer trails that break none of the concrete constraints (region,
+  // season, length, budget); relax step by step only if nothing qualifies.
+  let matches = scored.filter((s) => s.hardFail === 0 && s.pct >= 40);
+  if (matches.length < 3) matches = scored.filter((s) => s.hardFail === 0);
+  if (matches.length < 3) matches = scored.filter((s) => s.hardFail <= 1);
+  if (!matches.length) matches = scored.slice(0, 3);
+  matches = matches.slice(0, 6);
 
-  resultsEl.innerHTML = list.map(({ t, alt }) => {
-    return `
-    <a href="/treks/${escapeHtml(t.slug)}" class="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-6 px-2 -mx-2 transition-colors hover:bg-card/40">
-      <div class="flex items-center gap-5">
-        <span class="w-16 shrink-0 font-heading text-2xl md:text-3xl font-light text-accent tabular-nums leading-none">${escapeHtml((t.maxAlt || '').replace(/[≈~\s]/g, '').replace('m', ''))}<span class="text-[10px] text-muted-foreground align-top">m</span></span>
-        <div>
-          <h4 class="font-heading text-xl md:text-2xl uppercase tracking-tight text-foreground transition-colors group-hover:text-accent">${escapeHtml(t.name)}</h4>
-          <span class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">${escapeHtml(t.region)} · ${escapeHtml(t.province)}</span>
-          ${alt && missLabel(t) ? `<span class="mt-1 block font-mono text-[9px] uppercase tracking-widest text-accent/70">Alternative · differs on ${escapeHtml(missLabel(t))}</span>` : ''}
-        </div>
-      </div>
-      <div class="flex items-center gap-5 sm:gap-8">
-        <div class="text-left sm:text-right"><span class="block font-mono text-[9px] uppercase tracking-widest text-muted-foreground">Days</span><span class="font-mono text-sm text-foreground">${t.days != null ? t.days : '—'}</span></div>
-        <div class="text-left sm:text-right"><span class="block font-mono text-[9px] uppercase tracking-widest text-muted-foreground">Grade</span><span class="font-mono text-sm text-accent">${escapeHtml(t.difficulty)}</span></div>
-        <div class="text-left sm:text-right hidden sm:block"><span class="block font-mono text-[9px] uppercase tracking-widest text-muted-foreground">From</span><span class="font-mono text-sm text-foreground">${escapeHtml(priceLabel(t))}</span></div>
-        <span class="shrink-0 border border-border px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-all group-hover:border-accent group-hover:text-accent">View Trail →</span>
-      </div>
-    </a>`;
-  }).join('') +
-    `<a href="/treks" class="flex items-center justify-center gap-2 py-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:text-accent transition-colors">Browse all 28 trekking trails →</a>`;
+  if (countEl) countEl.innerText = 'Based on your answers, we found ' + matches.length + ' trek' + (matches.length === 1 ? '' : 's');
+
+  const top = matches[0];
+  const rest = matches.slice(1);
+  const altShort = (s) => (s || '').replace(/^[≈~\s]+/, '').split('(')[0].trim();
+
+  const strength = top.pct >= 80 ? 'Strong match' : top.pct >= 55 ? 'Good match' : 'Closest we have';
+  const reasons = top.passed.slice(0, 3).map(finderCritLabel).filter(Boolean);
+  const lead = top.pct >= 80 ? 'This is a strong match because you selected '
+    : top.pct >= 55 ? 'This is a good match because you selected '
+    : 'This is the closest we have — it matches on ';
+  let why;
+  if (!reasons.length) {
+    why = 'It is the closest trail we have to what you asked for, though it does not tick every box — open the full guide to see the detail.';
+  } else if (reasons.length === 1) {
+    why = lead + reasons[0] + '.';
+  } else {
+    why = lead + reasons.slice(0, -1).join(', ') + ' and ' + reasons[reasons.length - 1] + '.';
+  }
+  if (top.hardFail) why += ' It falls outside one of your filters — check the details before you commit.';
+  const dayLabel = (n) => n == null ? '—' : n + (n === 1 ? ' day' : ' days');
+
+  resultsEl.innerHTML =
+    '<a href="/treks/' + escapeHtml(top.m.slug) + '" class="group block border border-accent/40 bg-[#1b1e22] overflow-hidden">' +
+      '<div class="grid md:grid-cols-[240px_1fr]">' +
+        '<div class="relative h-44 md:h-full overflow-hidden"><img src="' + escapeHtml(top.m.img) + '" alt="' + escapeHtml(top.m.name) + '" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"><div class="absolute inset-0 bg-gradient-to-t from-[#1b1e22]/70 to-transparent"></div></div>' +
+        '<div class="p-6 md:p-8">' +
+          '<div class="flex items-start justify-between gap-4">' +
+            '<span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Your top match</span>' +
+            '<span class="shrink-0 border border-accent px-3 py-1 font-heading text-lg text-accent leading-none">' + top.pct + '% <span class="text-[9px] font-mono tracking-widest align-middle">match</span></span>' +
+          '</div>' +
+          '<h3 class="mt-2 font-heading text-3xl md:text-4xl uppercase tracking-tight text-white leading-none group-hover:text-accent transition-colors">' + escapeHtml(top.m.name) + '</h3>' +
+          '<span class="mt-1 block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">' + escapeHtml(top.m.region) + ' · ' + escapeHtml(top.m.province) + ' · ' + escapeHtml(strength) + '</span>' +
+          '<div class="mt-4 flex flex-wrap gap-x-6 gap-y-1 font-mono text-[11px] text-foreground/90">' +
+            '<span><span class="text-muted-foreground">' + dayLabel(top.m.days) + '</span></span>' +
+            '<span><span class="text-muted-foreground">' + escapeHtml(top.m.difficulty) + '</span></span>' +
+            '<span class="text-accent">' + escapeHtml(altShort(top.m.maxAlt)) + '</span>' +
+          '</div>' +
+          '<p class="mt-4 font-sans text-[13px] text-muted-foreground leading-relaxed max-w-lg">' + escapeHtml(why) + '</p>' +
+          '<span class="mt-5 inline-flex items-center gap-2 border border-border px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground group-hover:border-accent group-hover:text-accent transition-all">Open the full guide →</span>' +
+        '</div>' +
+      '</div>' +
+    '</a>' +
+    (rest.length ? '<span class="mt-8 mb-2 block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Other matches</span>' +
+      '<div class="divide-y divide-border border-t border-border">' + rest.map((s) => {
+        return '<a href="/treks/' + escapeHtml(s.m.slug) + '" class="group flex items-center justify-between gap-4 py-4 px-2 -mx-2 hover:bg-card/40 transition-colors">' +
+          '<div class="flex items-baseline gap-4 min-w-0">' +
+            '<span class="w-12 shrink-0 font-heading text-xl text-accent tabular-nums">' + s.pct + '%</span>' +
+            '<div class="min-w-0"><span class="block font-heading text-lg md:text-xl uppercase text-foreground group-hover:text-accent transition-colors leading-tight truncate">' + escapeHtml(s.m.name) + '</span>' +
+            '<span class="block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">' + escapeHtml(s.m.region) + '</span></div>' +
+          '</div>' +
+          '<div class="flex items-center gap-5 shrink-0 font-mono text-[11px] text-muted-foreground">' +
+            '<span class="hidden sm:inline">' + (s.m.days != null ? s.m.days + 'd' : '—') + '</span>' +
+            '<span class="hidden sm:inline text-accent">' + escapeHtml(altShort(s.m.maxAlt)) + '</span>' +
+            '<span class="border border-border px-3 py-1.5 group-hover:border-accent group-hover:text-accent transition-all">View →</span>' +
+          '</div>' +
+        '</a>';
+      }).join('') + '</div>' : '') +
+    '<div class="mt-8 flex flex-col sm:flex-row gap-3">' +
+      '<a href="/compare?t=' + encodeURIComponent(matches.slice(0, 3).map((s) => s.m.slug).join(',')) + '" class="flex-1 text-center border border-border px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:border-accent hover:text-accent transition-all">Compare these →</a>' +
+      '<a href="/contact" class="flex-1 text-center bg-accent text-background px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-accent-hover transition-colors">Get a personalised plan →</a>' +
+    '</div>';
 }
 
 function resetTrekFinder() {
   finderState.experience = null;
+  finderState.region = null;
   finderState.season = null;
   finderState.duration = null;
   finderState.budget = null;
+  finderState.style = [];
 
-  document.querySelectorAll('#trek-finder .finder-card').forEach(btn => {
-    btn.classList.remove('border-accent', 'ring-1', 'ring-accent', 'bg-accent/5');
+  document.querySelectorAll('#trek-finder .finder-card').forEach((btn) => {
+    btn.classList.remove('border-accent', 'ring-1', 'ring-accent', 'bg-accent/5', 'text-foreground');
     const title = btn.querySelector('.finder-card-title');
     if (title) title.classList.remove('text-accent');
   });
 
-  const nameEl = document.getElementById('finder-name');
-  const emailEl = document.getElementById('finder-email');
-  if (nameEl) nameEl.value = '';
-  if (emailEl) emailEl.value = '';
-
-  const msgEl = document.getElementById('finder-submit-msg');
-  if (msgEl) msgEl.classList.add('hidden');
-
   filterTrekFinder();
-}
-
-async function submitTrekFinderInquiry() {
-  const nameEl = document.getElementById('finder-name');
-  const emailEl = document.getElementById('finder-email');
-  const btn = document.getElementById('finder-submit-btn');
-  const msgEl = document.getElementById('finder-submit-msg');
-  const name = nameEl ? nameEl.value.trim() : '';
-  const email = emailEl ? emailEl.value.trim() : '';
-
-  const showMsg = (text, isError) => {
-    if (!msgEl) return;
-    msgEl.innerText = text;
-    msgEl.classList.remove('hidden');
-    msgEl.classList.toggle('border-red-500/40', !!isError);
-    msgEl.classList.toggle('bg-red-500/10', !!isError);
-    msgEl.classList.toggle('text-red-400', !!isError);
-    msgEl.classList.toggle('border-accent/40', !isError);
-    msgEl.classList.toggle('bg-accent/10', !isError);
-    msgEl.classList.toggle('text-accent', !isError);
-  };
-
-  if (!name || name.length < 2) return showMsg('Please enter your full name to request a brief.', true);
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) return showMsg('Please enter a valid email address.', true);
-  if (!finderState.experience) return showMsg('Select your experience level so we can match the right route.', true);
-
-  // Match against the full Trekking Trails directory
-  let trekLabel = 'Custom Route';
-  try {
-    const trails = finderTrailModel();
-    const crit = finderCriteria();
-    const scored = trails.map((t) => ({ t, hits: crit.filter((c) => c.test(t)).length }));
-    scored.sort((a, b) => b.hits - a.hits);
-    if (scored[0]) trekLabel = scored[0].t.name;
-  } catch (e) { /* directory not loaded — fall back to Custom Route */ }
-
-  const bits = [];
-  if (finderState.experience) bits.push(`Experience: ${finderState.experience}`);
-  if (finderState.season) bits.push(`Window: ${finderState.season}`);
-  if (finderState.duration) bits.push(`Length: ${finderState.duration}`);
-  if (finderState.budget) {
-    const bl = { b1: 'under $1,000', b2: '$1,000–$2,000', b3: '$2,000–$3,500', b4: '$3,500+' };
-    bits.push(`Budget: ${bl[finderState.budget] || finderState.budget}`);
-  }
-  const seasonNote = bits.length ? ` Profile — ${bits.join('; ')}.` : '';
-
-  if (btn) { btn.disabled = true; btn.classList.add('opacity-60', 'cursor-not-allowed'); }
-
-  try {
-    const res = await fetch('/api/inquiry', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name,
-        email,
-        trek: trekLabel,
-        crew: 1,
-        message: `Trek Finder — closest match: ${trekLabel}.${seasonNote}`
-      })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Something went wrong. Please try again.');
-
-    showMsg(`[ BRIEF REQUESTED ]  Thank you, ${name.toUpperCase()}. Our expedition coordinators matched your profile to ${trekLabel.toUpperCase()} and will reach out to ${email} within 24 hours.`, false);
-    if (nameEl) nameEl.value = '';
-    if (emailEl) emailEl.value = '';
-  } catch (err) {
-    showMsg(err.message || 'Something went wrong. Please try again.', true);
-  } finally {
-    if (btn) { btn.disabled = false; btn.classList.remove('opacity-60', 'cursor-not-allowed'); }
-  }
 }
 
 // ==========================================
@@ -1278,6 +1341,7 @@ const exploreRegions = {
       { name: 'Manaslu', elev: '8,163 m' },
       { name: 'Annapurna I', elev: '8,091 m' }
     ],
+    expeditions: ['dhaulagiri', 'manaslu', 'annapurna'],
     destinations: ['Pokhara', 'Jomsom', 'Muktinath', 'Manang', 'Lo Manthang', 'Gorkha', 'Bandipur'],
     regions: ['Annapurna', 'Manaslu', 'Mustang', 'Nar–Phu', 'Tsum Valley'],
     attractions: ['Phewa Lake', 'Annapurna Conservation Area', 'Kali Gandaki Gorge', 'Muktinath Temple', 'Lo Manthang'],
@@ -1339,6 +1403,7 @@ const exploreRegions = {
       { name: 'Makalu', elev: '8,485 m' },
       { name: 'Cho Oyu', elev: '8,188 m' }
     ],
+    expeditions: ['everest', 'kangchenjunga', 'lhotse', 'makalu', 'cho-oyu'],
     destinations: ['Lukla', 'Namche Bazaar', 'Tengboche', 'Ilam', 'Dharan', 'Biratnagar'],
     regions: ['Khumbu (Everest)', 'Gokyo', 'Kanchenjunga', 'Makalu–Barun', 'Arun Valley'],
     attractions: ['Sagarmatha National Park', 'Tengboche Monastery', 'Gokyo Lakes', 'Ilam tea estates', 'Kanchenjunga Conservation Area'],
@@ -1390,6 +1455,13 @@ function highlightExploreRegion(id) {
   }
 }
 
+function exploreTrailsFor(id) {
+  if (!window.TREKS) return [];
+  return Object.keys(window.TREKS).map(k => window.TREKS[k])
+    .filter(t => t && t.province === id)
+    .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+}
+
 function renderExploreRegion(id) {
   const panel = document.getElementById('explore-panel');
   if (!panel) return;
@@ -1397,76 +1469,119 @@ function renderExploreRegion(id) {
   const region = exploreRegions[id];
   if (!region) {
     panel.innerHTML = `
-      <div class="m-auto text-center">
+      <div class="m-auto text-center max-w-xs">
         <span class="block h-2 w-2 rounded-full bg-accent mx-auto mb-4 animate-pulse"></span>
-        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Select a Province</span>
-        <p class="mt-4 font-mono text-xs leading-relaxed text-muted-foreground max-w-xs mx-auto">
-          Seven provinces, eight eight-thousanders, every route we run. Hover or tap the map to begin.
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Pick a province</span>
+        <p class="mt-4 font-mono text-xs leading-relaxed text-muted-foreground">
+          Tap the map to open a province &mdash; what it&rsquo;s known for, the trails we guide there, the peaks above it and the places worth the detour.
         </p>
+        <div class="mt-5 flex flex-wrap justify-center gap-1.5">
+          ${Object.keys(exploreRegions).map(rk => `<button type="button" onclick="clickExploreRegion('${rk}')" class="border border-border px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-muted-foreground transition-all hover:border-accent hover:text-accent">${escapeHtml(exploreRegions[rk].name.replace(' Province', ''))}</button>`).join('')}
+        </div>
       </div>
     `;
     return;
   }
 
-  const list = (arr) => arr.map(x => `<li class="font-mono text-[11px] leading-relaxed text-foreground">${escapeHtml(x)}</li>`).join('');
+  const secHead = (label) => `<span class="mt-6 mb-2 block font-mono text-[9px] uppercase tracking-[0.25em] text-accent">${label}</span>`;
+  const shortName = region.name.replace(' Province', '');
 
-  const peaksHtml = (region.peaks && region.peaks.length)
-    ? `
-      <div class="mt-5">
-        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">${escapeHtml(region.peaksLabel || 'Signature Peaks')}</span>
-        <div class="mt-2 flex flex-wrap gap-1.5">
-          ${region.peaks.map(p => `<span class="border border-accent/40 px-2 py-1 font-mono text-[10px] text-foreground">${escapeHtml(p.name)} <span class="text-accent">${escapeHtml(p.elev)}</span></span>`).join('')}
-        </div>
-      </div>`
-    : '';
+  // ── Known for ──────────────────────────────────────────────────────────
+  const knownItems = (region.peaks && region.peaks.length)
+    ? region.peaks.map(p => ({ big: p.name, small: p.elev }))
+    : region.attractions.slice(0, 3).map(a => ({ big: a, small: '' }));
+  const knownHtml = `
+    ${secHead(region.peaks && region.peaks.length ? (region.peaksLabel || 'Known for') : 'Known for')}
+    <div class="space-y-1.5">
+      ${knownItems.map(k => `
+        <div class="flex items-baseline justify-between gap-3 border-b border-border/50 pb-1.5">
+          <span class="font-heading text-lg uppercase tracking-tight text-foreground leading-none">${escapeHtml(k.big)}</span>
+          ${k.small ? `<span class="shrink-0 font-mono text-[11px] text-accent">${escapeHtml(k.small)}</span>` : ''}
+        </div>`).join('')}
+    </div>`;
 
-  const linksHtml = region.links.map(l => `
-    <a href="${l.href}" class="border border-border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground transition-all hover:border-accent hover:text-accent">${escapeHtml(l.label)} &rsaquo;</a>
-  `).join('');
+  // ── Trails ─────────────────────────────────────────────────────────────
+  const trails = exploreTrailsFor(id);
+  let trailsHtml = '';
+  if (trails.length) {
+    trailsHtml = secHead('Trails we guide here') + '<div class="space-y-1.5">' +
+      trails.slice(0, 6).map(t => {
+        const st = t.stats || {};
+        const meta = [st.difficulty, st.maxAltitude].filter(Boolean).join(' · ');
+        return `<a href="/treks/${escapeHtml(t.slug)}" class="hme-xrow block border border-border px-3 py-2">
+          <span class="block font-mono text-[11px] uppercase tracking-wide text-foreground">${escapeHtml(t.name)}</span>
+          ${meta ? `<span class="mt-0.5 block font-mono text-[9px] uppercase tracking-widest text-muted-foreground">${escapeHtml(meta)}</span>` : ''}
+        </a>`;
+      }).join('') + '</div>' +
+      `<a href="/treks#${id}" class="mt-2.5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent hover:gap-3 transition-all">All ${escapeHtml(shortName)} trails (${trails.length}) &rarr;</a>`;
+  } else {
+    trailsHtml = secHead('Trails') +
+      `<p class="font-mono text-[11px] leading-relaxed text-muted-foreground">We don&rsquo;t run a scheduled trek in ${escapeHtml(shortName)} yet &mdash; <a href="/contact" class="text-accent hover:underline">ask us about a custom route</a>.</p>`;
+  }
+
+  // ── Expeditions ────────────────────────────────────────────────────────
+  let expHtml = '';
+  const expSlugs = (region.expeditions || []).filter(s => window.MOUNTAINS && window.MOUNTAINS[s]);
+  if (expSlugs.length) {
+    expHtml = secHead('Eight-thousanders above it') + '<div class="space-y-1.5">' +
+      expSlugs.map(s => {
+        const m = window.MOUNTAINS[s];
+        return `<a href="/expeditions/${escapeHtml(m.slug)}" class="hme-xrow flex items-baseline justify-between gap-3 border border-border px-3 py-2">
+          <span class="font-mono text-[11px] uppercase tracking-wide text-foreground">${escapeHtml(m.name)}</span>
+          <span class="shrink-0 font-mono text-[10px] text-accent">${escapeHtml(m.elevationLabel || '')}</span>
+        </a>`;
+      }).join('') + '</div>';
+  } else if (region.peaks && region.peaks.length) {
+    expHtml = secHead('Peaks') +
+      `<p class="font-mono text-[11px] leading-relaxed text-muted-foreground">No 8,000 m summits &mdash; the high points are ${region.peaks.map(p => escapeHtml(p.name) + ' (' + escapeHtml(p.elev) + ')').join(', ')}.</p>`;
+  }
+
+  // ── Culture & places (factual lists only) ──────────────────────────────
+  const cultureHtml = secHead('Culture &amp; places') + `
+    <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+      <div>
+        <span class="block font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/70">Towns &amp; hubs</span>
+        <ul class="mt-1.5 space-y-1">${region.destinations.map(x => `<li class="font-mono text-[11px] leading-snug text-foreground">${escapeHtml(x)}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <span class="block font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/70">Parks &amp; landmarks</span>
+        <ul class="mt-1.5 space-y-1">${region.attractions.map(x => `<li class="font-mono text-[11px] leading-snug text-foreground">${escapeHtml(x)}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+
+  // ── Stories ────────────────────────────────────────────────────────────
+  const storiesHtml = `<div class="mt-6 border-t border-border pt-4">
+      <a href="/dispatches" class="hme-xrow flex items-center justify-between gap-3 border border-border px-3 py-2.5">
+        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground">Field notes &amp; dispatches</span>
+        <span class="shrink-0 font-mono text-[11px] text-accent">&rarr;</span>
+      </a>
+    </div>`;
 
   panel.innerHTML = `
-    <div class="flex items-center justify-between gap-4">
-      <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">${escapeHtml(region.tag)}</span>
-      <span class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground whitespace-nowrap">${escapeHtml(region.coords)}</span>
-    </div>
-    <h3 class="mt-3 font-heading text-3xl md:text-4xl uppercase tracking-tight text-foreground leading-[0.95]">${escapeHtml(region.name)}</h3>
-    <p class="mt-3 font-mono text-xs leading-relaxed text-muted-foreground">${escapeHtml(region.blurb)}</p>
-
-    ${peaksHtml}
-
-    <div class="mt-5 grid grid-cols-2 gap-x-5 gap-y-1">
-      <div>
-        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Major Destinations</span>
-        <ul class="mt-2 space-y-1">${list(region.destinations)}</ul>
+    <div class="hme-xbody">
+      <div class="flex items-center justify-between gap-4">
+        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">${escapeHtml(region.tag)}</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground whitespace-nowrap">${escapeHtml(region.coords)}</span>
       </div>
-      <div>
-        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Trekking Regions</span>
-        <ul class="mt-2 space-y-1">${list(region.regions)}</ul>
-      </div>
-    </div>
-
-    <div class="mt-5">
-      <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Attractions</span>
-      <p class="mt-2 font-mono text-[11px] leading-relaxed text-muted-foreground">${region.attractions.map(escapeHtml).join('&nbsp;&nbsp;·&nbsp;&nbsp;')}</p>
-    </div>
-
-    <div class="mt-6 pt-5 border-t border-border">
-      <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Quick Links</span>
-      <div class="mt-2 flex flex-wrap gap-1.5">${linksHtml}</div>
-      <a href="/treks#${id}" class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent hover:gap-3 transition-all">All ${escapeHtml(region.name.replace(' Province',''))} trails &rarr;</a>
+      <h3 class="mt-3 font-heading text-3xl md:text-4xl uppercase tracking-tight text-foreground leading-[0.95]">${escapeHtml(region.name)}</h3>
+      <p class="mt-3 font-mono text-xs leading-relaxed text-muted-foreground">${escapeHtml(region.blurb)}</p>
+      ${knownHtml}
+      ${trailsHtml}
+      ${expHtml}
+      ${cultureHtml}
+      ${storiesHtml}
     </div>
   `;
 }
 
 function hoverExploreRegion(id) {
+  // Hover only previews the map itself — the discovery panel updates on click.
   if (exploreLockedRegion) return;
-  renderExploreRegion(id);
   highlightExploreRegion(id);
 }
 
 function unhoverExploreRegion() {
   if (exploreLockedRegion) return;
-  renderExploreRegion(null);
   highlightExploreRegion(null);
 }
 
@@ -1474,6 +1589,11 @@ function clickExploreRegion(id) {
   exploreLockedRegion = (exploreLockedRegion === id) ? null : id;
   renderExploreRegion(exploreLockedRegion);
   highlightExploreRegion(exploreLockedRegion);
+  // On tap (no hover), bring the panel into view on narrow screens.
+  if (exploreLockedRegion && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches) {
+    const panel = document.getElementById('explore-panel');
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
 }
 
 function scrollTrekGrid(direction) {
@@ -1941,25 +2061,32 @@ function deleteDispatch(index) {
   }
 }
 
-// Server Synchronization
+// Server Synchronization — requires the deployment's ADMIN_TOKEN.
+// The token is held in memory for the session only, never persisted.
+let __adminToken = null;
 async function saveEditsToServer() {
+  if (!__adminToken) {
+    __adminToken = window.prompt('Admin token required to save content changes:');
+    if (!__adminToken) return;
+  }
   try {
     const response = await fetch('/api/save', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': __adminToken },
       body: JSON.stringify(siteData)
     });
     const result = await response.json();
-    if (result.status === "success") {
-      alert("SUCCESS: Database edits securely synchronized with server disk.");
+    if (response.ok && result.status === 'success') {
+      alert('Saved. Website content updated.');
       originalData = JSON.parse(JSON.stringify(siteData));
       toggleEditMode();
     } else {
-      throw new Error(result.message);
+      if (response.status === 401) __adminToken = null;
+      throw new Error(result.message || `Save failed (${response.status})`);
     }
   } catch (err) {
-    console.error("[!] Save failure:", err);
-    alert(`FAILED TO SAVE: ${err.message}`);
+    console.error('[!] Save failure:', err.message);
+    alert(`Failed to save: ${err.message}`);
   }
 }
 

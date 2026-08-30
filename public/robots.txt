@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://verticalodyssey.np/sitemap.xml
+Sitemap: https://himalayanmagic.com/sitemap.xml

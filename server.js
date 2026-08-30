@@ -40,9 +40,14 @@ app.use(express.static(PUBLIC_DIR, {
 app.use('/api', apiRoutes);
 app.use('/', pageRoutes);
 
-// 7. Fallback Route for Single Page / Clean URLs
-app.get('*', (req, res) => {
-  res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
+// 7. 404 for anything unmatched (real status, not a soft 200)
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ status: 'error', message: 'Not found.' });
+  }
+  res.status(404).sendFile(path.join(PUBLIC_DIR, '404.html'), (err) => {
+    if (err) res.status(404).type('text/plain').send('404 — Not found');
+  });
 });
 
 // 8. Global Error Handler

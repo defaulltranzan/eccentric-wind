@@ -9,21 +9,42 @@ function sanitizeString(str) {
     .trim();
 }
 
+// The content database only ever contains these top-level sections.
+const ALLOWED_CONTENT_KEYS = new Set([
+  'hero', 'stats', 'about', 'contact', 'departures', 'packages', 'dispatches', 'services'
+]);
+
 function validateSavePayload(req, res, next) {
   const payload = req.body;
 
-  if (!payload || typeof payload !== 'object') {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
     return res.status(400).json({ status: 'error', message: 'Malformed JSON payload.' });
   }
 
-  if (!payload.hero || !payload.packages || !Array.isArray(payload.packages)) {
-    return res.status(400).json({ status: 'error', message: 'Payload schema missing required hero or packages definition.' });
+  // Prevent prototype pollution
+  if (Object.prototype.hasOwnProperty.call(payload, '__proto__') ||
+      Object.prototype.hasOwnProperty.call(payload, 'constructor') ||
+      Object.prototype.hasOwnProperty.call(payload, 'prototype')) {
+    return res.status(400).json({ status: 'error', message: 'Forbidden property keys detected.' });
   }
 
-  // Prevent prototype pollution
-  if (Object.prototype.hasOwnProperty.call(payload, '__proto__') || 
-      Object.prototype.hasOwnProperty.call(payload, 'constructor')) {
-    return res.status(400).json({ status: 'error', message: 'Forbidden property keys detected.' });
+  // Reject anything that is not a recognised content section
+  const unknown = Object.keys(payload).filter((k) => !ALLOWED_CONTENT_KEYS.has(k));
+  if (unknown.length) {
+    return res.status(400).json({ status: 'error', message: `Unrecognised content keys: ${unknown.join(', ')}` });
+  }
+
+  if (typeof payload.hero !== 'object' || payload.hero === null) {
+    return res.status(400).json({ status: 'error', message: 'Payload is missing a valid hero section.' });
+  }
+  if (!Array.isArray(payload.packages)) {
+    return res.status(400).json({ status: 'error', message: 'Payload is missing a valid packages list.' });
+  }
+  if (payload.packages.length > 60) {
+    return res.status(400).json({ status: 'error', message: 'Too many packages.' });
+  }
+  if (payload.packages.some((p) => typeof p !== 'object' || p === null || Array.isArray(p))) {
+    return res.status(400).json({ status: 'error', message: 'Every package must be an object.' });
   }
 
   next();
