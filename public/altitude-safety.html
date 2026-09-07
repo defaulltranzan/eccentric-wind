@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>High-Altitude Medicine & Rescue Logistics — Himalayan Magic Adventure</title>
+    <title>Altitude, Safety & Gear — Himalayan Magic Adventure</title>
+    <meta name="description" content="High-altitude medicine, acclimatisation, AMS risk and rescue logistics for Himalayan trekking — plus a category-by-category trek packing list you can tick off and filter by route.">
     <link rel="canonical" href="https://himalayanmagic.com/altitude-safety">
     <!-- Tailwind CSS -->
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="icon" type="image/png" href="/images/logo-icon.png">
+    <link rel="apple-touch-icon" href="/images/logo-icon.png">
     <link rel="stylesheet" href="/tailwind.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -37,7 +41,7 @@
             color: var(--foreground);
             font-family: 'IBM Plex Mono', monospace;
             line-height: 1.6;
-            transition: color 0.3s ease;
+            transition: none; /* theme switch is instant — see tw-input.css note */
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -50,31 +54,139 @@
             background: var(--accent);
             border-radius: 3px;
         }
+
+        /* ===== Interactive safety tools — see /safety-tools.js (REVERT § 5w) ===== */
+        .ap-controls { display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-end; }
+        .ap-select, .risk-field select {
+            background:#1b1e22; border:1px solid var(--border); color:var(--foreground);
+            font-family:'IBM Plex Mono',monospace; font-size:12px; padding:.7rem .9rem;
+            outline:none; width:100%; -webkit-appearance:none; appearance:none;
+            background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%);
+            background-position:calc(100% - 18px) 55%,calc(100% - 12px) 55%;
+            background-size:6px 6px,6px 6px; background-repeat:no-repeat;
+        }
+        .light-mode .ap-select, .light-mode .risk-field select { background-color:#fff; }
+        .ap-select:focus, .risk-field select:focus { border-color:var(--accent); }
+
+        .ap-grids { display:grid; gap:1.25rem; margin-top:1.5rem; }
+        @media (min-width:900px){ .ap-grids { grid-template-columns:3fr 2fr; align-items:start; } }
+        .ap-chart { position:relative; width:100%; }
+        .ap-svg { width:100%; height:auto; display:block; overflow:visible; touch-action:pan-y; }
+        .ap-svg:focus { outline:1px solid var(--accent); outline-offset:4px; }
+        .ap-grid { stroke:var(--border); stroke-width:1; }
+        .ap-ylab, .ap-xlab { fill:var(--muted-foreground); font-family:'IBM Plex Mono',monospace; font-size:11px; }
+        .ap-axis-title { fill:var(--muted-foreground); font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.14em; text-transform:uppercase; }
+        .ap-ref { stroke:var(--accent); stroke-width:1; stroke-dasharray:2 4; opacity:.45; }
+        .ap-reflab { fill:var(--accent); font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; opacity:.8; }
+        .ap-fill-top { stop-color:var(--accent); stop-opacity:.26; }
+        .ap-fill-bot { stop-color:var(--accent); stop-opacity:0; }
+        .ap-line { fill:none; stroke:var(--accent); stroke-width:2.5; stroke-linejoin:round; stroke-linecap:round; }
+        .ap-hitick { stroke:var(--accent); stroke-width:1; stroke-dasharray:1 3; opacity:.5; }
+        .ap-hidot { fill:var(--accent); opacity:.55; }
+        .ap-cursor { stroke:var(--foreground); stroke-width:1; stroke-dasharray:2 3; opacity:.4; transition:opacity .15s; }
+        .ap-node { fill:var(--background); stroke:var(--accent); stroke-width:2; transition:r .12s ease, opacity .2s ease; }
+        .light-mode .ap-node { fill:#fff; }
+        .ap-node.is-rest { stroke:var(--muted-foreground); }
+        .ap-node.is-warn { fill:#f59e0b; stroke:#f59e0b; }
+        .ap-node.is-crit { fill:#ef4444; stroke:#ef4444; }
+        .ap-node.is-summit { fill:var(--accent); stroke:var(--accent); }
+        .ap-node.is-active { r:7; stroke-width:3; }
+        .ap-capture { cursor:crosshair; }
+        .ap-tip { position:absolute; z-index:5; pointer-events:none; background:#16181b; border:1px solid var(--border); border-left:2px solid var(--accent); padding:.55rem .7rem; font-family:'IBM Plex Mono',monospace; display:flex; flex-direction:column; gap:.15rem; min-width:148px; box-shadow:0 12px 30px rgba(0,0,0,.4); }
+        .light-mode .ap-tip { background:#fff; }
+        .ap-tip-day { font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        .ap-tip-alt { font-size:15px; color:var(--foreground); }
+        .ap-tip-alt span { font-size:10px; color:var(--muted-foreground); }
+        .ap-tip-gain { font-size:10px; color:var(--muted-foreground); }
+        .ap-tip-gain.is-warn { color:#f59e0b; } .ap-tip-gain.is-crit { color:#ef4444; } .ap-tip-gain.is-down { color:#4ade80; }
+        .ap-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-top:1.25rem; }
+        @media (min-width:560px){ .ap-stats { grid-template-columns:repeat(4,1fr); } }
+        .ap-chip { background:var(--card); padding:.75rem .85rem; display:flex; flex-direction:column; gap:.25rem; }
+        .ap-chip-k { font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; letter-spacing:.14em; color:var(--muted-foreground); }
+        .ap-chip-v { font-family:'Oswald',sans-serif; font-size:1.1rem; color:var(--foreground); }
+        .ap-detail { border:1px solid var(--border); background:#1b1e22; padding:1.05rem 1.15rem; }
+        .light-mode .ap-detail { background:#fff; }
+        .ap-detail-head { display:flex; align-items:center; gap:.55rem; flex-wrap:wrap; }
+        .ap-detail-day { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--accent); }
+        .ap-badge { font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; letter-spacing:.1em; padding:.2rem .45rem; border:1px solid currentColor; }
+        .ap-badge.is-warn { color:#f59e0b; } .ap-badge.is-crit { color:#ef4444; } .ap-badge.is-rest { color:var(--muted-foreground); }
+        .ap-detail-title { font-family:'Oswald',sans-serif; font-weight:400; text-transform:uppercase; letter-spacing:-.01em; color:var(--foreground); font-size:1.1rem; margin:.5rem 0 .55rem; }
+        .ap-detail-row { display:flex; flex-wrap:wrap; gap:.3rem 1rem; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted-foreground); }
+        .ap-detail-row b { color:var(--foreground); }
+        .ap-detail-row .is-warn { color:#f59e0b; } .ap-detail-row .is-crit { color:#ef4444; } .ap-detail-row .is-down { color:#4ade80; }
+        .ap-detail-tip { font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.6; color:var(--muted-foreground); margin-top:.65rem; padding-top:.65rem; border-top:1px solid var(--border); }
+        .ap-verdict { border:1px solid var(--border); border-left:3px solid var(--accent); padding:1.05rem 1.15rem; margin-top:1.15rem; }
+        .ap-verdict.is-ok { border-left-color:#4ade80; } .ap-verdict.is-warn { border-left-color:#f59e0b; } .ap-verdict.is-crit { border-left-color:#ef4444; } .ap-verdict.is-info { border-left-color:var(--accent); }
+        .ap-verdict-k { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        .ap-verdict p { font-family:'IBM Plex Mono',monospace; font-size:11.5px; line-height:1.7; color:var(--foreground); margin:.5rem 0 .6rem; }
+        .ap-verdict-link { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); }
+        .ap-legend { display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; margin-top:1.35rem; font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted-foreground); }
+        .ap-legend i { display:inline-block; width:10px; height:10px; margin-right:.4rem; vertical-align:middle; font-style:normal; }
+
+        .risk-grid { display:grid; gap:1rem; grid-template-columns:1fr; }
+        @media (min-width:640px){ .risk-grid { grid-template-columns:1fr 1fr; } }
+        .risk-field label { display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--foreground); margin-bottom:.4rem; }
+        .risk-out { margin-top:1.5rem; border:1px solid var(--border); background:#1b1e22; padding:1.25rem; }
+        .light-mode .risk-out { background:#fff; }
+        .risk-meter { position:relative; display:flex; border:1px solid var(--border); margin-bottom:1.1rem; }
+        .risk-seg { flex:1; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.12em; padding:.5rem .2rem; color:var(--muted-foreground); }
+        .risk-seg.is-low { background:rgba(74,222,128,.10); } .risk-seg.is-mod { background:rgba(245,158,11,.12); } .risk-seg.is-high { background:rgba(239,68,68,.12); }
+        .risk-out.is-low .risk-seg.is-low { color:#4ade80; box-shadow:inset 0 -2px 0 #4ade80; }
+        .risk-out.is-mod .risk-seg.is-mod { color:#f59e0b; box-shadow:inset 0 -2px 0 #f59e0b; }
+        .risk-out.is-high .risk-seg.is-high { color:#ef4444; box-shadow:inset 0 -2px 0 #ef4444; }
+        .risk-needle { position:absolute; top:-6px; width:2px; height:calc(100% + 12px); background:var(--foreground); left:50%; transform:translateX(-50%); transition:left .5s cubic-bezier(.22,.61,.36,1); }
+        .risk-headline { display:flex; align-items:center; gap:.55rem; font-family:'Oswald',sans-serif; text-transform:uppercase; font-size:1.5rem; color:var(--foreground); }
+        .risk-dot { width:10px; height:10px; border-radius:50%; background:var(--muted-foreground); }
+        .risk-out.is-low .risk-dot { background:#4ade80; } .risk-out.is-mod .risk-dot { background:#f59e0b; } .risk-out.is-high .risk-dot { background:#ef4444; }
+        .risk-blurb { font-family:'IBM Plex Mono',monospace; font-size:11.5px; line-height:1.7; color:var(--foreground); margin:.7rem 0; }
+        .risk-steps { list-style:none; padding:0; margin:.6rem 0 0; display:flex; flex-direction:column; gap:.45rem; }
+        .risk-steps li { font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.6; color:var(--muted-foreground); padding-left:1rem; position:relative; }
+        .risk-steps li::before { content:'—'; position:absolute; left:0; color:var(--accent); }
+        .risk-disc { font-family:'IBM Plex Mono',monospace; font-size:10px; line-height:1.6; color:var(--muted-foreground); margin-top:1rem; padding-top:.8rem; border-top:1px solid var(--border); }
+        @media (prefers-reduced-motion: reduce){ .ap-line, .ap-node, .risk-needle, .ap-cursor { transition:none !important; } }
+
+        /* ── merged Gear & Packing checklist (was the /gear page) — see REVERT § 5x ── */
+        .lbl { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        #gear-trek { background:#1b1e22; }
+        .light-mode #gear-trek { background:#fff; }
+        #gear-grid.ess-only label:not(.is-ess) { display:none; }
+        #gear-grid.ess-only > div:not(:has(label.is-ess)) { display:none; }
+        @media print { header, footer, #gear-toolbar, #menu-trigger, #theme-fab, .no-print { display:none !important; } body { background:#fff; color:#000; } }
     </style>
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
     <!-- TOP BAR -->
-    <header class="relative z-40 border-b border-border bg-[#16181b]">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-12 w-auto object-contain transition-transform group-hover:scale-105">
-                <div>
-                    <span class="block font-heading text-base font-light tracking-widest text-white uppercase">Himalayan Magic Adventure</span>
-                    <span class="block text-[9px] text-accent tracking-[0.3em] uppercase">ALTITUDE SAFETY PROTOCOLS</span>
-                </div>
+    <!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+    <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+            <a href="/" class="group flex shrink-0 items-center gap-3">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <span class="hidden flex-col leading-none sm:flex">
+                    <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                    <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Altitude Safety Protocols</span>
+                </span>
             </a>
-            <nav class="hidden lg:flex items-center gap-8 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <a href="/" class="hover:text-accent transition-colors">Home</a>
-                <a href="/about" class="hover:text-accent transition-colors">About</a>
-                <a href="/services" class="hover:text-accent transition-colors">Services</a>
-                <a href="/treks" class="hover:text-accent transition-colors">Trekking Trails</a>
-                <a href="/expeditions" class="hover:text-accent transition-colors">Expeditions</a>
-                <a href="/altitude-safety" class="text-accent">Safety</a>
-                <a href="/dispatches" class="hover:text-accent transition-colors">Stories</a>
+            <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+                <a href="/" class="hme-navlink">Home</a>
+                <a href="/treks" class="hme-navlink">Treks</a>
+                <div class="hme-navgroup">
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <div class="hme-navdrop">
+                    <a href="/expeditions" class="hme-navdrop-all">The Full Atlas</a>
+                    <span class="hme-navdrop-sep"></span>
+                    <a href="/expeditions/8000m">8,000 m +<span class="hme-navdrop-n">14 peaks</span></a>
+                    <a href="/expeditions/7000m">7,000 m +<span class="hme-navdrop-n">9 peaks</span></a>
+                    <a href="/expeditions/6000m">6,000 m +<span class="hme-navdrop-n">8 peaks</span></a>
+                    <a href="/expeditions/trekking-peaks">Trekking Peaks<span class="hme-navdrop-n">Soon</span></a>
+                </div>
+            </div>
+                <a href="/altitude-safety" class="hme-navlink is-active">Safety</a>
+                <a href="/stories" class="hme-navlink">Stories</a>
+                <a href="/about" class="hme-navlink">About</a>
             </nav>
-            <a href="/#trek-finder" class="hidden sm:inline-flex items-center justify-center border border-accent hover:bg-accent hover:text-background text-[10px] font-mono uppercase tracking-widest px-4 py-2 transition-all">
-                Find Your Route
+            <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+                <span class="relative z-10">Find your route</span>
             </a>
         </div>
     </header>
@@ -94,8 +206,8 @@
             <a href="/" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">01</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Home</span></a>
             <a href="/expeditions" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">02</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Expeditions</span></a>
             <a href="/altitude-safety" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-accent">03</span><span class="font-heading text-4xl uppercase tracking-tightest text-accent md:text-6xl">Altitude Safety</span></a>
-            <a href="/about-sherpa" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">04</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Sherpa Heritage</span></a>
-            <a href="/dispatches" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">05</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Dispatches</span></a>
+            <a href="/about#sherpa" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">04</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Sherpa Heritage</span></a>
+            <a href="/stories" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">05</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Dispatches</span></a>
             <a href="/#trek-finder" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">06</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Find Your Route</span></a>
         </div>
     </div>
@@ -167,11 +279,106 @@
         </div>
     </section>
 
+    <!-- INTERACTIVE ACCLIMATISATION PROFILE  ·  see /safety-tools.js  (REVERT § 5w) -->
+    <section id="acclim-profile" class="px-6 py-20 md:px-20 border-b border-border bg-[#191b1f]">
+        <div class="max-w-6xl mx-auto space-y-8">
+            <div>
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03.2 — PLAN YOUR ASCENT</span>
+                <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white mt-2">
+                    ACCLIMATISATION <span class="font-semibold text-accent">PROFILE</span>
+                </h2>
+                <p class="max-w-3xl font-mono text-xs text-muted-foreground leading-relaxed mt-3">
+                    Pick a <b class="text-white/90">trekking route</b> to see where you sleep each night — the number that matters for acclimatisation — with any night that climbs more than ~500&nbsp;m above 3,000&nbsp;m flagged and the rest days marked. Pick an <b class="text-white/90">expedition</b> to see its rotation profile: the deliberate climb-high, drop-back-to-Base-Camp saw-tooth that carries a team to the summit.
+                </p>
+            </div>
+
+            <div class="ap-controls">
+                <label style="width:100%;max-width:460px">
+                    <span class="block mb-2 font-mono text-[10px] uppercase tracking-[0.14em] text-white">Choose a route or peak</span>
+                    <select id="ap-trek" class="ap-select"></select>
+                </label>
+            </div>
+
+            <div class="p-6 md:p-8 border border-border bg-card">
+                <div class="ap-grids">
+                    <div>
+                        <div id="ap-chart" class="ap-chart"></div>
+                        <div id="ap-stats" class="ap-stats"></div>
+                    </div>
+                    <div>
+                        <div id="ap-detail" class="ap-detail"></div>
+                        <div id="ap-verdict" class="ap-verdict"></div>
+                    </div>
+                </div>
+                <div class="ap-legend" id="ap-legend"></div>
+            </div>
+            <p class="font-mono text-[10px] text-muted-foreground leading-relaxed max-w-3xl">
+                Trek elevations come from our published route notes; expedition profiles come from the mountaineering record and each peak's camp altitudes — the phases every trip runs through, not a fixed day-by-day. Your guide or expedition leader adjusts the real pace to the team and the conditions.
+            </p>
+        </div>
+    </section>
+
+    <!-- AMS RISK PROFILE  ·  see /safety-tools.js  (REVERT § 5w) -->
+    <section id="ams-risk" class="px-6 py-20 md:px-20 border-b border-border bg-background">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div>
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03.3 — BEFORE YOU TRAVEL</span>
+                <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white mt-2">
+                    AMS <span class="font-semibold text-accent">RISK PROFILE</span>
+                </h2>
+                <p class="max-w-3xl font-mono text-xs text-muted-foreground leading-relaxed mt-3">
+                    A quick susceptibility estimate, modelled on the Wilderness Medical Society risk categories. Use it to work out — with your doctor — how conservative your itinerary and preparation need to be. It is a planning aid, not a medical assessment.
+                </p>
+            </div>
+
+            <div class="p-6 md:p-8 border border-border bg-card">
+                <div class="risk-grid">
+                    <div class="risk-field">
+                        <label for="risk-history">Previous altitude illness</label>
+                        <select id="risk-history">
+                            <option value="0">Never affected / never been to altitude</option>
+                            <option value="1">Mild AMS once</option>
+                            <option value="2">AMS more than once, or had to descend</option>
+                            <option value="4">Had HAPE or HACE (lungs / brain)</option>
+                        </select>
+                    </div>
+                    <div class="risk-field">
+                        <label for="risk-max">Highest altitude you have slept at</label>
+                        <select id="risk-max">
+                            <option value="1">Never above 2,500 m</option>
+                            <option value="0">2,500–3,500 m, no problems</option>
+                            <option value="-1">3,500–4,500 m, no problems</option>
+                            <option value="-2">Above 4,500 m, no problems</option>
+                        </select>
+                    </div>
+                    <div class="risk-field">
+                        <label for="risk-ascent">Your planned itinerary</label>
+                        <select id="risk-ascent">
+                            <option value="0">Standard guided itinerary with rest days</option>
+                            <option value="1">Not decided yet</option>
+                            <option value="2">Fast / condensed — few or no rest days</option>
+                            <option value="2">Flying straight to 3,500 m+ and walking from there</option>
+                        </select>
+                    </div>
+                    <div class="risk-field">
+                        <label for="risk-diamox">Acetazolamide (Diamox) as a preventive</label>
+                        <select id="risk-diamox">
+                            <option value="0">No</option>
+                            <option value="0">Discussing it with my doctor</option>
+                            <option value="-1">Yes — prescribed and planned</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="risk-out" class="risk-out" hidden></div>
+            </div>
+        </div>
+    </section>
+
     <!-- INTERACTIVE LAKE LOUISE AMS ASSESSMENT SIMULATOR -->
     <section class="px-6 py-20 md:px-20 border-b border-border bg-[#191b1f]">
         <div class="max-w-4xl mx-auto space-y-8">
             <div class="text-center space-y-2">
-                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03.2 — INTERACTIVE CLINICAL TOOL</span>
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03.4 — INTERACTIVE CLINICAL TOOL</span>
                 <h2 class="font-heading text-4xl uppercase tracking-tightest text-white">
                     LAKE LOUISE <span class="font-semibold text-accent">AMS SYMPTOM AUDITOR</span>
                 </h2>
@@ -238,12 +445,45 @@
         </div>
     </section>
 
+    <!-- 03.5 — GEAR & PACKING  ·  merged from the old /gear page 2026-09-07 (REVERT § 5x) -->
+    <section id="gear" class="border-b border-border bg-[#191b1f] scroll-mt-16">
+        <div class="max-w-4xl mx-auto px-6 md:px-20 pt-16 md:pt-20 pb-6 text-center space-y-2">
+            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03.5 — TREK LOADOUT</span>
+            <h2 class="font-heading text-4xl uppercase tracking-tightest text-white">GEAR &amp; <span class="font-semibold text-accent">PACKING</span></h2>
+            <p class="font-mono text-xs text-muted-foreground max-w-xl mx-auto">
+                A category-by-category list for a tea-house trek to around 5,000 m. Tick items as you pack &mdash; your progress is saved on this device. <span class="text-accent">Essential</span> items are the ones you should not leave Kathmandu without. Pick your route to fold in its specific kit.
+            </p>
+            <div id="gear-context" class="mt-4 flex flex-wrap justify-center gap-2"></div>
+        </div>
+
+        <div id="gear-toolbar" class="sticky top-0 z-30 border-y border-border bg-[#16181b]/95 backdrop-blur-md">
+            <div class="max-w-6xl mx-auto px-6 md:px-20 py-3 flex flex-wrap items-center gap-3 md:gap-4">
+                <select id="gear-trek" class="border border-border font-mono text-[11px] text-foreground px-3 py-2 outline-none focus:border-accent max-w-[14rem]" aria-label="Fold in a route's specific kit"></select>
+                <label class="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground cursor-pointer select-none">
+                    <input type="checkbox" id="gear-ess" class="h-3.5 w-3.5 accent-[color:var(--accent)]"> Essentials only
+                </label>
+                <span class="lbl"><span id="gear-done" class="text-accent">0</span> / <span id="gear-total">0</span> packed</span>
+                <div class="flex-1 min-w-[100px] h-1.5 bg-border max-w-xs"><div id="gear-bar" class="h-full bg-accent" style="width:0%"></div></div>
+                <button id="gear-print" class="border border-border font-mono text-[10px] uppercase tracking-widest px-3 py-2 text-muted-foreground hover:border-accent hover:text-accent transition-all">Print list</button>
+                <button id="gear-reset" class="border border-border font-mono text-[10px] uppercase tracking-widest px-3 py-2 text-muted-foreground hover:border-accent hover:text-accent transition-all">Reset</button>
+            </div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 md:px-20 py-10 md:py-14">
+            <div id="gear-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10"></div>
+            <div class="mt-14 border border-accent/30 bg-accent/5 p-5 max-w-3xl">
+                <span class="lbl text-accent block mb-2">Hiring &amp; buying in Kathmandu</span>
+                <p class="font-sans text-[13px] text-muted-foreground leading-relaxed">Thamel has everything &mdash; down jackets, sleeping bags, boots, poles &mdash; to buy or rent by the day. A &minus;15&nbsp;&deg;C sleeping bag and a down jacket are the two items most worth hiring if you do not own good ones. Test any rented boots on a walk before the trek.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -257,19 +497,19 @@
                 <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
                 <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
                 <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
-                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+                <a href="/stories" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
             </div>
             <div>
                 <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
                 <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
                 <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
                 <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
-                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 38 trails →</a>
             </div>
             <div>
                 <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
                 <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
-                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/about#sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
                 <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
                 <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
             </div>
@@ -415,6 +655,137 @@
             selectLanguage(currentLang);
         });
     </script>
-<script src="/menu.js?v=4"></script>
+<script src="/treks.js?v=5"></script>
+<script src="/mountains.js?v=1"></script>
+<script src="/peaks.js?v=3"></script>
+<script src="/safety-tools.js?v=3"></script>
+<!-- Gear & Packing checklist (merged from /gear 2026-09-07) — self-mounts on #gear-grid -->
+<script>
+(function () {
+  'use strict';
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var GEN = (window.TREK_DEFAULTS && window.TREK_DEFAULTS.packingList) || [];
+  var TREKS = window.TREKS || {};
+  var KEY = 'vo_gear_general';
+  var TKEY = 'vo_gear_trek';
+  var RKEY = function (s) { return 'vo_gear_route_' + s; };
+  var NEED2TIER = { essential: 'essential', recommended: 'recommended', optional: 'optional' };
+
+  var gridEl = document.getElementById('gear-grid');
+  var sel = document.getElementById('gear-trek');
+  var essEl = document.getElementById('gear-ess');
+  if (!gridEl || !sel || !essEl) return;
+  var state = {}, rstate = {}, routeSlug = '';
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  try { routeSlug = localStorage.getItem(TKEY) || ''; } catch (e) {}
+
+  var treklist = Object.keys(TREKS).map(function (k) { return TREKS[k]; })
+    .filter(function (t) { return t && t.name && Array.isArray(t.equipment) && t.equipment.length; })
+    .sort(function (a, b) { return String(a.name).localeCompare(String(b.name)); });
+  sel.innerHTML = '<option value="">General trek loadout</option>' +
+    treklist.map(function (t) { return '<option value="' + esc(t.slug) + '">' + esc(t.name) + '</option>'; }).join('');
+  if (routeSlug && TREKS[routeSlug]) sel.value = routeSlug; else routeSlug = '';
+
+  function loadRoute() {
+    rstate = {};
+    if (routeSlug) { try { rstate = JSON.parse(localStorage.getItem(RKEY(routeSlug)) || '{}'); } catch (e) {} }
+  }
+  loadRoute();
+
+  function routeCategory() {
+    if (!routeSlug) return null;
+    var t = TREKS[routeSlug];
+    if (!t || !Array.isArray(t.equipment) || !t.equipment.length) return null;
+    return {
+      category: 'Route-specific · ' + t.name,
+      items: t.equipment.map(function (e) {
+        return { name: e.item + (e.note ? ' — ' + e.note : ''), tier: NEED2TIER[e.need] || 'recommended' };
+      })
+    };
+  }
+
+  function gid(ci, ii) { return 'g' + ci + '_' + ii; }
+  function rid(ii) { return 'r' + ii; }
+  function row(id, it, on) {
+    var ess = it.tier === 'essential';
+    return '<label class="flex items-start gap-3 py-2 border-b border-border/60 cursor-pointer group' + (ess ? ' is-ess' : '') + '">' +
+      '<input type="checkbox" data-id="' + id + '" ' + (on ? 'checked' : '') + ' class="mt-1 h-3.5 w-3.5 accent-[color:var(--accent)] shrink-0">' +
+      '<span class="font-mono text-[11px] leading-relaxed ' + (on ? 'line-through text-muted-foreground' : 'text-foreground') + ' group-hover:text-accent transition-colors">' + esc(it.name) +
+      (it.tier ? ' <span class="ml-1 lbl ' + (ess ? 'text-accent' : '') + '">' + esc(it.tier) + '</span>' : '') +
+      '</span></label>';
+  }
+
+  function render() {
+    var html = GEN.map(function (cat, ci) {
+      return '<div><span class="lbl block mb-3 text-accent">' + esc(cat.category) + '</span>' +
+        (cat.items || []).map(function (it, ii) { return row(gid(ci, ii), it, state[gid(ci, ii)] === true); }).join('') + '</div>';
+    }).join('');
+    var rc = routeCategory();
+    if (rc) {
+      html += '<div class="border border-accent/30 bg-accent/5 p-4"><span class="lbl block mb-3 text-accent">' + esc(rc.category) + '</span>' +
+        rc.items.map(function (it, ii) { return row(rid(ii), it, rstate[rid(ii)] === true); }).join('') + '</div>';
+    }
+    gridEl.innerHTML = html;
+    updateProgress();
+    renderContext();
+  }
+
+  function updateProgress() {
+    var done = 0, total = 0;
+    GEN.forEach(function (c, ci) { (c.items || []).forEach(function (_, ii) { total++; if (state[gid(ci, ii)]) done++; }); });
+    var rc = routeCategory();
+    if (rc) rc.items.forEach(function (_, ii) { total++; if (rstate[rid(ii)]) done++; });
+    document.getElementById('gear-done').textContent = done;
+    document.getElementById('gear-total').textContent = total;
+    document.getElementById('gear-bar').style.width = (total ? (done / total * 100) : 0) + '%';
+  }
+
+  function renderContext() {
+    var box = document.getElementById('gear-context');
+    if (!box) return;
+    var t = routeSlug && TREKS[routeSlug];
+    if (!t) { box.innerHTML = ''; return; }
+    var chips = [];
+    if (t.stats && t.stats.maxAltitude) chips.push(['Max altitude', t.stats.maxAltitude]);
+    if (t.stats && t.stats.bestSeason) chips.push(['Best season', t.stats.bestSeason]);
+    if (t.stats && t.stats.difficulty) chips.push(['Grade', t.stats.difficulty]);
+    box.innerHTML = chips.map(function (c) {
+      return '<span class="inline-flex items-center gap-2 border border-border px-2.5 py-1 font-mono text-[10px] text-muted-foreground">' +
+        '<span class="text-accent uppercase tracking-widest text-[8px]">' + esc(c[0]) + '</span>' + esc(c[1]) + '</span>';
+    }).join('') + '<a href="/treks/' + esc(routeSlug) + '" class="inline-flex items-center px-2.5 py-1 font-mono text-[10px] text-accent hover:underline">Route notes &rarr;</a>';
+  }
+
+  gridEl.addEventListener('change', function (e) {
+    var cb = e.target;
+    if (!cb.dataset || !cb.dataset.id) return;
+    var id = cb.dataset.id;
+    if (id.charAt(0) === 'r') { rstate[id] = cb.checked; try { localStorage.setItem(RKEY(routeSlug), JSON.stringify(rstate)); } catch (x) {} }
+    else { state[id] = cb.checked; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (x) {} }
+    var span = cb.parentElement.querySelector('span');
+    if (span) { span.classList.toggle('line-through', cb.checked); span.classList.toggle('text-muted-foreground', cb.checked); }
+    updateProgress();
+  });
+
+  sel.addEventListener('change', function () {
+    routeSlug = sel.value;
+    try { routeSlug ? localStorage.setItem(TKEY, routeSlug) : localStorage.removeItem(TKEY); } catch (x) {}
+    loadRoute(); render();
+  });
+  essEl.addEventListener('change', function () { gridEl.classList.toggle('ess-only', essEl.checked); });
+
+  document.getElementById('gear-reset').addEventListener('click', function () {
+    state = {}; try { localStorage.removeItem(KEY); } catch (x) {}
+    if (routeSlug) { rstate = {}; try { localStorage.removeItem(RKEY(routeSlug)); } catch (x) {} }
+    render();
+  });
+  document.getElementById('gear-print').addEventListener('click', function () { window.print(); });
+
+  if (!GEN.length) gridEl.innerHTML = '<p class="font-sans text-sm text-muted-foreground">Packing list unavailable.</p>';
+  else render();
+})();
+</script>
+<script src="/menu.js?v=7"></script>
+<script src="/compass-nav.js?v=2"></script>
+<script src="/theme.js?v=2"></script>
 </body>
 </html>

@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The World Above 8,000 m — The 14 Eight-Thousanders | Himalayan Magic Adventure</title>
-    <meta name="description" content="An interactive atlas of the 14 mountains on Earth above 8,000 metres — Everest, K2, Kangchenjunga and the rest. Elevations, locations, difficulty, climbing seasons, first-ascent history and expedition planning across the Himalaya and Karakoram.">
+    <title>Mountain Expeditions by Elevation | Himalayan Magic Adventure</title>
+    <meta name="description" content="Every Himalayan and Karakoram climb we run, organised by the altitude you will reach — eight-thousanders, 7,000 m proving-ground peaks, and the 6,000 m and trekking peaks where most climbers start. Choose your elevation, then explore each collection in depth.">
     <link rel="canonical" href="https://himalayanmagic.com/expeditions">
 
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="icon" type="image/png" href="/images/logo-icon.png">
+    <link rel="apple-touch-icon" href="/images/logo-icon.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* The expedition atlas runs a shade darker and cooler than the trekking pages */
         :root { --background:#15171a; --foreground:#f3f4f6; --card:#1d1f23; --border:#2b2e34; --accent:#f06225; --accent-hover:#d04e1b; --muted:#23262b; --muted-foreground:#9399a2; --ink:16,18,21; --ice:#8fb3c9; }
         .light-mode { --background:#f4f5f6; --foreground:#111827; --card:#ffffff; --border:#e2e4e7; --accent:#e04f1a; --accent-hover:#c23e11; --muted:#eceef0; --muted-foreground:#4b5563; --ink:17,24,39; --ice:#3c6d8c; }
         body { background: var(--background); color: var(--foreground); font-family: 'IBM Plex Sans', sans-serif; }
@@ -22,44 +24,24 @@
         .fade-up { opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
         .fade-up.in { opacity:1; transform:none; }
 
-        .ex-sel { background:var(--card); border:1px solid var(--border); padding:.5rem .7rem; font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--foreground); outline:none; cursor:pointer; -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' fill='none'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%239399a2' stroke-width='1.3'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .6rem center; padding-right:1.6rem; }
-        .ex-sel:focus { border-color:var(--accent); }
-        .ex-mode { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.15em; padding:.5rem .9rem; border:1px solid var(--border); color:var(--muted-foreground); transition:all .2s ease; }
-        .ex-mode.on { border-color:var(--accent); color:var(--accent); background:rgba(240,98,37,.06); }
-
         /* mountain tiles */
         .mt { transition:border-color .3s ease, box-shadow .35s ease; }
         .mt:hover, .mt:focus-visible { border-color:rgba(240,98,37,.55); box-shadow:0 18px 46px -16px rgba(0,0,0,.7); }
         .mt-img { transition:opacity .6s ease, transform .6s cubic-bezier(.2,.6,.2,1); }
         .mt-img.loaded { opacity:1; }
         .mt:hover .mt-img, .mt:focus-visible .mt-img { transform:scale(1.05); }
-        .mt-scrim { background:linear-gradient(to top, rgba(var(--ink),.95) 0%, rgba(var(--ink),.55) 38%, rgba(var(--ink),.06) 68%, rgba(var(--ink),.34) 100%); transition:opacity .4s ease; }
-        .mt:hover .mt-scrim, .mt:focus-visible .mt-scrim { background:linear-gradient(to top, rgba(var(--ink),.98) 0%, rgba(var(--ink),.74) 46%, rgba(var(--ink),.22) 80%, rgba(var(--ink),.4) 100%); }
-        .mt-more.reveal { max-height:0; opacity:0; overflow:hidden; transform:translateY(4px); transition:max-height .45s ease, opacity .35s ease, transform .35s ease, margin .35s ease; margin-top:0; }
-        .mt:hover .mt-more.reveal, .mt:focus-visible .mt-more.reveal { max-height:8rem; opacity:1; transform:none; margin-top:.6rem; }
         .mt-arrow { transition:transform .3s ease; }
         .mt:hover .mt-arrow, .mt:focus-visible .mt-arrow { transform:translateX(5px); }
-        .mt-shimmer { background:linear-gradient(100deg,#1d1f23 28%,#26292f 50%,#1d1f23 72%); background-size:200% 100%; animation:mtshim 1.5s ease-in-out infinite; }
-        @keyframes mtshim { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-        /* elevation skyline */
-        .sky-col { transition:opacity .25s ease, filter .25s ease; }
-        .sky-col:hover { opacity:1 !important; filter:brightness(1.15); }
+        /* elevation-band tiles */
+        .ex-band { transition:border-color .3s ease, box-shadow .35s ease, transform .35s ease; }
+        .ex-band:hover, .ex-band:focus-visible { border-color:rgba(240,98,37,.6); box-shadow:0 22px 50px -18px rgba(0,0,0,.7); transform:translateY(-3px); }
+        .ex-band-img { transition:opacity .5s ease, transform .8s cubic-bezier(.2,.6,.2,1); }
+        .ex-band:hover .ex-band-img, .ex-band:focus-visible .ex-band-img { opacity:.55; transform:scale(1.06); }
 
-        /* map */
-        .peak-pin { cursor:pointer; transition:transform .25s ease; transform-box:fill-box; transform-origin:50% 100%; }
-        .peak-pin:hover, .peak-pin.on { transform:scale(1.4); }
-        .peak-hit { cursor:pointer; }
-
-        @media (max-width:1023px) {
-            .mt-more.reveal { max-height:8rem; opacity:1; transform:none; margin-top:.6rem; }
-        }
         @media (prefers-reduced-motion: reduce) {
             .fade-up { opacity:1; transform:none; transition:none; }
-            .mt, .mt-img, .mt-scrim, .mt-more.reveal, .mt-arrow, .sky-col, .peak-pin { transition:none !important; }
-            .mt:hover .mt-img, .mt:focus-visible .mt-img { transform:none; }
-            .mt-more.reveal { max-height:8rem; opacity:1; transform:none; margin-top:.6rem; }
-            .mt-shimmer { animation:none; }
+            .mt, .mt-img, .mt-arrow, .ex-band, .ex-band-img { transition:none !important; }
         }
     </style>
 </head>
@@ -67,237 +49,184 @@
 
 <div id="read-progress" class="fixed left-0 top-0 z-[60] h-0.5 bg-accent" style="width:0%"></div>
 
-<header class="relative z-40 border-b border-border bg-[#101215]">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto object-contain">
-            <div>
-                <span class="block font-heading text-sm font-light tracking-widest text-white uppercase">Himalayan Magic Adventure</span>
-                <span class="block text-[9px] text-accent tracking-[0.3em] uppercase">Mountaineering Expeditions · Est. 1993</span>
-            </div>
+<!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Mountaineering Expeditions · Est. 1993</span>
+            </span>
         </a>
-        <nav class="hidden lg:flex items-center gap-7 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            <a href="/" class="hover:text-accent transition-colors">Home</a>
-            <a href="/about" class="hover:text-accent transition-colors">About</a>
-            <a href="/treks" class="hover:text-accent transition-colors">Trekking Trails</a>
-            <a href="/expeditions" class="text-accent">Expeditions</a>
-            <a href="/altitude-safety" class="hover:text-accent transition-colors">Safety</a>
-            <a href="/dispatches" class="hover:text-accent transition-colors">Stories</a>
-            <a href="/contact" class="hover:text-accent transition-colors">Contact</a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink">Treks</a>
+            <div class="hme-navgroup">
+                <a href="/expeditions" class="hme-navlink is-active">Expeditions</a>
+                <div class="hme-navdrop">
+                    <a href="/expeditions" class="hme-navdrop-all">The Full Atlas</a>
+                    <span class="hme-navdrop-sep"></span>
+                    <a href="/expeditions/8000m">8,000 m +<span class="hme-navdrop-n">14 peaks</span></a>
+                    <a href="/expeditions/7000m">7,000 m +<span class="hme-navdrop-n">9 peaks</span></a>
+                    <a href="/expeditions/6000m">6,000 m +<span class="hme-navdrop-n">8 peaks</span></a>
+                    <a href="/expeditions/trekking-peaks">Trekking Peaks<span class="hme-navdrop-n">Soon</span></a>
+                </div>
+            </div>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/stories" class="hme-navlink">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
         </nav>
-        <a href="/contact" class="hidden sm:inline-flex items-center justify-center border border-accent hover:bg-accent hover:text-background text-[10px] font-mono uppercase tracking-widest px-4 py-2 transition-all">Plan an Expedition</a>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
     </div>
 </header>
 
-<!-- 01 · CINEMATIC HERO -->
-<section class="relative min-h-[92vh] flex flex-col justify-end overflow-hidden border-b border-border">
-    <div class="absolute inset-0 z-0"><img src="/images/everest_real.jpg" alt="An eight-thousand-metre Himalayan peak at altitude" class="h-full w-full object-cover"></div>
+<!-- 1.1 · HERO -->
+<section data-media class="relative min-h-[74vh] flex flex-col justify-end overflow-hidden border-b border-border">
+    <div class="absolute inset-0 z-0"><img src="/images/everest_real.jpg" alt="Himalayan and Karakoram peaks at altitude" class="h-full w-full object-cover"></div>
     <div class="absolute inset-0 z-0 bg-gradient-to-t from-[#15171a] via-[#15171a]/60 to-[#15171a]/25"></div>
     <div class="absolute inset-0 z-0 bg-gradient-to-r from-[#15171a]/80 to-transparent"></div>
     <div class="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-10 pt-28 pb-14">
         <nav class="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55 mb-6"><a href="/" class="hover:text-accent">Home</a> / <span class="text-white/85">Expeditions</span></nav>
-        <span class="kicker">The 14 Eight-Thousanders · Himalaya + Karakoram</span>
-        <h1 class="sec-h text-white text-[3.4rem] leading-[0.85] sm:text-7xl md:text-[6.5rem] mt-3">The World<br>Above <span class="text-accent">8,000 m</span></h1>
-        <p class="max-w-xl font-sans text-sm md:text-base text-white/80 mt-6 leading-relaxed">Explore the fourteen highest mountains on Earth — their elevations, their geography, how they are climbed and when, and the history written on them since 1950.</p>
-        <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-px bg-border border border-border max-w-2xl">
-            <div class="bg-[#101215]/90 p-3"><span class="lbl block">Peaks</span><span class="block font-heading text-2xl text-white mt-0.5">14</span></div>
-            <div class="bg-[#101215]/90 p-3"><span class="lbl block">Threshold</span><span class="block font-heading text-2xl text-white mt-0.5">8,000 m+</span></div>
-            <div class="bg-[#101215]/90 p-3"><span class="lbl block">Ranges</span><span class="block font-heading text-lg text-white mt-1 leading-tight">Himalaya<br>Karakoram</span></div>
-            <div class="bg-[#101215]/90 p-3"><span class="lbl block">In Nepal</span><span class="block font-heading text-2xl text-white mt-0.5">8 <span class="text-sm text-white/50">/ 14</span></span></div>
-        </div>
+        <span class="kicker">Mountaineering expeditions · Himalaya + Karakoram</span>
+        <h1 class="sec-h text-white text-[3rem] leading-[0.85] sm:text-6xl md:text-[5.5rem] mt-3">Expeditions,<br>by <span class="text-accent">elevation</span></h1>
+        <p class="max-w-xl font-sans text-sm md:text-base text-white/80 mt-6 leading-relaxed">Every climb we run, organised by the altitude you will reach. Start with the band that matches where you are as a climber — then open its collection for the full atlas, map, difficulty and history.</p>
         <div class="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#atlas" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Explore the 14 peaks</a>
-            <a href="#map" class="inline-flex items-center gap-2 border border-white/40 text-white font-mono text-[11px] uppercase tracking-widest px-6 py-3 hover:border-accent hover:text-accent transition-all">View the map</a>
+            <a href="#collections" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Choose your elevation</a>
+            <a href="#bestsellers" class="inline-flex items-center gap-2 border border-white/40 text-white font-mono text-[11px] uppercase tracking-widest px-6 py-3 hover:border-accent hover:text-accent transition-all">See the best sellers</a>
         </div>
     </div>
 </section>
 
-<!-- 02 · INTRODUCTION -->
-<section class="border-b border-border bg-[#101215] fade-up">
-    <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24 grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-center">
-        <div class="font-heading font-light leading-none text-accent text-[7rem] md:text-[11rem] tracking-tightest">14</div>
-        <div class="max-w-xl">
-            <span class="kicker">What is an eight-thousander?</span>
-            <p class="font-sans text-[15px] md:text-base text-muted-foreground leading-relaxed mt-4">
-                Fourteen mountains on Earth rise above 8,000 metres — the altitude at which, near the summit, the air holds roughly a third of the oxygen available at sea level. Ten of them stand in the Himalaya; four in the Karakoram. Eight are wholly or partly in Nepal, the rest in Pakistan, China and, at one shared border, India.
-            </p>
-            <p class="font-sans text-[15px] md:text-base text-muted-foreground leading-relaxed mt-4">
-                The first, Annapurna, was climbed in 1950. The last, Shishapangma, in 1964 — delayed only by politics. Everything below is an atlas of those fourteen summits.
-            </p>
-        </div>
-    </div>
-</section>
-
-<!-- 03 · ATLAS / MAP / COMPARE -->
-<div id="ex-toolbar" class="sticky top-0 z-30 border-b border-border bg-[#101215]/95 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-3 space-y-3">
-        <div class="flex flex-wrap items-center gap-2.5">
-            <div class="flex gap-1.5" id="ex-modes">
-                <button class="ex-mode on" data-mode="atlas">Atlas</button>
-                <button class="ex-mode" data-mode="map">Map</button>
-                <button class="ex-mode" data-mode="compare">Compare</button>
-            </div>
-            <div class="relative flex-1 min-w-[170px] max-w-xs">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground"></i>
-                <input id="ex-q" type="search" autocomplete="off" placeholder="Search a mountain…" aria-label="Search mountains"
-                    class="w-full bg-[var(--card)] border border-border pl-9 pr-3 py-2 font-mono text-xs text-foreground placeholder:text-muted-foreground/70 outline-none focus:border-accent">
-            </div>
-            <select id="ex-country" class="ex-sel" aria-label="Filter by country"></select>
-            <select id="ex-range" class="ex-sel" aria-label="Filter by range">
-                <option value="">Any range</option>
-                <option value="Himalaya">Himalaya</option>
-                <option value="Karakoram">Karakoram</option>
-            </select>
-            <select id="ex-season" class="ex-sel" aria-label="Filter by season">
-                <option value="">Any season</option>
-                <option value="Spring">Spring window</option>
-                <option value="Summer">Summer window</option>
-                <option value="Autumn">Autumn window</option>
-            </select>
-            <div class="ml-auto flex items-center gap-2">
-                <span class="lbl hidden sm:block">Sort</span>
-                <select id="ex-sort" class="ex-sel" aria-label="Sort mountains">
-                    <option value="rank">By rank</option>
-                    <option value="elev-desc">Elevation ↓</option>
-                    <option value="elev-asc">Elevation ↑</option>
-                    <option value="name">Name</option>
-                </select>
-            </div>
-        </div>
-        <div id="ex-chips" class="hidden flex-wrap items-center gap-2"></div>
-    </div>
-</div>
-
-<main id="atlas" class="flex-1 bg-[#15171a] scroll-mt-16">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-8 md:py-12">
-        <div class="flex items-baseline justify-between mb-6">
-            <h2 class="sec-h text-2xl md:text-3xl text-foreground">The 14 Peaks</h2>
-            <span id="ex-count" class="lbl"></span>
-        </div>
-        <!-- ATLAS grid -->
-        <div id="view-atlas">
-            <div id="ex-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4 auto-rows-[150px] grid-flow-row-dense"></div>
-            <div id="ex-empty" class="hidden py-16 text-center">
-                <span class="kicker">Nothing here</span>
-                <h3 class="sec-h text-2xl md:text-3xl text-foreground mt-3 mb-3">No mountains match</h3>
-                <button id="ex-clear2" class="border border-accent text-accent hover:bg-accent hover:text-background font-mono text-[10px] uppercase tracking-widest px-5 py-2.5 transition-all">Clear filters</button>
-            </div>
-        </div>
-        <!-- MAP -->
-        <div id="view-map" class="hidden">
-            <div class="grid lg:grid-cols-[1.6fr_1fr] gap-6">
-                <div class="border border-border bg-[#101215] p-3 md:p-5">
-                    <div class="relative w-full overflow-x-auto"><div id="ex-map-wrap" style="min-width:640px"></div></div>
-                    <p class="lbl mt-3">Schematic atlas — marker positions are set from real coordinates; terrain is stylised. Tap a peak.</p>
+<!-- 1.2 · CHOOSE YOUR ELEVATION -->
+<section id="collections" class="border-b border-border bg-[#101215] fade-up scroll-mt-16">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
+        <span class="kicker">Start here</span>
+        <h2 class="sec-h text-white text-4xl md:text-6xl mt-3 mb-4">Choose your elevation</h2>
+        <p class="max-w-2xl font-sans text-[15px] text-muted-foreground leading-relaxed mb-10">
+            Pick the band that matches where you are as a climber — the eight-thousanders are the giants, the 7,000 m peaks the classic proving ground, and the 6,000 m and trekking peaks where most climbers start. Each tile opens a full collection: atlas, map, compare tool, difficulty, seasons and first-ascent history.
+        </p>
+        <div id="peak-collections" class="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-3 sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 sm:overflow-visible">
+            <a href="/expeditions/8000m" class="ex-band group relative flex flex-col justify-end overflow-hidden border border-border min-h-[280px] md:min-h-[360px] shrink-0 snap-start w-[82%] max-w-[300px] sm:w-auto sm:max-w-none sm:shrink">
+                <img src="/images/everest_real.jpg" alt="" aria-hidden="true" loading="lazy" class="ex-band-img absolute inset-0 h-full w-full object-cover opacity-40">
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/72 to-[#0c0e10]/15"></div>
+                <span class="absolute top-4 left-4 z-10 font-mono text-[9px] uppercase tracking-[0.25em] text-white/65" data-count="8000">14 peaks</span>
+                <div class="relative z-10 p-5">
+                    <span class="block font-heading text-[2.5rem] md:text-[3.2rem] font-light uppercase tracking-tightest text-white leading-none group-hover:text-accent transition-colors">8,000<span class="text-[0.9rem] align-top ml-1 text-accent">m +</span></span>
+                    <span class="block font-sans text-[12.5px] text-white/70 leading-snug mt-3">The death-zone giants — Everest, K2 and the rest.</span>
+                    <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent">Open collection <span aria-hidden="true">&rarr;</span></span>
                 </div>
-                <div id="ex-map-panel" class="border border-border bg-card p-6 min-h-[320px] flex flex-col justify-center"></div>
+            </a>
+            <a href="/expeditions/7000m" class="ex-band group relative flex flex-col justify-end overflow-hidden border border-accent/50 min-h-[280px] md:min-h-[360px] shrink-0 snap-start w-[82%] max-w-[300px] sm:w-auto sm:max-w-none sm:shrink">
+                <img src="/images/annapurna_real.jpg" alt="" aria-hidden="true" loading="lazy" class="ex-band-img absolute inset-0 h-full w-full object-cover opacity-40">
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/72 to-[#0c0e10]/15"></div>
+                <span class="absolute top-4 left-4 z-10 font-mono text-[9px] uppercase tracking-[0.25em] text-white/65" data-count="7000">9 peaks</span>
+                <div class="relative z-10 p-5">
+                    <span class="block font-heading text-[2.5rem] md:text-[3.2rem] font-light uppercase tracking-tightest text-white leading-none group-hover:text-accent transition-colors">7,000<span class="text-[0.9rem] align-top ml-1 text-accent">m +</span></span>
+                    <span class="block font-sans text-[12.5px] text-white/70 leading-snug mt-3">The proving ground before an eight-thousander.</span>
+                    <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent">Open collection <span aria-hidden="true">&rarr;</span></span>
+                </div>
+            </a>
+            <a href="/expeditions/6000m" class="ex-band group relative flex flex-col justify-end overflow-hidden border border-border min-h-[280px] md:min-h-[360px] shrink-0 snap-start w-[82%] max-w-[300px] sm:w-auto sm:max-w-none sm:shrink">
+                <img src="/images/langtang_real.jpg" alt="" aria-hidden="true" loading="lazy" class="ex-band-img absolute inset-0 h-full w-full object-cover opacity-40">
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/72 to-[#0c0e10]/15"></div>
+                <span class="absolute top-4 left-4 z-10 font-mono text-[9px] uppercase tracking-[0.25em] text-white/65" data-count="6000">8 peaks</span>
+                <div class="relative z-10 p-5">
+                    <span class="block font-heading text-[2.5rem] md:text-[3.2rem] font-light uppercase tracking-tightest text-white leading-none group-hover:text-accent transition-colors">6,000<span class="text-[0.9rem] align-top ml-1 text-accent">m +</span></span>
+                    <span class="block font-sans text-[12.5px] text-white/70 leading-snug mt-3">Nepal’s trekking-peak summits — and Ama Dablam.</span>
+                    <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent">Open collection <span aria-hidden="true">&rarr;</span></span>
+                </div>
+            </a>
+            <a href="/expeditions/trekking-peaks" class="ex-band group relative flex flex-col justify-end overflow-hidden border border-border min-h-[280px] md:min-h-[360px] shrink-0 snap-start w-[82%] max-w-[300px] sm:w-auto sm:max-w-none sm:shrink">
+                <img src="/images/hero-mountain.jpg" alt="" aria-hidden="true" loading="lazy" class="ex-band-img absolute inset-0 h-full w-full object-cover opacity-30">
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/78 to-[#0c0e10]/25"></div>
+                <span class="absolute top-4 left-4 z-10 font-mono text-[9px] uppercase tracking-[0.25em] text-white/55" data-count="trekking">In preparation</span>
+                <div class="relative z-10 p-5">
+                    <span class="block font-heading text-[2.1rem] md:text-[2.6rem] font-light uppercase tracking-tightest text-white/90 leading-none group-hover:text-accent transition-colors">Trekking<br>Peaks</span>
+                    <span class="block font-sans text-[12.5px] text-white/60 leading-snug mt-3">A climb bolted onto a trek — 5,500 to 6,500 m.</span>
+                    <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Coming soon</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 1.3 · WHERE CLIMBERS START WITH US -->
+<section class="border-b border-border bg-[#15171a] fade-up">
+    <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-24">
+        <span class="kicker">The progression</span>
+        <h2 class="sec-h text-white text-3xl md:text-5xl mt-3 mb-4">Where climbers start with us</h2>
+        <p class="max-w-2xl font-sans text-[15px] text-muted-foreground leading-relaxed mb-12">Almost no one starts on an eight-thousander. The climbers we take highest have usually moved up through the bands with us — a trekking peak to learn the systems, a 6,000 m peak for a first fixed camp, a 7,000 m peak to test altitude and commitment, then a Himalayan giant.</p>
+        <ol class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
+            <li class="bg-[#101215] p-6"><span class="font-heading text-4xl text-accent font-light">01</span><span class="block font-heading text-lg uppercase text-white mt-2 leading-tight">Trekking peak</span><p class="font-sans text-[12.5px] text-muted-foreground leading-relaxed mt-2">5,500–6,500 m. Rope work, crampons and glacier travel on a climb attached to a trek.</p></li>
+            <li class="bg-[#101215] p-6"><span class="font-heading text-4xl text-accent font-light">02</span><span class="block font-heading text-lg uppercase text-white mt-2 leading-tight">6,000 m peak</span><p class="font-sans text-[12.5px] text-muted-foreground leading-relaxed mt-2">A first expedition with fixed camps, load carries and a summit day at real altitude.</p></li>
+            <li class="bg-[#101215] p-6"><span class="font-heading text-4xl text-accent font-light">03</span><span class="block font-heading text-lg uppercase text-white mt-2 leading-tight">7,000 m peak</span><p class="font-sans text-[12.5px] text-muted-foreground leading-relaxed mt-2">The proving ground — multi-week expeditions, serious weather, the altitude that decides readiness.</p></li>
+            <li class="bg-[#101215] p-6"><span class="font-heading text-4xl text-accent font-light">04</span><span class="block font-heading text-lg uppercase text-white mt-2 leading-tight">8,000 m peak</span><p class="font-sans text-[12.5px] text-muted-foreground leading-relaxed mt-2">The giants. Supplementary oxygen, Sherpa climbing crew, and a summit in the death zone.</p></li>
+        </ol>
+    </div>
+</section>
+
+<!-- 1.4 · BEST SELLERS -->
+<section id="bestsellers" class="border-b border-border bg-[#101215] fade-up scroll-mt-16">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div>
+                <span class="kicker">Most-run this decade</span>
+                <h2 class="sec-h text-white text-3xl md:text-5xl mt-3">Best sellers</h2>
+                <p class="max-w-xl font-sans text-[14px] text-muted-foreground leading-relaxed mt-4">The expeditions we field the most teams on — a mix of the accessible eight-thousanders and the classic 7,000 m objectives.</p>
             </div>
+            <a href="/expeditions/8000m" class="shrink-0 inline-flex items-center gap-2 border border-border px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:border-accent hover:text-accent transition-all">Open the 8,000 m atlas <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <!-- COMPARE -->
-        <div id="view-compare" class="hidden">
-            <p class="font-sans text-[13px] text-muted-foreground mb-5 max-w-xl">Select up to three mountains to compare side by side.</p>
-            <div id="ex-cmp-pick" class="flex flex-wrap gap-2 mb-8"></div>
-            <div id="ex-cmp-table" class="overflow-x-auto"></div>
-        </div>
-    </div>
-</main>
-
-<!-- 04 · ELEVATION COMPARISON -->
-<section id="elevation" class="border-y border-border bg-[#101215] fade-up scroll-mt-16">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-3">
-            <div><span class="kicker">04 — Elevation</span><h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2">The Skyline of the 8,000ers</h2></div>
-            <div class="flex items-center gap-1.5">
-                <button class="ex-mode on" data-unit="m">Metres</button>
-                <button class="ex-mode" data-unit="ft">Feet</button>
-            </div>
-        </div>
-        <p class="font-sans text-[13px] text-muted-foreground max-w-2xl mb-8">Ordered by rank, from Everest down to Shishapangma. Columns start at 7,800 m so the differences between the peaks are visible — the drop from Everest to K2 is 238 m; from K2 to Kangchenjunga, just 25 m.</p>
-        <div id="ex-skyline"></div>
+        <div id="ex-bestsellers" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"></div>
     </div>
 </section>
 
-<!-- 05 · DIFFICULTY -->
-<section id="difficulty" class="border-b border-border bg-[#15171a] fade-up scroll-mt-16">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <span class="kicker">05 — Expedition difficulty</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2 mb-4">How the Fourteen Compare</h2>
-        <p class="font-sans text-[13px] text-muted-foreground max-w-2xl mb-8" id="ex-diff-note"></p>
-        <div id="ex-difficulty" class="grid md:grid-cols-2 gap-4"></div>
-    </div>
-</section>
-
-<!-- 06 · SEASONS -->
-<section id="seasons" class="border-b border-border bg-[#101215] fade-up scroll-mt-16">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <span class="kicker">06 — Climbing seasons</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2 mb-4">When Each Mountain Is Climbed</h2>
-        <p class="font-sans text-[13px] text-muted-foreground max-w-2xl mb-6" id="ex-seasons-intro"></p>
-        <div id="ex-seasons"></div>
-        <p class="lbl mt-4">Seasons and windows shift year to year with conditions and access rules — treat this as the general pattern, not a schedule.</p>
-    </div>
-</section>
-
-<!-- 07 · FIRST ASCENTS -->
-<section id="history" class="border-b border-border bg-[#15171a] fade-up scroll-mt-16">
-    <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <span class="kicker">07 — Historic first ascents</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2 mb-8">1950 – 1964: The Fourteen Are Climbed</h2>
-        <div id="ex-timeline" class="border-l border-border ml-2"></div>
-    </div>
-</section>
-
-<!-- 08 · NEPAL'S EIGHT-THOUSANDERS -->
-<section id="nepal" class="border-b border-border bg-[#101215] fade-up scroll-mt-16">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <span class="kicker">08 — Nepal’s eight-thousanders</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2 mb-4">Eight of the Fourteen Rise in Nepal</h2>
-        <p class="font-sans text-[13px] text-muted-foreground max-w-2xl mb-8">Three lie wholly within the country — Dhaulagiri, Manaslu and Annapurna. The other five share a border with China or India. Each of these mountains has a trekking route on its flanks: a way to stand beneath it without climbing it.</p>
-        <div id="ex-nepal" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-    </div>
-</section>
-
-<!-- 09 · EXPEDITION PLANNING -->
-<section id="planning" class="border-b border-border bg-[#15171a] fade-up scroll-mt-16">
-    <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <span class="kicker">09 — Expedition planning</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2 mb-4">What an 8,000 m Expedition Involves</h2>
-        <p class="font-sans text-[14px] text-muted-foreground max-w-2xl mb-8" id="ex-plan-intro"></p>
-        <div id="ex-planning" class="grid md:grid-cols-2 gap-x-10 gap-y-6"></div>
-    </div>
-</section>
-
-<!-- 10 · SAFETY -->
-<section id="safety" class="border-b border-border bg-[#101215] fade-up scroll-mt-16">
-    <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <span class="kicker">10 — Safety</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2 mb-4">The Hazards, Named</h2>
-        <p class="font-sans text-[14px] text-muted-foreground max-w-2xl mb-8" id="ex-safety-intro"></p>
-        <div id="ex-safety" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8"></div>
-        <div class="border border-accent/40 bg-accent/5 p-5"><span class="lbl text-accent block mb-2">Important</span><p class="font-sans text-[13px] text-muted-foreground leading-relaxed" id="ex-disclaimer"></p></div>
-    </div>
-</section>
-
-<!-- 11 · JOURNAL -->
-<section id="journal" class="border-b border-border bg-[#15171a] fade-up scroll-mt-16">
-    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-20">
-        <span class="kicker">11 — Expedition journal</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-2 mb-8">From the Mountains</h2>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <a href="/dispatches" class="mt group relative block overflow-hidden border border-border bg-card h-52"><img class="mt-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" src="/images/everest_real.jpg" alt="Everest expedition"><div class="mt-scrim absolute inset-0"></div><div class="relative z-10 flex h-full flex-col justify-end p-4"><span class="lbl text-white/70">Field notes</span><span class="font-heading text-xl font-light uppercase text-white leading-tight mt-1">Everest &amp; the Khumbu</span></div></a>
-            <a href="/dispatches" class="mt group relative block overflow-hidden border border-border bg-card h-52"><img class="mt-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" src="/images/hero-mountain.jpg" alt="K2 chronicles"><div class="mt-scrim absolute inset-0"></div><div class="relative z-10 flex h-full flex-col justify-end p-4"><span class="lbl text-white/70">Field notes</span><span class="font-heading text-xl font-light uppercase text-white leading-tight mt-1">The Karakoram Summer</span></div></a>
-            <a href="/dispatches" class="mt group relative block overflow-hidden border border-border bg-card h-52"><img class="mt-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" src="/images/ebc.png" alt="Sherpa stories"><div class="mt-scrim absolute inset-0"></div><div class="relative z-10 flex h-full flex-col justify-end p-4"><span class="lbl text-white/70">Field notes</span><span class="font-heading text-xl font-light uppercase text-white leading-tight mt-1">Sherpa Stories &amp; First Ascents</span></div></a>
+<!-- 1.5 · OUR RECOMMENDATIONS -->
+<section class="border-b border-border bg-[#15171a] fade-up">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
+        <span class="kicker">Not sure where to start?</span>
+        <h2 class="sec-h text-white text-3xl md:text-5xl mt-3 mb-10">Our recommendations</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+            <a href="/expeditions/7000m" class="mt group relative flex flex-col border border-border bg-[#101215] p-6 min-h-[220px] justify-between">
+                <div>
+                    <span class="lbl">If you are new to expeditions</span>
+                    <h3 class="font-heading text-2xl uppercase text-white leading-tight mt-2 group-hover:text-accent transition-colors">Start on a 7,000 m peak</h3>
+                    <p class="font-sans text-[13px] text-muted-foreground leading-relaxed mt-3">Himlung Himal and Baruntse are the classic first big expeditions — real altitude, fixed camps, a forgiving normal route.</p>
+                </div>
+                <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent">See the 7,000 m peaks <span class="mt-arrow" aria-hidden="true">&rarr;</span></span>
+            </a>
+            <a href="/expeditions/8000m" class="mt group relative flex flex-col border border-border bg-[#101215] p-6 min-h-[220px] justify-between">
+                <div>
+                    <span class="lbl">If you are ready for 8,000 m</span>
+                    <h3 class="font-heading text-2xl uppercase text-white leading-tight mt-2 group-hover:text-accent transition-colors">The accessible giants</h3>
+                    <p class="font-sans text-[13px] text-muted-foreground leading-relaxed mt-3">Manaslu and Cho Oyu are the eight-thousanders most teams choose first. Compare all fourteen in the atlas.</p>
+                </div>
+                <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent">Open the atlas <span class="mt-arrow" aria-hidden="true">&rarr;</span></span>
+            </a>
+            <a href="/treks" class="mt group relative flex flex-col border border-border bg-[#101215] p-6 min-h-[220px] justify-between">
+                <div>
+                    <span class="lbl">If you want to stand beneath them</span>
+                    <h3 class="font-heading text-2xl uppercase text-white leading-tight mt-2 group-hover:text-accent transition-colors">Trek to base camp</h3>
+                    <p class="font-sans text-[13px] text-muted-foreground leading-relaxed mt-3">Everest, Manaslu, Kangchenjunga and Dhaulagiri all have trekking routes on their flanks — no climbing required.</p>
+                </div>
+                <span class="mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent">Browse 38 treks <span class="mt-arrow" aria-hidden="true">&rarr;</span></span>
+            </a>
         </div>
     </div>
 </section>
 
-<!-- 12 · FINAL CTA -->
+<!-- 1.6 · PLAN AN EXPEDITION -->
 <section class="border-b border-border bg-[#101215]">
     <div class="max-w-4xl mx-auto px-6 py-20 text-center">
         <span class="kicker">Plan an expedition</span>
-        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-3 mb-4" id="ex-cta-h">Which summit comes next?</h2>
-        <p class="font-sans text-[14px] text-muted-foreground max-w-xl mx-auto mb-8" id="ex-cta-sub"></p>
-        <div id="ex-cta-actions" class="flex flex-wrap justify-center gap-3"></div>
+        <h2 class="sec-h text-3xl md:text-5xl text-foreground mt-3 mb-4">Which summit comes next?</h2>
+        <p class="font-sans text-[14px] text-muted-foreground max-w-xl mx-auto mb-8">Tell us where you are as a climber and what you want to attempt. We will build the expedition — permits, logistics, Sherpa crew and a schedule that gets you acclimatised and in position for the weather window.</p>
+        <div class="flex flex-wrap justify-center gap-3">
+            <a href="/contact" class="bg-accent text-background hover:bg-accent-hover font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Talk to our expedition desk</a>
+            <a href="/expeditions/8000m" class="border border-border text-foreground hover:border-accent hover:text-accent font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Explore the eight-thousanders</a>
+        </div>
     </div>
 </section>
 
@@ -309,7 +238,7 @@
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -323,19 +252,19 @@
                 <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
                 <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
                 <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
-                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+                <a href="/stories" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
             </div>
             <div>
-                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
-                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
-                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
-                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
-                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Expeditions by elevation</span>
+                <a href="/expeditions/8000m" class="block py-1 hover:text-accent transition-colors">8,000 m + · 14 peaks</a>
+                <a href="/expeditions/7000m" class="block py-1 hover:text-accent transition-colors">7,000 m + · 9 peaks</a>
+                <a href="/expeditions/6000m" class="block py-1 hover:text-accent transition-colors">6,000 m + · 8 peaks</a>
+                <a href="/expeditions/trekking-peaks" class="block py-1 hover:text-accent transition-colors">Trekking Peaks · soon</a>
             </div>
             <div>
                 <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
                 <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
-                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/about#sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
                 <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
                 <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
             </div>
@@ -380,9 +309,66 @@ function hmeApplyTheme() {
 hmeApplyTheme();
 </script>
 <script src="/mountains.js?v=1"></script>
-<script src="/treks.js?v=2"></script>
-<script src="/expeditions.js?v=1"></script>
-<script src="/announce.js?v=1"></script>
-<script src="/menu.js?v=4"></script>
+<script src="/peaks.js?v=3"></script>
+<script>
+  // data-driven counts for the collection tiles (progressive enhancement)
+  try {
+    (window.getPeakCategories ? window.getPeakCategories() : []).forEach(function (c) {
+      var el = document.querySelector('#peak-collections [data-count="' + c.id + '"]');
+      if (!el) return;
+      if (c.count > 0) el.textContent = c.count + (c.count === 1 ? ' peak' : ' peaks') +
+        (c.published < c.count ? ' · ' + (c.count - c.published) + ' in prep' : '');
+    });
+  } catch (e) {}
+
+  // Best sellers — featured peaks across every band
+  try {
+    var grid = document.getElementById('ex-bestsellers');
+    if (grid && window.getPeaks) {
+      var best = window.getPeaks({ sort: 'featured' }).filter(function (p) { return p.featured; }).slice(0, 8);
+      if (!best.length) best = window.getPeaks({ sort: 'elevation' }).slice(0, 8);
+      var e = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+      grid.innerHTML = best.map(function (p) {
+        var img = p.image
+          ? '<img src="' + e(p.image) + '" alt="" aria-hidden="true" loading="lazy" class="mt-img absolute inset-0 h-full w-full object-cover opacity-0">'
+          : '<div class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(240,98,37,0.12),transparent_55%),repeating-linear-gradient(115deg,rgba(255,255,255,0.04)_0_1px,transparent_1px_22px)]"></div>';
+        return '<a href="' + e(p.href) + '" class="mt group relative flex flex-col justify-end overflow-hidden border border-border bg-[#181a1e] min-h-[240px]">' +
+          img +
+          '<div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/72 to-[#181a1e]/15"></div>' +
+          '<span class="absolute top-3 left-3 z-10 bg-black/45 border border-white/15 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.18em] text-white">' + e(p.categoryLabel || '') + '</span>' +
+          '<div class="relative z-10 p-4">' +
+            '<span class="font-mono text-[9px] uppercase tracking-[0.2em] text-white/60 block">' + e(p.range || p.countryLabel) + '</span>' +
+            '<span class="font-heading text-xl md:text-2xl font-light uppercase tracking-tight text-white leading-tight group-hover:text-accent transition-colors block mt-0.5">' + e(p.name.replace(/^Mount /, '')) + '</span>' +
+            '<span class="font-mono text-[10px] text-accent mt-1 block">' + e(p.elevationDisplay || '') + '</span>' +
+            '<span class="mt-2 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-white/70">Explore <span class="mt-arrow">&rarr;</span></span>' +
+          '</div></a>';
+      }).join('');
+      grid.querySelectorAll('.mt-img').forEach(function (im) {
+        if (im.complete) im.classList.add('loaded');
+        else im.addEventListener('load', function () { im.classList.add('loaded'); });
+      });
+    }
+  } catch (e2) {}
+
+  // Trust strip
+  try {
+    var tr = document.getElementById('ex-trust');
+    var D = window.EXPED_DEFAULTS || {};
+    if (tr && (D.trust || []).length) {
+      var e3 = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+      tr.innerHTML = D.trust.map(function (x) {
+        return '<div><span class="font-mono text-[11px] text-accent uppercase tracking-wider block mb-2">' + e3(x.title) + '</span><span class="font-sans text-[12px] text-muted-foreground leading-relaxed">' + e3(x.note) + '</span></div>';
+      }).join('');
+    }
+  } catch (e4) {}
+
+  // fade-up
+  var io = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) x.target.classList.add('in'); }); }, { threshold: 0.06 });
+  document.querySelectorAll('.fade-up').forEach(function (el) { io.observe(el); });
+</script>
+<script src="/announce.js?v=2"></script>
+<script src="/menu.js?v=7"></script>
+<script src="/compass-nav.js?v=2"></script>
+<script src="/theme.js?v=2"></script>
 </body>
 </html>

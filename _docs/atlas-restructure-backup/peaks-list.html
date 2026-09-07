@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peak Collection — Himalayan Magic Adventure</title>
+    <meta name="description" content="Himalayan and Karakoram expedition peaks by elevation band — 8,000 m giants, 7,000 m expeditions, 6,000 m peaks and trekking peaks.">
+    <link rel="canonical" id="canonical-link" href="https://himalayanmagic.com/expeditions">
+
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="stylesheet" href="/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --background:#15171a; --foreground:#f3f4f6; --card:#1d1f23; --border:#2b2e34; --accent:#f06225; --accent-hover:#d04e1b; --muted:#23262b; --muted-foreground:#9399a2; --ink:16,18,21; }
+        .light-mode { --background:#f4f5f6; --foreground:#111827; --card:#ffffff; --border:#e2e4e7; --accent:#e04f1a; --accent-hover:#c23e11; --muted:#eceef0; --muted-foreground:#4b5563; --ink:17,24,39; }
+        body { background: var(--background); color: var(--foreground); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.65; }
+        ::-webkit-scrollbar { width:6px; height:6px; } ::-webkit-scrollbar-track { background: var(--background); } ::-webkit-scrollbar-thumb { background: var(--accent); border-radius:3px; }
+        .kicker { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.3em; color:var(--accent); }
+        .lbl { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        .sec-h { font-family:'Oswald',sans-serif; font-weight:300; text-transform:uppercase; letter-spacing:-.02em; line-height:.95; }
+        .pk-sel { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.12em; padding:.55rem .8rem; border:1px solid var(--border); background:var(--card); color:var(--muted-foreground); }
+        .pk { transition: border-color .3s ease, box-shadow .35s ease; }
+        .pk:hover, .pk:focus-visible { border-color: rgba(240,98,37,.55); box-shadow: 0 18px 46px -16px rgba(0,0,0,.7); }
+        .pk-img { transition: opacity .6s ease, transform .6s cubic-bezier(.2,.6,.2,1); }
+        .pk-img.loaded { opacity: .55; }
+        .pk:hover .pk-img, .pk:focus-visible .pk-img { transform: scale(1.05); opacity:.7; }
+        .pk-arrow { transition: transform .3s ease; }
+        .pk:hover .pk-arrow, .pk:focus-visible .pk-arrow { transform: translateX(5px); }
+        @media (prefers-reduced-motion: reduce) { .pk, .pk-img, .pk-arrow { transition:none !important; } }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+<!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Mountaineering Expeditions · Est. 1993</span>
+            </span>
+        </a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink">Treks</a>
+            <div class="hme-navgroup">
+                <a href="/expeditions" class="hme-navlink is-active">Expeditions</a>
+                <div class="hme-navdrop">
+                    <a href="/expeditions" class="hme-navdrop-all">The Full Atlas</a>
+                    <span class="hme-navdrop-sep"></span>
+                    <a href="/expeditions/8000m">8,000 m +<span class="hme-navdrop-n">14 peaks</span></a>
+                    <a href="/expeditions/7000m">7,000 m +<span class="hme-navdrop-n">9 peaks</span></a>
+                    <a href="/expeditions/6000m">6,000 m +<span class="hme-navdrop-n">Soon</span></a>
+                    <a href="/expeditions/trekking-peaks">Trekking Peaks<span class="hme-navdrop-n">Soon</span></a>
+                </div>
+            </div>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/dispatches" class="hme-navlink">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
+        </nav>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
+    </div>
+</header>
+
+<main id="peaks-root" class="flex-1"></main>
+
+<footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Peaks</span>
+                <a href="/expeditions/8000m" class="block py-1 hover:text-accent transition-colors">8,000 m Giants</a>
+                <a href="/expeditions/7000m" class="block py-1 hover:text-accent transition-colors">7,000 m Expeditions</a>
+                <a href="/expeditions/6000m" class="block py-1 hover:text-accent transition-colors">6,000 m Peaks</a>
+                <a href="/expeditions" class="block py-1 text-accent hover:text-accent-hover transition-colors">The full atlas →</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+        <div class="mt-10 text-center">
+            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <button onclick="hxToggleTheme()" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all">
+        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+    </button>
+</div>
+
+<script src="/mountains.js?v=1"></script>
+<script src="/peaks.js?v=2"></script>
+<script src="/peaks-list-render.js?v=2"></script>
+<script src="/menu.js?v=5"></script>
+<script src="/compass-nav.js?v=1"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>

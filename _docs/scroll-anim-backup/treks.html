@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trekking Trails of Nepal — Find Your Trail | Himalayan Magic Adventure</title>
+    <meta name="description" content="Discover every trekking trail we guide in Nepal — from Everest Base Camp and the Annapurna Circuit to Dolpo, Kanchenjunga and the mid-hills. Filter by region, difficulty, duration and season; each trail has a full route guide.">
+    <link rel="canonical" href="https://himalayanmagic.com/treks">
+
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="stylesheet" href="/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --background:#1b1e22; --foreground:#f3f4f6; --card:#22252a; --border:#2e3239; --accent:#f06225; --accent-hover:#d04e1b; --muted:#272b32; --muted-foreground:#9ca3af; --ink:20,22,26; }
+        .light-mode { --background:#f9fafb; --foreground:#111827; --card:#ffffff; --border:#e5e7eb; --accent:#e04f1a; --accent-hover:#c23e11; --muted:#f3f4f6; --muted-foreground:#4b5563; --ink:17,24,39; }
+        body { background: var(--background); color: var(--foreground); font-family: 'IBM Plex Sans', sans-serif; }
+        ::-webkit-scrollbar { width:6px; height:6px; } ::-webkit-scrollbar-track { background: var(--background); } ::-webkit-scrollbar-thumb { background: var(--accent); border-radius:3px; }
+        .kicker { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.3em; color:var(--accent); }
+        .lbl { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+
+        /* ---- discovery toolbar ---- */
+        .tk-sel { background:#1b1e22; border:1px solid var(--border); padding:.5rem .7rem; font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--foreground); outline:none; cursor:pointer; -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' fill='none'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%239ca3af' stroke-width='1.3'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .6rem center; padding-right:1.6rem; }
+        .light-mode .tk-sel { background-color:#fff; }
+        .tk-sel:focus { border-color:var(--accent); }
+        .tk-chip { display:inline-flex; align-items:center; gap:.4rem; border:1px solid rgba(240,98,37,.4); background:rgba(240,98,37,.08); color:var(--foreground); font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.08em; padding:.28rem .55rem; transition:background .2s ease; }
+        .tk-chip:hover { background:rgba(240,98,37,.16); }
+        .tk-clear { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted-foreground); text-decoration:underline; text-underline-offset:3px; }
+        .tk-clear:hover { color:var(--accent); }
+
+        /* ---- category rail ---- */
+        .tk-cat { transition:border-color .25s ease; }
+        .tk-cat img { transition:opacity .3s ease, transform .5s ease; }
+        .tk-cat:hover img { opacity:.62; transform:scale(1.04); }
+        .tk-cat.on { border-color:var(--accent); }
+        .tk-cat.on img { opacity:.72; }
+        .tk-cat.on .tk-cat-l { color:var(--accent); }
+
+        /* ---- trek tiles ---- */
+        .tk { transition:border-color .3s ease, box-shadow .35s ease, transform .35s ease; }
+        .tk:hover, .tk:focus-visible { border-color:rgba(240,98,37,.55); box-shadow:0 16px 44px -14px rgba(0,0,0,.6); }
+        .tk-img { will-change:transform; transition:opacity .6s ease, transform .6s cubic-bezier(.2,.6,.2,1); }
+        .tk-img.loaded { opacity:1; }
+        .tk:hover .tk-img, .tk:focus-visible .tk-img { transform:scale(1.045); }
+        .tk-scrim { background:linear-gradient(to top, rgba(var(--ink),.94) 0%, rgba(var(--ink),.55) 34%, rgba(var(--ink),.08) 64%, rgba(var(--ink),.30) 100%); transition:opacity .4s ease; }
+        .tk:hover .tk-scrim, .tk:focus-visible .tk-scrim { background:linear-gradient(to top, rgba(var(--ink),.97) 0%, rgba(var(--ink),.72) 44%, rgba(var(--ink),.24) 78%, rgba(var(--ink),.4) 100%); }
+        .tk-desc.reveal { max-height:0; opacity:0; overflow:hidden; transform:translateY(4px); transition:max-height .45s ease, opacity .35s ease, transform .35s ease, margin .35s ease; margin-top:0; }
+        .tk:hover .tk-desc.reveal, .tk:focus-visible .tk-desc.reveal { max-height:6rem; opacity:1; transform:none; margin-top:.5rem; }
+        .tk-arrow { transition:transform .3s ease; }
+        .tk:hover .tk-arrow, .tk:focus-visible .tk-arrow { transform:translateX(5px); }
+        .tk-badge { backdrop-filter:blur(4px); }
+        .tk-shimmer { background:linear-gradient(100deg,#22252a 28%,#2c3037 50%,#22252a 72%); background-size:200% 100%; animation:tkshimmer 1.5s ease-in-out infinite; }
+        .light-mode .tk-shimmer { background:linear-gradient(100deg,#eee 28%,#f6f6f6 50%,#eee 72%); background-size:200% 100%; }
+        @keyframes tkshimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        @media (max-width:1023px) {
+            .tk-desc.reveal { max-height:6rem; opacity:1; transform:none; margin-top:.5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .tk, .tk-img, .tk-scrim, .tk-desc.reveal, .tk-arrow, .tk-cat, .tk-cat img { transition:none !important; }
+            .tk:hover .tk-img, .tk:focus-visible .tk-img, .tk-cat:hover img { transform:none; }
+            .tk-desc.reveal { max-height:6rem; opacity:1; transform:none; margin-top:.5rem; }
+            .tk-shimmer { animation:none; }
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+<!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Trekking Trails of Nepal · Est. 1993</span>
+            </span>
+        </a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink is-active">Treks</a>
+            <a href="/expeditions" class="hme-navlink">Expeditions</a>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/dispatches" class="hme-navlink">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
+        </nav>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section data-media class="relative border-b border-border overflow-hidden">
+    <div class="absolute inset-0 z-0"><img src="/images/annapurna_real.jpg" alt="Trekkers beneath the Annapurna massif, Nepal" class="h-full w-full object-cover opacity-40"></div>
+    <div class="absolute inset-0 z-0 bg-gradient-to-t from-[#1b1e22] via-[#1b1e22]/70 to-[#1b1e22]/45"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
+        <span class="kicker">Trekking Trails · Nepal</span>
+        <h1 class="font-heading font-light uppercase tracking-tightest leading-[0.9] text-white text-5xl md:text-7xl mt-3">Find Your <span class="text-accent">Trail</span></h1>
+        <p class="max-w-2xl font-sans text-sm md:text-base text-white/80 mt-5 leading-relaxed">
+            Every route we guide, from the eight-thousander base camps to the trans-Himalayan valleys and the quiet mid-hills. Filter by region, difficulty, duration or season — every trail opens to a full route guide.
+        </p>
+        <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
+            <span><span class="text-accent text-sm font-heading mr-1" id="hero-count">28</span> trails</span>
+            <span><span class="text-accent text-sm font-heading mr-1">6</span> provinces</span>
+            <span><span class="text-accent text-sm font-heading mr-1">8</span> eight-thousanders</span>
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORY RAIL -->
+<section class="border-b border-border bg-background">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-5">
+        <span class="lbl block mb-3">Explore by</span>
+        <div id="tk-cats" class="flex gap-3 overflow-x-auto pb-1 -mx-2 px-2"></div>
+    </div>
+</section>
+
+<!-- DISCOVERY TOOLBAR -->
+<div id="tk-toolbar" class="sticky top-0 z-30 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-3 space-y-3">
+        <div class="flex flex-wrap items-center gap-2.5">
+            <div class="relative flex-1 min-w-[190px] max-w-sm">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground"></i>
+                <input id="f-q" type="search" autocomplete="off" placeholder="Search treks, regions or mountains…" aria-label="Search treks"
+                    class="w-full bg-[#1b1e22] border border-border pl-9 pr-3 py-2 font-mono text-xs text-foreground placeholder:text-muted-foreground/70 outline-none focus:border-accent">
+            </div>
+            <select id="f-region" class="tk-sel" aria-label="Filter by region"></select>
+            <select id="f-diff" class="tk-sel" aria-label="Filter by difficulty">
+                <option value="">Any difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Challenging">Challenging</option>
+                <option value="Strenuous">Strenuous</option>
+            </select>
+            <select id="f-dur" class="tk-sel" aria-label="Filter by duration">
+                <option value="">Any length</option>
+                <option value="s">Under 10 days</option>
+                <option value="m">10–16 days</option>
+                <option value="l">17+ days</option>
+            </select>
+            <select id="f-season" class="tk-sel" aria-label="Filter by season">
+                <option value="">Any season</option>
+                <option value="spring">Spring · Mar–May</option>
+                <option value="autumn">Autumn · Sep–Nov</option>
+                <option value="winter">Winter-friendly</option>
+                <option value="monsoon">Monsoon-friendly</option>
+            </select>
+            <div class="ml-auto flex items-center gap-2">
+                <span class="lbl hidden sm:block">Sort</span>
+                <select id="f-sort" class="tk-sel" aria-label="Sort treks">
+                    <option value="rec">Recommended</option>
+                    <option value="pop">Most popular</option>
+                    <option value="short">Shortest first</option>
+                    <option value="long">Longest first</option>
+                    <option value="high">Highest altitude</option>
+                </select>
+            </div>
+        </div>
+        <div id="tk-chips" class="hidden flex-wrap items-center gap-2"></div>
+    </div>
+</div>
+
+<!-- GRID -->
+<main class="flex-1 bg-background">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 py-8 md:py-12">
+        <div class="flex items-baseline justify-between mb-6">
+            <h2 class="font-heading font-light text-2xl md:text-3xl uppercase text-foreground tracking-tightest">The Trails</h2>
+            <span id="tk-count" class="lbl"></span>
+        </div>
+        <div id="tk-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4 auto-rows-[150px] grid-flow-row-dense"></div>
+        <div id="tk-empty" class="hidden py-16 md:py-24 text-center">
+            <span class="kicker">Nothing here</span>
+            <h3 class="font-heading font-light text-2xl md:text-4xl uppercase text-foreground mt-3 mb-3 tracking-tightest">No treks match your search</h3>
+            <p class="font-sans text-sm text-muted-foreground mb-7 max-w-sm mx-auto">Try widening the filters, or start from one of these trails instead.</p>
+            <button id="tk-clear2" class="border border-accent text-accent hover:bg-accent hover:text-background font-mono text-[10px] uppercase tracking-widest px-5 py-2.5 transition-all mb-10">Clear all filters</button>
+            <div id="tk-suggest" class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto"></div>
+        </div>
+    </div>
+</main>
+
+<section class="border-t border-border bg-[#191b1f]">
+    <div class="max-w-4xl mx-auto px-6 py-16 text-center">
+        <span class="kicker">Not sure which trail?</span>
+        <h2 class="font-heading font-light text-3xl md:text-4xl uppercase text-foreground mt-3 mb-4 tracking-tightest">Tell us your dates and fitness</h2>
+        <p class="font-sans text-sm text-muted-foreground max-w-lg mx-auto mb-8">We will match you to the right trail — honestly, including whether now is the right season and whether a shorter route would suit you better.</p>
+        <a href="/contact" class="inline-flex bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Ask a local expert</a>
+    </div>
+</section>
+
+<footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+        <div class="mt-10 text-center">
+            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
+        </div>
+    </div>
+</footer>
+
+<script src="/treks.js?v=2"></script>
+<script>
+(function () {
+  'use strict';
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); };
+  var firstInt = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
+  var T = window.TREKS || {}, P = window.TREK_PROVINCES || {};
+  var ORDER = ['koshi', 'bagmati', 'gandaki', 'karnali', 'lumbini', 'madhesh', 'sudurpashchim'];
+  if (localStorage.getItem('vo_theme') === 'light') document.body.classList.add('light-mode');
+
+  /* ---------- derive a lightweight view model per trek ---------- */
+  var LIST = Object.keys(T).map(function (slug, i) {
+    var t = T[slug], s = t.stats || {}, su = t.suitability || {};
+    var prov = P[t.province] || {};
+    var dm = firstInt(s.duration);
+    var alt = firstInt(s.maxAltitude);
+    var bs = (s.bestSeason || '').toLowerCase();
+    var ovr = (t.overview || []).join(' ').toLowerCase();
+    var season = {
+      spring: /(mar|apr|may)/.test(bs),
+      autumn: /(sep|oct|nov)/.test(bs),
+      winter: /(dec|jan|feb|year-round|oct.?may)/.test(bs),
+      monsoon: /(jun|jul|aug|monsoon|mid-may)/.test(bs) || /rain-shadow|monsoon/.test(ovr)
+    };
+    var seasonWords = [];
+    if (season.spring) seasonWords.push('Spring');
+    if (season.autumn) seasonWords.push('Autumn');
+    if (!season.spring && !season.autumn && season.winter) seasonWords.push('Winter');
+    if (season.monsoon) seasonWords.push('Monsoon OK');
+    var pr = (t.cost && t.cost.tiers && t.cost.tiers[0] && t.cost.tiers[0].rangeUSD) || '';
+    var pm = pr.match(/\$[\d,]+/);
+    var priceFrom = pm ? ('From ' + pm[0] + (/per day/i.test(pr) ? ' / day' : '')) : '';
+    var durMatch = String(s.duration || '').match(/(\d+)(?:\s*[–—-]\s*(\d+))?\s*days?/i);
+    var durShort = durMatch ? (durMatch[2] ? durMatch[1] + '–' + durMatch[2] + ' days' : durMatch[1] + ' days') : (s.duration || '').split('(')[0].trim();
+    var altShort = (s.maxAltitude || '').replace(/^[≈~\s]+/, '').split('(')[0].trim();
+    return {
+      slug: slug, idx: i, name: t.name.replace(/ Trek$/, ''),
+      region: t.region || prov.name || '',
+      provinceName: (prov.name || '').replace(' Province', ''),
+      provinceKey: t.province,
+      tagline: t.tagline || t.summary || '',
+      img: t.heroImage || '/images/hero-mountain.jpg',
+      difficulty: s.difficulty || '', durShort: durShort, altShort: altShort,
+      priceFrom: priceFrom, seasonShort: seasonWords.join(' / '), bestSeason: s.bestSeason || '',
+      durationDays: dm, maxAltM: alt, season: season,
+      featured: !!t.featured, popular: !!t.popular,
+      remoteness: su.remoteness || 0, physical: su.physical || 0, technical: su.technical || 0, altitudeScore: su.altitude || 0,
+      peakNames: ((t.acclimatization || {}), (t.highlights || []).join(' ') + ' ' + (t.summary || ''))
+    };
+  });
+
+  /* ---------- filter state ---------- */
+  var st = { q: '', region: '', diff: '', dur: '', season: '', cat: 'all', sort: 'rec' };
+
+  var CATS = [
+    { id: 'all', label: 'All trails', img: '/images/annapurna_real.jpg', test: function () { return true; } },
+    { id: 'popular', label: 'Most popular', img: '/images/ebc.png', test: function (t) { return t.popular; } },
+    { id: 'everest', label: 'Everest region', img: '/images/everest_real.jpg', test: function (t) { return /khumbu|everest/i.test(t.region); } },
+    { id: 'annapurna', label: 'Annapurna & Mustang', img: '/images/annapurna.png', test: function (t) { return /annapurna|mustang/i.test(t.region); } },
+    { id: 'offbeat', label: 'Off the beaten path', img: '/images/manaslu_real.jpg', test: function (t) { return t.remoteness >= 8; } },
+    { id: 'short', label: 'Short treks', img: '/images/langtang_real.jpg', test: function (t) { return t.durationDays && t.durationDays <= 9; } },
+    { id: 'high', label: 'High altitude', img: '/images/hero-mountain.jpg', test: function (t) { return t.maxAltM && t.maxAltM >= 5000; } },
+    { id: 'beginner', label: 'Beginner friendly', img: '/images/itinerary.png', test: function (t) { return t.physical <= 5 && t.technical <= 2 && t.altitudeScore <= 6; } }
+  ];
+  var catById = {}; CATS.forEach(function (c) { catById[c.id] = c; });
+
+  /* ---------- populate region select + category rail ---------- */
+  (function () {
+    var provs = ORDER.filter(function (p) { return LIST.some(function (t) { return t.provinceKey === p; }); });
+    var opts = '<option value="">All regions</option>' + provs.map(function (p) {
+      var n = (P[p].name || '').replace(' Province', '');
+      var c = LIST.filter(function (t) { return t.provinceKey === p; }).length;
+      return '<option value="' + p + '">' + esc(n) + ' (' + c + ')</option>';
+    }).join('');
+    document.getElementById('f-region').innerHTML = opts;
+
+    document.getElementById('tk-cats').innerHTML = CATS.map(function (c) {
+      var n = c.id === 'all' ? LIST.length : LIST.filter(c.test).length;
+      return '<button type="button" data-cat="' + c.id + '" class="tk-cat group relative shrink-0 w-[158px] md:w-[204px] h-[88px] md:h-[102px] overflow-hidden border border-border" aria-pressed="false">' +
+        '<img src="' + esc(c.img) + '" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full object-cover opacity-45">' +
+        '<span class="absolute inset-0 bg-gradient-to-t from-[#141619] via-[#141619]/40 to-transparent"></span>' +
+        '<span class="relative z-10 flex h-full flex-col justify-end items-start p-3">' +
+        '<span class="tk-cat-l font-heading text-[13px] md:text-[15px] font-light uppercase tracking-tight text-white leading-tight">' + esc(c.label) + '</span>' +
+        '<span class="font-mono text-[9px] tracking-widest text-white/55 mt-0.5">' + n + ' trails</span>' +
+        '</span></button>';
+    }).join('');
+  })();
+
+  /* ---------- layout rhythm ---------- */
+  var SM = ['col-span-2 row-span-3', 'col-span-2 row-span-3', 'col-span-1 row-span-2', 'col-span-1 row-span-2', 'col-span-2 row-span-3', 'col-span-1 row-span-2', 'col-span-1 row-span-2', 'col-span-2 row-span-3'];
+  var MD = ['md:col-span-4 md:row-span-2', 'md:col-span-2 md:row-span-3', 'md:col-span-2 md:row-span-2', 'md:col-span-2 md:row-span-2', 'md:col-span-2 md:row-span-3', 'md:col-span-4 md:row-span-2', 'md:col-span-2 md:row-span-2', 'md:col-span-2 md:row-span-2'];
+  var LG = ['lg:col-span-4 lg:row-span-3', 'lg:col-span-2 lg:row-span-3', 'lg:col-span-3 lg:row-span-2', 'lg:col-span-3 lg:row-span-2', 'lg:col-span-2 lg:row-span-2', 'lg:col-span-2 lg:row-span-2', 'lg:col-span-4 lg:row-span-2', 'lg:col-span-2 lg:row-span-3', 'lg:col-span-3 lg:row-span-2', 'lg:col-span-3 lg:row-span-2', 'lg:col-span-2 lg:row-span-2', 'lg:col-span-2 lg:row-span-2'];
+
+  function spanFor(i, forceBig) {
+    if (forceBig) return SM[0] + ' ' + MD[0] + ' ' + 'lg:col-span-4 lg:row-span-3';
+    if (i > 0 && i % 9 === 0) return 'col-span-2 row-span-3 md:col-span-4 md:row-span-2 lg:col-span-6 lg:row-span-2'; /* panoramic full-width */
+    return SM[i % SM.length] + ' ' + MD[i % MD.length] + ' ' + LG[i % LG.length];
+  }
+
+  /* ---------- card ---------- */
+  var ARROW = '<svg class="tk-arrow" width="16" height="8" viewBox="0 0 16 8" fill="none" aria-hidden="true"><path d="M0 4h14M11 1l3 3-3 3" stroke="currentColor" stroke-width="1.4"/></svg>';
+
+  function card(t, cls, big) {
+    var meta = [t.durShort, t.difficulty, '<span class="text-accent">' + esc(t.altShort) + '</span>'];
+    if (big && t.seasonShort) meta.push('Best: ' + esc(t.seasonShort));
+    var badge = (t.featured ? 'Signature route' : (t.popular ? 'Popular' : ''));
+    return '<a href="/treks/' + esc(t.slug) + '" class="tk group relative block overflow-hidden border border-border bg-card ' + cls + '" ' +
+      'aria-label="' + esc(t.name + ' — ' + t.region + '. ' + t.durShort + ', ' + t.difficulty + ', maximum altitude ' + t.altShort) + '">' +
+      '<div class="tk-shimmer absolute inset-0"></div>' +
+      '<img class="tk-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" decoding="async" src="' + esc(t.img) + '" alt="' + esc(t.name + ', ' + t.region + ', Nepal') + '">' +
+      '<div class="tk-scrim absolute inset-0"></div>' +
+      (badge ? '<span class="tk-badge absolute top-3 left-3 z-10 bg-black/35 border border-white/15 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.2em] text-white">' + esc(badge) + '</span>' : '') +
+      '<div class="relative z-10 flex h-full flex-col justify-end p-4 md:p-5">' +
+        '<span class="lbl text-white/70">' + esc(t.region) + '</span>' +
+        '<h3 class="font-heading font-light uppercase tracking-tight text-white leading-[0.95] mt-1 ' + (big ? 'text-3xl md:text-[2.6rem]' : 'text-lg md:text-2xl') + '">' + esc(t.name) + '</h3>' +
+        '<p class="tk-desc ' + (big ? '' : 'reveal ') + 'font-sans text-[12.5px] leading-snug text-white/80">' + esc(t.tagline) + '</p>' +
+        '<div class="mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[10px] uppercase tracking-wider text-white/85">' +
+          meta.map(function (m, k) { return (k ? '<span class="text-white/30">/</span>' : '') + '<span>' + m + '</span>'; }).join('') +
+        '</div>' +
+        '<div class="mt-3 flex items-center justify-between gap-3">' +
+          '<span class="font-mono text-[11px] text-white/90">' + esc(t.priceFrom || t.bestSeason.split('·')[0].trim()) + '</span>' +
+          '<span class="tk-cta inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white shrink-0">Explore ' + ARROW + '</span>' +
+        '</div>' +
+      '</div>' +
+    '</a>';
+  }
+
+  /* ---------- filtering ---------- */
+  function apply() {
+    var q = st.q.trim().toLowerCase();
+    var out = LIST.filter(function (t) {
+      if (st.region && t.provinceKey !== st.region) return false;
+      if (st.diff && t.difficulty.toLowerCase().indexOf(st.diff.toLowerCase()) < 0) return false;
+      if (st.dur === 's' && !(t.durationDays && t.durationDays < 10)) return false;
+      if (st.dur === 'm' && !(t.durationDays && t.durationDays >= 10 && t.durationDays <= 16)) return false;
+      if (st.dur === 'l' && !(t.durationDays && t.durationDays >= 17)) return false;
+      if (st.season && !t.season[st.season]) return false;
+      if (st.cat && st.cat !== 'all' && catById[st.cat] && !catById[st.cat].test(t)) return false;
+      if (q) {
+        var hay = (t.name + ' ' + t.region + ' ' + t.provinceName + ' ' + t.tagline + ' ' + t.peakNames).toLowerCase();
+        if (hay.indexOf(q) < 0) return false;
+      }
+      return true;
+    });
+
+    out.sort(function (a, b) {
+      if (st.sort === 'rec') return (b.featured - a.featured) || (b.popular - a.popular) || (a.idx - b.idx);
+      if (st.sort === 'pop') return (b.popular - a.popular) || (a.idx - b.idx);
+      if (st.sort === 'short') return (a.durationDays || 99) - (b.durationDays || 99);
+      if (st.sort === 'long') return (b.durationDays || 0) - (a.durationDays || 0);
+      if (st.sort === 'high') return (b.maxAltM || 0) - (a.maxAltM || 0);
+      return 0;
+    });
+
+    render(out);
+    renderChips();
+  }
+
+  function render(out) {
+    var grid = document.getElementById('tk-grid');
+    var empty = document.getElementById('tk-empty');
+    document.getElementById('tk-count').textContent = out.length + (out.length === 1 ? ' trail' : ' trails');
+
+    if (!out.length) {
+      grid.innerHTML = '';
+      grid.classList.add('hidden');
+      empty.classList.remove('hidden');
+      document.getElementById('tk-suggest').innerHTML = LIST.filter(function (t) { return t.popular; }).slice(0, 4).map(function (t) {
+        return '<a href="/treks/' + esc(t.slug) + '" class="tk group relative block overflow-hidden border border-border bg-card h-40" aria-label="' + esc(t.name) + '">' +
+          '<img class="tk-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" src="' + esc(t.img) + '" alt="' + esc(t.name) + '">' +
+          '<div class="tk-scrim absolute inset-0"></div>' +
+          '<div class="relative z-10 flex h-full items-end p-3"><span class="font-heading text-base font-light uppercase text-white leading-tight">' + esc(t.name) + '</span></div></a>';
+      }).join('');
+      bindImgs();
+      return;
+    }
+    empty.classList.add('hidden');
+    grid.classList.remove('hidden');
+
+    var bigDone = false;
+    grid.innerHTML = out.map(function (t, i) {
+      var forceBig = false;
+      if (!bigDone && st.sort === 'rec' && t.featured) { forceBig = true; bigDone = true; }
+      var cls = spanFor(i, forceBig);
+      var big = forceBig || /row-span-3/.test(cls) || /col-span-4|col-span-6/.test(cls);
+      return card(t, cls, big);
+    }).join('');
+    bindImgs();
+  }
+
+  function bindImgs() {
+    document.querySelectorAll('#tk-grid .tk-img, #tk-suggest .tk-img').forEach(function (img) {
+      if (img.complete && img.naturalWidth) { img.classList.add('loaded'); return; }
+      img.addEventListener('load', function () { img.classList.add('loaded'); }, { once: true });
+      img.addEventListener('error', function () { img.classList.add('loaded'); img.style.opacity = 1; }, { once: true });
+    });
+  }
+
+  function renderChips() {
+    var box = document.getElementById('tk-chips');
+    var chips = [];
+    if (st.cat && st.cat !== 'all' && catById[st.cat]) chips.push(['cat', catById[st.cat].label]);
+    if (st.region && P[st.region]) chips.push(['region', (P[st.region].name || '').replace(' Province', '') + ' region']);
+    if (st.diff) chips.push(['diff', st.diff]);
+    if (st.dur) chips.push(['dur', st.dur === 's' ? 'Under 10 days' : st.dur === 'm' ? '10–16 days' : '17+ days']);
+    if (st.season) chips.push(['season', st.season.charAt(0).toUpperCase() + st.season.slice(1)]);
+    if (st.q.trim()) chips.push(['q', '“' + st.q.trim() + '”']);
+
+    if (!chips.length) { box.classList.add('hidden'); box.innerHTML = ''; return; }
+    box.classList.remove('hidden');
+    box.classList.add('flex');
+    box.innerHTML = chips.map(function (c) {
+      return '<button type="button" class="tk-chip" data-clear="' + c[0] + '">' +
+        '<span aria-hidden="true">×</span> ' + esc(c[1]) + '</button>';
+    }).join('') + '<button type="button" class="tk-clear ml-1" data-clear="all">Clear all</button>';
+  }
+
+  function clearKey(k) {
+    if (k === 'all') { st = { q: '', region: '', diff: '', dur: '', season: '', cat: 'all', sort: st.sort }; syncControls(); }
+    else if (k === 'cat') st.cat = 'all';
+    else if (k === 'region') { st.region = ''; document.getElementById('f-region').value = ''; }
+    else if (k === 'diff') { st.diff = ''; document.getElementById('f-diff').value = ''; }
+    else if (k === 'dur') { st.dur = ''; document.getElementById('f-dur').value = ''; }
+    else if (k === 'season') { st.season = ''; document.getElementById('f-season').value = ''; }
+    else if (k === 'q') { st.q = ''; document.getElementById('f-q').value = ''; }
+    syncCats();
+    apply();
+  }
+
+  function syncControls() {
+    document.getElementById('f-q').value = st.q;
+    document.getElementById('f-region').value = st.region;
+    document.getElementById('f-diff').value = st.diff;
+    document.getElementById('f-dur').value = st.dur;
+    document.getElementById('f-season').value = st.season;
+    document.getElementById('f-sort').value = st.sort;
+    syncCats();
+  }
+  function syncCats() {
+    document.querySelectorAll('#tk-cats .tk-cat').forEach(function (b) {
+      var on = b.dataset.cat === st.cat;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  /* ---------- events ---------- */
+  var deb;
+  document.getElementById('f-q').addEventListener('input', function (e) {
+    clearTimeout(deb); var v = e.target.value;
+    deb = setTimeout(function () { st.q = v; apply(); }, 160);
+  });
+  document.getElementById('f-region').addEventListener('change', function (e) { st.region = e.target.value; apply(); });
+  document.getElementById('f-diff').addEventListener('change', function (e) { st.diff = e.target.value; apply(); });
+  document.getElementById('f-dur').addEventListener('change', function (e) { st.dur = e.target.value; apply(); });
+  document.getElementById('f-season').addEventListener('change', function (e) { st.season = e.target.value; apply(); });
+  document.getElementById('f-sort').addEventListener('change', function (e) { st.sort = e.target.value; apply(); });
+
+  document.getElementById('tk-cats').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cat]'); if (!b) return;
+    st.cat = (st.cat === b.dataset.cat) ? 'all' : b.dataset.cat;
+    syncCats(); apply();
+    document.getElementById('tk-toolbar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  document.getElementById('tk-chips').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-clear]'); if (b) clearKey(b.dataset.clear);
+  });
+  document.getElementById('tk-clear2').addEventListener('click', function () { clearKey('all'); });
+
+  /* ---------- deep link: /treks#<province> ---------- */
+  (function () {
+    var h = (location.hash || '').replace('#', '');
+    if (h && P[h] && LIST.some(function (t) { return t.provinceKey === h; })) {
+      st.region = h;
+    }
+  })();
+
+  syncControls();
+  apply();
+})();
+</script>
+<script src="/announce.js?v=1"></script>
+<script src="/menu.js?v=4"></script>
+<script src="/reveal.js?v=1"></script>
+<script src="/compass-nav.js?v=1"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>

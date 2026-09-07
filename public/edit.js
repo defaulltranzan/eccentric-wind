@@ -36,10 +36,11 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "EST. 1993 · 30+ YEARS OF HIMALAYAN EXCELLENCE",
+    heroBadge: "EST. 1993 · 30 YEARS IN THE HIMALAYA",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroDesc: "Orchestrating transformative journeys across Nepal's sacred peaks and high corridors since 1993. Guided by veteran IFMGA/NMA Sherpa masters with 100% safety commitment.",
+    heroTagline: "Leave the ordinary behind and ascend into legend.",
+    heroDesc: "Nepal's trekking trails and 8,000-metre expeditions — led since 1993 by the certified local guides who live beneath these mountains.",
     btnViewExpeditions: "Begin Climbing",
     scrollElevation: "SCROLL FOR ELEVATION",
     
@@ -52,9 +53,9 @@ const i18n = {
     ],
     
     // 02 Expedition Matrix
-    sec02Label: "02 — Flagship Expeditions",
+    sec02Label: "02 — Flagship Routes",
     sec02HeadingPrimary: "Choose Your",
-    sec02HeadingAccent: "Summit",
+    sec02HeadingAccent: "Adventure",
     optAllRegions: "ALL REGIONS",
     optNepal: "NEPAL",
     optTibet: "TIBET",
@@ -104,10 +105,10 @@ const i18n = {
     btnDeclareIntent: "Declare Intent",
     
     // 06 Dispatches
-    sec06Label: "06 — DISPATCHES FROM THE TRAIL",
+    sec06Label: "06 — The Field Journal",
     sec06Heading: "Stories From The <span class='font-semibold text-accent'>High Places</span>",
     btnWriteDispatch: "+ Write Dispatch",
-    readJournal: "READ JOURNAL",
+    readJournal: "READ STORY",
     noDispatches: "NO HISTORICAL DISPATCHES LOGGED YET.",
     
     // Legacy & About
@@ -146,11 +147,12 @@ const i18n = {
     btnDiscard: "रद्द गर्नुहोस्",
     
     // Top Bar & Manifesto
-    coordSystem: "[ निर्देशाङ्क ग्रिड प्रणाली ]",
-    heroBadge: "नेपालका उत्कृष्ट साहसिक विशेषज्ञहरू",
-    heroTitlePrimary: "भर्टिकल",
-    heroTitleItalic: "ओडिसी (महायात्रा)",
-    heroDesc: "नेपालका सर्वोच्च हिमाली मार्गहरूमा धैर्य र साहसको तीर्थयात्रा। यो केवल बिदा होइन—शरीर र आत्माको एक रूपान्तरणकारी उचाइ हो।",
+    coordSystem: "27°59'N · 86°55'E",
+    heroBadge: "सन् १९९३ देखि · हिमालयमा ३० वर्ष",
+    heroTitlePrimary: "HIMALAYAN",
+    heroTitleItalic: "MAGIC ADVENTURE",
+    heroTagline: "साधारणलाई पछाडि छोड्नुहोस्, किंवदन्तीमा चढ्नुहोस्।",
+    heroDesc: "नेपालका पदयात्रा मार्ग र ८,००० मिटरका अभियानहरू — सन् १९९३ देखि, यी हिमालको फेदमा बस्ने प्रमाणित स्थानीय गाइडहरूको नेतृत्वमा।",
     btnViewExpeditions: "अभियानहरू हेर्नुहोस्",
     scrollElevation: "उचाइको लागि स्क्रोल गर्नुहोस्",
     
@@ -163,9 +165,9 @@ const i18n = {
     ],
     
     // 02 Expedition Matrix
-    sec02Label: "०२ — मुख्य अभियानहरू",
+    sec02Label: "०२ — प्रमुख यात्राहरू",
     sec02HeadingPrimary: "आफ्नो",
-    sec02HeadingAccent: "शिखर रोज्नुहोस्",
+    sec02HeadingAccent: "यात्रा रोज्नुहोस्",
     optAllRegions: "सबै क्षेत्रहरू",
     optNepal: "नेपाल",
     optTibet: "तिब्बत",
@@ -215,10 +217,10 @@ const i18n = {
     btnDeclareIntent: "इरादा पेश गर्नुहोस्",
     
     // 06 Dispatches
-    sec06Label: "०६ — पदयात्राका रिपोर्टहरू",
+    sec06Label: "०६ — फिल्ड जर्नल",
     sec06Heading: "उच्च हिमालका <span class='font-semibold text-accent'>कथाहरू</span>",
     btnWriteDispatch: "+ नयाँ रिपोर्ट लेख्नुहोस्",
-    readJournal: "विवरण पढ्नुहोस्",
+    readJournal: "कथा पढ्नुहोस्",
     noDispatches: "हालसम्म कुनै रिपोर्टहरू प्रकाशित भएका छैनन्।",
     
     // Legacy & About
@@ -257,11 +259,12 @@ const i18n = {
     btnDiscard: "放弃修改",
     
     // Top Bar & Manifesto
-    coordSystem: "[ 坐标网格系统 ]",
-    heroBadge: "尼泊尔顶尖高海拔探险专家",
-    heroTitlePrimary: "纵向",
-    heroTitleItalic: "奥德赛",
-    heroDesc: "穿越尼泊尔最高走廊的耐力朝圣之旅。这不是普通度假——而是一场对身体与心灵的升华蜕变。由国际高山向导联合会（IFMGA）认证向导领衔。",
+    coordSystem: "27°59'N · 86°55'E",
+    heroBadge: "自 1993 年 · 喜马拉雅 30 年",
+    heroTitlePrimary: "HIMALAYAN",
+    heroTitleItalic: "MAGIC ADVENTURE",
+    heroTagline: "把平凡留在身后，攀上传奇之巅。",
+    heroDesc: "尼泊尔的徒步路线与 8,000 米级探险 —— 自 1993 年起，由生活在这些雪山脚下的持证当地向导带领。",
     btnViewExpeditions: "浏览探险路线",
     scrollElevation: "向下滚动探索海拔",
     
@@ -274,9 +277,9 @@ const i18n = {
     ],
     
     // 02 Expedition Matrix
-    sec02Label: "02 — 旗舰远征",
+    sec02Label: "02 — 旗舰路线",
     sec02HeadingPrimary: "选择你的",
-    sec02HeadingAccent: "巅峰",
+    sec02HeadingAccent: "旅程",
     optAllRegions: "所有区域",
     optNepal: "尼泊尔",
     optTibet: "西藏",
@@ -326,10 +329,10 @@ const i18n = {
     btnDeclareIntent: "提交攀登意愿",
     
     // 06 Dispatches
-    sec06Label: "06 — 探险前线简报",
+    sec06Label: "06 — 山野随笔",
     sec06Heading: "来自<span class='font-semibold text-accent'>群山之巅</span>的纪实故事",
     btnWriteDispatch: "+ 撰写探险简报",
-    readJournal: "阅读日志",
+    readJournal: "阅读全文",
     noDispatches: "暂无历史简报发布。",
     
     // Legacy & About
@@ -551,13 +554,15 @@ function applyLanguageUI() {
     if (hItalic) hItalic.innerText = t.heroTitleItalic;
     const hDesc = document.getElementById('hero-description');
     if (hDesc) hDesc.innerText = t.heroDesc;
+    const hTag = document.getElementById('hero-tagline');
+    if (hTag && t.heroTagline) hTag.innerText = t.heroTagline;
   }
 
   // 4. Section Headers & Navigation
   const matrixLabel = document.querySelector('#expeditions span.text-accent');
   if (matrixLabel) matrixLabel.innerText = t.sec02Label;
   const matrixHeading = document.querySelector('#expeditions h2');
-  if (matrixHeading) matrixHeading.innerHTML = `${t.sec02HeadingPrimary} <br><span class="font-semibold text-accent">${t.sec02HeadingAccent}</span>`;
+  if (matrixHeading) matrixHeading.innerHTML = `${t.sec02HeadingPrimary} <span class="font-semibold text-accent">${t.sec02HeadingAccent}</span>`;
 
   const btnAddTrek = document.querySelector('#add-trek-panel button');
   if (btnAddTrek) btnAddTrek.innerText = t.btnAddTrek;
@@ -576,13 +581,11 @@ function applyLanguageUI() {
   const gearDesc = document.querySelector('#gear p.text-muted-foreground');
   if (gearDesc) gearDesc.innerText = t.sec04Desc;
 
-  // 8. Dispatches
+  // 8. The Field Journal (homepage strip)
   const dispLabel = document.getElementById('dispatches-label');
   if (dispLabel) dispLabel.innerText = t.sec06Label;
   const dispHeading = document.querySelector('#dispatches h2');
   if (dispHeading) dispHeading.innerHTML = t.sec06Heading;
-  const btnWriteDisp = document.getElementById('btn-add-dispatch');
-  if (btnWriteDisp) btnWriteDisp.innerText = t.btnWriteDispatch;
 
   // 9. About Section
   const abBadge = document.getElementById('about-badge');
@@ -613,75 +616,242 @@ function applyLanguageUI() {
 }
 
 /* ==========================================================================
-   SECTION 02 — FLAGSHIP EXPEDITIONS
-   Renders the best-selling eight-thousanders (from mountains.js) into
-   #flagship-grid on the homepage. Each tile links to its /expeditions/<slug>
-   page. Data-driven: mark a peak with `bestseller: <n>` in mountains.js.
+   SECTION 02 — CHOOSE YOUR ADVENTURE
+   One horizontal face-card scroller with three route types:
+     · treks  — best-selling tea-house trails      (window.TREKS,  popular:true)
+     · peaks  — the flagship eight-thousanders     (window.MOUNTAINS, bestseller:n)
+     · high   — best-selling 6,000 / 7,000 m climbs (window.getPeaks, featured:true)
+   Six curated cards per type, then a trailing "explore all" tile.
+   Trekking is the default. Every card carries the same basic read:
+     a headline number (altitude), region, name, a one-line note, three stats,
+     a country/region foot and an Explore link to the full guide.
    ========================================================================== */
-function renderFlagshipPeaks() {
-  const grid = document.getElementById('flagship-grid');
-  if (!grid || !window.MOUNTAINS) return;
+const FLAGSHIP_STATE = { cat: 'treks' };
+const FLAGSHIP_CARD_LIMIT = 6;
 
-  const peaks = Object.keys(window.MOUNTAINS)
-    .map(k => window.MOUNTAINS[k])
-    .filter(m => m.bestseller)
-    .sort((a, b) => a.bestseller - b.bestseller);
+const FLAGSHIP_SUB = {
+  treks: 'The trails we walk most — tea-house treks from a week to a month. Each tile opens a full route guide: day-by-day itinerary, altitude profile, season, cost and permits.',
+  peaks: 'The eight-thousanders we run most. Each tile opens a full expedition guide — the normal route, camps, season, hazards and history.',
+  high: 'Our most-booked 6,000 and 7,000 m climbs — from first glacier peaks to serious pre-8,000 m objectives. Each tile opens the route, grade, season and history.'
+};
 
-  if (!peaks.length) { grid.classList.add('hidden'); return; }
-  grid.classList.remove('hidden');
+function fsDigits(v) {
+  const m = String(v == null ? '' : v).match(/[\d][\d,]*/);
+  return m ? m[0] : '';
+}
+function fsApprox(v) { return /[≈~]/.test(String(v || '')) ? '≈' : ''; }
+function fsShortDuration(v) {
+  const m = String(v || '').match(/\d[\d\s–-]*\s*days?/i);
+  return m ? m[0].replace(/\s+/g, ' ').trim() : String(v || '—');
+}
+function fsSeasonTag(v) {
+  const m = String(v || '').match(/spring|summer|autumn|fall|winter|pre-?monsoon|post-?monsoon/i);
+  return m ? m[0].toUpperCase() : '';
+}
 
-  grid.innerHTML = peaks.map((m, i) => {
-    const elev = m.elevationLabel || ((m.elevationM || 0).toLocaleString() + ' m');
-    const season = (m.season && m.season.primary) || '';
-    const seasonWin = (m.season && m.season.window) || '';
-    const firstYear = (m.firstAscent && m.firstAscent.year) || '—';
-    // A 1–5 "commitment" read, averaged from the comparative difficulty profile.
-    const d = m.difficulty || {};
-    const dvals = ['technical', 'altitude', 'exposure', 'weather', 'objectiveHazard']
-      .map(k => d[k]).filter(v => typeof v === 'number');
-    const commit = dvals.length ? Math.round(dvals.reduce((a, b) => a + b, 0) / dvals.length) : 0;
-    const pips = commit
-      ? '<span class="tracking-[0.15em] text-accent">' + '●'.repeat(commit) +
-        '<span class="text-muted-foreground/40">' + '○'.repeat(5 - commit) + '</span></span>'
-      : '<span class="text-muted-foreground">—</span>';
-    // Show only the first three on mobile — a six-card swipe gets tedious on a phone.
-    const extra = i >= 3 ? ' hme-flag-extra' : '';
+/* the six flagship treks: popular routes, in data order */
+function flagshipTrekItems() {
+  const T = window.TREKS || {};
+  const P = window.TREK_PROVINCES || {};
+  return Object.keys(T).map(k => T[k]).filter(t => t && t.popular)
+    .slice(0, FLAGSHIP_CARD_LIMIT).map(t => {
+      const s = t.stats || {};
+      return {
+        href: '/treks/' + t.slug,
+        kicker: t.region || (P[t.province] && P[t.province].name) || 'Nepal',
+        approx: fsApprox(s.maxAltitude),
+        big: fsDigits(s.maxAltitude) || '—',
+        unit: 'm',
+        name: t.name.replace(/\s+Trek$/i, ''),
+        aka: '',
+        blurb: t.tagline || t.summary || '',
+        tagTL: t.featured ? 'Signature' : (t.restricted ? 'Restricted' : 'Popular'),
+        tagTR: '',
+        rows: [
+          ['Duration', fsShortDuration(s.duration)],
+          ['Difficulty', s.difficulty || '—'],
+          ['Best season', s.bestSeason || '—']
+        ],
+        foot: (P[t.province] && P[t.province].name) ? P[t.province].name.replace(' Province', '') : (t.region || 'Nepal'),
+        image: t.heroImage || ''
+      };
+    });
+}
 
-    return `
-    <a href="/expeditions/${escapeHtml(m.slug)}" aria-label="${escapeHtml(m.name + ' expedition — ' + elev + ', ' + m.countryLabel)}"
-       class="hme-flag${extra} group relative block h-[440px] w-[290px] sm:w-[320px] shrink-0 snap-start overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:border-accent">
-      <div class="absolute inset-0 z-0 bg-cover bg-center opacity-45 group-hover:opacity-30 scale-100 group-hover:scale-105 transition-all duration-700 ease-out" style="background-image:url('${escapeHtml(m.heroImage)}')"></div>
+/* the flagship eight-thousanders */
+function flagshipPeakItems() {
+  const M = window.MOUNTAINS || {};
+  return Object.keys(M).map(k => M[k]).filter(m => m.bestseller)
+    .sort((a, b) => a.bestseller - b.bestseller)
+    .slice(0, FLAGSHIP_CARD_LIMIT).map(m => {
+      const elev = m.elevationLabel || ((m.elevationM || 0).toLocaleString() + ' m');
+      const d = m.difficulty || {};
+      const dvals = ['technical', 'altitude', 'exposure', 'weather', 'objectiveHazard']
+        .map(k => d[k]).filter(v => typeof v === 'number');
+      const commit = dvals.length ? Math.round(dvals.reduce((a, b) => a + b, 0) / dvals.length) : 0;
+      const pips = commit
+        ? '<span class="tracking-[0.15em] text-accent">' + '●'.repeat(commit) +
+          '<span class="text-muted-foreground/40">' + '○'.repeat(5 - commit) + '</span></span>'
+        : '—';
+      return {
+        href: '/expeditions/' + m.slug,
+        kicker: m.range || '',
+        approx: '',
+        big: fsDigits(elev),
+        unit: 'm',
+        name: m.name,
+        aka: m.aka || '',
+        blurb: m.tagline || '',
+        tagTL: '#' + m.rank + ' <span class="text-white/50">/ 14</span>',
+        tagTR: (m.season && m.season.primary) || '',
+        rows: [
+          ['First climbed', (m.firstAscent && m.firstAscent.year) || '—'],
+          ['Commitment', pips],
+          ['Window', (m.season && m.season.window) || '—']
+        ],
+        foot: m.countryLabel || '',
+        image: m.heroImage || ''
+      };
+    });
+}
+
+/* best-selling 6,000 / 7,000 m climbs */
+function flagshipHighItems() {
+  if (!window.getPeaks) return [];
+  // best-sellers for this band are the accessible ones — order low to high
+  let list = window.getPeaks({ category: ['7000', '6000'], sort: 'elevation-asc' })
+    .filter(p => p.featured);
+  if (list.length < FLAGSHIP_CARD_LIMIT) {
+    const more = window.getPeaks({ category: ['7000', '6000'], sort: 'elevation-asc' })
+      .filter(p => !p.featured);
+    list = list.concat(more);
+  }
+  return list.slice(0, FLAGSHIP_CARD_LIMIT).map(p => ({
+    href: p.href,
+    kicker: p.range || p.region || '',
+    approx: '',
+    big: fsDigits(p.elevationDisplay),
+    unit: 'm',
+    name: p.name,
+    aka: p.aka || '',
+    blurb: p.shortDescription || '',
+    tagTL: escapeHtml(p.categoryLabel || ''),
+    tagTR: fsSeasonTag(p.climbingSeason),
+    rows: [
+      ['First climbed', p.firstAscentYear || '—'],
+      ['Grade', p.peakGrade || '—'],
+      ['Type', p.peakType || '—']
+    ],
+    foot: p.countryLabel || '',
+    image: p.image || ''
+  }));
+}
+
+function flagshipMoreTile(cat) {
+  const map = {
+    treks: { href: '/treks', label: 'trekking routes', count: (window.TREKS ? Object.keys(window.TREKS).length : 38) },
+    peaks: { href: '/expeditions/8000m', label: 'the 14 eight-thousanders', count: 14 },
+    high: { href: '/expeditions', label: '6,000 &amp; 7,000 m peaks', count: (window.getPeaks ? window.getPeaks({ category: ['7000', '6000'] }).length : 0) }
+  };
+  const m = map[cat] || map.treks;
+  return `
+    <a href="${m.href}" aria-label="Explore all ${m.label.replace(/&amp;/g, 'and')}"
+       class="hme-flag hme-flag-more group relative flex h-[440px] w-[220px] shrink-0 snap-start flex-col items-center justify-center gap-5 text-center focus:outline-none focus-visible:border-accent">
+      <span class="flex h-14 w-14 items-center justify-center rounded-full border border-accent/50 text-accent transition-all group-hover:bg-accent/10 group-hover:scale-105">
+        <i class="fa-solid fa-arrow-right"></i>
+      </span>
+      <span class="px-6 font-heading text-2xl uppercase tracking-tightest text-foreground leading-tight group-hover:text-accent transition-colors">Explore all<br>${m.label}</span>
+      ${m.count ? `<span class="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">${m.count} in the directory &rarr;</span>` : ''}
+    </a>`;
+}
+
+function flagshipCardHTML(c) {
+  const rows = c.rows.map(([k, v]) => `
+          <span class="text-muted-foreground/70">${escapeHtml(k)}</span>
+          <span class="text-right ${/[<]/.test(String(v)) ? '' : 'text-foreground/90'} truncate">${/[<]/.test(String(v)) ? v : escapeHtml(String(v))}</span>`).join('');
+  const bg = c.image
+    ? `<div class="absolute inset-0 z-0 bg-cover bg-center opacity-45 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700 ease-out" style="background-image:url('${escapeHtml(c.image)}')"></div>`
+    : `<div class="absolute inset-0 z-0 opacity-[0.5] bg-[radial-gradient(circle_at_28%_18%,rgba(240,98,37,0.16),transparent_55%),repeating-linear-gradient(118deg,rgba(255,255,255,0.045)_0_1px,transparent_1px_23px)]"></div>`;
+  return `
+    <a href="${c.href}" aria-label="${escapeHtml(c.name + ' — ' + c.big + ' ' + c.unit + (c.foot ? ', ' + c.foot : ''))}"
+       class="hme-flag group relative block h-[440px] w-[290px] sm:w-[320px] shrink-0 snap-start overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:border-accent">
+      ${bg}
       <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/78 to-[#181a1e]/20"></div>
-      <span class="absolute top-4 left-4 z-10 bg-black/45 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">#${m.rank} <span class="text-white/50">/ 14</span></span>
-      ${season ? `<span class="absolute top-4 right-4 z-10 bg-accent/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-background">${escapeHtml(season)}</span>` : ''}
+      <span class="absolute top-4 left-4 z-10 bg-black/45 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">${c.tagTL}</span>
+      ${c.tagTR ? `<span class="absolute top-4 right-4 z-10 bg-accent/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-background">${escapeHtml(c.tagTR)}</span>` : ''}
       <div class="relative z-10 flex h-full flex-col justify-end p-6">
-        <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">${escapeHtml(m.range)}</span>
+        <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground truncate">${escapeHtml(c.kicker)}</span>
         <div class="mt-1 flex items-end gap-1.5">
-          <span class="font-heading text-[2.9rem] md:text-5xl font-normal leading-none tracking-tightest text-accent">${escapeHtml(elev.replace(/\s*m$/i, ''))}</span>
-          <span class="mb-1 font-mono text-[10px] font-medium uppercase tracking-widest text-muted-foreground leading-tight">m</span>
+          <span class="font-heading text-[2.9rem] md:text-5xl font-normal leading-none tracking-tightest text-accent">${escapeHtml(c.approx + c.big)}</span>
+          <span class="mb-1 font-mono text-[10px] font-medium uppercase tracking-widest text-muted-foreground leading-tight">${escapeHtml(c.unit)}</span>
         </div>
-        <h3 class="mt-1.5 font-heading text-3xl md:text-[2rem] font-medium uppercase tracking-tightest text-foreground group-hover:text-accent transition-colors leading-[0.95]">${escapeHtml(m.name)}</h3>
-        ${m.aka ? `<span class="mt-1 block font-mono text-[10px] tracking-wide text-muted-foreground/80">${escapeHtml(m.aka)}</span>` : ''}
-        <p class="mt-2 font-mono text-[11px] leading-relaxed text-muted-foreground line-clamp-2">${escapeHtml(m.tagline || '')}</p>
-        <div class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-border/70 pt-3 font-mono text-[9px] uppercase tracking-[0.12em]">
-          <span class="text-muted-foreground/70">First climbed</span>
-          <span class="text-right text-foreground/90">${escapeHtml(String(firstYear))}</span>
-          <span class="text-muted-foreground/70">Commitment</span>
-          <span class="text-right">${pips}</span>
-          <span class="text-muted-foreground/70">Window</span>
-          <span class="text-right text-foreground/90 truncate">${escapeHtml(seasonWin || '—')}</span>
+        <h3 class="mt-1.5 font-heading text-3xl md:text-[2rem] font-medium uppercase tracking-tightest text-foreground group-hover:text-accent transition-colors leading-[0.95]">${escapeHtml(c.name)}</h3>
+        ${c.aka ? `<span class="mt-1 block font-mono text-[10px] tracking-wide text-muted-foreground/80">${escapeHtml(c.aka)}</span>` : ''}
+        ${c.blurb ? `<p class="mt-2 font-mono text-[11px] leading-relaxed text-muted-foreground line-clamp-2">${escapeHtml(c.blurb)}</p>` : ''}
+        <div class="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 border-t border-border/70 pt-3 font-mono text-[9px] uppercase tracking-[0.12em]">${rows}
         </div>
         <div class="mt-3 flex items-center justify-between gap-3 border-t border-border/70 pt-3">
-          <span class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground truncate">${escapeHtml(m.countryLabel)}</span>
+          <span class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground truncate">${escapeHtml(c.foot)}</span>
           <span class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent shrink-0">Explore <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i></span>
         </div>
       </div>
     </a>`;
-  }).join('');
+}
+
+function renderFlagship() {
+  const grid = document.getElementById('flagship-grid');
+  if (!grid) return;
+
+  const cat = FLAGSHIP_STATE.cat;
+  const items = cat === 'peaks' ? flagshipPeakItems()
+              : cat === 'high' ? flagshipHighItems()
+              : flagshipTrekItems();
+
+  if (!items.length) { grid.classList.add('hidden'); return; }
+  grid.classList.remove('hidden');
+
+  grid.innerHTML = items.map(flagshipCardHTML).join('') + flagshipMoreTile(cat);
+  grid.scrollLeft = 0;
+
+  const sub = document.getElementById('flagship-sub');
+  if (sub) sub.textContent = FLAGSHIP_SUB[cat] || FLAGSHIP_SUB.treks;
+
+  document.querySelectorAll('#flagship-tabs .hme-flag-tab').forEach(btn => {
+    btn.setAttribute('aria-selected', btn.dataset.cat === cat ? 'true' : 'false');
+  });
 
   updateFlagshipNav();
   grid.removeEventListener('scroll', updateFlagshipNav);
   grid.addEventListener('scroll', updateFlagshipNav, { passive: true });
+  if (typeof hmeSyncCompassH === 'function') hmeSyncCompassH();
+}
+
+/* keep the old name working for any external caller */
+function renderFlagshipPeaks() { renderFlagship(); }
+
+function setFlagshipCategory(cat) {
+  if (!['treks', 'peaks', 'high'].includes(cat) || cat === FLAGSHIP_STATE.cat) return;
+  FLAGSHIP_STATE.cat = cat;
+  renderFlagship();
+}
+
+function initFlagshipTabs() {
+  const tabs = document.getElementById('flagship-tabs');
+  if (!tabs || tabs.dataset.wired) return;
+  tabs.dataset.wired = '1';
+  tabs.addEventListener('click', e => {
+    const btn = e.target.closest('.hme-flag-tab');
+    if (btn && btn.dataset.cat) setFlagshipCategory(btn.dataset.cat);
+  });
+  tabs.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const order = ['treks', 'peaks', 'high'];
+    const i = order.indexOf(FLAGSHIP_STATE.cat);
+    const next = order[(i + (e.key === 'ArrowRight' ? 1 : order.length - 1)) % order.length];
+    setFlagshipCategory(next);
+    const b = tabs.querySelector(`.hme-flag-tab[data-cat="${next}"]`);
+    if (b) b.focus();
+  });
 }
 
 function scrollFlagship(dir) {
@@ -692,14 +862,14 @@ function scrollFlagship(dir) {
   const target = Math.max(0, Math.min(g.scrollLeft + step, g.scrollWidth - g.clientWidth));
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   g.scrollTo({ left: target, behavior: reduce ? 'auto' : 'smooth' });
-  setTimeout(updateFlagshipNav, 400);
+  setTimeout(updateFlagshipNav, 450);
 }
 
 function updateFlagshipNav() {
   const g = document.getElementById('flagship-grid');
   if (!g) return;
-  const prev = document.querySelector('.hme-flag-nav[aria-label="Previous peaks"]');
-  const next = document.querySelector('.hme-flag-nav[aria-label="More peaks"]');
+  const prev = document.querySelector('.hme-flag-nav[aria-label="Scroll left"]');
+  const next = document.querySelector('.hme-flag-nav[aria-label="Scroll right"]');
   const max = g.scrollWidth - g.clientWidth - 4;
   if (prev) prev.toggleAttribute('disabled', g.scrollLeft <= 4);
   if (next) next.toggleAttribute('disabled', g.scrollLeft >= max);
@@ -713,26 +883,6 @@ async function loadContent() {
     const response = await fetch('/api/content');
     if (!response.ok) throw new Error("Failed to read content database.");
     siteData = await response.json();
-
-    // Default sample dispatches if not in db
-    if (!siteData.dispatches) {
-      siteData.dispatches = [
-        {
-          title: "The Acclimatization Philosophy",
-          date: "August 15, 2026",
-          category: "SAFETY GUIDE",
-          excerpt: "Why we require a mandatory two-day rest buffer at Namche Bazaar. Insights from IFMGA expedition leaders.",
-          img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=400"
-        },
-        {
-          title: "Crossing The Thorong La Pass",
-          date: "August 02, 2026",
-          category: "EXPEDITION LOG",
-          excerpt: "A tactical log of wind conditions, sunrise timing, and path conditions at 5,416 meters during early season.",
-          img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=400"
-        }
-      ];
-    }
 
     originalData = JSON.parse(JSON.stringify(siteData));
 
@@ -781,11 +931,12 @@ function renderStats() {
 
   statsList.forEach((stat, idx) => {
     const div = document.createElement('div');
-    div.className = "border-r border-border p-8 text-center last:border-r-0";
+    // 2-col on mobile / 4-col on md+. Row dividers on mobile, column dividers on md.
+    div.className = "border-border border-b md:border-b-0 border-r even:border-r-0 md:border-r md:last:border-r-0 px-4 py-10 sm:p-8 lg:py-14 text-center";
     div.innerHTML = `
-      <div class="font-heading text-4xl sm:text-5xl font-light text-accent mb-1 cursor-text" 
+      <div class="font-heading text-[2.6rem] leading-[0.88] sm:text-5xl lg:text-[3.25rem] font-light tracking-tightest text-accent antialiased [font-feature-settings:'tnum'] mb-2 cursor-text"
            data-stat-idx="${idx}" data-field="value">${escapeHtml(stat.value)}</div>
-      <div class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground cursor-text" 
+      <div class="font-mono text-[11px] sm:text-xs uppercase tracking-[0.15em] leading-snug text-muted-foreground cursor-text"
            data-stat-idx="${idx}" data-field="label">${escapeHtml(stat.label)}</div>
     `;
     statsGrid.appendChild(div);
@@ -979,13 +1130,12 @@ const finderState = { experience: null, region: null, season: null, duration: nu
 
 const FINDER_CONTAINERS = {
   experience: 'finder-experience-cards',
-  region: 'finder-region-cards',
   season: 'finder-season-cards',
   duration: 'finder-duration-cards',
-  budget: 'finder-budget-cards',
   style: 'finder-style-cards'
 };
 
+// Segmented buttons + style chips (single- or multi-select).
 function selectFinderCard(group, value) {
   const container = document.getElementById(FINDER_CONTAINERS[group]);
   if (!container) return;
@@ -1001,15 +1151,15 @@ function selectFinderCard(group, value) {
     const on = group === 'style'
       ? finderState.style.indexOf(btn.dataset.value) > -1
       : btn.dataset.value === finderState[group];
-    btn.classList.toggle('border-accent', on);
-    btn.classList.toggle('ring-1', on);
-    btn.classList.toggle('ring-accent', on);
-    btn.classList.toggle('bg-accent/5', on);
-    btn.classList.toggle('text-foreground', on && !btn.querySelector('.finder-card-title'));
-    const title = btn.querySelector('.finder-card-title');
-    if (title) title.classList.toggle('text-accent', on);
+    btn.classList.toggle('is-on', on);
   });
 
+  filterTrekFinder();
+}
+
+// <select> controls (region, budget).
+function setFinderValue(group, value) {
+  finderState[group] = value || null;
   filterTrekFinder();
 }
 
@@ -1128,6 +1278,7 @@ function finderCritLabel(key) {
 function filterTrekFinder() {
   const resultsEl = document.getElementById('finder-results');
   const countEl = document.getElementById('finder-count');
+  const hintEl = document.getElementById('finder-hint');
   const resetBtn = document.getElementById('finder-reset-btn');
   if (!resultsEl) return;
 
@@ -1138,17 +1289,15 @@ function filterTrekFinder() {
   if (resetBtn) resetBtn.classList.toggle('hidden', active === 0);
 
   if (!model.length) {
-    resultsEl.innerHTML = '<div class="py-10 text-center font-mono text-xs text-muted-foreground">Trail directory unavailable. <a href="/treks" class="text-accent underline">Browse all trekking trails →</a></div>';
-    if (countEl) countEl.innerText = 'BROWSE ALL TRAILS';
+    resultsEl.innerHTML = '<div class="py-6 text-center font-mono text-xs text-muted-foreground">Trail directory unavailable. <a href="/treks" class="text-accent underline">Browse all trekking trails →</a></div>';
+    if (countEl) countEl.innerText = '38 trails';
     return;
   }
 
   if (active === 0) {
-    resultsEl.innerHTML = '<div class="border border-dashed border-border/70 py-12 px-6 text-center">' +
-      '<span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70">No answers yet</span>' +
-      '<p class="mt-3 font-mono text-xs text-muted-foreground max-w-sm mx-auto leading-relaxed">Pick an answer to any question above and your top matches appear here, scored and explained.</p>' +
-      '</div>';
-    if (countEl) countEl.innerText = 'Answer a question above to see your matches';
+    resultsEl.innerHTML = '';
+    if (countEl) countEl.innerText = '38 trails';
+    if (hintEl) hintEl.innerText = 'Set a filter to rank your matches';
     return;
   }
 
@@ -1179,9 +1328,10 @@ function filterTrekFinder() {
   if (matches.length < 3) matches = scored.filter((s) => s.hardFail === 0);
   if (matches.length < 3) matches = scored.filter((s) => s.hardFail <= 1);
   if (!matches.length) matches = scored.slice(0, 3);
-  matches = matches.slice(0, 6);
+  matches = matches.slice(0, 4);
 
-  if (countEl) countEl.innerText = 'Based on your answers, we found ' + matches.length + ' trek' + (matches.length === 1 ? '' : 's');
+  if (countEl) countEl.innerText = matches.length + ' match' + (matches.length === 1 ? '' : 'es');
+  if (hintEl) hintEl.innerText = active + (active === 1 ? ' filter set' : ' filters set') + ' — top matches below';
 
   const top = matches[0];
   const rest = matches.slice(1);
@@ -1206,7 +1356,7 @@ function filterTrekFinder() {
   resultsEl.innerHTML =
     '<a href="/treks/' + escapeHtml(top.m.slug) + '" class="group block border border-accent/40 bg-[#1b1e22] overflow-hidden">' +
       '<div class="grid md:grid-cols-[240px_1fr]">' +
-        '<div class="relative h-44 md:h-full overflow-hidden"><img src="' + escapeHtml(top.m.img) + '" alt="' + escapeHtml(top.m.name) + '" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"><div class="absolute inset-0 bg-gradient-to-t from-[#1b1e22]/70 to-transparent"></div></div>' +
+        '<div class="relative h-44 md:h-full overflow-hidden bg-[#22252a]"><img src="' + escapeHtml(top.m.img) + '" alt="' + escapeHtml(top.m.name) + '" loading="lazy" onerror="this.onerror=null;this.src=\'/images/hero-mountain.jpg\'" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"><div class="absolute inset-0 bg-gradient-to-t from-[#1b1e22]/70 to-transparent"></div></div>' +
         '<div class="p-6 md:p-8">' +
           '<div class="flex items-start justify-between gap-4">' +
             '<span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">Your top match</span>' +
@@ -1253,11 +1403,8 @@ function resetTrekFinder() {
   finderState.budget = null;
   finderState.style = [];
 
-  document.querySelectorAll('#trek-finder .finder-card').forEach((btn) => {
-    btn.classList.remove('border-accent', 'ring-1', 'ring-accent', 'bg-accent/5', 'text-foreground');
-    const title = btn.querySelector('.finder-card-title');
-    if (title) title.classList.remove('text-accent');
-  });
+  document.querySelectorAll('#trek-finder .finder-card').forEach((btn) => btn.classList.remove('is-on'));
+  document.querySelectorAll('#trek-finder select').forEach((s) => { s.value = ''; });
 
   filterTrekFinder();
 }
@@ -1417,6 +1564,129 @@ const exploreRegions = {
   }
 };
 
+// ==========================================================================
+// EXPLORE — Regions lens  (the DEFAULT view)
+// --------------------------------------------------------------------------
+// Nepal read the way trekkers name it: 8 mountain regions along the range +
+// the Terai lowlands. Every one of the 38 treks in treks.js and all 8 of
+// Nepal's eight-thousanders fall into exactly one region (see matchRegions —
+// the exact free-text `trek.region` strings each region absorbs).
+//
+// Geometry is in the map's viewBox space (0 0 1000 380):
+//   band  = [x0, x1]  vertical slice of the country that selects this region
+//   dot   = [x, y]     the marker on the ridge
+//   label = [x, y]     anchor for the region name (shown on hover / when active)
+//   zoom  = [x, y, w, h] viewBox the map eases to when the region is opened
+// Peak elevations are static, well-established figures (mountains.js / peaks.js).
+// COPY NOTE: `char` lines are concise first drafts — worth a client read,
+// like the pending photography.
+// ==========================================================================
+const exploreGeo = {
+  'west': {
+    name: 'Far West & Dolpo', aka: 'Dolpo · Rara · Humla · Api', province: 'karnali',
+    band: [40, 305], dot: [206, 120], label: [206, 120], labelPos: 'below',
+    zoom: [26, 37, 396, 124],
+    matchRegions: ['Dolpo', 'Rara', 'Humla'],
+    char: "Nepal's wild, dry north-west — the medieval valleys and turquoise lakes of Dolpo, the pine-ringed water of Rara, and the old salt road through Humla to Tibet.",
+    trailheads: 'Juphal · Jumla · Simikot',
+    peaks: [{ name: 'Kanjiroba', elev: '6,883 m' }, { name: 'Api', elev: '7,132 m', slug: 'api-himal', pt: [118, 128] }]
+  },
+  'dhaulagiri': {
+    name: 'Dhaulagiri', province: 'gandaki',
+    band: [305, 410], dot: [356, 100], label: [356, 100], labelPos: 'below',
+    zoom: [236, 27, 322, 101],
+    matchRegions: ['Dhaulagiri'],
+    char: 'The seventh-highest mountain on earth and the high glaciated circuit around it, crossing two passes above 5,000 m with full camping support.',
+    trailheads: 'Beni · Darbang',
+    peaks: [{ name: 'Dhaulagiri I', elev: '8,167 m', slug: 'dhaulagiri', pt: [352, 96] }, { name: 'Putha Hiunchuli', elev: '7,246 m', slug: 'putha-hiunchuli', pt: [322, 118] }]
+  },
+  'annapurna': {
+    name: 'Annapurna & Mustang', aka: 'Circuit · Sanctuary · Lo', province: 'gandaki',
+    band: [410, 500], dot: [452, 96], label: [452, 96], labelPos: 'above',
+    zoom: [322, 23, 340, 106],
+    matchRegions: ['Annapurna', 'Annapurna (Nar–Phu)', 'Mustang'],
+    char: "Nepal's most-walked trails — the Circuit over the Thorong La, the Sanctuary to Base Camp, the deepest gorge on earth, and the walled kingdom of Lo behind the range.",
+    trailheads: 'Pokhara · Besisahar · Jomsom',
+    peaks: [{ name: 'Annapurna I', elev: '8,091 m', slug: 'annapurna', pt: [452, 92] }, { name: 'Machhapuchhre', elev: '6,993 m' }]
+  },
+  'manaslu': {
+    name: 'Manaslu & Ganesh', aka: 'Larke La · Tsum', province: 'gandaki',
+    band: [500, 572], dot: [534, 90], label: [534, 90], labelPos: 'above',
+    zoom: [410, 23, 322, 101],
+    matchRegions: ['Manaslu', 'Manaslu (Tsum)', 'Ganesh Himal / Ruby Valley'],
+    char: 'The eighth-highest mountain, circled on a restricted-area trail over the Larke La, with the sacred Tsum valley and the quiet Ganesh foothills alongside.',
+    trailheads: 'Soti Khola · Machha Khola · Arughat',
+    peaks: [{ name: 'Manaslu', elev: '8,163 m', slug: 'manaslu', pt: [532, 86] }, { name: 'Himlung Himal', elev: '7,126 m', slug: 'himlung-himal', pt: [558, 72] }]
+  },
+  'langtang': {
+    name: 'Langtang & Helambu', aka: 'Gosaikunda · Tamang Heritage', province: 'bagmati',
+    band: [572, 690], dot: [626, 94], label: [626, 94], labelPos: 'below',
+    zoom: [500, 24, 344, 108],
+    matchRegions: ['Langtang', 'Langtang / Gosaikunda', 'Langtang (Tamang Heritage)', 'Langtang (Jugal Himal)', 'Helambu'],
+    char: 'The closest alpine wilderness to Kathmandu — the glacier-head valley of Langtang, the sacred lakes of Gosaikunda and the Tamang ridges of Helambu.',
+    trailheads: 'Syabrubesi · Dhunche · Sundarijal',
+    peaks: [{ name: 'Langtang Lirung', elev: '7,227 m' }]
+  },
+  'rolwaling': {
+    name: 'Rolwaling', aka: 'Tashi Lapcha', province: 'bagmati',
+    band: [690, 748], dot: [718, 74], label: [718, 74], labelPos: 'above',
+    zoom: [592, 17, 322, 101],
+    matchRegions: ['Rolwaling'],
+    char: 'A steep, sacred valley below Gauri Shankar, linked to the Khumbu by the technical Tashi Lapcha pass — a wilderness route for experienced trekkers.',
+    trailheads: 'Chetchet · Gongar',
+    peaks: [{ name: 'Gauri Shankar', elev: '7,134 m' }, { name: 'Melungtse', elev: '7,181 m' }]
+  },
+  'everest': {
+    name: 'Everest & Makalu', aka: 'Khumbu · Barun', province: 'koshi',
+    band: [748, 892], dot: [818, 80], label: [818, 80], labelPos: 'above',
+    zoom: [672, 20, 360, 113],
+    matchRegions: ['Khumbu (Everest)', 'Makalu–Barun', 'Makalu (Barun)'],
+    char: 'The Sherpa heartland — the trails to Everest Base Camp, the Gokyo lakes and the three passes, and the wild Barun valley under Makalu next door.',
+    trailheads: 'Lukla · Tumlingtar',
+    peaks: [{ name: 'Everest', elev: '8,849 m', slug: 'everest', pt: [816, 72] }, { name: 'Cho Oyu', elev: '8,188 m', slug: 'cho-oyu', pt: [786, 86] }, { name: 'Makalu', elev: '8,485 m', slug: 'makalu', pt: [848, 94] }, { name: 'Lhotse', elev: '8,516 m', slug: 'lhotse' }]
+  },
+  'kanchenjunga': {
+    name: 'Kanchenjunga', aka: 'The Far East', province: 'koshi',
+    band: [892, 965], dot: [934, 92], label: [934, 92], labelPos: 'left',
+    zoom: [770, 27, 322, 101],
+    matchRegions: ['Kanchenjunga', 'Kanchenjunga–Makalu'],
+    char: "The third-highest mountain, in Nepal's far-eastern corner on the Sikkim border — a long restricted-area trek to the north and south base camps.",
+    trailheads: 'Taplejung · Suketar',
+    peaks: [{ name: 'Kangchenjunga', elev: '8,586 m', slug: 'kangchenjunga', pt: [934, 84] }]
+  },
+  'terai': {
+    name: 'Terai & Lowlands', aka: 'Lumbini · Bardiya · Janakpur', province: 'lumbini',
+    band: [200, 820], dot: [440, 300], label: [440, 300], labelPos: 'below', lowland: true,
+    zoom: [96, 202, 760, 238],
+    matchRegions: ['Lumbini', 'Bardiya', 'Rukum–Rolpa', 'Janakpur (Mithila)'],
+    char: 'The southern plains — the birthplace of the Buddha at Lumbini, the jungle of Bardiya, the Mithila temple city of Janakpur. Cultural walking, not altitude.',
+    trailheads: 'Bhairahawa · Nepalgunj · Janakpur',
+    peaks: []
+  }
+};
+
+// Draw order / tab order, west to east; terai last.
+const EXPLORE_GEO_ORDER = ['west', 'dhaulagiri', 'annapurna', 'manaslu', 'langtang', 'rolwaling', 'everest', 'kanchenjunga', 'terai'];
+
+// Map a trek's free-text `region` string to a canonical geo-region key.
+function regionKeyForTrek(t) {
+  if (!t || !t.region) return null;
+  for (let i = 0; i < EXPLORE_GEO_ORDER.length; i++) {
+    const mr = exploreGeo[EXPLORE_GEO_ORDER[i]].matchRegions;
+    for (let j = 0; j < mr.length; j++) {
+      if (t.region === mr[j]) return EXPLORE_GEO_ORDER[i];
+    }
+  }
+  return null;
+}
+
+function geoTreksFor(key) {
+  if (!window.TREKS) return [];
+  return Object.keys(window.TREKS).map(k => window.TREKS[k])
+    .filter(t => t && regionKeyForTrek(t) === key)
+    .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+}
+
 let exploreLockedRegion = null;
 
 function highlightExploreRegion(id) {
@@ -1551,8 +1821,8 @@ function renderExploreRegion(id) {
 
   // ── Stories ────────────────────────────────────────────────────────────
   const storiesHtml = `<div class="mt-6 border-t border-border pt-4">
-      <a href="/dispatches" class="hme-xrow flex items-center justify-between gap-3 border border-border px-3 py-2.5">
-        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground">Field notes &amp; dispatches</span>
+      <a href="/stories" class="hme-xrow flex items-center justify-between gap-3 border border-border px-3 py-2.5">
+        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground">Stories &amp; field notes</span>
         <span class="shrink-0 font-mono text-[11px] text-accent">&rarr;</span>
       </a>
     </div>`;
@@ -1594,6 +1864,312 @@ function clickExploreRegion(id) {
     const panel = document.getElementById('explore-panel');
     if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
+}
+
+// ==========================================================================
+// EXPLORE — Regions lens: build the layer, hover-to-reveal, zoom-on-select
+// Rest state = silhouette + ridge + 9 region marks. Hover a region and it
+// lights up; open one and the map eases in and its named peaks appear as
+// links to the expedition pages.
+// ==========================================================================
+let exploreLens = 'regions';
+let exploreLockedGeo = null;
+let geoLayerBuilt = false;
+let geoZoomRaf = null;
+let geoZoomFallback = null;
+const GEO_FULL_VIEW = [20, 40, 960, 300];
+const GEO_NEPAL_PATH = 'M40,150 L130,108 L212,132 L300,92 L382,118 L452,78 L520,104 L586,68 L652,98 L712,60 L772,82 L858,52 L900,60 L965,96 L965,150 L892,214 L812,262 L745,298 L658,320 L566,334 L470,342 L388,332 L314,315 L240,298 L165,268 L92,222 L45,174 Z';
+
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+// Build the region layer once: clip, per-region wash + mark + label + peaks + hit.
+function buildGeoLayer() {
+  if (geoLayerBuilt) return;
+  const layer = document.getElementById('hme-geo-layer');
+  if (!layer) return;
+  geoLayerBuilt = true;
+
+  const defs = svgEl('defs', {});
+  const clip = svgEl('clipPath', { id: 'hme-nepal-clip' });
+  clip.appendChild(svgEl('path', { d: GEO_NEPAL_PATH }));
+  defs.appendChild(clip);
+  // subtle north→south elevation gradient for the silhouette
+  const grad = svgEl('linearGradient', { id: 'hme-nepal-grad', x1: '0', y1: '0', x2: '0', y2: '1' });
+  grad.appendChild(svgEl('stop', { offset: '0', 'stop-color': '#262b31' }));
+  grad.appendChild(svgEl('stop', { offset: '0.55', 'stop-color': '#1e2126' }));
+  grad.appendChild(svgEl('stop', { offset: '1', 'stop-color': '#181b1f' }));
+  defs.appendChild(grad);
+  layer.appendChild(defs);
+
+  // faint survey graticule behind the country
+  const gratG = svgEl('g', { class: 'hme-graticule', 'clip-path': 'url(#hme-nepal-clip)' });
+  for (let gx = 120; gx < 965; gx += 120) gratG.appendChild(svgEl('line', { x1: gx, y1: 40, x2: gx, y2: 350 }));
+  for (let gy = 90; gy < 330; gy += 70) gratG.appendChild(svgEl('line', { x1: 30, y1: gy, x2: 970, y2: gy }));
+  layer.appendChild(gratG);
+
+  const washG = svgEl('g', { 'clip-path': 'url(#hme-nepal-clip)' });
+  const markG = svgEl('g', {});
+  const peakG = svgEl('g', {});
+  const hitG = svgEl('g', {});
+
+  EXPLORE_GEO_ORDER.forEach(key => {
+    const g = exploreGeo[key];
+    const [x0, x1] = g.band;
+    const count = geoTreksFor(key).length;
+
+    washG.appendChild(svgEl('rect', {
+      class: 'hme-rg-wash', 'data-geo': key,
+      x: x0, y: g.lowland ? 196 : 0, width: x1 - x0, height: g.lowland ? 170 : 250
+    }));
+
+    // region mark — a small mountain glyph (hollow diamond for the Terai)
+    const [mx, my] = g.dot;
+    const mark = g.lowland
+      ? svgEl('rect', { class: 'hme-rg-mark is-lowland', 'data-geo': key, x: mx - 3, y: my - 3, width: 6, height: 6, transform: `rotate(45 ${mx} ${my})`, 'vector-effect': 'non-scaling-stroke' })
+      : svgEl('path', { class: 'hme-rg-mark', 'data-geo': key, d: `M${mx},${my - 8} L${mx - 7},${my + 3} L${mx + 7},${my + 3} Z`, 'vector-effect': 'non-scaling-stroke' });
+    markG.appendChild(mark);
+
+    const anchor = g.labelPos === 'left' ? 'end' : g.labelPos === 'right' ? 'start' : 'middle';
+    const dx = g.labelPos === 'left' ? -10 : g.labelPos === 'right' ? 10 : 0;
+    const dy = g.labelPos === 'above' ? -13 : g.labelPos === 'below' ? 20 : 4;
+    const label = svgEl('text', {
+      class: 'hme-rg-label', 'data-geo': key,
+      x: g.label[0] + dx, y: g.label[1] + dy, 'text-anchor': anchor
+    });
+    label.textContent = g.name;
+    markG.appendChild(label);
+
+    // named peaks — shown only when this region is open; the ones with an
+    // expedition page are links.
+    (g.peaks || []).forEach(p => {
+      if (!p.pt) return;
+      const [px, py] = p.pt;
+      const wrap = p.slug
+        ? svgEl('a', { class: 'hme-rg-peak', 'data-geo': key, href: '/expeditions/' + p.slug, 'aria-label': p.name + ' — ' + p.elev })
+        : svgEl('g', { class: 'hme-rg-peak', 'data-geo': key });
+      wrap.appendChild(svgEl('path', { class: 'hme-rg-peak-tri', d: `M${px},${py - 9} L${px - 6},${py + 2} L${px + 6},${py + 2} Z`, 'vector-effect': 'non-scaling-stroke' }));
+      const pl = svgEl('text', { class: 'hme-rg-peak-lbl', x: px, y: py + 14, 'text-anchor': 'middle' });
+      pl.textContent = p.name + (p.slug ? '  ↗' : '');
+      wrap.appendChild(pl);
+      peakG.appendChild(wrap);
+    });
+
+    const hit = svgEl('rect', {
+      class: 'hme-rg-hit', 'data-geo': key,
+      x: g.lowland ? 232 : x0, y: g.lowland ? 252 : 0,
+      width: g.lowland ? 560 : (x1 - x0), height: g.lowland ? 110 : 252,
+      role: 'button', tabindex: '0',
+      'aria-label': g.name + ' — ' + (count ? count + ' trek' + (count > 1 ? 's' : '') : 'custom routes')
+    });
+    hitG.appendChild(hit);
+  });
+
+  layer.appendChild(washG);
+  layer.appendChild(peakG);
+  layer.appendChild(markG);
+  layer.appendChild(hitG);
+
+  const pick = e => { const n = e.target.closest('.hme-rg-hit'); return n && n.dataset.geo; };
+  hitG.addEventListener('mouseover', e => { const k = pick(e); if (k) hoverGeo(k); });
+  hitG.addEventListener('mouseout', e => { if (pick(e)) unhoverGeo(); });
+  hitG.addEventListener('focusin', e => { const k = pick(e); if (k) hoverGeo(k); });
+  hitG.addEventListener('focusout', e => { if (pick(e)) unhoverGeo(); });
+  hitG.addEventListener('click', e => { const k = pick(e); if (k) clickGeo(k); });
+  hitG.addEventListener('keydown', e => {
+    const k = pick(e);
+    if (k && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); clickGeo(k); }
+  });
+}
+
+function highlightGeo(key) {
+  const svg = document.querySelector('.hme-map');
+  if (svg) {
+    if (key) svg.dataset.geoActive = key; else svg.removeAttribute('data-geo-active');
+  }
+  document.querySelectorAll('.hme-rg-wash, .hme-rg-mark, .hme-rg-label, .hme-rg-peak, .hme-rg-hit').forEach(el => {
+    el.classList.toggle('is-active', el.dataset.geo === key);
+  });
+}
+
+function hoverGeo(key) { if (!exploreLockedGeo) highlightGeo(key); }
+function unhoverGeo() { if (!exploreLockedGeo) highlightGeo(null); }
+
+// Ease the SVG viewBox toward `target` ([x,y,w,h]); snap when animation
+// frames are unavailable (reduced-motion, or a hidden/minimised window).
+function geoZoom(target) {
+  const svg = document.querySelector('.hme-map');
+  if (!svg) return;
+  const dest = target.join(' ');
+  if (geoZoomRaf) cancelAnimationFrame(geoZoomRaf);
+  if (geoZoomFallback) clearTimeout(geoZoomFallback);
+  const reduce = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || document.hidden;
+  if (reduce) { svg.setAttribute('viewBox', dest); return; }
+  const from = (svg.getAttribute('viewBox') || GEO_FULL_VIEW.join(' ')).split(/[ ,]+/).map(Number);
+  const t0 = performance.now(), dur = 480;
+  const ease = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+  const step = now => {
+    const p = Math.min(1, (now - t0) / dur), k = ease(p);
+    svg.setAttribute('viewBox', from.map((v, i) => v + (target[i] - v) * k).join(' '));
+    if (p < 1) geoZoomRaf = requestAnimationFrame(step); else geoZoomRaf = null;
+  };
+  geoZoomRaf = requestAnimationFrame(step);
+  geoZoomFallback = setTimeout(() => { svg.setAttribute('viewBox', dest); }, dur + 120);
+}
+
+function clickGeo(key) {
+  const opening = exploreLockedGeo !== key;
+  exploreLockedGeo = opening ? key : null;
+  renderGeoRegion(exploreLockedGeo);
+  highlightGeo(exploreLockedGeo);
+  const svg = document.querySelector('.hme-map');
+  const back = document.getElementById('hme-geo-back');
+  if (svg) svg.classList.toggle('hme-zoomed', opening);
+  if (back) back.hidden = !opening;
+  geoZoom(opening ? (exploreGeo[key].zoom || GEO_FULL_VIEW) : GEO_FULL_VIEW);
+  if (opening && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches) {
+    const panel = document.getElementById('explore-panel');
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function geoZoomOut() {
+  if (exploreLockedGeo) clickGeo(exploreLockedGeo);
+}
+
+// treks.html (GEO_REGION_GROUPS) reads #<key> and filters to exactly this group.
+function geoTreksHash(key) {
+  return exploreGeo[key] ? key : '';
+}
+
+function renderGeoRegion(key) {
+  const panel = document.getElementById('explore-panel');
+  if (!panel) return;
+  const g = exploreGeo[key];
+
+  if (!g) {
+    panel.innerHTML = `
+      <div class="mx-auto max-w-md text-center py-6">
+        <span class="block h-2 w-2 rounded-full bg-accent mx-auto mb-4 animate-pulse"></span>
+        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Pick a region</span>
+        <p class="mt-4 font-mono text-xs leading-relaxed text-muted-foreground">
+          Hover the map to bring a region to life; tap it to open the trails we guide there, the peaks above it and where each route begins.
+        </p>
+        <div class="mt-5 flex flex-wrap justify-center gap-1.5">
+          ${EXPLORE_GEO_ORDER.map(rk => `<button type="button" onclick="clickGeo('${rk}')" class="border border-border px-2.5 py-1 font-mono text-[9px] uppercase tracking-wider text-muted-foreground transition-all hover:border-accent hover:text-accent">${escapeHtml(exploreGeo[rk].name)}</button>`).join('')}
+        </div>
+      </div>`;
+    return;
+  }
+
+  const esc = escapeHtml;
+  const secHead = (label) => `<span class="mb-2 block font-mono text-[9px] uppercase tracking-[0.25em] text-accent">${label}</span>`;
+  const prov = exploreRegions[g.province] || {};
+  const trails = geoTreksFor(key);
+
+  let trailsHtml;
+  if (trails.length) {
+    trailsHtml = '<div class="space-y-1.5">' +
+      trails.map(t => {
+        const st = t.stats || {};
+        const meta = [st.difficulty, st.maxAltitude].filter(Boolean).join(' · ');
+        return `<a href="/treks/${esc(t.slug)}" class="hme-xrow block border border-border px-3 py-2">
+          <span class="flex items-center gap-2">
+            <span class="font-mono text-[11px] uppercase tracking-wide text-foreground">${esc(t.name.replace(/ Trek$/, ''))}</span>
+            ${t.restricted ? '<span class="shrink-0 border border-accent/40 px-1 font-mono text-[8px] uppercase tracking-wider text-accent">Restricted</span>' : ''}
+          </span>
+          ${meta ? `<span class="mt-0.5 block font-mono text-[9px] uppercase tracking-widest text-muted-foreground">${esc(meta)}</span>` : ''}
+        </a>`;
+      }).join('') + '</div>' +
+      `<a href="/treks#${esc(geoTreksHash(key))}" class="mt-3 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent hover:gap-3 transition-all">All ${esc(g.name)} treks &rarr;</a>`;
+  } else {
+    trailsHtml = `<p class="font-mono text-[11px] leading-relaxed text-muted-foreground">No scheduled trek here yet &mdash; <a href="/contact" class="text-accent hover:underline">ask us about a custom route</a>.</p>`;
+  }
+
+  let peaksHtml = '';
+  if (g.peaks && g.peaks.length) {
+    peaksHtml = '<div class="space-y-1.5">' + g.peaks.map(p => {
+      const row = `<span class="font-heading text-base uppercase tracking-tight text-foreground leading-none">${esc(p.name)}</span>
+        <span class="shrink-0 font-mono text-[11px] text-accent">${esc(p.elev)}${p.slug ? ' &rarr;' : ''}</span>`;
+      return p.slug
+        ? `<a href="/expeditions/${esc(p.slug)}" class="hme-xrow flex items-baseline justify-between gap-3 border-b border-border/50 pb-1.5">${row}</a>`
+        : `<div class="flex items-baseline justify-between gap-3 border-b border-border/50 pb-1.5">${row}</div>`;
+    }).join('') + '</div>';
+  }
+
+  const sec = (head, body) => body ? `${secHead(head)}${body}` : '';
+
+  panel.innerHTML = `
+    <div class="hme-xbody">
+      <div class="flex items-center justify-between gap-3">
+        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">${esc(g.aka || 'Trekking region')}</span>
+        <span class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground whitespace-nowrap">${esc((prov.name || '').replace(' Province', '') + ' Province')}</span>
+      </div>
+      <h3 class="mt-2 font-heading text-2xl md:text-3xl uppercase tracking-tight text-foreground leading-[0.95]">${esc(g.name)}</h3>
+      <p class="mt-2 font-mono text-[11px] leading-relaxed text-muted-foreground">${esc(g.char)}</p>
+      <div class="mt-5">${sec(`Trails we guide here (${trails.length})`, trailsHtml)}</div>
+      ${peaksHtml ? `<div class="mt-6">${sec('Peaks above it', peaksHtml)}</div>` : ''}
+      ${g.trailheads ? `<div class="mt-6">${sec(trails.length ? 'Trailheads' : 'Access', `<p class="font-mono text-[11px] leading-relaxed text-foreground">${esc(g.trailheads)}</p>`)}</div>` : ''}
+      <div class="mt-6 border-t border-border pt-4">
+        <a href="/stories" class="hme-xrow flex items-center justify-between gap-3 border border-border px-3 py-2.5"><span class="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground">Stories &amp; field notes</span><span class="shrink-0 font-mono text-[11px] text-accent">&rarr;</span></a>
+      </div>
+    </div>`;
+}
+
+function setExploreLens(lens) {
+  if (lens !== 'regions' && lens !== 'provinces') return;
+  exploreLens = lens;
+  const sec = document.getElementById('explore');
+  const svg = document.querySelector('.hme-map');
+  if (sec) sec.dataset.lens = lens;
+  if (svg) { svg.dataset.lens = lens; svg.classList.remove('hme-zoomed'); }
+  document.querySelectorAll('#explore-lens [data-lens]').forEach(b => {
+    b.setAttribute('aria-selected', b.dataset.lens === lens ? 'true' : 'false');
+  });
+  document.querySelectorAll('#explore [data-explore-hint]').forEach(el => {
+    el.hidden = el.dataset.exploreHint !== lens;
+  });
+  const back = document.getElementById('hme-geo-back');
+  if (back) back.hidden = true;
+  exploreLockedRegion = null;
+  exploreLockedGeo = null;
+  highlightExploreRegion(null);
+  highlightGeo(null);
+  geoZoom(GEO_FULL_VIEW);
+  if (lens === 'regions') renderGeoRegion(null);
+  else renderExploreRegion(null);
+}
+
+function initExploreLens() {
+  const tabs = document.getElementById('explore-lens');
+  if (tabs && !tabs.dataset.wired) {
+    tabs.dataset.wired = '1';
+    tabs.addEventListener('click', e => {
+      const b = e.target.closest('[data-lens]');
+      if (b) setExploreLens(b.dataset.lens);
+    });
+    tabs.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      setExploreLens(exploreLens === 'regions' ? 'provinces' : 'regions');
+      const b = tabs.querySelector(`[data-lens="${exploreLens}"]`);
+      if (b) b.focus();
+    });
+  }
+  const back = document.getElementById('hme-geo-back');
+  if (back && !back.dataset.wired) {
+    back.dataset.wired = '1';
+    back.addEventListener('click', geoZoomOut);
+  }
+}
+
+function initExplore() {
+  buildGeoLayer();
+  initExploreLens();
+  setExploreLens('regions');
 }
 
 function scrollTrekGrid(direction) {
@@ -1779,43 +2355,42 @@ function renderGearChecklist() {
   if (countDisplay) countDisplay.innerText = `${checkedItems} / ${totalItems}`;
 }
 
-// Render Dispatches
+// Render Stories strip (homepage §6) — sourced from stories.js (window.STORIES)
 function renderDispatches() {
   const container = document.getElementById('dispatches-container');
   if (!container) return;
-  container.innerHTML = '';
 
   const t = i18n[currentLang] || i18n.en;
-  const list = siteData.dispatches || [];
+  const list = (typeof window.getStories === 'function')
+    ? window.getStories({ limit: 3 })
+    : [];
 
   if (list.length === 0) {
     container.innerHTML = `<div class="col-span-full py-16 text-center text-muted-foreground font-mono text-xs">${t.noDispatches}</div>`;
     return;
   }
 
-  list.forEach((d, idx) => {
-    const card = document.createElement('div');
-    card.className = "group relative flex h-full flex-col border border-border bg-card overflow-hidden hover:border-accent transition-colors";
-    card.innerHTML = `
+  const fmt = window.formatStoryDate || (s => s);
+  container.innerHTML = list.map(s => `
+    <a href="/stories/${escapeHtml(s.slug)}" class="group relative flex h-full flex-col border border-border bg-card overflow-hidden hover:border-accent transition-colors">
       <div class="h-48 overflow-hidden relative">
-        <img src="${d.img}" class="h-full w-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500" alt="Dispatch thumbnail">
+        <img src="${escapeHtml(s.heroImage || '')}" onerror="this.style.display='none'" class="h-full w-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500" alt="${escapeHtml(s.heroAlt || s.title)}">
         <div class="absolute inset-0 bg-gradient-to-t from-card to-transparent"></div>
-        ${isEditMode ? `
-          <button onclick="deleteDispatch(${idx})" class="absolute top-3 right-3 px-2 py-0.5 border border-red-500 bg-[#1b1e22] text-red-500 text-[8px] font-mono hover:bg-red-500 hover:text-white transition-colors">${t.btnDelete}</button>
-        ` : ''}
+        <span class="absolute top-3 left-3 bg-[#1b1e22]/90 border border-accent/40 text-accent font-mono text-[9px] px-2 py-0.5 uppercase tracking-widest">${escapeHtml(s.category)}</span>
       </div>
       <div class="p-6 flex flex-col flex-grow space-y-3">
-        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">${escapeHtml(d.category)}</span>
-        <h3 class="font-heading text-xl uppercase tracking-tight text-white group-hover:text-accent transition-colors">${escapeHtml(d.title)}</h3>
-        <p class="font-mono text-[10px] text-muted-foreground leading-relaxed">${escapeHtml(d.excerpt)}</p>
-        <div class="mt-auto pt-4 flex justify-between font-mono text-[9px] uppercase tracking-widest text-[#666]">
-          <span>${escapeHtml(d.date)}</span>
-          <span class="text-accent group-hover:underline cursor-pointer">${t.readJournal}</span>
+        <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">${escapeHtml(fmt(s.date))}${s.readMinutes ? ' &nbsp;·&nbsp; ' + escapeHtml(String(s.readMinutes)) + ' min' : ''}</span>
+        <h3 class="font-heading text-xl uppercase tracking-tight text-white group-hover:text-accent transition-colors leading-snug">${escapeHtml(s.title)}</h3>
+        <p class="font-sans text-[12px] text-muted-foreground leading-relaxed line-clamp-3">${escapeHtml(s.excerpt)}</p>
+        <div class="mt-auto pt-4 flex justify-between items-center font-mono text-[9px] uppercase tracking-widest text-[#666] border-t border-border">
+          <span class="truncate">${escapeHtml(s.author || '')}</span>
+          <span class="text-accent shrink-0 group-hover:underline">${t.readJournal}</span>
         </div>
       </div>
-    `;
-    container.appendChild(card);
-  });
+    </a>`).join('') +
+    `<a href="/stories" class="group col-span-full mt-2 flex items-center justify-center gap-3 border border-dashed border-border px-5 py-4 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground hover:border-accent hover:text-accent transition-all">
+      Read the full field journal <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+    </a>`;
 }
 
 // ==========================================
@@ -1827,7 +2402,6 @@ function toggleEditMode() {
   const adminActions = document.getElementById('admin-actions');
   const adminSaveActions = document.getElementById('admin-save-actions');
   const addTrekPanel = document.getElementById('add-trek-panel');
-  const btnAddDispatch = document.getElementById('btn-add-dispatch');
   const aboutImgEditor = document.getElementById('about-img-editor');
 
   if (adminActions && adminSaveActions) {
@@ -1841,7 +2415,6 @@ function toggleEditMode() {
   }
 
   if (addTrekPanel) addTrekPanel.classList.toggle('hidden', !isEditMode);
-  if (btnAddDispatch) btnAddDispatch.classList.toggle('hidden', !isEditMode);
   if (aboutImgEditor) aboutImgEditor.classList.toggle('hidden', !isEditMode);
 
   renderWebsite();
@@ -2020,46 +2593,8 @@ function deleteTrek(id) {
   }
 }
 
-// Dispatches Add / Delete
-function openAddDispatchModal() {
-  document.getElementById('dispatch-title-input').value = '';
-  document.getElementById('dispatch-date-input').value = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' });
-  document.getElementById('dispatch-cat-input').value = 'EXPEDITION LOG';
-  document.getElementById('dispatch-excerpt-input').value = '';
-  document.getElementById('dispatch-img-input').value = 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=400';
-
-  document.getElementById('dispatch-modal').classList.remove('hidden');
-}
-
-function closeDispatchModal() {
-  document.getElementById('dispatch-modal').classList.add('hidden');
-}
-
-function saveDispatchModal() {
-  const title = document.getElementById('dispatch-title-input').value.trim();
-  const date = document.getElementById('dispatch-date-input').value.trim();
-  const category = document.getElementById('dispatch-cat-input').value.trim();
-  const excerpt = document.getElementById('dispatch-excerpt-input').value.trim();
-  const img = document.getElementById('dispatch-img-input').value.trim();
-
-  if (!title || !excerpt) {
-    alert("Title and Excerpt are required to log a dispatch.");
-    return;
-  }
-
-  const payload = { title, date, category, excerpt, img };
-  siteData.dispatches.unshift(payload);
-
-  closeDispatchModal();
-  renderWebsite();
-}
-
-function deleteDispatch(index) {
-  if (confirm("Remove this dispatch log?")) {
-    siteData.dispatches.splice(index, 1);
-    renderWebsite();
-  }
-}
+// The Field Journal is now file-based (public/stories.js). To publish an
+// article, add a STORIES['slug'] record there — no in-page editor.
 
 // Server Synchronization — requires the deployment's ADMIN_TOKEN.
 // The token is held in memory for the session only, never persisted.
@@ -2292,9 +2827,11 @@ function initHeroVideoSpeed() {
 window.addEventListener('DOMContentLoaded', () => {
   initTheme();
   selectLanguage(currentLang);
+  initFlagshipTabs();
+  renderFlagship();
   loadContent();
   initHeroVideoSpeed();
-  renderExploreRegion(null);
+  initExplore();
 });
 
 

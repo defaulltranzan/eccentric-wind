@@ -18,13 +18,13 @@
     {
       tag: '2026 Expeditions',
       full: '⚡ Autumn 2026 Sagarmatha & Annapurna Peak Booking Open — Guaranteed Small Groups',
-      short: '⚡ Autumn 2026 Bookings Open'
+      short: '⚡ Autumn 2026 booking open'
     },
     {
       tag: 'Trail Advisory',
       alert: true,
       full: '⚠ Flash flooding in Nepal — the Langtang Valley trek is closed until further notice',
-      short: '⚠ Langtang Valley trek closed until further notice'
+      short: '⚠ Langtang Valley trek closed'
     }
   ];
 
@@ -43,15 +43,15 @@
     bar.id = 'announcement-bar';
     created = true;
   }
-  bar.className = 'announcement-bar sticky top-0 z-50 bg-accent text-white text-[11px] font-mono py-2 px-6 shadow-md';
+  bar.className = 'announcement-bar sticky top-0 z-50 bg-accent text-white text-[10px] sm:text-[11px] font-mono py-1.5 sm:py-2 px-3 sm:px-6 shadow-md';
   bar.innerHTML =
-    '<div class="max-w-7xl mx-auto flex items-center justify-between gap-4">' +
+    '<div class="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">' +
       '<div class="flex items-center gap-2 min-w-0" role="status" aria-live="polite">' +
-        '<span id="hme-annc-tag" class="shrink-0 rounded px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold"></span>' +
+        '<span id="hme-annc-tag" class="hidden sm:inline-block shrink-0 rounded px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold"></span>' +
         '<span id="hme-annc-msg" class="truncate"></span>' +
       '</div>' +
       '<a id="hme-annc-cta" class="shrink-0 hover:underline font-semibold flex items-center gap-1 text-[10px] uppercase tracking-widest" href="' + CTA.href + '">' +
-        CTA.label + ' <i class="fa-solid fa-arrow-right text-[8px]"></i></a>' +
+        '<span class="hidden sm:inline">' + CTA.label + '</span><i class="fa-solid fa-arrow-right text-[8px]"></i></a>' +
     '</div>';
 
   var style = document.createElement('style');
@@ -109,13 +109,20 @@
 
   bar.addEventListener('mouseenter', stop);
   bar.addEventListener('mouseleave', start);
-  if (wideMQ.addEventListener) wideMQ.addEventListener('change', function () { render(idx); });
+  if (wideMQ.addEventListener) wideMQ.addEventListener('change', function () {
+    render(idx);
+    if (!wideMQ.matches) bar.classList.remove('announcement-hidden');
+  });
   window.addEventListener('resize', function () { render(idx); }, { passive: true });
 
-  // ---- scroll hide (idempotent with any page-level handler) -------------
+  // ---- scroll hide — desktop only ------------------------------------------
+  //  On phones the bar stays pinned so the notice (and any trail advisory)
+  //  is always readable while scrolling. On wider screens it slips away on
+  //  scroll-down and returns on scroll-up so it never covers content for long.
   function bindScrollHide() {
     var lastY = window.pageYOffset || 0;
     window.addEventListener('scroll', function () {
+      if (!wideMQ.matches) { bar.classList.remove('announcement-hidden'); return; }
       var y = window.pageYOffset || document.documentElement.scrollTop || 0;
       if (y > lastY && y > 60) bar.classList.add('announcement-hidden');
       else bar.classList.remove('announcement-hidden');

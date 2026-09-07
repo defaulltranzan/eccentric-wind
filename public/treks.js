@@ -323,7 +323,7 @@ TREKS['everest-base-camp'] = {
   tagline: 'To the foot of the highest mountain on earth',
   province: 'koshi',
   region: 'Khumbu (Everest)',
-  heroImage: '/images/ebc.png',
+  heroImage: '/images/treks/everest-base-camp.jpg',
   summary: 'The classic 12-day walk through the Sherpa heartland of the Khumbu to Everest Base Camp (5,364 m) and the sunrise viewpoint of Kala Patthar (5,545 m). No climbing — but real altitude, and the most famous trail in the Himalaya.',
   stats: {
     duration: '12 days on the trail (14–16 with Kathmandu)',
@@ -495,7 +495,7 @@ TREKS['three-passes'] = {
   tagline: 'The complete high circuit of the Khumbu',
   province: 'koshi',
   region: 'Khumbu (Everest)',
-  heroImage: '/images/everest_real.jpg',
+  heroImage: '/images/treks/three-passes.jpg',
   summary: 'The most complete way to see the Everest region: a strenuous 18-day loop crossing Kongma La (5,535 m), Cho La (5,420 m) and Renjo La (5,360 m), taking in Everest Base Camp, Kala Patthar, Gokyo Ri and the Gokyo lakes along the way.',
   stats: {
     duration: '18 days on the trail',
@@ -669,7 +669,7 @@ TREKS['gokyo-lakes'] = {
   tagline: 'Turquoise lakes and the widest view in the Khumbu',
   province: 'koshi',
   region: 'Khumbu (Everest)',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/gokyo-lakes.jpg',
   summary: 'A quieter alternative to Everest Base Camp: 12 days up the Dudh Koshi and into the Gokyo valley, to a chain of glacial lakes below Cho Oyu and the summit of Gokyo Ri (5,357 m), where four eight-thousanders line up in a single view.',
   stats: {
     duration: '12 days on the trail',
@@ -828,7 +828,7 @@ TREKS['everest-view-trek'] = {
   tagline: 'The Khumbu in a week, without the extreme altitude',
   province: 'koshi',
   region: 'Khumbu (Everest)',
-  heroImage: '/images/everest_real.jpg',
+  heroImage: '/images/treks/everest-view-trek.jpg',
   summary: 'A 9-day taste of the Everest region for those short on time or wary of very high altitude: Lukla, Namche, the Everest View Hotel panorama, Khumjung village and the Tengboche monastery, topping out around 3,860–3,960 m.',
   stats: {
     duration: '9 days on the trail',
@@ -1137,7 +1137,7 @@ TREKS['makalu-base-camp'] = {
     { q: 'Are there ATMs or resupply points?', a: 'No. Carry all the cash you need from Kathmandu, in small notes.' },
     { q: 'How many spare days should I budget?', a: 'At least two, mostly for the Tumlingtar flight, plus flexibility for a weather day near Base Camp.' }
   ],
-  relatedTreks: ['kanchenjunga-base-camp', 'everest-base-camp', 'three-passes', 'upper-dolpo'],
+  relatedTreks: ['kanchenjunga-base-camp', 'everest-base-camp', 'three-passes', 'upper-dolpo', 'lumba-sumba-pass-trek', 'sherpeni-col-pass-trek'],
   relatedDestinations: [
     { name: 'Tumlingtar & the Arun valley', note: 'Lowland Rai and Chhetri country, rarely visited, worth a night either side.' },
     { name: 'Chitwan or Koshi Tappu', note: 'A warm wildlife contrast on the way back, both reachable from the east.' },
@@ -1148,11 +1148,12 @@ TREKS['makalu-base-camp'] = {
 
 TREKS['kanchenjunga-base-camp'] = {
   slug: 'kanchenjunga-base-camp',
+  restricted: true,
   name: 'Kanchenjunga Base Camp Trek',
   tagline: 'The far-eastern giant, on Nepal’s wildest long trail',
   province: 'koshi',
   region: 'Kanchenjunga',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/kanchenjunga-base-camp.jpg',
   summary: 'A 20-day restricted-area trek to both base camps of Kanchenjunga (8,586 m) — Pangpema in the north and Oktang in the south — through the far-eastern corner of Nepal, where the trail is long, the villages are Limbu and Sherpa, and other trekkers are rare.',
   stats: {
     duration: '20 days on the trail',
@@ -1315,13 +1316,348 @@ TREKS['kanchenjunga-base-camp'] = {
     { q: 'How many spare days should I budget?', a: 'At least two, mainly for eastern-Nepal flights and roads, plus flexibility for a weather day on the ridge.' },
     { q: 'Will I see wildlife?', a: 'The conservation area holds red panda, blue sheep, Himalayan black bear and, rarely, snow leopard. Sightings are luck, but the forest is alive with birds.' }
   ],
-  relatedTreks: ['makalu-base-camp', 'everest-base-camp', 'upper-dolpo', 'limi-valley'],
+  relatedTreks: ['makalu-base-camp', 'everest-base-camp', 'upper-dolpo', 'limi-valley', 'lumba-sumba-pass-trek'],
   relatedDestinations: [
     { name: 'Ilam tea country', note: 'The green tea hills on the drive in — worth a night for the estates and the views to Kanchenjunga.' },
     { name: 'Koshi Tappu Wildlife Reserve', note: 'A birdwatching wetland on the eastern plains, an easy add-on on the way back.' },
     { name: 'Kathmandu — Boudhanath', note: 'The standard staging point before and after.' }
   ],
   hotelsNote: 'Kathmandu hotels either side are included. Eastern towns (Bhadrapur, Taplejung, Ilam) have simple guesthouses; the trail is home-stays, basic lodges and tents. Ask us about an Ilam tea-estate night on the way in.'
+};
+
+TREKS['lumba-sumba-pass-trek'] = {
+  slug: 'lumba-sumba-pass-trek',
+  restricted: true,
+  name: 'Lumba Sumba Pass Trek',
+  tagline: 'The wild link between Kanchenjunga and Makalu',
+  province: 'koshi',
+  region: 'Kanchenjunga–Makalu',
+  heroImage: '/images/treks/kanchenjunga-base-camp.jpg',
+  summary: 'A remote 18–20 day camping trek across far-eastern Nepal, crossing the Lumba Sumba La (≈ 5,160 m) between the Tamor and Arun watersheds — from the Kanchenjunga foothills, past the old Tibetan trade village of Olangchung Gola, over the pass and down into the Makalu Barun. A Great Himalaya Trail section walked by only a handful of groups each year.',
+  stats: {
+    duration: '18–20 days (14–16 on the trail)',
+    difficulty: 'Strenuous',
+    maxAltitude: '≈ 5,160 m',
+    maxAltitudePoint: 'Lumba Sumba La',
+    bestSeason: 'Apr–May · Oct–Nov',
+    startPoint: 'Taplejung (fly Kathmandu–Bhadrapur, then drive) or Suketar',
+    endPoint: 'Num / Tumlingtar (fly Tumlingtar–Kathmandu)',
+    distanceKm: '≈ 150–170 km',
+    walkHours: '6–8 hrs/day'
+  },
+  seo: {
+    title: 'Lumba Sumba Pass Trek — Nepal | Kanchenjunga to Makalu Itinerary, Permits & Best Time',
+    description: 'The Lumba Sumba Pass trek across far-eastern Nepal, linking the Kanchenjunga and Makalu regions over a ≈ 5,160 m pass. Restricted-area permits, camping itinerary, difficulty, best season and FAQ.'
+  },
+  overview: [
+    'The Lumba Sumba Pass trek joins the two great massifs of eastern Nepal — Kanchenjunga in the east and Makalu in the west — over a single high crossing between the Tamor and Arun river systems. It was opened as a promoted route around 2012, as a section of the Great Himalaya Trail, and it still sees only a small number of organised groups each season. There is almost no lodge infrastructure: this is a fully supported camping trek with a full crew.',
+    'From the Tamor valley the route climbs north through Limbu and then Sherpa and Tibetan-Buddhist country to Olangchung Gola (Walung), a centuries-old trans-Himalayan trade village on the Tibet border with a large gompa and a way of life still tied to the passes. From there it works up to the Lumba Sumba La (≈ 5,160 m — figures differ by source), the watershed, then descends past Thudam and Chyamtang into the upper Arun and the Makalu Barun National Park, finishing at Num or continuing to the Tumlingtar airstrip.',
+    'It is a wilderness trek in the true sense — long days, high camps, no shops, no phone signal for long stretches, and the chance of the pass being snowed in. It suits experienced trekkers who have done a big Himalayan route before and are comfortable with tents, cold and self-reliance.'
+  ],
+  highlights: [
+    'The Lumba Sumba La (≈ 5,160 m) — the watershed between the Tamor and the Arun',
+    'Olangchung Gola (Walung) — a living Tibetan trade village and its 400-year-old gompa',
+    'Views of Kanchenjunga, Jannu (Kumbhakarna) and, later, Makalu',
+    'The upper Arun gorge and the forests of the Makalu Barun',
+    'Blue sheep, Himalayan tahr and, in the forest belts, the possibility of red panda',
+    'A trek where you may not see another foreign group for the entire route'
+  ],
+  suitability: {
+    physical: 8, technical: 3, altitude: 8, remoteness: 9,
+    walkHours: '6–8 hours a day, with a long pass day',
+    terrain: 'Forest and river trails low down, then yak pasture, moraine and a snow pass. Non-technical but rough, with landslide-prone sections and stream crossings.',
+    weatherExposure: 'High on the Lumba Sumba La — no shelter, and snow can close it for days.',
+    goodFor: [
+      'Experienced trekkers who have completed a major Himalayan route',
+      'Anyone happy to camp for two weeks with a crew and no lodges',
+      'Walkers who want genuine solitude and cultural depth over comfort'
+    ],
+    notIdeal: [
+      'First-time trekkers or anyone new to altitude',
+      'Solo trekkers — the restricted-area permits need a group and a guide',
+      'Tight schedules with no room to wait out the pass'
+    ]
+  },
+  why: {
+    lead: 'Two of the world’s five highest mountains sit at either end of this walk, and almost nobody makes the connection on foot.',
+    paragraphs: [
+      'Most trekkers see Kanchenjunga or Makalu, then fly home. Lumba Sumba is the thread between them — a route that follows old salt-and-wool trade lines north to the border, crosses the range where the traders crossed it, and comes down the other side into a different valley system entirely. Olangchung Gola alone is worth the journey: a stone village of carved windows and prayer flags where the gompa still holds festivals and the mule trains still run to Tibet.',
+      'The reward for the effort is space. For days at a time the only structures are your tents and the occasional herders’ shelter, and the trail is walked by yak caravans rather than trekking groups. It is eastern Nepal at its emptiest, and it asks for a real commitment in return.'
+    ],
+    gallery: [
+      { img: '/images/treks/kanchenjunga-base-camp.jpg', caption: 'The Lumba Sumba La watershed' },
+      { img: '/images/treks/lumba-sumba-pass-2.webp', caption: 'Olangchung Gola on the Tibet trade route' },
+      { img: '/images/treks/lumba-sumba-pass-3.webp', caption: 'Camp in the upper Tamor' }
+    ]
+  },
+  passes: [{ name: 'Lumba Sumba La', elevation: '≈ 5,160 m', day: 10 }],
+  acclimatization: {
+    days: [7, 9],
+    note: 'The route gains height gradually through the Tamor valley, but the days above Olangchung Gola are the ones that matter. Most itineraries build in an acclimatisation day around Olangchung Gola (≈ 3,200 m) and a slow approach to the high camp below the pass, with a rest or exploration day at yak-pasture altitude before the crossing. The pass is the highest sleep-adjacent point of the trek and the section that catches out an under-acclimatised walker.'
+  },
+  itinerary: [
+    { day: 1, title: 'Fly Kathmandu–Bhadrapur, drive to Taplejung', from: 'Kathmandu (1,400 m)', to: 'Taplejung (≈ 1,820 m)', distanceKm: '—', walkHours: '45 min flight + 7–9 hr drive', startEle: 1400, endEle: 1820, terrain: 'Flight to the eastern Terai, then a long hill road', stay: 'Guest house', meals: 'B/L/D', highlights: ['The tea gardens of Ilam on the drive'], tips: 'A long travel day — the walking starts tomorrow.' },
+    { day: 2, title: 'Taplejung to Chirwa', from: 'Taplejung (1,820 m)', to: 'Chirwa (≈ 1,270 m)', distanceKm: '≈ 15 km', walkHours: '5–6 hrs', startEle: 1820, endEle: 1270, terrain: 'Descending trail and jeep track through Limbu villages along the Tamor', stay: 'Camp / basic lodge', meals: 'B/L/D', highlights: ['First views up the Tamor gorge'], tips: 'Cardamom drying racks line the trail in autumn.' },
+    { day: 3, title: 'Chirwa to Lelep', from: 'Chirwa (1,270 m)', to: 'Lelep (≈ 1,690 m)', distanceKm: '≈ 14 km', walkHours: '5–6 hrs', startEle: 1270, endEle: 1690, terrain: 'River trail, suspension bridges, the Kanchenjunga Conservation Area checkpoint', stay: 'Camp', meals: 'B/L/D', highlights: ['KCA entry / permit check at Lelep'], tips: 'The restricted area begins here — permits and guide checked.' },
+    { day: 4, title: 'Lelep to Ela Danda', from: 'Lelep (1,690 m)', to: 'Ela Danda (≈ 2,050 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 1690, endEle: 2050, terrain: 'Forested climb above the Tamor', stay: 'Camp', meals: 'B/L/D', highlights: ['Old-growth forest, langur monkeys'], tips: 'A quiet, green day gaining height slowly.' },
+    { day: 5, title: 'Ela Danda to Olangchung Gola', from: 'Ela Danda (2,050 m)', to: 'Olangchung Gola (≈ 3,200 m)', distanceKm: '≈ 16 km', walkHours: '6–7 hrs', startEle: 2050, endEle: 3200, terrain: 'Steady climb into the upper Tamor and Tibetan-Buddhist country', stay: 'Camp / homestay', meals: 'B/L/D', highlights: ['Arriving in the old trade village of Walung'], tips: 'A big ascent day — you feel the altitude by evening.' },
+    { day: 6, title: 'Olangchung Gola — acclimatisation & village day', from: 'Olangchung Gola (3,200 m)', to: 'Olangchung Gola (3,200 m)', distanceKm: '≈ 6 km', walkHours: '3–4 hrs', startEle: 3200, endEle: 3200, terrain: 'Short walks to the gompa and toward the Tibet trade pass', stay: 'Camp / homestay', meals: 'B/L/D', highlights: ['Diki Chhyoling Gompa', 'Views toward the Lumbasumba Himal'], tips: 'Climb a little above the village and come back down to sleep.' },
+    { day: 7, title: 'Olangchung Gola to Upper Kharka', from: 'Olangchung Gola (3,200 m)', to: 'Upper Kharka (≈ 3,900 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 3200, endEle: 3900, terrain: 'Yak pasture and moraine above the treeline', stay: 'Camp', meals: 'B/L/D', highlights: ['The range ahead comes into view'], tips: 'Herders’ shelters only from here — full camping.' },
+    { day: 8, title: 'Upper Kharka to Pass Base Camp', from: 'Upper Kharka (3,900 m)', to: 'Pass Base Camp (≈ 4,700 m)', distanceKm: '≈ 9 km', walkHours: '4–5 hrs', startEle: 3900, endEle: 4700, terrain: 'Moraine and glacial-valley walking to a high camp below the pass', stay: 'Camp', meals: 'B/L/D', highlights: ['The Lumba Sumba La wall ahead'], tips: 'A short day on purpose — rest for the crossing.' },
+    { day: 9, title: 'Acclimatisation / contingency day at Base Camp', from: 'Pass Base Camp (4,700 m)', to: 'Pass Base Camp (4,700 m)', distanceKm: '≈ 5 km', walkHours: '2–4 hrs', startEle: 4700, endEle: 4700, terrain: 'Short acclimatisation walk toward the pass and back', stay: 'Camp', meals: 'B/L/D', highlights: ['A held day for weather and acclimatisation'], tips: 'If the forecast is good, some groups cross a day early; the schedule flexes.' },
+    { day: 10, title: 'Cross the Lumba Sumba La to the Arun side', from: 'Pass Base Camp (4,700 m)', to: 'Chauri Kharka / west-side camp (≈ 4,000 m)', distanceKm: '≈ 14 km', walkHours: '8–10 hrs', startEle: 4700, endEle: 4000, terrain: 'Long climb over snow and moraine to ≈ 5,160 m, then a rough descent into the Arun watershed', stay: 'Camp', meals: 'B/L/D', highlights: ['Lumba Sumba La (≈ 5,160 m)', 'Kanchenjunga behind, Makalu ahead on a clear day'], tips: 'Pre-dawn start. Microspikes; poles for the descent. The exact west-side camp depends on conditions.' },
+    { day: 11, title: 'Descend toward Thudam', from: 'West-side camp (4,000 m)', to: 'Thudam (≈ 3,500 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 4000, endEle: 3500, terrain: 'Valley descent to a tiny seasonal Bhote settlement', stay: 'Camp', meals: 'B/L/D', highlights: ['Thudam — a handful of houses, seasonally occupied'], tips: 'The hardest ground is behind you.' },
+    { day: 12, title: 'Thudam to Kharka above Chyamtang', from: 'Thudam (3,500 m)', to: 'Kharka (≈ 3,300 m)', distanceKm: '≈ 14 km', walkHours: '6–7 hrs', startEle: 3500, endEle: 3300, terrain: 'Forest and ridge trails, entering the Makalu Barun National Park', stay: 'Camp', meals: 'B/L/D', highlights: ['Rhododendron and fir forest, birdlife'], tips: 'The park boundary and its checkpoint.' },
+    { day: 13, title: 'To Chyamtang and Hongon', from: 'Kharka (3,300 m)', to: 'Hongon (≈ 2,200 m)', distanceKm: '≈ 15 km', walkHours: '6–7 hrs', startEle: 3300, endEle: 2200, terrain: 'Long descent through Sherpa and Lhomi villages of the upper Arun', stay: 'Camp / homestay', meals: 'B/L/D', highlights: ['Lhomi villages, a distinct border culture'], tips: 'Big descent — go easy on the knees.' },
+    { day: 14, title: 'Hongon toward Num', from: 'Hongon (2,200 m)', to: 'Gola / Num area (≈ 1,600 m)', distanceKm: '≈ 16 km', walkHours: '6–7 hrs', startEle: 2200, endEle: 1600, terrain: 'Arun valley trail with steep side-stream crossings', stay: 'Camp / lodge', meals: 'B/L/D', highlights: ['The Arun — one of Nepal’s largest rivers'], tips: 'Warm, humid air after two weeks up high.' },
+    { day: 15, title: 'Drive Num to Tumlingtar', from: 'Num (1,560 m)', to: 'Tumlingtar (≈ 460 m)', distanceKm: '—', walkHours: '4–6 hr drive', startEle: 1560, endEle: 460, terrain: 'Rough hill road down the Arun', stay: 'Guest house', meals: 'B/L/D', highlights: ['Trek complete'], tips: 'The road can be cut by monsoon damage — a jeep and a buffer day help.' },
+    { day: 16, title: 'Fly Tumlingtar to Kathmandu', from: 'Tumlingtar (460 m)', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '35 min flight', startEle: 460, endEle: 1400, terrain: 'Flight', stay: 'Hotel', meals: 'B', highlights: ['Back in the city'], tips: 'Eastern flights are weather-sensitive; keep a contingency day.' }
+  ],
+  routePoints: [
+    { name: 'Lelep', elevation: '≈ 1,690 m', day: 3, walkTime: '5–6 hrs from Chirwa', stay: 'Camp + KCA checkpoint', highlight: 'The Kanchenjunga Conservation Area restricted zone begins', warning: 'No entry beyond without permits and a guide.' },
+    { name: 'Olangchung Gola (Walung)', elevation: '≈ 3,200 m', day: 5, walkTime: '6–7 hrs from Ela Danda', stay: 'Camp / homestay', highlight: 'A living Tibetan trade village and its historic gompa', warning: 'First real altitude — take the acclimatisation day.' },
+    { name: 'Pass Base Camp', elevation: '≈ 4,700 m', day: 8, walkTime: '4–5 hrs from Upper Kharka', stay: 'Camp — no facilities', highlight: 'The launch camp for the Lumba Sumba La', warning: 'A cold, exposed camp; the crew carries everything.' },
+    { name: 'Lumba Sumba La', elevation: '≈ 5,160 m', day: 10, walkTime: '4–5 hrs up from Base Camp', stay: 'Pass — no shelter', highlight: 'The watershed and high point of the trek', warning: 'Snow can close it; long, exposed, no bail-out for hours. Figures for the exact height vary between sources — verify.' },
+    { name: 'Thudam', elevation: '≈ 3,500 m', day: 11, walkTime: '5–6 hrs from the west-side camp', stay: 'Camp', highlight: 'A tiny, seasonally occupied Bhote settlement', warning: 'No resupply; the crew carries all food from Olangchung Gola.' }
+  ],
+  permits: [
+    { name: 'Kanchenjunga Conservation Area / Restricted Area Permit', where: 'Kathmandu, through a licensed operator only', feeNote: 'Per-week restricted-area fee + conservation-area fee — verify', notes: 'Requires a group of at least two and a licensed guide; independent trekking is not allowed on the eastern approach.' },
+    { name: 'Makalu Barun National Park entry permit', where: 'Kathmandu (NTB) or the park checkpoint on the Arun side', feeNote: 'Fixed park fee — verify', notes: 'Covers the western half of the route.' },
+    { name: 'Local rural municipality fees', where: 'At checkpoints along the route', feeNote: 'Small local levies — verify', notes: 'Carry passport and photos.' }
+  ],
+  cost: {
+    note: 'A fully supported camping expedition across two conservation areas, with long road access at both ends and a full crew (guide, cook, kitchen and camp staff, porters or pack animals). Priced well above a teahouse trek. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / camping', rangeUSD: '$2,600–$3,600', includes: ['Licensed guide + full camping crew', 'All permits', 'All camping equipment and meals', 'Domestic flights (Bhadrapur / Tumlingtar) and ground transport'] },
+      { name: 'Comfort', rangeUSD: '$3,800–$4,800', includes: ['Larger crew and rest days', 'Better tents and camp comforts', 'Assistant guide', 'City 4★ hotels'] },
+      { name: 'Premium', rangeUSD: '$5,500+', includes: ['Private departure', 'Extra contingency days', 'Helicopter evacuation cover arranged', 'Kanchenjunga or Makalu base-camp extension'] }
+    ],
+    breakdown: [
+      { item: 'Restricted-area permit', note: 'Per week on the Kanchenjunga side — a significant cost' },
+      { item: 'Conservation / park fees', note: 'KCA and Makalu Barun' },
+      { item: 'Full camping crew', note: 'Guide, cook, kitchen and camp staff, porters / pack animals' },
+      { item: 'Domestic flights + jeeps', note: 'Bhadrapur in, Tumlingtar out, plus long hill drives' },
+      { item: 'Food + fuel carried in', note: 'No shops for most of the route' },
+      { item: 'Tips', note: 'Customary for the whole crew at the end' }
+    ],
+    independentVsGuided: 'Not possible independently. The Kanchenjunga restricted-area permit is issued only to groups of two or more with a licensed guide through a registered operator, and the route has no lodge network to support solo travel.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Bhadrapur', mode: 'Domestic flight', duration: '45 min', note: 'Then a 7–9 hr drive up to Taplejung via Ilam.' },
+      { from: 'Num', to: 'Tumlingtar', mode: 'Jeep', duration: '4–6 hrs', note: 'Rough hill road down the Arun; monsoon damage is common.' },
+      { from: 'Tumlingtar', to: 'Kathmandu', mode: 'Domestic flight', duration: '35 min', note: 'Weather-sensitive; a contingency day is wise.' }
+    ],
+    note: 'Access at both ends is long and slow. Build in at least one buffer day for the pass and one for the flights.'
+  },
+  equipment: [
+    { item: 'Four-season sleeping bag (≈ −20°C)', need: 'essential', note: 'All nights are camping; the high camps are very cold.' },
+    { item: 'Microspikes / light crampons', need: 'essential', note: 'The Lumba Sumba La is usually snow.' },
+    { item: 'Down jacket + insulated trousers', need: 'recommended', note: 'For the pre-dawn pass start.' },
+    { item: 'Trekking poles', need: 'essential', note: 'Long, rough descents on both sides.' },
+    { item: 'Satellite messenger / phone', need: 'essential', note: 'There is no mobile coverage for most of the route.' },
+    { item: 'Personal water treatment + wide-mouth bottle', need: 'essential', note: 'All water is from streams; doubles as a hot-water bottle.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The Lumba Sumba La', note: 'A long, exposed, high crossing with no shelter. Snow closes it, and a good crew will wait for a window rather than force it.' },
+      { name: 'Remoteness', note: 'You are days from a road for most of the trek, with no phone signal. Evacuation means a helicopter, weather permitting, from a limited number of clearings.' },
+      { name: 'Altitude', note: 'The trek sleeps above 3,000 m for a week and crosses above 5,000 m. The Olangchung Gola and Base Camp acclimatisation time is the margin.' },
+      { name: 'River and stream crossings', note: 'The Tamor and Arun side-streams run high after rain and snowmelt; some are bridged only seasonally.' },
+      { name: 'Cold injury', note: 'Frostnip risk on the pass morning without proper gloves, boots and face cover.' }
+    ],
+    turnaround: 'If the pass is closed, the group waits at Base Camp for a window; if none comes, the trek retraces down the Tamor to Taplejung — still a fine journey. A trekker not acclimatising well at Olangchung Gola does not continue to the high camps.',
+    note: 'Carry a satellite messenger. There is no aid post on the route; the nearest medical facilities are in Taplejung and Khandbari.'
+  },
+  faq: [
+    { q: 'How hard is the Lumba Sumba Pass trek?', a: 'Hard. It is a fully supported camping trek of around two weeks on the trail, with 6–8 hour days, a long crossing of a ≈ 5,160 m pass, no lodges for most of the route and no phone signal. You should have completed a major Himalayan trek before attempting it.' },
+    { q: 'Is it a restricted-area trek?', a: 'Yes, on the Kanchenjunga side. It needs a Kanchenjunga restricted-area / conservation permit, a Makalu Barun National Park permit, a licensed guide and a group of at least two. Independent trekking is not allowed.' },
+    { q: 'How high is the pass?', a: 'Around 5,160 m. Some sources give figures a little higher or lower — confirm with your operator; it does not change how the day is planned.' },
+    { q: 'Do I sleep in lodges or tents?', a: 'Almost entirely tents, with a full camping crew. A few lower villages (Olangchung Gola, Chyamtang, Hongon) may offer a basic homestay room.' },
+    { q: 'When is the best time to go?', a: 'April–May and October–November. Autumn usually has the most stable weather for the pass. Winter snow closes it; the monsoon makes the river trails dangerous.' },
+    { q: 'Can I combine it with Kanchenjunga or Makalu Base Camp?', a: 'Yes. Adding the Kanchenjunga north or south base camp at the start, or Makalu Base Camp at the finish, turns it into a 4–5 week expedition. Ask us about the combined itinerary.' },
+    { q: 'Is there mobile coverage?', a: 'Only in Taplejung, Olangchung Gola (patchy) and near Tumlingtar. Assume you are offline for most of the trek and carry a satellite messenger.' },
+    { q: 'What about altitude sickness?', a: 'The itinerary builds in acclimatisation at Olangchung Gola and below the pass. If symptoms do not clear, you descend the Tamor and recover or evacuate — the pass is never forced.' }
+  ],
+  relatedTreks: ['kanchenjunga-base-camp', 'makalu-base-camp', 'sherpeni-col-pass-trek', 'upper-dolpo'],
+  relatedDestinations: [
+    { name: 'Kanchenjunga Base Camp', note: 'The eastern massif — add the north or south base camp before the pass.' },
+    { name: 'Makalu Base Camp', note: 'The western massif — continue up the Arun after the crossing.' },
+    { name: 'Ilam tea gardens', note: 'On the drive in from Bhadrapur — a green, rolling counterpoint to the high country.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu hotels and guest houses at Taplejung and Tumlingtar. The trail is camping throughout, with a full crew. Ask us about combining it with Kanchenjunga or Makalu Base Camp.'
+};
+
+TREKS['sherpeni-col-pass-trek'] = {
+  slug: 'sherpeni-col-pass-trek',
+  name: 'Sherpani Col Pass Trek',
+  tagline: 'A mountaineering traverse from Makalu to the Khumbu',
+  province: 'koshi',
+  region: 'Makalu (Barun)',
+  heroImage: '/images/everest_real.jpg',
+  summary: 'A serious 22–24 day high-altitude traverse linking the Makalu Barun to the Everest region over three glaciated cols — the Sherpani Col (≈ 6,146 m), West Col (≈ 6,143 m) and Amphu Labtsa (≈ 5,845 m). Fixed ropes, crampons and a climbing crew are required. This is an alpine expedition, not a trek in the ordinary sense, and it is attempted by only a handful of parties each year.',
+  stats: {
+    duration: '22–24 days (18–20 on the trail)',
+    difficulty: 'Extreme (mountaineering)',
+    maxAltitude: '≈ 6,146 m',
+    maxAltitudePoint: 'Sherpani Col',
+    bestSeason: 'Apr–May · Oct–Nov',
+    startPoint: 'Tumlingtar (fly from Kathmandu), then drive to Num',
+    endPoint: 'Lukla (fly to Kathmandu), via Chukhung and Namche',
+    distanceKm: '≈ 150 km',
+    walkHours: '6–9 hrs/day, with long glacier and abseil days'
+  },
+  seo: {
+    title: 'Sherpani Col Pass Trek — Nepal | Makalu to Everest Traverse, Route, Difficulty & Permits',
+    description: 'The Sherpani Col traverse from Makalu Base Camp to the Khumbu over the Sherpani Col (≈ 6,146 m), West Col and Amphu Labtsa. A glaciated mountaineering route: fixed ropes, crampons, climbing crew, permits and season.'
+  },
+  overview: [
+    'The Sherpani Col traverse is one of the hardest ways to walk between two of Nepal’s major regions. It starts with the trek up the Arun to Makalu Base Camp, then leaves all trails to cross the Barun watershed into the Hongu (Honku) basin over the Sherpani Col and the West Col — two glaciated passes above 6,000 m that involve fixed rope, roped glacier travel and long abseils — before crossing a third pass, the Amphu Labtsa (≈ 5,845 m), into the Imja valley and the Everest trekking trail at Chukhung.',
+    'It is graded as a mountaineering objective. Every member needs to be competent on crampons and an ascender, comfortable abseiling with a pack at altitude, and fit enough for consecutive long days above 5,000 m. The trip runs with a climbing guide and Sherpa team who fix the ropes and ferry loads; nights on the cols are spent in tents on glaciers or moraine.',
+    'It should not be confused with the ordinary Makalu Base Camp trek. If you want the Barun valley without the passes, that trek is the right choice. Sherpani Col is for experienced climbers who want a committing, self-contained high traverse with essentially no one else on it.'
+  ],
+  highlights: [
+    'Three glaciated passes — Sherpani Col (≈ 6,146 m), West Col (≈ 6,143 m), Amphu Labtsa (≈ 5,845 m)',
+    'Makalu (8,463 m) at close range from the Barun and the cols',
+    'The remote Hongu basin — a glacial wilderness of lakes and unclimbed walls',
+    'A true traverse: Arun watershed to Khumbu, entirely on foot',
+    'Baruntse, Chamlang, Ama Dablam and the Everest–Lhotse wall on the western half',
+    'A route walked by a handful of expeditions a year, and no one else'
+  ],
+  suitability: {
+    physical: 9, technical: 7, altitude: 10, remoteness: 9,
+    walkHours: 'Long days throughout; the col days involve pre-dawn starts, fixed-rope climbing and multiple abseils',
+    terrain: 'Trekking trails to Makalu Base Camp, then glacier travel, moraine, fixed rope on snow and ice, and long abseils off the cols. Crevasse and rockfall hazard.',
+    weatherExposure: 'Extreme on the cols — no shelter, and a storm can pin a team for days at over 5,500 m.',
+    goodFor: [
+      'Experienced mountaineers comfortable on crampons, ascender and abseil at altitude',
+      'Climbers who have summited a 6,000 m peak or crossed technical Himalayan passes before',
+      'Parties happy to camp on glaciers for a week with a climbing crew'
+    ],
+    notIdeal: [
+      'Trekkers without technical climbing experience — this is not a walking route',
+      'Anyone who has not spent nights above 5,000 m before',
+      'Trips with no contingency time — the cols routinely force multi-day waits'
+    ]
+  },
+  why: {
+    lead: 'It is the only foot route between the Makalu and Everest regions, and it goes over the top of the range to get there.',
+    paragraphs: [
+      'The Hongu basin in the middle of this traverse is one of the emptiest places in the Nepal Himalaya — a chain of glacial lakes ringed by 6,000 and 7,000 m walls, with no villages, no lodges and, usually, no other people. You reach it by abseiling off the West Col and you leave it by climbing the Amphu Labtsa, and in between you camp on moraine beneath Baruntse.',
+      'For a climber, the appeal is the completeness of it: you start in the subtropical Arun, walk up to the foot of the world’s fifth-highest mountain, cross the range on ropes, and come down the other side onto the Everest Base Camp trail. Very few Himalayan journeys join up that neatly, and fewer still are this committing.'
+    ],
+    gallery: [
+      { img: '/images/everest_real.jpg', caption: 'Fixed rope on the Sherpani Col' },
+      { img: '/images/treks/sherpeni-col-2.webp', caption: 'The Hongu basin from the West Col' },
+      { img: '/images/treks/sherpeni-col-3.webp', caption: 'Amphu Labtsa, the final pass into the Khumbu' }
+    ]
+  },
+  passes: [
+    { name: 'Sherpani Col', elevation: '≈ 6,146 m', day: 13 },
+    { name: 'West Col', elevation: '≈ 6,143 m', day: 14 },
+    { name: 'Amphu Labtsa', elevation: '≈ 5,845 m', day: 17 }
+  ],
+  acclimatization: {
+    days: [8, 11],
+    note: 'The trek up the Arun and the Barun to Makalu Base Camp (≈ 4,870 m) provides the main acclimatisation, usually with a rest and exploration day at Base Camp. A further acclimatisation day is built in at the advanced camp below the Sherpani Col. Every night from Makalu Base Camp to Chukhung is above 4,800 m, and three of them are above 5,500 m — the traverse leaves no room for an under-acclimatised member.'
+  },
+  itinerary: [
+    { day: 1, title: 'Fly Kathmandu to Tumlingtar, drive to Num', from: 'Kathmandu (1,400 m)', to: 'Num (≈ 1,560 m)', distanceKm: '—', walkHours: '35 min flight + 4–6 hr drive', startEle: 1400, endEle: 1560, terrain: 'Flight to the Arun valley, then a rough hill road', stay: 'Guest house', meals: 'B/L/D', highlights: ['First views up the Arun'], tips: 'Flights east are weather-sensitive; keep the schedule loose.' },
+    { day: 2, title: 'Num to Seduwa', from: 'Num (1,560 m)', to: 'Seduwa (≈ 1,530 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 1560, endEle: 1530, terrain: 'Steep descent to the Arun, then a climb to the Makalu Barun park gate', stay: 'Lodge / camp', meals: 'B/L/D', highlights: ['Makalu Barun National Park entry'], tips: 'A deceptively hard day — a big drop and a big climb.' },
+    { day: 3, title: 'Seduwa to Tashi Gaon', from: 'Seduwa (1,530 m)', to: 'Tashi Gaon (≈ 2,070 m)', distanceKm: '≈ 10 km', walkHours: '4–5 hrs', startEle: 1530, endEle: 2070, terrain: 'Terraced farmland and forest', stay: 'Lodge / camp', meals: 'B/L/D', highlights: ['The last permanent village before the ridge'], tips: 'Load up on rest — the next days are steep.' },
+    { day: 4, title: 'Tashi Gaon to Khongma Danda', from: 'Tashi Gaon (2,070 m)', to: 'Khongma Danda (≈ 3,560 m)', distanceKm: '≈ 8 km', walkHours: '6–7 hrs', startEle: 2070, endEle: 3560, terrain: 'A relentless forest climb to a ridge camp', stay: 'Lodge / camp', meals: 'B/L/D', highlights: ['First high views if the cloud lifts'], tips: 'A 1,500 m climbing day — pace it.' },
+    { day: 5, title: 'Khongma Danda — acclimatisation / crossing the Shipton La', from: 'Khongma Danda (3,560 m)', to: 'Dobato (≈ 3,650 m)', distanceKm: '≈ 10 km', walkHours: '6–7 hrs', startEle: 3560, endEle: 3650, terrain: 'A pass day over the Shipton La (≈ 4,170 m) and Keke La, then down to Dobato', stay: 'Lodge / camp', meals: 'B/L/D', highlights: ['Shipton La', 'First close view of Makalu'], tips: 'The Barun valley opens up on the far side.' },
+    { day: 6, title: 'Dobato to Yangle Kharka', from: 'Dobato (3,650 m)', to: 'Yangle Kharka (≈ 3,600 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 3650, endEle: 3600, terrain: 'Descent into the Barun and a valley-floor trail', stay: 'Lodge / camp', meals: 'B/L/D', highlights: ['The Barun gorge, waterfalls and huge cliffs'], tips: 'An easier day, gaining little height.' },
+    { day: 7, title: 'Yangle Kharka to Langmale Kharka', from: 'Yangle Kharka (3,600 m)', to: 'Langmale Kharka (≈ 4,410 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 3600, endEle: 4410, terrain: 'Yak pasture and moraine as the valley climbs', stay: 'Camp', meals: 'B/L/D', highlights: ['Peak 6 and Peak 7 above the trail'], tips: 'Full camping from here.' },
+    { day: 8, title: 'Langmale Kharka to Makalu Base Camp', from: 'Langmale Kharka (4,410 m)', to: 'Makalu Base Camp (≈ 4,870 m)', distanceKm: '≈ 8 km', walkHours: '4–5 hrs', startEle: 4410, endEle: 4870, terrain: 'Moraine and the Barun Glacier snout', stay: 'Camp', meals: 'B/L/D', highlights: ['The Makalu south face fills the sky'], tips: 'Arrive early; the afternoon is for rest.' },
+    { day: 9, title: 'Makalu Base Camp — rest & acclimatisation', from: 'Makalu Base Camp (4,870 m)', to: 'Makalu Base Camp (4,870 m)', distanceKm: '≈ 6 km', walkHours: '3–5 hrs', startEle: 4870, endEle: 4870, terrain: 'Acclimatisation walk toward Swiss Base Camp / the Barun Glacier', stay: 'Camp', meals: 'B/L/D', highlights: ['Everest and Lhotse appear behind Makalu from the higher ground'], tips: 'A key rest day before the technical section.' },
+    { day: 10, title: 'Makalu Base Camp to Swiss Base Camp', from: 'Makalu Base Camp (4,870 m)', to: 'Swiss Base Camp (≈ 5,150 m)', distanceKm: '≈ 7 km', walkHours: '4–5 hrs', startEle: 4870, endEle: 5150, terrain: 'Glacier and moraine travel up the Barun', stay: 'Camp', meals: 'B/L/D', highlights: ['The route to the cols comes into view'], tips: 'The crew begins ferrying loads for the passes.' },
+    { day: 11, title: 'Swiss Base Camp to Sherpani Col Base Camp', from: 'Swiss Base Camp (5,150 m)', to: 'Sherpani Col Base Camp (≈ 5,688 m)', distanceKm: '≈ 6 km', walkHours: '4–6 hrs', startEle: 5150, endEle: 5688, terrain: 'Steep moraine and the edge of the glacier to a high camp', stay: 'Camp', meals: 'B/L/D', highlights: ['The Sherpani Col headwall above camp'], tips: 'A very cold, exposed camp — an early night.' },
+    { day: 12, title: 'Acclimatisation / load-ferrying / contingency day', from: 'Sherpani Col Base Camp (5,688 m)', to: 'Sherpani Col Base Camp (5,688 m)', distanceKm: '≈ 4 km', walkHours: '2–5 hrs', startEle: 5688, endEle: 5688, terrain: 'The crew fixes rope on the col; members rest or carry a light load partway', stay: 'Camp', meals: 'B/L/D', highlights: ['A held day for weather and rope-fixing'], tips: 'The schedule flexes here — the cols are crossed only on a settled forecast.' },
+    { day: 13, title: 'Cross the Sherpani Col to the West Col camp', from: 'Sherpani Col Base Camp (5,688 m)', to: 'West Col camp (≈ 6,000 m)', distanceKm: '≈ 5 km', walkHours: '7–10 hrs', startEle: 5688, endEle: 6000, terrain: 'Fixed-rope climb of snow and ice to the Sherpani Col (≈ 6,146 m), a long abseil down the far side onto the Hongu glacier, then a short climb to a camp below the West Col', stay: 'Camp (glacier)', meals: 'B/L/D', highlights: ['Sherpani Col (≈ 6,146 m)', 'The Hongu basin opening below'], tips: 'Pre-dawn start; crampons, harness, ascender and abseil device in constant use. The exact camp depends on the day.' },
+    { day: 14, title: 'Cross the West Col into the Hongu basin', from: 'West Col camp (6,000 m)', to: 'Baruntse Base Camp / Panch Pokhari (≈ 5,000 m)', distanceKm: '≈ 8 km', walkHours: '6–9 hrs', startEle: 6000, endEle: 5000, terrain: 'A short climb to the West Col (≈ 6,143 m), then long abseils and a descent of the glacier into the Hongu, to camp near the Panch Pokhari lakes', stay: 'Camp', meals: 'B/L/D', highlights: ['West Col (≈ 6,143 m)', 'The glacial lakes of the Hongu beneath Baruntse'], tips: 'A big descent day — abseils with a pack, then hours of glacier walking.' },
+    { day: 15, title: 'Rest / contingency day in the Hongu', from: 'Hongu basin (≈ 5,000 m)', to: 'Hongu basin (≈ 5,000 m)', distanceKm: '≈ 4 km', walkHours: '2–4 hrs', startEle: 5000, endEle: 5000, terrain: 'Rest and short walks among the lakes', stay: 'Camp', meals: 'B/L/D', highlights: ['One of the remotest campsites in Nepal'], tips: 'A buffer day; if the West Col took longer, this is absorbed.' },
+    { day: 16, title: 'Hongu basin to Amphu Labtsa Base Camp', from: 'Hongu basin (5,000 m)', to: 'Amphu Labtsa Base Camp (≈ 5,500 m)', distanceKm: '≈ 9 km', walkHours: '5–6 hrs', startEle: 5000, endEle: 5500, terrain: 'Glacier and moraine to a camp below the final pass', stay: 'Camp', meals: 'B/L/D', highlights: ['The Amphu Labtsa headwall'], tips: 'The last high camp — the Khumbu is one pass away.' },
+    { day: 17, title: 'Cross the Amphu Labtsa to Chukhung', from: 'Amphu Labtsa Base Camp (5,500 m)', to: 'Chukhung (≈ 4,730 m)', distanceKm: '≈ 10 km', walkHours: '7–10 hrs', startEle: 5500, endEle: 4730, terrain: 'A steep fixed-rope climb and/or abseil over the Amphu Labtsa (≈ 5,845 m), then a long descent of the Amphu Lapcha glacier into the Imja valley', stay: 'Lodge', meals: 'B/L/D', highlights: ['Amphu Labtsa (≈ 5,845 m)', 'Back on the Everest trail at Chukhung — a bed and a menu'], tips: 'Ropes and abseils on the Khumbu side; a committing final pass day.' },
+    { day: 18, title: 'Chukhung to Dingboche and Tengboche', from: 'Chukhung (4,730 m)', to: 'Tengboche (≈ 3,860 m)', distanceKm: '≈ 15 km', walkHours: '6–7 hrs', startEle: 4730, endEle: 3860, terrain: 'The Everest Base Camp trekking trail, descending', stay: 'Lodge', meals: 'B/L/D', highlights: ['Ama Dablam at every turn', 'Tengboche Monastery'], tips: 'Thicker air, a hot shower, and other trekkers again.' },
+    { day: 19, title: 'Tengboche to Namche Bazaar', from: 'Tengboche (3,860 m)', to: 'Namche Bazaar (≈ 3,440 m)', distanceKm: '≈ 10 km', walkHours: '5 hrs', startEle: 3860, endEle: 3440, terrain: 'Forest descent and the climb back to Namche', stay: 'Lodge', meals: 'B/L/D', highlights: ['Bakeries and a real bed in Namche'], tips: 'The traverse is done — this is the wind-down.' },
+    { day: 20, title: 'Namche to Lukla', from: 'Namche Bazaar (3,440 m)', to: 'Lukla (≈ 2,840 m)', distanceKm: '≈ 19 km', walkHours: '6–7 hrs', startEle: 3440, endEle: 2840, terrain: 'The Dudh Koshi trail back to Lukla', stay: 'Lodge', meals: 'B/L/D', highlights: ['The last of the big peaks behind you'], tips: 'A long final walking day.' },
+    { day: 21, title: 'Fly Lukla to Kathmandu', from: 'Lukla (2,840 m)', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '35 min flight', startEle: 2840, endEle: 1400, terrain: 'Mountain flight', stay: 'Hotel', meals: 'B', highlights: ['Trek complete'], tips: 'Lukla flights are weather-dependent — keep contingency days.' },
+    { day: 22, title: 'Contingency day', from: 'Kathmandu or Lukla', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '—', startEle: 1400, endEle: 1400, terrain: 'Buffer', stay: 'Hotel', meals: 'B', highlights: ['Spare day for pass or flight weather'], tips: 'Two or more buffer days are strongly recommended on this route.' }
+  ],
+  routePoints: [
+    { name: 'Makalu Base Camp', elevation: '≈ 4,870 m', day: 8, walkTime: '8 days from Num', stay: 'Camp', highlight: 'The end of the trekking trail and the start of the technical traverse', warning: 'The last point from which you can turn back and walk out easily.' },
+    { name: 'Sherpani Col Base Camp', elevation: '≈ 5,688 m', day: 11, walkTime: '3 days of glacier travel from Makalu Base Camp', stay: 'Camp — no facilities', highlight: 'The launch camp for the first col', warning: 'Above 5,500 m; a storm here means a serious wait or retreat.' },
+    { name: 'Sherpani Col', elevation: '≈ 6,146 m', day: 13, walkTime: '4–6 hrs of fixed-rope climbing from Base Camp', stay: 'Pass — no shelter', highlight: 'The high point of the traverse; the crossing into the Hongu', warning: 'Fixed rope, crevasses, a long abseil down the far side. Committing — there is no easy return once across.' },
+    { name: 'West Col', elevation: '≈ 6,143 m', day: 14, walkTime: '2–3 hrs from the West Col camp', stay: 'Pass — no shelter', highlight: 'The gateway out of the Hongu toward the Khumbu', warning: 'Long abseils with a pack; loose rock in places.' },
+    { name: 'Amphu Labtsa', elevation: '≈ 5,845 m', day: 17, walkTime: '4–6 hrs from Amphu Labtsa Base Camp', stay: 'Pass — no shelter', highlight: 'The final pass, dropping onto the Everest Base Camp trail at Chukhung', warning: 'Fixed rope and abseils on the Khumbu side; the last technical obstacle. Height figures vary between sources — verify.' }
+  ],
+  permits: [
+    { name: 'Makalu Barun National Park entry permit', where: 'Kathmandu (NTB) or the park gate at Seduwa', feeNote: 'Fixed park fee — verify', notes: 'Covers the approach up the Arun and the Barun.' },
+    { name: 'Sagarmatha National Park entry permit', where: 'Kathmandu (NTB) or Monjo', feeNote: 'Fixed park fee — verify', notes: 'For the Khumbu section from the Amphu Labtsa to Lukla.' },
+    { name: 'Khumbu Pasang Lhamu Rural Municipality permit', where: 'Lukla / Monjo', feeNote: 'Fixed local fee — verify', notes: 'Standard Khumbu local levy.' },
+    { name: 'Pass / climbing arrangements', where: 'Through a registered operator', feeNote: 'Varies — verify', notes: 'The cols are above 6,000 m and are treated as a mountaineering undertaking. Confirm the current permit position and any peak-permit or expedition requirements with your operator well in advance.' }
+  ],
+  cost: {
+    note: 'A supported alpine expedition with a climbing guide, a Sherpa rope-fixing and load-carrying team, full glacier camping equipment, and two national parks. It is priced like a 6,000 m peak trip, not a trek. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / expedition', rangeUSD: '$4,500–$6,000', includes: ['Climbing guide + Sherpa team', 'Rope fixing and group climbing hardware', 'All permits', 'Full camping and glacier equipment', 'Domestic flights and transport'] },
+      { name: 'Comfort', rangeUSD: '$6,500–$8,500', includes: ['Higher guide-to-member ratio', 'Extra Sherpa support and contingency days', 'Better camp comforts', 'City 4★ hotels'] },
+      { name: 'Premium', rangeUSD: '$9,500+', includes: ['Private expedition', 'One Sherpa per member on the cols', 'Baruntse or Mera Peak add-on', 'Helicopter contingency'] }
+    ],
+    breakdown: [
+      { item: 'Climbing guide + Sherpa team', note: 'For rope fixing, load carrying and safety on the cols — the largest cost' },
+      { item: 'Group climbing hardware', note: 'Fixed rope, snow and rock protection, spare gear' },
+      { item: 'National park + local permits', note: 'Makalu Barun and Sagarmatha' },
+      { item: 'Full glacier camping', note: 'Tents, kitchen, fuel and food carried for a week with no resupply' },
+      { item: 'Domestic flights + jeeps', note: 'Tumlingtar in, Lukla out' },
+      { item: 'Contingency', note: 'Buffer days for weather on three separate passes' }
+    ],
+    independentVsGuided: 'This route is not attempted independently. It requires a professional climbing crew to fix ropes and manage the glaciers and abseils, and the operator handles the permit position for the high cols.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Tumlingtar', mode: 'Domestic flight', duration: '35 min', note: 'Then a 4–6 hr jeep to Num. Flights east are weather-sensitive.' },
+      { from: 'Lukla', to: 'Kathmandu', mode: 'Domestic flight', duration: '35 min', note: 'In peak season, Lukla flights may operate from Ramechhap (a 4–5 hr drive from Kathmandu).' }
+    ],
+    note: 'Two different mountain airstrips at either end, both weather-dependent. Build in at least two contingency days.'
+  },
+  equipment: [
+    { item: 'Mountaineering boots (crampon-compatible)', need: 'essential', note: 'Warm B2/B3 boots for the glaciers and cols.' },
+    { item: 'Crampons, ice axe, harness, ascender, belay/abseil device, 2 prusiks', need: 'essential', note: 'In constant use on the three col days.' },
+    { item: 'Climbing helmet', need: 'essential', note: 'Rockfall on the col approaches and abseils.' },
+    { item: 'Four-season sleeping bag (≈ −25°C) + insulated mat', need: 'essential', note: 'Several nights above 5,500 m on glaciers.' },
+    { item: 'Down suit or heavy down jacket + insulated trousers', need: 'recommended', note: 'The col mornings are extremely cold and windy.' },
+    { item: 'Satellite messenger / phone', need: 'essential', note: 'No coverage from Makalu Base Camp until Chukhung.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The cols', note: 'Three glaciated passes above 5,800 m with fixed rope, crevasses, rockfall and long abseils. Once across the Sherpani Col there is no easy retreat — the team is committed to the traverse.' },
+      { name: 'Altitude', note: 'Every night from Makalu Base Camp to Chukhung is above 4,700 m, and three are above 5,500 m. There is no scope to continue with even mild altitude illness on the technical section.' },
+      { name: 'Weather', note: 'A storm can pin a team for days at a high, exposed camp. The itinerary carries buffer days for exactly this; the crew will not cross a col on a poor forecast.' },
+      { name: 'Objective hazard', note: 'Crevasses on the Hongu and Barun glaciers, rockfall on the col headwalls, and cornices on the passes.' },
+      { name: 'Isolation', note: 'The Hongu basin is one of the remotest places in the range. Evacuation is a helicopter from a limited number of clearings, weather permitting.' }
+    ],
+    turnaround: 'Before the Sherpani Col, a member who is not acclimatising or not moving well on ropes descends the Barun and walks out via Num — a safe, if disappointing, option. After the Sherpani Col the team is committed and manages problems in the Hongu with its own resources and, if needed, a helicopter.',
+    note: 'This is a mountaineering route. Members must be honest with the guide about their technical experience before booking. Carry a satellite messenger and comprehensive insurance covering mountaineering to 6,500 m and helicopter rescue.'
+  },
+  faq: [
+    { q: 'Is the Sherpani Col a trek or a climb?', a: 'It is a climb. Three glaciated passes above 5,800 m involve fixed rope, roped glacier travel and long abseils. You need to be competent on crampons, an ascender and an abseil device at altitude, and ideally have summited a 6,000 m peak or crossed technical Himalayan passes before.' },
+    { q: 'How does it compare with Makalu Base Camp?', a: 'The first eight days are the Makalu Base Camp trek. After that, Sherpani Col leaves all trails and crosses the range on ropes to the Khumbu. If you want the Barun valley without the technical passes, do the Makalu Base Camp trek instead.' },
+    { q: 'How high are the passes?', a: 'Sherpani Col ≈ 6,146 m, West Col ≈ 6,143 m, Amphu Labtsa ≈ 5,845 m. Sources vary by a few metres; confirm with your operator.' },
+    { q: 'Can it be done in the other direction?', a: 'Yes — some parties cross from the Khumbu (Chukhung) to Makalu. Most operators run it west-to-east from Makalu Base Camp so that the hardest col is crossed while the team is freshest and best acclimatised.' },
+    { q: 'When is the best time?', a: 'April–May and October–November. Autumn generally has the most stable weather for the cols. The passes are not attempted in winter or the monsoon.' },
+    { q: 'How much contingency time do I need?', a: 'At least two spare days, and ideally more. Three separate passes each carry the risk of a weather delay, and both airstrips are unreliable.' },
+    { q: 'What permits are required?', a: 'Makalu Barun and Sagarmatha national park permits and the Khumbu local permit, plus whatever arrangement applies to the high cols in your year of travel — your operator confirms this in advance.' },
+    { q: 'Can I add a peak?', a: 'Yes. Baruntse (7,129 m) sits in the Hongu basin on the route, and Mera Peak is a short distance away. Adding a summit turns the trip into a full expedition of five weeks or more.' }
+  ],
+  relatedTreks: ['makalu-base-camp', 'lumba-sumba-pass-trek', 'three-passes', 'everest-base-camp'],
+  relatedDestinations: [
+    { name: 'Makalu Base Camp', note: 'The trekking route up the Barun — the non-technical alternative.' },
+    { name: 'Baruntse (7,129 m)', note: 'The 7,000 m peak in the middle of the traverse — a natural expedition add-on.' },
+    { name: 'Everest Three Passes', note: 'The Khumbu high-pass circuit you emerge onto at Chukhung.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu hotels and a guest house at Num. The route is camping from Tashi Gaon to Chukhung, with a climbing crew, then tea houses through the Khumbu to Lukla. This is a mountaineering expedition — talk to us about your technical experience before booking.'
 };
 
 /* ========================= BAGMATI PROVINCE ========================= */
@@ -1473,7 +1809,7 @@ TREKS['langtang-valley'] = {
     { q: 'Can the trek be extended?', a: 'Yes — you can add the Gosaikunda lakes and cross the Laurebina La to Helambu, turning it into a 12–14 day trip. Decide when you plan the trip.' },
     { q: 'What if I get altitude sickness?', a: 'It is unlikely to be severe at these altitudes, but if it happens you rest at Kyanjin or descend to Langtang village. Do the Ri climbs only when you feel well.' }
   ],
-  relatedTreks: ['gosaikunda', 'helambu-circuit', 'tamang-heritage-trail', 'mardi-himal'],
+  relatedTreks: ['gosaikunda', 'helambu-circuit', 'tamang-heritage-trail', 'mardi-himal', 'ganja-la-pass-trek', 'panch-pokhari-trek'],
   relatedDestinations: [
     { name: 'Gosaikunda lakes', note: 'A natural 3–4 day extension over the Laurebina La.' },
     { name: 'Kathmandu Valley — Bhaktapur & Patan', note: 'The obvious pre/post base; medieval Newar cities.' },
@@ -1488,7 +1824,7 @@ TREKS['gosaikunda'] = {
   tagline: 'A sacred alpine lake in the hills above Kathmandu',
   province: 'bagmati',
   region: 'Langtang / Gosaikunda',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/gosaikunda.jpg',
   summary: 'A 9-day trek to the sacred lakes of Gosaikunda (4,380 m), an important Hindu and Buddhist pilgrimage site set among 4,000 m ridgelines, usually approached via Dhunche or combined with Langtang or Helambu over the Laurebina La pass.',
   stats: {
     duration: '9 days (7–8 on the trail)',
@@ -1627,7 +1963,7 @@ TREKS['gosaikunda'] = {
     { q: 'What if I get altitude sickness?', a: 'Descend toward Sing Gompa, which is low enough to recover. Do the pass only if you are well; otherwise return via Dhunche.' },
     { q: 'How many spare days should I allow?', a: 'One, mainly for a weather day on the Laurebina La.' }
   ],
-  relatedTreks: ['langtang-valley', 'helambu-circuit', 'tamang-heritage-trail', 'mardi-himal'],
+  relatedTreks: ['langtang-valley', 'helambu-circuit', 'tamang-heritage-trail', 'mardi-himal', 'panch-pokhari-trek'],
   relatedDestinations: [
     { name: 'Helambu', note: 'The green Sherpa ridge country the trek descends into — extend a couple of days.' },
     { name: 'Langtang Valley', note: 'Combine for a fuller Langtang-region trip.' },
@@ -1642,7 +1978,7 @@ TREKS['helambu-circuit'] = {
   tagline: 'Sherpa ridge villages a day from Kathmandu',
   province: 'bagmati',
   region: 'Helambu',
-  heroImage: '/images/itinerary.png',
+  heroImage: '/images/treks/helambu-circuit.jpg',
   summary: 'A gentle 7-day loop through the Sherpa and Hyolmo villages of the Helambu region on the northern rim of the Kathmandu Valley — low altitude, forest ridges, monasteries and mountain views, with a start and finish within an hour of the city.',
   stats: {
     duration: '7 days (5–6 on the trail)',
@@ -1773,7 +2109,7 @@ TREKS['helambu-circuit'] = {
     { q: 'Can it be combined with other treks?', a: 'Yes — it links to Gosaikunda over the Laurebina La and to Langtang, turning it into a longer regional trip.' },
     { q: 'Will I see the big mountains?', a: 'Yes, on clear days — Langtang, Dorje Lakpa and Ganesh Himal along the ridge, with the Everest group visible far to the east from Tharepati.' }
   ],
-  relatedTreks: ['gosaikunda', 'langtang-valley', 'tamang-heritage-trail', 'everest-view-trek'],
+  relatedTreks: ['gosaikunda', 'langtang-valley', 'tamang-heritage-trail', 'everest-view-trek', 'ganja-la-pass-trek', 'panch-pokhari-trek'],
   relatedDestinations: [
     { name: 'Nagarkot', note: 'A Kathmandu-rim hill station with a sunrise Himalaya view — an easy add-on.' },
     { name: 'Gosaikunda', note: 'Reachable over the Laurebina La for a longer trip.' },
@@ -1921,7 +2257,7 @@ TREKS['tamang-heritage-trail'] = {
     { q: 'What is the food like?', a: 'Home-cooked Tamang meals — dal bhat, local greens, buckwheat, potatoes, millet — eaten with the family. Simple and good.' },
     { q: 'Are there ATMs?', a: 'No. Carry cash from Kathmandu; daily costs are low.' }
   ],
-  relatedTreks: ['langtang-valley', 'gosaikunda', 'helambu-circuit', 'everest-view-trek'],
+  relatedTreks: ['langtang-valley', 'gosaikunda', 'helambu-circuit', 'everest-view-trek', 'panch-pokhari-trek'],
   relatedDestinations: [
     { name: 'Langtang Valley', note: 'Continue straight on from Syabrubesi for the full regional trek.' },
     { name: 'Gatlang & Parvati Kunda', note: 'Built into the itinerary — one of the prettier villages in the region.' },
@@ -2083,7 +2419,7 @@ TREKS['rolwaling-valley'] = {
     { q: 'What if I get altitude sickness?', a: 'You descend the valley toward Beding, which is low enough to recover. If it happens near the pass, the crossing is off and you return via Rolwaling.' },
     { q: 'How many spare days should I budget?', a: 'At least two — one or more for the Tashi Lapcha weather window, one for the Lukla flight.' }
   ],
-  relatedTreks: ['everest-base-camp', 'three-passes', 'gokyo-lakes', 'ganesh-himal-trek'],
+  relatedTreks: ['everest-base-camp', 'three-passes', 'gokyo-lakes', 'ganesh-himal-trek', 'tashi-lapcha-pass-trek'],
   relatedDestinations: [
     { name: 'Thame', note: 'The historic Khumbu village where the pass route rejoins the Everest trail.' },
     { name: 'Namche Bazaar', note: 'A well-earned rest stop after the crossing.' },
@@ -2097,8 +2433,8 @@ TREKS['ganesh-himal-trek'] = {
   name: 'Ganesh Himal Trek',
   tagline: 'Empty ridges between Langtang and Manaslu',
   province: 'bagmati',
-  region: 'Ganesh Himal (Tamang Heritage)',
-  heroImage: '/images/langtang_real.jpg',
+  region: 'Ganesh Himal / Ruby Valley',
+  heroImage: '/images/treks/ganesh-himal-trek.jpg',
   summary: 'A 12-day off-the-beaten-track trek through the foothills of the Ganesh Himal, north-west of Kathmandu — Tamang and Gurung villages, high pastures, the Singla and Pangsang ridges, and views across to both the Langtang and Manaslu ranges, with almost no other trekkers.',
   stats: {
     duration: '12 days (9–10 on the trail)',
@@ -2121,6 +2457,7 @@ TREKS['ganesh-himal-trek'] = {
     'It suits experienced trekkers who have done the popular routes and want somewhere with no lodges to book ahead and no other groups on the trail.'
   ],
   highlights: [
+    'The Ruby Valley — the tourism-board name for this Ganesh Himal circuit',
     'Ganesh Himal and Manaslu from the Pangsang / Singla ridge',
     'Tamang and Gurung villages with almost no trekking tourism',
     'High summer pastures and the herders who use them',
@@ -2250,6 +2587,471 @@ TREKS['ganesh-himal-trek'] = {
   hotelsNote: 'Kathmandu hotels either side are included; the trail is home-stays and camp. This route is planned individually — talk to us about the variant that fits your dates and experience.'
 };
 
+TREKS['panch-pokhari-trek'] = {
+  slug: 'panch-pokhari-trek',
+  name: 'Panch Pokhari Trek',
+  tagline: 'Five sacred lakes under the Jugal Himal',
+  province: 'bagmati',
+  region: 'Langtang (Jugal Himal)',
+  heroImage: '/images/langtang_real.jpg',
+  summary: 'A short, quiet 8–10 day trek north-east of Kathmandu to the five glacial lakes of Panch Pokhari (≈ 4,100 m), a Hindu and Buddhist pilgrimage site below the Jugal Himal. Home-stay villages, forest ridges and a high lake basin with views to Dorje Lakpa, Rolwaling and, on a clear day, Everest — with almost no other trekkers.',
+  stats: {
+    duration: '8–10 days (6–8 on the trail)',
+    difficulty: 'Moderate',
+    maxAltitude: '≈ 4,200 m',
+    maxAltitudePoint: 'Panch Pokhari ridge',
+    bestSeason: 'Mar–May · Oct–Nov',
+    startPoint: 'Chautara / Bhotang (drive from Kathmandu)',
+    endPoint: 'Chautara / Melamchi (drive to Kathmandu)',
+    distanceKm: '≈ 70–90 km',
+    walkHours: '5–7 hrs/day'
+  },
+  seo: {
+    title: 'Panch Pokhari Trek — Nepal | Five Sacred Lakes Itinerary, Cost & Best Time',
+    description: 'The Panch Pokhari trek in Sindhupalchok, north-east of Kathmandu: five glacial lakes at ≈ 4,100 m below the Jugal Himal. Home-stay itinerary, difficulty, permits, cost, best season and FAQ.'
+  },
+  overview: [
+    'Panch Pokhari — “five ponds” — is a cluster of small glacial lakes in a high basin below the Jugal Himal, in Sindhupalchok district. It is the eighth-highest wetland in the world and a long-standing pilgrimage site: during the Janai Purnima full moon in August, Hindu pilgrims and shamans walk up for a ritual bathe, and there is a small Shiva shrine by the water.',
+    'The trek reaches it in a few days from a road head two to three hours from Kathmandu, climbing through Tamang and Sherpa home-stay villages, terraced farmland and then rhododendron and oak forest to the open ridge that holds the lakes. It is one of the closest genuine high-country treks to the capital, and one of the least walked — the 2015 earthquake hit this district hard, and tourism has been slow to return.',
+    'The altitude is modest by Nepali standards and there is no pass to cross, but the walking is steep and the upper section is exposed to weather. It suits trekkers who want a short, cultural, lightly-trodden route rather than a headline objective.'
+  ],
+  highlights: [
+    'The five lakes of Panch Pokhari (≈ 4,100 m) and the ridge viewpoint above them',
+    'Dorje Lakpa and the Jugal Himal wall at close range',
+    'A clear-day panorama stretching from Rolwaling to the Everest peaks',
+    'Tamang and Sherpa home-stays in earthquake-rebuilt villages',
+    'The Janai Purnima pilgrimage (August full moon), if you time it for that',
+    'A high trek within a short drive of Kathmandu, with hardly anyone else on it'
+  ],
+  suitability: {
+    physical: 6, technical: 1, altitude: 5, remoteness: 6,
+    walkHours: '5–7 hours a day, with some steep climbs and descents',
+    terrain: 'Village trails, forest ridges and an open alpine basin. No technical ground, but rough and steep in places, and muddy after rain.',
+    weatherExposure: 'Moderate — the lake basin and the ridge are exposed, and cloud and cold move in fast in the afternoons.',
+    goodFor: [
+      'Trekkers wanting a short, quiet route close to Kathmandu',
+      'Anyone interested in living Tamang and Sherpa village culture',
+      'Walkers with reasonable fitness who want height without a big pass'
+    ],
+    notIdeal: [
+      'Trekkers looking for tea-house comfort — accommodation is basic home-stays and some camping',
+      'Anyone wanting a 5,000 m point or a pass crossing',
+      'First-time trekkers in the monsoon — the trail is leech-ridden and slippery'
+    ]
+  },
+  why: {
+    lead: 'A high, holy lake basin you can reach from Kathmandu faster than you can reach Lukla.',
+    paragraphs: [
+      'Panch Pokhari has the feel of a place that used to see more people. The pilgrim trail is well made, there are rest shelters and a pilgrim house by the lakes, and the villages have the bones of a tourism economy — but for most of the year you will have the ridge to yourself. The reward on a clear morning is a view that runs the length of the central Himalaya, with the Jugal Himal so close it fills half the sky.',
+      'It also works as a first taste of Nepali trekking that does not involve a flight, a permit queue or a crowd. You walk out of a hill town, sleep in family homes, climb to a sacred lake, and are back in Kathmandu inside a week and a half.'
+    ],
+    gallery: [
+      { img: '/images/langtang_real.jpg', caption: 'The lakes of Panch Pokhari below the Jugal Himal' },
+      { img: '/images/treks/panch-pokhari-2.webp', caption: 'Ridge camp on the way up' },
+      { img: '/images/treks/panch-pokhari-3.webp', caption: 'Tamang home-stay village' }
+    ]
+  },
+  acclimatization: {
+    days: [4],
+    note: 'The route gains height steadily and tops out around 4,100–4,200 m, so serious altitude illness is uncommon — but the last day to the lakes is a big climb. Most itineraries spend two nights at Panch Pokhari, or a night at Nasimpati (≈ 3,600 m) first, and keep the pace slow on the final ascent. Anyone feeling unwell drops back to Nasimpati or Hile Bhanjyang to recover.'
+  },
+  itinerary: [
+    { day: 1, title: 'Drive Kathmandu to Bhotang', from: 'Kathmandu (1,400 m)', to: 'Bhotang (≈ 1,400 m)', distanceKm: '—', walkHours: '5–6 hr drive', startEle: 1400, endEle: 1400, terrain: 'Highway to Melamchi, then a rough road up the Indrawati valley', stay: 'Home-stay', meals: 'B/L/D', highlights: ['The Melamchi valley, and its water-supply tunnel to Kathmandu'], tips: 'Road conditions vary — a jeep is best.' },
+    { day: 2, title: 'Bhotang to Hile Bhanjyang', from: 'Bhotang (1,400 m)', to: 'Hile Bhanjyang (≈ 2,300 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 1400, endEle: 2300, terrain: 'A steady climb through farmland and villages onto a ridge', stay: 'Home-stay / camp', meals: 'B/L/D', highlights: ['First ridge views back over the Kathmandu hills'], tips: 'A solid climbing day to start.' },
+    { day: 3, title: 'Hile Bhanjyang to Nasimpati', from: 'Hile Bhanjyang (2,300 m)', to: 'Nasimpati (≈ 3,600 m)', distanceKm: '≈ 13 km', walkHours: '6–7 hrs', startEle: 2300, endEle: 3600, terrain: 'Ridge trail through rhododendron and fir forest, rest shelters along the way', stay: 'Camp / basic shelter', meals: 'B/L/D', highlights: ['The Jugal Himal appears above the forest'], tips: 'A big height gain — go slowly and drink well.' },
+    { day: 4, title: 'Nasimpati to Panch Pokhari', from: 'Nasimpati (3,600 m)', to: 'Panch Pokhari (≈ 4,100 m)', distanceKm: '≈ 7 km', walkHours: '4–5 hrs', startEle: 3600, endEle: 4100, terrain: 'Open alpine ridge to the lake basin', stay: 'Pilgrim house / camp', meals: 'B/L/D', highlights: ['The five lakes and the Shiva shrine', 'Dorje Lakpa filling the skyline'], tips: 'Arrive with the afternoon free; keep warm as the cloud comes in.' },
+    { day: 5, title: 'Panch Pokhari — viewpoint & rest day', from: 'Panch Pokhari (4,100 m)', to: 'Panch Pokhari (4,100 m)', distanceKm: '≈ 4 km', walkHours: '2–3 hrs', startEle: 4100, endEle: 4200, terrain: 'Short climb to the ridge viewpoint above the lakes and back', stay: 'Pilgrim house / camp', meals: 'B/L/D', highlights: ['Sunrise from the ridge — Rolwaling to the Everest peaks on a clear day'], tips: 'The best light is at dawn; be up early.' },
+    { day: 6, title: 'Panch Pokhari to Tupi Danda', from: 'Panch Pokhari (4,100 m)', to: 'Tupi Danda (≈ 2,300 m)', distanceKm: '≈ 15 km', walkHours: '6–7 hrs', startEle: 4100, endEle: 2300, terrain: 'A long descent, sometimes on a different ridge to make a loop', stay: 'Home-stay', meals: 'B/L/D', highlights: ['Back into forest and birdlife'], tips: 'A knee-heavy day — poles help.' },
+    { day: 7, title: 'Tupi Danda to Chautara, drive to Kathmandu', from: 'Tupi Danda (2,300 m)', to: 'Kathmandu (1,400 m)', distanceKm: '≈ 8 km walk + drive', walkHours: '3–4 hrs walk + 3–4 hr drive', startEle: 2300, endEle: 1400, terrain: 'Descend to the road head at Chautara, then drive out', stay: 'Hotel', meals: 'B/L', highlights: ['Trek complete'], tips: 'Chautara is the district headquarters and has decent onward transport.' },
+    { day: 8, title: 'Contingency day', from: 'Kathmandu', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '—', startEle: 1400, endEle: 1400, terrain: 'Buffer', stay: 'Hotel', meals: 'B', highlights: ['Spare day for weather or road delays'], tips: 'Useful in the shoulder seasons when the upper trail can hold snow.' }
+  ],
+  routePoints: [
+    { name: 'Hile Bhanjyang', elevation: '≈ 2,300 m', day: 2, walkTime: '5–6 hrs from Bhotang', stay: 'Home-stays', highlight: 'The first ridge camp; earthquake-rebuilt Tamang village', warning: 'Basic accommodation — bring a sleeping bag.' },
+    { name: 'Nasimpati', elevation: '≈ 3,600 m', day: 3, walkTime: '6–7 hrs from Hile Bhanjyang', stay: 'Rough shelter / camp', highlight: 'The staging point below the lakes', warning: 'Cold and exposed; the big height gain from here.' },
+    { name: 'Panch Pokhari', elevation: '≈ 4,100 m', day: 4, walkTime: '4–5 hrs from Nasimpati', stay: 'Pilgrim house / camp', highlight: 'The five sacred lakes and the Jugal Himal viewpoint', warning: 'No supplies; weather turns quickly in the afternoons.' }
+  ],
+  permits: [
+    { name: 'Local area / entry fee', where: 'At the checkpoint on the trail (Sindhupalchok)', feeNote: 'Small local fee — verify', notes: 'Panch Pokhari lies outside the national parks and conservation areas; a local municipality fee applies. Carry passport and photos.' },
+    { name: 'Guide / TIMS arrangements', where: 'Through a registered operator', feeNote: 'Included in a booked trip — verify', notes: 'Nepal now requires trekkers to use a licensed guide on most routes; your operator arranges the current paperwork.' }
+  ],
+  cost: {
+    note: 'A short, road-accessible trek with no expensive permits — one of the better-value routes in the country. Accommodation is home-stays and some camping, so a small crew is usually carried. Confirm a quote for your dates.',
+    tiers: [
+      { name: 'Group / home-stay', rangeUSD: '$600–$950', includes: ['Licensed guide', 'Home-stay and basic lodging', 'Ground transport', 'Main meals', 'Local fees'] },
+      { name: 'Comfort', rangeUSD: '$1,000–$1,500', includes: ['Private guide + porter', 'Camping crew for the upper section', 'Better food and equipment', 'City 4★'] },
+      { name: 'Premium', rangeUSD: '$1,800+', includes: ['Private trip', 'Full camping support', 'Extra rest day at the lakes', 'Jugal Himal viewpoint extension'] }
+    ],
+    breakdown: [
+      { item: 'Guide (+ porter)', note: 'Mandatory guide; a porter is optional on this route' },
+      { item: 'Transport', note: 'Jeep from Kathmandu to Bhotang and back from Chautara' },
+      { item: 'Lodging + meals', note: 'Home-stays low down, camping or a rough shelter up high' },
+      { item: 'Local fees', note: 'A municipality entry fee only' },
+      { item: 'Tips', note: 'Customary at the end' }
+    ],
+    independentVsGuided: 'The route can be walked with just a guide and a light pack; a camping crew is only needed for the two nights around the lakes, where lodging is a rough pilgrim shelter.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Bhotang (via Melamchi)', mode: 'Private jeep', duration: '5–6 hrs', note: 'The road up the Indrawati is rough and can be slow in the wet.' },
+      { from: 'Chautara', to: 'Kathmandu', mode: 'Jeep or bus', duration: '3–4 hrs', note: 'Chautara has regular onward transport as the district headquarters.' }
+    ],
+    note: 'Both road heads are within half a day of Kathmandu, which makes this one of the easiest high treks to reach.'
+  },
+  equipment: [
+    { item: 'Sleeping bag to ≈ −10°C', need: 'essential', note: 'Home-stays and the pilgrim shelter provide little bedding.' },
+    { item: 'Warm layers + hat and gloves', need: 'essential', note: 'The lake basin is cold once the sun goes.' },
+    { item: 'Trekking poles', need: 'recommended', note: 'The descent is long and steep.' },
+    { item: 'Waterproofs + pack cover', need: 'essential', note: 'Cloud and drizzle are common on the upper ridge.' },
+    { item: 'Head torch + power bank', need: 'essential', note: 'No mains power above Hile Bhanjyang.' },
+    { item: 'Water treatment', need: 'essential', note: 'Spring and stream water only above the villages.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'Altitude', note: 'Modest here, but the final climb to 4,100 m is done from a low base in a couple of days. A slow pace and two nights at the lakes are the safeguard.' },
+      { name: 'Weather', note: 'The ridge and lake basin are exposed. Snow can lie into April and from November, and cloud closes the views by mid-morning.' },
+      { name: 'Trail condition', note: 'Sections were damaged by the 2015 earthquake and by landslides; the route shifts year to year and needs a guide who knows the current line.' },
+      { name: 'Basic facilities', note: 'There is no lodge network, no shop and no health post above the road head. Everything is carried.' }
+    ],
+    turnaround: 'If the weather closes in or a member is unwell, the trek drops back to Nasimpati and then the villages, all within a day. There is no pass and no committing section.',
+    note: 'Carry a phone with offline maps; coverage reaches parts of the ridge. The nearest hospital is in Chautara or Kathmandu.'
+  },
+  faq: [
+    { q: 'How hard is the Panch Pokhari trek?', a: 'Moderate. There is no pass and the maximum altitude is around 4,100–4,200 m, but the daily climbs are steep and the accommodation is basic. Reasonable fitness and a willingness to camp or use simple home-stays are enough.' },
+    { q: 'How long does it take?', a: 'Six to eight days on the trail, eight to ten with travel and a contingency day. It is one of the shortest genuine high treks near Kathmandu.' },
+    { q: 'Do I need a permit?', a: 'Only a local municipality entry fee — Panch Pokhari is outside the national parks. Nepal now requires a licensed guide on most trekking routes, which your operator arranges.' },
+    { q: 'When is the best time to go?', a: 'March–May and October–November. Autumn has the clearest mountain views; spring brings the rhododendron bloom. Winter snow can block the upper ridge, and the monsoon trail is leechy and slippery.' },
+    { q: 'What is the Janai Purnima pilgrimage?', a: 'On the August full moon, Hindu pilgrims and jhankris (shamans) walk up to bathe in the lakes. It is a vivid but crowded and wet time to visit; most trekkers come in the dry seasons instead.' },
+    { q: 'Is there mobile coverage?', a: 'Patchy on the lower ridge, generally none at the lakes. Download offline maps before you leave the road.' },
+    { q: 'Can it be combined with another trek?', a: 'It pairs well with the Helambu Circuit or the Tamang Heritage Trail for a longer Bagmati itinerary.' }
+  ],
+  relatedTreks: ['helambu-circuit', 'langtang-valley', 'tamang-heritage-trail', 'gosaikunda'],
+  relatedDestinations: [
+    { name: 'Melamchi valley', note: 'On the drive in — the source of Kathmandu’s water-supply project.' },
+    { name: 'Helambu', note: 'The Sherpa region immediately west; the two treks link on the ridges.' },
+    { name: 'Chautara', note: 'The hill-town district headquarters at the western trailhead.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu hotels. The trail is family home-stays low down and a rough pilgrim shelter or tents at the lakes. Ask us about combining it with Helambu or the Tamang Heritage Trail.'
+};
+
+TREKS['ganja-la-pass-trek'] = {
+  slug: 'ganja-la-pass-trek',
+  name: 'Ganja La Pass Trek',
+  tagline: 'The high, technical link between Langtang and Helambu',
+  province: 'bagmati',
+  region: 'Langtang',
+  heroImage: '/images/treks/ganja-la-pass-trek.jpg',
+  summary: 'A 12–14 day trek up the Langtang valley and over the Ganja La (≈ 5,122 m) — a steep, often snowbound pass with no lodges on either side of it — into the Sherpa country of Helambu. A committing crossing for experienced trekkers, with two to three nights of camping on the high traverse.',
+  stats: {
+    duration: '12–14 days (10–11 on the trail)',
+    difficulty: 'Strenuous',
+    maxAltitude: '≈ 5,122 m',
+    maxAltitudePoint: 'Ganja La',
+    bestSeason: 'Apr–May · Oct–Nov',
+    startPoint: 'Syabrubesi (drive from Kathmandu)',
+    endPoint: 'Sermathang / Melamchi (drive to Kathmandu)',
+    distanceKm: '≈ 90–110 km',
+    walkHours: '5–8 hrs/day, one long pass day'
+  },
+  seo: {
+    title: 'Ganja La Pass Trek — Nepal | Langtang to Helambu Over a 5,122 m Pass | Itinerary & Best Time',
+    description: 'The Ganja La Pass trek from the Langtang valley over a ≈ 5,122 m pass into Helambu. A technical, camping high crossing: itinerary, difficulty, gear, permits, best season and FAQ.'
+  },
+  overview: [
+    'The Ganja La is the mountain wall that closes the south side of the Langtang valley. Crossing it takes you from Kyanjin Gompa, at the head of Langtang, directly over the range into Helambu — a route that used to be a herders’ and traders’ line and is now a serious trekking crossing for parties who want more than the standard valley walk.',
+    'The pass itself is around 5,122 m and is frequently under snow. The northern approach from Ganja La Phedi is a steep climb of scree and snow; the southern side is steeper still, often needs a fixed rope or a hand line, and is exposed. Between Kyanjin Gompa and Tarke Ghyang — three to four days — there are no lodges, no villages and no shelter, so the traverse is fully camped with a crew.',
+    'It suits fit, experienced trekkers who are comfortable on steep snow with crampons and, if needed, a rope. It is not a technical climb, but it is a long way from a tea-house trek, and a snowed-up Ganja La turns parties back most seasons.'
+  ],
+  highlights: [
+    'The Ganja La (≈ 5,122 m) — a genuine mountain pass, not a walkers’ col',
+    'The full Langtang valley: Langtang village, Kyanjin Gompa and the glaciers of Langtang Lirung',
+    'Kyanjin Ri or Tserko Ri (≈ 4,700–5,000 m) as acclimatisation viewpoints',
+    'A high, wild traverse with camps at Keldang and Dukpu and no one else around',
+    'Dropping into the Sherpa villages and gompas of Helambu on the far side',
+    'A point-to-point crossing of the range within a short drive of Kathmandu'
+  ],
+  suitability: {
+    physical: 8, technical: 4, altitude: 8, remoteness: 7,
+    walkHours: '5–8 hours a day, with a 9–11 hour pass day',
+    terrain: 'Valley tea-house trails to Kyanjin Gompa, then steep scree and snow to the pass, an exposed and sometimes roped descent, and high ridge camps. Non-technical but demanding, and dangerous in fresh snow.',
+    weatherExposure: 'High on the Ganja La and the ridge camps beyond — no shelter for two to three days.',
+    goodFor: [
+      'Fit trekkers with previous high-altitude and steep-snow experience',
+      'Anyone wanting a committing traverse rather than an out-and-back valley trek',
+      'Walkers comfortable with three nights of camping in cold, exposed spots'
+    ],
+    notIdeal: [
+      'First-time trekkers or anyone new to crampons and steep snow',
+      'Trips with no spare days — the pass regularly forces a wait or a turnaround',
+      'Anyone uneasy with exposure on a roped descent'
+    ]
+  },
+  why: {
+    lead: 'The Langtang valley is a there-and-back trek — unless you go over the top of it.',
+    paragraphs: [
+      'Most people walk up to Kyanjin Gompa, climb a viewpoint, and walk back down the same trail. The Ganja La is the way out the other side: a hard morning on the pass, then a descent into a completely different valley system, and two days along a high, empty ridge before the first Helambu village. It turns a linear trek into a true crossing of the Himalaya.',
+      'The Langtang valley also carries its own weight now. The 2015 earthquake buried the old village of Langtang under a landslide; the rebuilt village and its memorial are part of what you walk through. The valley has come back, the lodges are busy again, and the community is glad of the trekkers — the Ganja La adds a wilder second act to a trek that is meaningful in its own right.'
+    ],
+    gallery: [
+      { img: '/images/treks/ganja-la.webp', caption: 'The Ganja La under snow' },
+      { img: '/images/treks/ganja-la-2.webp', caption: 'Kyanjin Gompa at the head of the Langtang valley' },
+      { img: '/images/treks/ganja-la-3.webp', caption: 'Ridge camp at Keldang on the Helambu side' }
+    ]
+  },
+  passes: [{ name: 'Ganja La', elevation: '≈ 5,122 m', day: 8 }],
+  acclimatization: {
+    days: [5, 6],
+    note: 'The Langtang valley gives a good acclimatisation profile: a night at Lama Hotel, a night at Langtang village, then two nights at Kyanjin Gompa (≈ 3,870 m) with a day climb of Kyanjin Ri (≈ 4,770 m) or Tserko Ri (≈ 4,985 m). That climb-high, sleep-low day is the key preparation for the pass, which is crossed from a camp at Ganja La Phedi (≈ 4,400 m) the following morning.'
+  },
+  itinerary: [
+    { day: 1, title: 'Drive Kathmandu to Syabrubesi', from: 'Kathmandu (1,400 m)', to: 'Syabrubesi (≈ 1,550 m)', distanceKm: '—', walkHours: '6–7 hr drive', startEle: 1400, endEle: 1550, terrain: 'Highway then a winding hill road above the Trishuli', stay: 'Tea house', meals: 'B/L/D', highlights: ['The Langtang road, rebuilt after the earthquake'], tips: 'Leave early — the road is slow.' },
+    { day: 2, title: 'Syabrubesi to Lama Hotel', from: 'Syabrubesi (1,550 m)', to: 'Lama Hotel (≈ 2,470 m)', distanceKm: '≈ 12 km', walkHours: '6 hrs', startEle: 1550, endEle: 2470, terrain: 'Riverside forest trail, langur monkeys, waterfalls', stay: 'Tea house', meals: 'B/L/D', highlights: ['Old-growth forest along the Langtang Khola'], tips: 'A humid, steady climb — pace it.' },
+    { day: 3, title: 'Lama Hotel to Langtang village', from: 'Lama Hotel (2,470 m)', to: 'Langtang village (≈ 3,430 m)', distanceKm: '≈ 15 km', walkHours: '6–7 hrs', startEle: 2470, endEle: 3430, terrain: 'The valley opens; past the 2015 landslide site and the rebuilt village', stay: 'Tea house', meals: 'B/L/D', highlights: ['The Langtang memorial and the new village', 'Langtang Lirung above'], tips: 'A reflective stretch — the guide will explain what happened here.' },
+    { day: 4, title: 'Langtang village to Kyanjin Gompa', from: 'Langtang village (3,430 m)', to: 'Kyanjin Gompa (≈ 3,870 m)', distanceKm: '≈ 7 km', walkHours: '3–4 hrs', startEle: 3430, endEle: 3870, terrain: 'Yak pasture, mani walls and a gentle climb to the monastery', stay: 'Tea house', meals: 'B/L/D', highlights: ['Kyanjin Gompa and the cheese factory', 'The glaciers at the valley head'], tips: 'Arrive by lunch; the afternoon is for rest.' },
+    { day: 5, title: 'Kyanjin Gompa — acclimatisation (Kyanjin Ri or Tserko Ri)', from: 'Kyanjin Gompa (3,870 m)', to: 'Kyanjin Gompa (3,870 m)', distanceKm: '≈ 8–12 km', walkHours: '5–7 hrs', startEle: 3870, endEle: 4985, terrain: 'Steep climb to a ridge or peak viewpoint and back', stay: 'Tea house', meals: 'B/L/D', highlights: ['Tserko Ri (≈ 4,985 m) — a 360° panorama of the Langtang Himal'], tips: 'The most important acclimatisation day. Climb high, sleep low.' },
+    { day: 6, title: 'Kyanjin Gompa to Ganja La Phedi', from: 'Kyanjin Gompa (3,870 m)', to: 'Ganja La Phedi (≈ 4,400 m)', distanceKm: '≈ 7 km', walkHours: '4–5 hrs', startEle: 3870, endEle: 4400, terrain: 'Cross the Langtang Khola and climb pasture and moraine to a base camp below the pass', stay: 'Camp', meals: 'B/L/D', highlights: ['The Ganja La wall above camp'], tips: 'Full camping from here to Helambu. An early night before the pass.' },
+    { day: 7, title: 'Contingency / acclimatisation day at Phedi', from: 'Ganja La Phedi (4,400 m)', to: 'Ganja La Phedi (4,400 m)', distanceKm: '≈ 4 km', walkHours: '2–4 hrs', startEle: 4400, endEle: 4400, terrain: 'Short walk toward the pass to check conditions', stay: 'Camp', meals: 'B/L/D', highlights: ['A held day for weather'], tips: 'If the pass is clear, some groups cross a day early; the plan flexes.' },
+    { day: 8, title: 'Cross the Ganja La to Keldang', from: 'Ganja La Phedi (4,400 m)', to: 'Keldang (≈ 4,270 m)', distanceKm: '≈ 12 km', walkHours: '9–11 hrs', startEle: 4400, endEle: 4270, terrain: 'Steep scree and snow to the Ganja La (≈ 5,122 m), a steep and often roped descent on the south side, then a long ridge walk to camp', stay: 'Camp', meals: 'B/L/D', highlights: ['Ganja La (≈ 5,122 m)', 'The Jugal and Rolwaling ranges to the east'], tips: 'Pre-dawn start. Crampons; a fixed rope on the south side. A very long day.' },
+    { day: 9, title: 'Keldang to Dukpu', from: 'Keldang (4,270 m)', to: 'Dukpu (≈ 4,040 m)', distanceKm: '≈ 12 km', walkHours: '6–7 hrs', startEle: 4270, endEle: 4040, terrain: 'A high, exposed ridge traverse with several minor climbs', stay: 'Camp', meals: 'B/L/D', highlights: ['A rarely-walked ridge with a huge horizon'], tips: 'Undulating and tiring; water is scarce, so fill up when you can.' },
+    { day: 10, title: 'Dukpu to Tarke Ghyang', from: 'Dukpu (4,040 m)', to: 'Tarke Ghyang (≈ 2,600 m)', distanceKm: '≈ 14 km', walkHours: '6–7 hrs', startEle: 4040, endEle: 2600, terrain: 'Cross a final ridge (≈ 4,100 m), then a long forest descent to the first Helambu village', stay: 'Tea house / lodge', meals: 'B/L/D', highlights: ['Tarke Ghyang — a large Sherpa village with an old gompa', 'Back among trees, lodges and a hot meal'], tips: 'The camping is done — a bed tonight.' },
+    { day: 11, title: 'Tarke Ghyang to Sermathang', from: 'Tarke Ghyang (2,600 m)', to: 'Sermathang (≈ 2,620 m)', distanceKm: '≈ 11 km', walkHours: '4–5 hrs', startEle: 2600, endEle: 2620, terrain: 'A gentle, forested ridge trail between Sherpa villages', stay: 'Lodge', meals: 'B/L/D', highlights: ['Chortens, gompas and apple orchards'], tips: 'An easy, pretty wind-down day.' },
+    { day: 12, title: 'Sermathang to Melamchi, drive to Kathmandu', from: 'Sermathang (2,620 m)', to: 'Kathmandu (1,400 m)', distanceKm: '≈ 12 km walk + drive', walkHours: '3–4 hrs walk + 3–4 hr drive', startEle: 2620, endEle: 1400, terrain: 'Descend to the Melamchi road head, then drive out', stay: 'Hotel', meals: 'B/L', highlights: ['Trek complete'], tips: 'Some itineraries walk out earlier from Tarke Ghyang if time is short.' },
+    { day: 13, title: 'Contingency day', from: 'Kathmandu', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '—', startEle: 1400, endEle: 1400, terrain: 'Buffer', stay: 'Hotel', meals: 'B', highlights: ['Spare day for pass weather'], tips: 'Strongly recommended — the Ganja La often forces a wait.' }
+  ],
+  routePoints: [
+    { name: 'Kyanjin Gompa', elevation: '≈ 3,870 m', day: 4, walkTime: '3 days from Syabrubesi', stay: 'Tea houses', highlight: 'The head of the Langtang valley and the acclimatisation base', warning: 'The last lodge before the pass; two nights here are essential.' },
+    { name: 'Ganja La Phedi', elevation: '≈ 4,400 m', day: 6, walkTime: '4–5 hrs from Kyanjin Gompa', stay: 'Camp — no facilities', highlight: 'The base camp for the pass', warning: 'Exposed and cold; the crew carries everything from Kyanjin.' },
+    { name: 'Ganja La', elevation: '≈ 5,122 m', day: 8, walkTime: '4–5 hrs up from Phedi', stay: 'Pass — no shelter', highlight: 'The crossing point between Langtang and Helambu', warning: 'Frequently snowbound; a steep, exposed, often roped south side. Turned back most seasons in poor conditions.' },
+    { name: 'Keldang', elevation: '≈ 4,270 m', day: 8, walkTime: 'End of the long pass day', stay: 'Camp', highlight: 'The first camp on the Helambu ridge', warning: 'Water is limited; a cold, high camp.' },
+    { name: 'Tarke Ghyang', elevation: '≈ 2,600 m', day: 10, walkTime: '2 days along the ridge from the pass', stay: 'Lodges', highlight: 'The first Helambu village — the end of the camping section', warning: 'None — a welcome return to lodges and food.' }
+  ],
+  permits: [
+    { name: 'Langtang National Park entry permit', where: 'Kathmandu (NTB) or the Dhunche / Ghatte Khola checkpoint', feeNote: 'Fixed park fee — verify', notes: 'Covers the Langtang valley and the pass.' },
+    { name: 'Local rural municipality permit (Helambu / Rasuwa)', where: 'At checkpoints on the route', feeNote: 'Small local fee — verify', notes: 'A local levy applies on both sides.' },
+    { name: 'Guide / TIMS arrangements', where: 'Through a registered operator', feeNote: 'Included in a booked trip — verify', notes: 'A licensed guide is required; the exposed pass makes it non-negotiable in practice.' }
+  ],
+  cost: {
+    note: 'A Langtang tea-house trek plus a three-day camped high traverse with a crew and pass equipment. More than the standard Langtang valley trek, but far less than a restricted-area route. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / teahouse + camping', rangeUSD: '$1,100–$1,600', includes: ['Licensed guide + camping crew for the traverse', 'National park and local permits', 'Ground transport', 'Tea houses in Langtang and Helambu, tents on the pass', 'Main meals'] },
+      { name: 'Comfort', rangeUSD: '$1,700–$2,400', includes: ['Private guide + porter', 'Assistant guide on the pass day', 'Better tents and food', 'City 4★'] },
+      { name: 'Premium', rangeUSD: '$2,800+', includes: ['Private trip', 'Larger crew and extra rest days', 'Tserko Ri and Langtang glacier days added', 'Helicopter contingency'] }
+    ],
+    breakdown: [
+      { item: 'Guide + camping crew', note: 'A crew is only needed for the three camped days on the traverse' },
+      { item: 'National park + local fees', note: 'Langtang National Park and rural municipality levies' },
+      { item: 'Transport', note: 'Jeep to Syabrubesi and back from Melamchi' },
+      { item: 'Lodging + meals', note: 'Tea houses either side, tents for Phedi, Keldang and Dukpu' },
+      { item: 'Pass equipment', note: 'Fixed rope and group snow gear for the Ganja La' },
+      { item: 'Tips', note: 'Customary at the end' }
+    ],
+    independentVsGuided: 'The Langtang valley section can be walked independently with a guide, but the Ganja La traverse needs a crew to camp the three trailless days and to fix a rope on the pass. In practice the whole trek is done as a supported trip.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Syabrubesi', mode: 'Private jeep or bus', duration: '6–7 hrs', note: 'A rough, winding hill road; landslide delays are possible in the wet.' },
+      { from: 'Melamchi', to: 'Kathmandu', mode: 'Jeep or bus', duration: '3–4 hrs', note: 'The Helambu road head; regular onward transport.' }
+    ],
+    note: 'Both road heads are within a day of Kathmandu, so the trek loses no time to domestic flights.'
+  },
+  equipment: [
+    { item: 'Sleeping bag to ≈ −15°C', need: 'essential', note: 'Three nights camping above 4,000 m.' },
+    { item: 'Crampons / microspikes', need: 'essential', note: 'The Ganja La is usually snow or hard névé.' },
+    { item: 'Harness + belay device', need: 'recommended', note: 'For the fixed rope on the south side of the pass — the crew carries the rope.' },
+    { item: 'Down jacket + warm gloves', need: 'essential', note: 'For the pre-dawn pass start.' },
+    { item: 'Trekking poles', need: 'essential', note: 'The descents on both sides are long and steep.' },
+    { item: 'Water bottles (2–3 L capacity)', need: 'essential', note: 'The ridge camps beyond the pass have little water.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The Ganja La', note: 'A steep, exposed, frequently snowbound pass with a roped section on the south side. It is turned back most seasons when fresh snow makes the descent dangerous. The crew makes the call.' },
+      { name: 'The trailless traverse', note: 'Two to three days between Kyanjin Gompa and Tarke Ghyang with no shelter, no villages and limited water. A crew and full camping equipment are essential.' },
+      { name: 'Altitude', note: 'The pass is above 5,000 m and the ridge camps are near 4,000–4,300 m. The Kyanjin acclimatisation day is the safeguard.' },
+      { name: 'Cold and exposure', note: 'The high camps and the pass morning are severe; frostnip is a risk without proper gloves and boots.' },
+      { name: 'Water scarcity on the ridge', note: 'Between Keldang and Dukpu, running water is limited — fill every bottle when you find it.' }
+    ],
+    turnaround: 'If the Ganja La is out of condition, the group descends the Langtang valley and walks or drives out — the Langtang valley trek is a fine trip on its own. A trekker not acclimatising at Kyanjin Gompa does not go to the pass.',
+    note: 'Carry a satellite messenger for the traverse. Helicopter evacuation is possible from Kyanjin Gompa and from clearings on the ridge, weather permitting; the HRA runs a seasonal post at Kyanjin.'
+  },
+  faq: [
+    { q: 'How hard is the Ganja La?', a: 'It is a strenuous, committing pass — around 5,122 m, usually under snow, with a steep and often roped descent on the south side, and two to three days of camping with no lodges. You should be fit, have previous altitude experience, and be comfortable on steep snow with crampons.' },
+    { q: 'Is it a technical climb?', a: 'No, but it is close to the edge of trekking. The south side is steep enough that a fixed rope or hand line is normally used, and fresh snow can make it genuinely dangerous.' },
+    { q: 'Can I do the Langtang valley without the pass?', a: 'Yes — the Langtang Valley trek to Kyanjin Gompa and back is a separate, easier route with tea houses throughout. The Ganja La is the harder crossing option.' },
+    { q: 'How often is the pass open?', a: 'It varies year to year and week to week. Spring and autumn give the best chances; even then, parties are turned back in poor conditions. Build in spare days.' },
+    { q: 'Where does the trek finish?', a: 'In Helambu — usually at Tarke Ghyang or Sermathang, from where a road runs to Melamchi and on to Kathmandu.' },
+    { q: 'What permits do I need?', a: 'A Langtang National Park permit and local municipality fees, plus a licensed guide. It is not a restricted area.' },
+    { q: 'Is there mobile coverage?', a: 'In the Langtang valley up to Kyanjin Gompa and again in Helambu. The traverse between them is a dead zone — carry a satellite messenger.' }
+  ],
+  relatedTreks: ['langtang-valley', 'tamang-heritage-trail', 'gosaikunda', 'panch-pokhari-trek'],
+  relatedDestinations: [
+    { name: 'Langtang Valley', note: 'The tea-house trek to Kyanjin Gompa — the first half of this route, without the pass.' },
+    { name: 'Helambu Circuit', note: 'The Sherpa villages you finish among; the two routes share the same ridges.' },
+    { name: 'Gosaikunda', note: 'The sacred lakes trek, linked to Langtang by the Laurebina La — a lower-committing high option.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu hotels. The trail is tea houses in the Langtang valley and in Helambu, with three nights camping on the Ganja La traverse. A contingency day for the pass is strongly advised.'
+};
+
+TREKS['tashi-lapcha-pass-trek'] = {
+  slug: 'tashi-lapcha-pass-trek',
+  name: 'Tashi Lapcha Pass Trek',
+  tagline: 'Over a glaciated 5,755 m pass from Rolwaling to the Khumbu',
+  province: 'bagmati',
+  region: 'Rolwaling',
+  heroImage: '/images/langtang_real.jpg',
+  summary: 'A serious 18–20 day traverse from the remote Rolwaling valley over the Tashi Lapcha (≈ 5,755 m) — a crevassed, roped glacier pass — into the Khumbu at Thame. Full camping on the high section with a climbing crew, and one of the harder pass crossings in Nepal outside of mountaineering routes.',
+  stats: {
+    duration: '18–20 days (15–17 on the trail)',
+    difficulty: 'Extreme (technical pass)',
+    maxAltitude: '≈ 5,755 m',
+    maxAltitudePoint: 'Tashi Lapcha',
+    bestSeason: 'Apr–May · Oct–Nov',
+    startPoint: 'Chetchet / Gongar Khola (drive from Kathmandu)',
+    endPoint: 'Lukla (fly to Kathmandu), via Thame and Namche',
+    distanceKm: '≈ 120–140 km',
+    walkHours: '5–8 hrs/day, with long glacier days'
+  },
+  seo: {
+    title: 'Tashi Lapcha Pass Trek — Nepal | Rolwaling to Khumbu Over a 5,755 m Glacier Pass',
+    description: 'The Tashi Lapcha (Tashi Labtsa) Pass trek from Rolwaling to the Everest region over a ≈ 5,755 m glaciated pass. Roped crossing, camping itinerary, gear, permits, difficulty and best season.'
+  },
+  overview: [
+    'The Tashi Lapcha is the pass that joins the Rolwaling valley to the Khumbu. It is around 5,755 m, it is glaciated on both sides, and it is crossed on a rope: crevasses on the approach glaciers, a short climb to the col, and a descent past the Tengi Ragi Tau icefall to the Thame valley. It is not a mountaineering objective in the way the Sherpani Col is, but it is well beyond an ordinary trekking pass, and every crossing runs with a climbing guide and Sherpa team who fix rope and manage the glaciers.',
+    'The route to the pass is a trek in itself — up the Rolwaling from the Tama Koshi, through the Buddhist villages of Simigaon, Beding and Na, past the sacred lake of Tsho Rolpa. Rolwaling is a "beyul", a hidden valley in Sherpa tradition, and it is one of the least-visited inhabited valleys in the country. From Na the trail leaves the villages behind for four to five days of camping on moraine and glacier before the pass and the drop into the Khumbu.',
+    'It suits experienced trekkers who are fit, comfortable on crampons and a rope, and have spent nights above 5,000 m before. A snowed-up Tashi Lapcha, or an unstable icefall, turns parties back.'
+  ],
+  highlights: [
+    'The Tashi Lapcha (≈ 5,755 m) — a crevassed, roped glacier pass between two regions',
+    'The Rolwaling valley — a Sherpa "beyul" and one of Nepal’s quietest inhabited valleys',
+    'Tsho Rolpa, the country’s largest and most closely-watched glacial lake',
+    'Gaurishankar (7,134 m), Melungtse and, from the pass, the Khumbu peaks',
+    'The Buddhist villages of Beding and Na, and the gompa at Beding',
+    'Emerging onto the Everest trail at Thame — Tenzing Norgay’s home village'
+  ],
+  suitability: {
+    physical: 9, technical: 6, altitude: 9, remoteness: 8,
+    walkHours: '5–8 hours a day, with long roped glacier days around the pass',
+    terrain: 'Village and forest trails in Rolwaling, then moraine, crevassed glacier and a roped col. Steep, exposed and objectively hazardous near the icefall.',
+    weatherExposure: 'Severe on the pass and the glacier camps — four to five days with no shelter and no bail-out.',
+    goodFor: [
+      'Fit, experienced trekkers comfortable on crampons and a fixed rope at altitude',
+      'Anyone who has crossed a technical Himalayan pass or climbed a 6,000 m peak before',
+      'Parties happy to camp on glaciers for the better part of a week'
+    ],
+    notIdeal: [
+      'Trekkers without steep-snow and glacier experience — this is a roped crossing',
+      'Anyone who has not slept above 5,000 m',
+      'Trips with no contingency time — the pass and the icefall both force delays'
+    ]
+  },
+  why: {
+    lead: 'Rolwaling is a valley most Nepalis have never been to, and the only trekking way out of the top of it goes over a glacier.',
+    paragraphs: [
+      'For a valley this close to Kathmandu, Rolwaling is astonishingly little visited. It is a dead-end unless you cross the Tashi Lapcha, and the villages — Beding at 3,690 m, Na at 4,180 m — still run on yak herding and potatoes, with a trickle of climbers heading for Pachermo or the pass. Walking up it feels like arriving somewhere before the road did.',
+      'The pass is the payoff and the price. It is a proper glacier crossing, roped and crampon-shod, threading crevasses beneath the Tengi Ragi Tau icefall, and it drops you — after four or five days of camping — straight onto the Everest Base Camp trail at Thame. Few journeys in Nepal change gear so completely, from empty beyul to Khumbu bakery in a single high day.'
+    ],
+    gallery: [
+      { img: '/images/langtang_real.jpg', caption: 'The Tashi Lapcha glacier below the col' },
+      { img: '/images/treks/tashi-lapcha-2.webp', caption: 'Beding, in the Rolwaling valley' },
+      { img: '/images/treks/tashi-lapcha-3.webp', caption: 'Tsho Rolpa glacial lake' }
+    ]
+  },
+  passes: [{ name: 'Tashi Lapcha', elevation: '≈ 5,755 m', day: 12 }],
+  acclimatization: {
+    days: [7, 10],
+    note: 'The Rolwaling approach acclimatises the team well: a night at Beding (≈ 3,690 m), then two nights at Na (≈ 4,180 m) with a day walk toward Yalung Ri or Tsho Rolpa, then a slow move up the glacier with a further acclimatisation or load-ferrying day at the camp below the pass (Ngole / Kabug, ≈ 5,000–5,400 m). Every night from Na to the Khumbu side is above 4,100 m, and the two highest are above 5,000 m.'
+  },
+  itinerary: [
+    { day: 1, title: 'Drive Kathmandu to Chetchet / Gongar Khola', from: 'Kathmandu (1,400 m)', to: 'Gongar Khola (≈ 1,440 m)', distanceKm: '—', walkHours: '8–10 hr drive', startEle: 1400, endEle: 1440, terrain: 'Highway to Charikot, then a rough road up the Tama Koshi', stay: 'Guest house / camp', meals: 'B/L/D', highlights: ['The Tama Koshi hydropower valley'], tips: 'A very long drive — an early start.' },
+    { day: 2, title: 'Gongar Khola to Simigaon', from: 'Gongar Khola (1,440 m)', to: 'Simigaon (≈ 2,000 m)', distanceKm: '≈ 8 km', walkHours: '4–5 hrs', startEle: 1440, endEle: 2000, terrain: 'A steep climb from the river to a Sherpa village on a shelf', stay: 'Camp / homestay', meals: 'B/L/D', highlights: ['Simigaon gompa and the first Gaurishankar views'], tips: 'A short but sharp climbing day.' },
+    { day: 3, title: 'Simigaon to Dongang', from: 'Simigaon (2,000 m)', to: 'Dongang (≈ 2,790 m)', distanceKm: '≈ 12 km', walkHours: '6–7 hrs', startEle: 2000, endEle: 2790, terrain: 'Forest trail high above the Rolwaling Khola, entering the Gaurishankar Conservation Area', stay: 'Camp', meals: 'B/L/D', highlights: ['Dense rhododendron and fir forest', 'Conservation area checkpoint'], tips: 'The valley narrows and steepens.' },
+    { day: 4, title: 'Dongang to Beding', from: 'Dongang (2,790 m)', to: 'Beding (≈ 3,690 m)', distanceKm: '≈ 12 km', walkHours: '6–7 hrs', startEle: 2790, endEle: 3690, terrain: 'Climb into the upper Rolwaling; the treeline and the first big peaks', stay: 'Camp / lodge', meals: 'B/L/D', highlights: ['Beding — the main Rolwaling village and its gompa'], tips: 'The altitude is noticeable now — slow down.' },
+    { day: 5, title: 'Beding to Na', from: 'Beding (3,690 m)', to: 'Na (≈ 4,180 m)', distanceKm: '≈ 7 km', walkHours: '3–4 hrs', startEle: 3690, endEle: 4180, terrain: 'Yak pasture and the open upper valley', stay: 'Camp / lodge', meals: 'B/L/D', highlights: ['Na — the highest settlement in Rolwaling, seasonally occupied'], tips: 'A short day on purpose.' },
+    { day: 6, title: 'Na — acclimatisation day (Tsho Rolpa or Yalung Ri base)', from: 'Na (4,180 m)', to: 'Na (4,180 m)', distanceKm: '≈ 10 km', walkHours: '5–6 hrs', startEle: 4180, endEle: 4600, terrain: 'Day walk to the Tsho Rolpa moraine dam or toward Yalung Ri', stay: 'Camp / lodge', meals: 'B/L/D', highlights: ['Tsho Rolpa (≈ 4,580 m) — a 3 km glacial lake held back by a moraine'], tips: 'Climb high, sleep low — the key acclimatisation day.' },
+    { day: 7, title: 'Na to Kabug (glacier camp)', from: 'Na (4,180 m)', to: 'Kabug (≈ 4,750 m)', distanceKm: '≈ 8 km', walkHours: '5–6 hrs', startEle: 4180, endEle: 4750, terrain: 'Moraine along the north side of Tsho Rolpa to a glacier-edge camp', stay: 'Camp', meals: 'B/L/D', highlights: ['The route to the pass comes into view'], tips: 'Full camping from here to the Khumbu.' },
+    { day: 8, title: 'Kabug to Tashi Lapcha Base Camp (Ngole)', from: 'Kabug (4,750 m)', to: 'Ngole (≈ 5,000 m)', distanceKm: '≈ 6 km', walkHours: '4–5 hrs', startEle: 4750, endEle: 5000, terrain: 'Glacier and moraine to the base camp below the pass', stay: 'Camp', meals: 'B/L/D', highlights: ['Parchamo (Pachermo) peak above camp'], tips: 'A cold, exposed camp; the crew begins fixing rope.' },
+    { day: 9, title: 'Acclimatisation / load-ferry / contingency day', from: 'Ngole (5,000 m)', to: 'Ngole (5,000 m)', distanceKm: '≈ 4 km', walkHours: '2–5 hrs', startEle: 5000, endEle: 5000, terrain: 'Rest, or a light carry toward the pass while the crew fixes rope', stay: 'Camp', meals: 'B/L/D', highlights: ['A held day for weather and rope-fixing'], tips: 'The pass is crossed only on a settled forecast; the schedule flexes here.' },
+    { day: 10, title: 'Ngole to the high camp below the col', from: 'Ngole (5,000 m)', to: 'High camp (≈ 5,400 m)', distanceKm: '≈ 5 km', walkHours: '4–5 hrs', startEle: 5000, endEle: 5400, terrain: 'Roped travel up the Drolambau Glacier, weaving crevasses', stay: 'Camp (glacier)', meals: 'B/L/D', highlights: ['A camp on the glacier beneath the Tashi Lapcha'], tips: 'Crampons and rope from here; an early night.' },
+    { day: 11, title: 'Contingency day at the high camp', from: 'High camp (5,400 m)', to: 'High camp (5,400 m)', distanceKm: '≈ 2 km', walkHours: '1–3 hrs', startEle: 5400, endEle: 5400, terrain: 'Held for weather', stay: 'Camp (glacier)', meals: 'B/L/D', highlights: ['A buffer day at altitude'], tips: 'If the previous days went to plan, the pass may be crossed a day early and this day used lower down.' },
+    { day: 12, title: 'Cross the Tashi Lapcha to Thengbo', from: 'High camp (5,400 m)', to: 'Thengbo (≈ 4,350 m)', distanceKm: '≈ 10 km', walkHours: '8–10 hrs', startEle: 5400, endEle: 4350, terrain: 'A short climb to the col (≈ 5,755 m), then a steep, crevassed descent past the Tengi Ragi Tau icefall onto the Khumbu-side glacier and down to a moraine camp', stay: 'Camp', meals: 'B/L/D', highlights: ['Tashi Lapcha (≈ 5,755 m)', 'The Khumbu peaks ahead'], tips: 'Pre-dawn start. Roped throughout; the icefall descent is the crux and the objective hazard.' },
+    { day: 13, title: 'Thengbo to Thame', from: 'Thengbo (4,350 m)', to: 'Thame (≈ 3,800 m)', distanceKm: '≈ 10 km', walkHours: '4–5 hrs', startEle: 4350, endEle: 3800, terrain: 'Down the Thame valley to the first Khumbu village', stay: 'Lodge', meals: 'B/L/D', highlights: ['Thame — Tenzing Norgay’s home village and its cliffside gompa', 'Lodges, a menu and a bed'], tips: 'The camping is over; you are on the Everest trail now.' },
+    { day: 14, title: 'Thame to Namche Bazaar', from: 'Thame (3,800 m)', to: 'Namche Bazaar (≈ 3,440 m)', distanceKm: '≈ 10 km', walkHours: '4–5 hrs', startEle: 3800, endEle: 3440, terrain: 'The Bhote Koshi trail to Namche', stay: 'Lodge', meals: 'B/L/D', highlights: ['Namche — bakeries, hot showers and shops'], tips: 'A short, easy day into the Khumbu hub.' },
+    { day: 15, title: 'Namche to Lukla', from: 'Namche Bazaar (3,440 m)', to: 'Lukla (≈ 2,840 m)', distanceKm: '≈ 19 km', walkHours: '6–7 hrs', startEle: 3440, endEle: 2840, terrain: 'The Dudh Koshi trail back to Lukla', stay: 'Lodge', meals: 'B/L/D', highlights: ['The last of the peaks behind you'], tips: 'A long final walking day.' },
+    { day: 16, title: 'Fly Lukla to Kathmandu', from: 'Lukla (2,840 m)', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '35 min flight', startEle: 2840, endEle: 1400, terrain: 'Mountain flight', stay: 'Hotel', meals: 'B', highlights: ['Trek complete'], tips: 'Lukla flights may run from Ramechhap in peak season; keep contingency days.' },
+    { day: 17, title: 'Contingency day', from: 'Kathmandu or Lukla', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '—', startEle: 1400, endEle: 1400, terrain: 'Buffer', stay: 'Hotel', meals: 'B', highlights: ['Spare day for pass or flight weather'], tips: 'Two buffer days are advised — the pass and the Lukla flight both carry delay risk.' }
+  ],
+  routePoints: [
+    { name: 'Beding', elevation: '≈ 3,690 m', day: 4, walkTime: '4 days from the road head', stay: 'Camp / basic lodge', highlight: 'The main Rolwaling village and its gompa', warning: 'Basic supplies only; the last shop of any size.' },
+    { name: 'Na', elevation: '≈ 4,180 m', day: 5, walkTime: '3–4 hrs from Beding', stay: 'Camp / seasonal lodge', highlight: 'The highest settlement in Rolwaling and the acclimatisation base', warning: 'Seasonally occupied; two nights here before the glacier.' },
+    { name: 'Tsho Rolpa', elevation: '≈ 4,580 m', day: 6, walkTime: 'Day walk from Na', stay: 'Day visit', highlight: 'Nepal’s largest glacial lake, held by a moraine dam', warning: 'The dam is monitored for outburst-flood risk; stay on the marked trail.' },
+    { name: 'Tashi Lapcha Base Camp (Ngole)', elevation: '≈ 5,000 m', day: 8, walkTime: '2 days from Na', stay: 'Camp — no facilities', highlight: 'The launch camp for the pass', warning: 'Above 5,000 m; a storm here means a serious wait.' },
+    { name: 'Tashi Lapcha', elevation: '≈ 5,755 m', day: 12, walkTime: '3–4 hrs from the high camp', stay: 'Pass — no shelter', highlight: 'The crossing into the Khumbu', warning: 'Crevassed glaciers either side and the Tengi Ragi Tau icefall on the descent — roped throughout, and the objective hazard of the trek. Height figures vary slightly between sources — verify.' }
+  ],
+  permits: [
+    { name: 'Gaurishankar Conservation Area entry permit', where: 'Kathmandu (NTB) or the checkpoint at Dongang', feeNote: 'Fixed conservation fee — verify', notes: 'Covers the Rolwaling valley.' },
+    { name: 'Sagarmatha National Park entry permit', where: 'Kathmandu (NTB) or Monjo', feeNote: 'Fixed park fee — verify', notes: 'For the Khumbu side from the pass to Lukla.' },
+    { name: 'Khumbu Pasang Lhamu Rural Municipality permit', where: 'Lukla / Namche', feeNote: 'Fixed local fee — verify', notes: 'Standard Khumbu local levy.' },
+    { name: 'Pass arrangements', where: 'Through a registered operator', feeNote: 'Varies — verify', notes: 'Rolwaling and the Tashi Lapcha are treated as a controlled, guided undertaking. Confirm the current permit and guide position with your operator well in advance.' }
+  ],
+  cost: {
+    note: 'A supported traverse with a climbing crew, full glacier camping, two protected areas and long road access at the Rolwaling end. Priced between a restricted-area trek and a 6,000 m peak. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / camping', rangeUSD: '$3,200–$4,400', includes: ['Climbing guide + Sherpa team', 'Rope fixing and group hardware', 'All permits', 'Full camping equipment and meals', 'Transport and the Lukla flight'] },
+      { name: 'Comfort', rangeUSD: '$4,600–$6,000', includes: ['Higher guide ratio', 'Extra Sherpa support and contingency days', 'Better camp comforts', 'City 4★'] },
+      { name: 'Premium', rangeUSD: '$7,000+', includes: ['Private departure', 'One Sherpa per two members on the glacier', 'Parchamo (Pachermo) Peak add-on', 'Helicopter contingency'] }
+    ],
+    breakdown: [
+      { item: 'Climbing crew', note: 'Guide and Sherpa team for rope fixing and glacier safety — the largest cost' },
+      { item: 'Group hardware', note: 'Fixed rope, snow protection, spare crampons and ice axes' },
+      { item: 'Protected-area fees', note: 'Gaurishankar Conservation Area and Sagarmatha National Park' },
+      { item: 'Full glacier camping', note: 'Tents, kitchen, fuel and food for four to five unsupported days' },
+      { item: 'Transport', note: 'A long jeep to the Tama Koshi in, the Lukla flight out' },
+      { item: 'Contingency', note: 'Buffer days for the pass, the icefall and the Lukla flight' }
+    ],
+    independentVsGuided: 'This route is not walked independently. The glaciers and the pass require a climbing crew to fix rope and manage crevasse and icefall hazard, and the operator confirms the current permit position for Rolwaling and the crossing.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Gongar Khola (via Charikot)', mode: 'Private jeep', duration: '8–10 hrs', note: 'A long day; the upper Tama Koshi road is rough and hydropower-construction traffic is heavy.' },
+      { from: 'Lukla', to: 'Kathmandu', mode: 'Domestic flight', duration: '35 min', note: 'In peak season the flight may operate from Ramechhap (a 4–5 hr drive from Kathmandu).' }
+    ],
+    note: 'A long drive in and a weather-dependent flight out. Build in at least two contingency days.'
+  },
+  equipment: [
+    { item: 'Mountaineering boots (crampon-compatible)', need: 'essential', note: 'Warm B2/B3 boots for the glacier days.' },
+    { item: 'Crampons, ice axe, harness, ascender, belay device, 2 prusiks', need: 'essential', note: 'In use for two to three days around the pass.' },
+    { item: 'Climbing helmet', need: 'essential', note: 'The icefall descent and the col approaches.' },
+    { item: 'Four-season sleeping bag (≈ −20°C) + insulated mat', need: 'essential', note: 'Several nights on or beside the glacier.' },
+    { item: 'Down jacket + insulated trousers', need: 'recommended', note: 'The pass morning is bitterly cold.' },
+    { item: 'Satellite messenger / phone', need: 'essential', note: 'No coverage from Dongang until Thame.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The Tashi Lapcha', note: 'Glaciated on both sides with crevasses, and the Tengi Ragi Tau icefall threatens the descent. It is crossed on a rope, at pace, on a settled forecast only. Fresh snow or an active icefall turns parties back.' },
+      { name: 'Altitude', note: 'Every night from Na is above 4,100 m and the two highest camps are above 5,000 m, before a 5,755 m pass. The Rolwaling and Na acclimatisation days are the margin.' },
+      { name: 'Weather', note: 'Four to five days on the high section with no shelter. A storm can pin a team; the itinerary carries buffer days for this.' },
+      { name: 'Tsho Rolpa outburst-flood risk', note: 'The lake is dammed by an unstable moraine and is actively monitored. The trail keeps to the safe side; follow the guide.' },
+      { name: 'Isolation', note: 'Between Na and Thame there is no settlement and no rescue point except by helicopter from a few glacier clearings, weather permitting.' }
+    ],
+    turnaround: 'Before the glacier, a member not acclimatising or not moving well on a rope descends the Rolwaling and walks out via Simigaon. Once on the Drolambau Glacier the team is committed to the crossing and manages problems with its own resources and, if needed, a helicopter.',
+    note: 'This is a controlled, guided crossing close to a mountaineering route. Be honest with the guide about your glacier and steep-snow experience before booking, and carry insurance covering trekking-peak-grade activity and helicopter rescue.'
+  },
+  faq: [
+    { q: 'Is the Tashi Lapcha a trek or a climb?', a: 'It sits between the two. There is no summit and little actual climbing, but the pass is a crevassed glacier crossing on a rope, beneath an icefall, with several days of camping above 4,700 m. You need to be fit, comfortable on crampons and a fixed rope, and to have slept above 5,000 m before.' },
+    { q: 'How high is the pass?', a: 'Around 5,755 m. Sources differ by a few metres; it does not change the plan.' },
+    { q: 'Which direction is it done?', a: 'Almost always from Rolwaling to the Khumbu (west to east), so the team acclimatises on the long approach and finishes on the well-served Everest trail.' },
+    { q: 'Do I need previous experience?', a: 'Yes. Prior glacier travel, cramponing and a technical Himalayan pass or 6,000 m peak are effectively prerequisites. It is not a first big trek.' },
+    { q: 'When is it crossed?', a: 'April–May and October–November. Autumn generally has the most stable conditions. It is not attempted in winter or the monsoon.' },
+    { q: 'Is Rolwaling a restricted area?', a: 'It lies in the Gaurishankar Conservation Area and requires a permit and a guide; the exact permit position for the valley and the pass can change, so your operator confirms it before you travel.' },
+    { q: 'Can I climb a peak on the way?', a: 'Yes — Parchamo (Pachermo, 6,187 m) rises right by the pass and is a common add-on, turning the trip into a 3-week expedition.' }
+  ],
+  relatedTreks: ['rolwaling-valley', 'three-passes', 'everest-base-camp', 'sherpeni-col-pass-trek'],
+  relatedDestinations: [
+    { name: 'Rolwaling Valley', note: 'The trek up the beyul to Na and Tsho Rolpa — the non-glaciated alternative that turns back at the valley head.' },
+    { name: 'Parchamo Peak (6,187 m)', note: 'The trekking peak beside the pass — a natural summit add-on.' },
+    { name: 'Everest Three Passes', note: 'The Khumbu high-pass circuit you can continue onto from Namche.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu hotels and a guest house at the Tama Koshi road head. The route is camping from Simigaon to the Khumbu side, with a climbing crew, then tea houses through the Khumbu to Lukla. Talk to us about your glacier experience before booking.'
+};
+
 /* ========================= GANDAKI PROVINCE ========================= */
 
 TREKS['annapurna-circuit'] = {
@@ -2259,7 +3061,7 @@ TREKS['annapurna-circuit'] = {
   tagline: 'Around the Annapurna massif, over the Thorong La',
   province: 'gandaki',
   region: 'Annapurna',
-  heroImage: '/images/annapurna_real.jpg',
+  heroImage: '/images/treks/annapurna-circuit.jpg',
   summary: 'The classic 12–16 day circuit of the Annapurna massif, from subtropical valleys through pine forest and the arid Manang plateau to the Thorong La (5,416 m) and down to the pilgrimage temple of Muktinath and the Kali Gandaki gorge.',
   stats: {
     duration: '12–16 days on the trail',
@@ -2407,7 +3209,7 @@ TREKS['annapurna-circuit'] = {
     { q: 'What is the Tilicho Lake side trip?', a: 'A 2–3 day detour from Manang to one of the highest large lakes in the world (4,919 m). It adds a serious day and a night at Tilicho Base Camp; only for well-acclimatised, strong trekkers.' },
     { q: 'What happens on the Thorong La in bad weather?', a: 'You do not cross. Guides wait it out at Manang or the Phedi, and if the window does not come, the trek ends without the pass. Pushing on in a storm is how the 2014 disaster happened.' }
   ],
-  relatedTreks: ['annapurna-base-camp', 'mardi-himal', 'manaslu-circuit', 'upper-mustang'],
+  relatedTreks: ['annapurna-base-camp', 'mardi-himal', 'manaslu-circuit', 'upper-mustang', 'nar-phu-valley-trek', 'tilicho-lake-trek'],
   relatedDestinations: [
     { name: 'Pokhara', note: 'The lakeside city where the trek ends — Phewa Lake, paragliding, and the World Peace Pagoda.' },
     { name: 'Upper Mustang', note: 'Begins at Kagbeni, right on the circuit — a natural add-on for another week.' },
@@ -2423,7 +3225,7 @@ TREKS['annapurna-base-camp'] = {
   tagline: 'Into the Sanctuary, ringed by a wall of ice',
   province: 'gandaki',
   region: 'Annapurna',
-  heroImage: '/images/annapurna.png',
+  heroImage: '/images/treks/annapurna-base-camp.jpg',
   summary: 'A 10-day trek from the hills above Pokhara into the Annapurna Sanctuary — a glacial amphitheatre almost entirely surrounded by peaks over 7,000 m — to Annapurna Base Camp at 4,130 m, via the Gurung villages and rhododendron forests of the Modi Khola valley.',
   stats: {
     duration: '10 days (7–8 on the trail)',
@@ -2565,7 +3367,7 @@ TREKS['annapurna-base-camp'] = {
     { q: 'What if I get altitude sickness?', a: 'It is usually mild at these altitudes. Rest at MBC or descend to Deurali or Bamboo, all of which are low enough to recover. Serious signs mean immediate descent.' },
     { q: 'What is the avalanche risk really like?', a: 'Confined to the Deurali–MBC section and mainly a concern in and just after heavy snow. In the normal seasons, with a guide checking conditions, it is a managed risk rather than a constant danger.' }
   ],
-  relatedTreks: ['mardi-himal', 'annapurna-circuit', 'upper-mustang', 'langtang-valley'],
+  relatedTreks: ['mardi-himal', 'annapurna-circuit', 'upper-mustang', 'langtang-valley', 'tilicho-lake-trek'],
   relatedDestinations: [
     { name: 'Poon Hill / Ghorepani', note: 'The classic sunrise ridge — combine at the start.' },
     { name: 'Pokhara', note: 'Phewa Lake, paragliding, the Peace Pagoda — the perfect wind-down.' },
@@ -2729,6 +3531,7 @@ TREKS['mardi-himal'] = {
 
 TREKS['upper-mustang'] = {
   slug: 'upper-mustang',
+  restricted: true,
   popular: true,
   name: 'Upper Mustang Trek',
   tagline: 'The walled kingdom in the Annapurna rain-shadow',
@@ -2881,7 +3684,7 @@ TREKS['upper-mustang'] = {
     { q: 'Can I combine it with the Annapurna Circuit?', a: 'Yes — the routes meet at Kagbeni. A common plan is to walk the Circuit over the Thorong La to Muktinath, then continue into Upper Mustang, though you still need the restricted-area permit and a guide for the Mustang section.' },
     { q: 'What if I get altitude sickness?', a: 'Descend toward Jomsom, which is straightforward from anywhere on the route. Given the moderate altitude, serious AMS is uncommon here, but report symptoms early.' }
   ],
-  relatedTreks: ['annapurna-circuit', 'annapurna-base-camp', 'upper-dolpo', 'tsum-valley'],
+  relatedTreks: ['annapurna-circuit', 'annapurna-base-camp', 'upper-dolpo', 'tsum-valley', 'nar-phu-valley-trek', 'mesokanto-la-pass-trek'],
   relatedDestinations: [
     { name: 'Muktinath', note: 'On the route out — the temple sacred to Hindus and Buddhists.' },
     { name: 'Marpha & the Kali Gandaki', note: 'The apple-orchard village and the world’s deepest gorge, on the Jomsom approach.' },
@@ -2892,6 +3695,7 @@ TREKS['upper-mustang'] = {
 
 TREKS['manaslu-circuit'] = {
   slug: 'manaslu-circuit',
+  restricted: true,
   popular: true,
   name: 'Manaslu Circuit Trek',
   tagline: 'Around the eighth-highest mountain, over the Larke La',
@@ -3048,7 +3852,7 @@ TREKS['manaslu-circuit'] = {
     { q: 'What if the Larke La is closed by snow?', a: 'You wait at Samdo for a window; if it does not come, you retrace down the Budhi Gandaki. The pass is never forced.' },
     { q: 'What if I get altitude sickness?', a: 'You descend toward Samagaon or lower, recover, and either continue on a reduced plan or arrange evacuation. The acclimatisation days are designed to prevent this.' }
   ],
-  relatedTreks: ['tsum-valley', 'annapurna-circuit', 'everest-base-camp', 'ganesh-himal-trek'],
+  relatedTreks: ['tsum-valley', 'annapurna-circuit', 'everest-base-camp', 'ganesh-himal-trek', 'manaslu-tsum-valley-trek'],
   relatedDestinations: [
     { name: 'Tsum Valley', note: 'The sacred hidden valley branching off the circuit — a week-long extension.' },
     { name: 'Annapurna Circuit', note: 'The routes join at Dharapani; some trekkers continue toward Manang.' },
@@ -3059,6 +3863,7 @@ TREKS['manaslu-circuit'] = {
 
 TREKS['tsum-valley'] = {
   slug: 'tsum-valley',
+  restricted: true,
   name: 'Tsum Valley Trek',
   tagline: 'A sacred hidden valley on the Tibetan border',
   province: 'gandaki',
@@ -3212,7 +4017,7 @@ TREKS['tsum-valley'] = {
     { q: 'What is special about Tsum culturally?', a: 'It is a beyul (hidden valley) with its own Tsumba language and dress, a centuries-old community vow of non-violence, and working monasteries and nunneries — Rachen, Mu Gompa, Gumba Lungdang — near the Tibetan border.' },
     { q: 'What if I get altitude sickness?', a: 'You descend the valley, which always leads downhill toward the road. Given the moderate altitude, serious AMS is uncommon, but report symptoms early.' }
   ],
-  relatedTreks: ['manaslu-circuit', 'ganesh-himal-trek', 'upper-mustang', 'limi-valley'],
+  relatedTreks: ['manaslu-circuit', 'ganesh-himal-trek', 'upper-mustang', 'limi-valley', 'manaslu-tsum-valley-trek'],
   relatedDestinations: [
     { name: 'Manaslu Circuit', note: 'The obvious pairing — continue past Lokpa and over the Larke La.' },
     { name: 'Ganesh Himal Base Camp', note: 'A side trip from Gumba Lungdang for the strong and well-equipped.' },
@@ -3227,7 +4032,7 @@ TREKS['dhaulagiri-circuit'] = {
   tagline: 'A true camping expedition around the seventh-highest peak',
   province: 'gandaki',
   region: 'Dhaulagiri',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/dhaulagiri-circuit.jpg',
   summary: 'An 18-day, fully-supported camping trek around Dhaulagiri I (8,167 m), crossing two glaciated passes — French Col (5,360 m) and Dhampus Pass (5,240 m) — and camping for several nights above 4,500 m in the glacial basin of Hidden Valley. One of Nepal’s most serious teahouse-free treks.',
   stats: {
     duration: '18–20 days on the trail',
@@ -3378,7 +4183,7 @@ TREKS['dhaulagiri-circuit'] = {
     { q: 'What if I get altitude sickness at Base Camp or Hidden Valley?', a: 'This is the crux problem: there is no quick descent. The response is oxygen or a PAC bag, holding position, and a helicopter evacuation when weather allows — which is why acclimatisation is non-negotiable.' },
     { q: 'Can I do just Dhaulagiri Base Camp and turn back?', a: 'Yes — an out-and-back to Dhaulagiri Base Camp via the Myagdi Khola, without the passes, is a serious but less committing option of around 12–14 days.' }
   ],
-  relatedTreks: ['annapurna-circuit', 'upper-mustang', 'manaslu-circuit', 'upper-dolpo'],
+  relatedTreks: ['annapurna-circuit', 'upper-mustang', 'manaslu-circuit', 'upper-dolpo', 'nar-phu-valley-trek'],
   relatedDestinations: [
     { name: 'Marpha & the Kali Gandaki', note: 'The apple-orchard village where the trek rejoins the trail network.' },
     { name: 'Muktinath', note: 'A short detour from Jomsom on the way out.' },
@@ -3387,10 +4192,645 @@ TREKS['dhaulagiri-circuit'] = {
   hotelsNote: 'Trips include Kathmandu and Pokhara hotels; the route is camping for around two weeks with full crew support, then tea houses from Marpha. This is sold as an expedition — talk to us early about your experience, dates and the weather window.'
 };
 
+TREKS['nar-phu-valley-trek'] = {
+  slug: 'nar-phu-valley-trek',
+  restricted: true,
+  popular: true,
+  name: 'Nar Phu Valley Trek',
+  tagline: 'Two hidden Tibetan villages north of the Annapurnas',
+  province: 'gandaki',
+  region: 'Annapurna (Nar–Phu)',
+  heroImage: '/images/treks/annapurna-circuit.jpg',
+  summary: 'A 12–14 day restricted-area trek into the Nar and Phu valleys — a walled-off Tibetan-Buddhist enclave behind the Annapurna Circuit, opened to trekkers only in 2003. Medieval stone villages, a hilltop gompa, and a crossing of the Kang La (≈ 5,320 m) back onto the Circuit at Ngawal.',
+  stats: {
+    duration: '12–14 days (9–11 on the trail)',
+    difficulty: 'Strenuous',
+    maxAltitude: '≈ 5,320 m',
+    maxAltitudePoint: 'Kang La',
+    bestSeason: 'Mar–May · Sep–Nov',
+    startPoint: 'Koto (drive from Kathmandu via Besisahar / Chame)',
+    endPoint: 'Ngawal, then Jomsom / Pokhara — or continue the Annapurna Circuit',
+    distanceKm: '≈ 90–110 km',
+    walkHours: '5–7 hrs/day'
+  },
+  seo: {
+    title: 'Nar Phu Valley Trek — Nepal | Restricted-Area Itinerary, Kang La, Permit Cost & Best Time',
+    description: 'The Nar Phu Valley trek behind the Annapurna Circuit: restricted-area permits and cost, 12–14 day itinerary over the Kang La (≈ 5,320 m), the villages of Nar and Phu, difficulty, best season and FAQ.'
+  },
+  overview: [
+    'The Nar and Phu valleys sit directly behind the Annapurna Circuit, north of Chame, but for most of the last century they were closed. The area opened to trekking only in 2003, and it is still a restricted zone: you need a special permit, a licensed guide and a group of at least two.',
+    'From Koto — a village on the Circuit — the trail leaves the main route and climbs a deep, narrow gorge into the Nar Khola. Phu, at around 4,080 m, is a fortified Tibetan village of stacked stone houses beneath the ruins of a dzong, with the Tashi Lhakhang gompa on a spur above it. Nar, reached over a separate side valley, is a working farming village with three gompas and a wall of white chortens at its entrance. Both keep a way of life, a dialect and a calendar closer to Tibet than to Nepal.',
+    'The trek usually finishes by crossing the Kang La (≈ 5,320 m) from Nar back onto the Annapurna Circuit at Ngawal, from where you can walk out to Jomsom or continue over the Thorong La. It is a short trek but a high one, with real altitude and a serious pass, and the gorge sections are exposed.'
+  ],
+  highlights: [
+    'Phu village (≈ 4,080 m) — a fortified Tibetan settlement below a ruined dzong',
+    'Tashi Lhakhang Gompa, one of the most revered monasteries in the region',
+    'Nar village, its chorten gateway and its three gompas',
+    'The Kang La (≈ 5,320 m) — a big pass with an Annapurna II and IV panorama',
+    'The Nar Khola gorge: cliff trails, cantilevered bridges and hoodoo rock towers',
+    'A restricted valley with a fraction of the traffic of the Circuit it hides behind'
+  ],
+  suitability: {
+    physical: 7, technical: 2, altitude: 8, remoteness: 7,
+    walkHours: '5–7 hours a day, with one long pass day',
+    terrain: 'Gorge trails with exposure, then high pasture and moraine, and a snow pass. Non-technical but demanding, and the gorge sections need a head for heights.',
+    weatherExposure: 'High on the Kang La — no shelter, and snow can close it.',
+    goodFor: [
+      'Trekkers with previous multi-day and altitude experience',
+      'Anyone drawn to Tibetan-Buddhist culture and closed-valley history',
+      'Walkers who want a short trek that still delivers a 5,000 m+ pass'
+    ],
+    notIdeal: [
+      'First-time trekkers or anyone new to altitude',
+      'Solo trekkers — the restricted-area permit needs a group of two',
+      'Anyone uneasy on exposed cliff trails'
+    ]
+  },
+  why: {
+    lead: 'The Annapurna Circuit has a secret door in it, and hardly anyone opens it.',
+    paragraphs: [
+      'Thousands of people walk past Koto every season on their way around the Annapurnas. A handful turn north into the gorge. The reward for that turn is one of the best-preserved Tibetan-Buddhist landscapes in Nepal — Phu with its dzong and its gompa, Nar with its chortens and its fields, and days of walking through country that looks and feels like the far side of the Himalaya, because it very nearly is.',
+      'It also works beautifully as an add-on. Cross the Kang La back onto the Circuit and you can carry straight on over the Thorong La, turning a famous trek into a much richer three-week loop that most Circuit walkers never see.'
+    ],
+    gallery: [
+      { img: '/images/treks/annapurna-circuit.jpg', caption: 'Phu village below its ruined dzong' },
+      { img: '/images/treks/nar-phu-valley-2.webp', caption: 'The chorten gateway to Nar' },
+      { img: '/images/treks/nar-phu-valley-3.webp', caption: 'The Kang La, looking back at Annapurna II' }
+    ]
+  },
+  passes: [{ name: 'Kang La', elevation: '≈ 5,320 m', day: 9 }],
+  acclimatization: {
+    days: [4, 7],
+    note: 'The gorge approach gains height gradually. Most itineraries take an acclimatisation day at Phu (≈ 4,080 m), with a walk to the Tashi Lhakhang Gompa or toward the Himlung base-camp trail, and a night at Nar (≈ 4,110 m) with an acclimatisation walk before the Kang La. The pass is crossed from a camp at Kang La Phedi (≈ 4,530 m) the next morning — the section that catches out an under-acclimatised trekker.'
+  },
+  itinerary: [
+    { day: 1, title: 'Drive Kathmandu to Chame', from: 'Kathmandu (1,400 m)', to: 'Chame (≈ 2,670 m)', distanceKm: '—', walkHours: '9–10 hr drive', startEle: 1400, endEle: 2670, terrain: 'Highway to Besisahar, then a rough jeep road up the Marsyangdi', stay: 'Tea house', meals: 'B/L/D', highlights: ['The Marsyangdi gorge and the first Annapurna views'], tips: 'A long day; the walking starts tomorrow.' },
+    { day: 2, title: 'Chame to Koto, then into the gorge to Meta', from: 'Chame (2,670 m)', to: 'Meta (≈ 3,560 m)', distanceKm: '≈ 16 km', walkHours: '6–7 hrs', startEle: 2670, endEle: 3560, terrain: 'Leave the Circuit at Koto; a steep, exposed gorge trail with the restricted-area checkpoint', stay: 'Tea house / camp', meals: 'B/L/D', highlights: ['The Nar Khola gorge', 'The restricted area begins at the Koto checkpoint'], tips: 'A big climbing day into thin air — pace it.' },
+    { day: 3, title: 'Meta to Phu', from: 'Meta (3,560 m)', to: 'Phu (≈ 4,080 m)', distanceKm: '≈ 14 km', walkHours: '6–7 hrs', startEle: 3560, endEle: 4080, terrain: 'Open high valley past hoodoo rock towers and the Kyang ruins', stay: 'Tea house / camp', meals: 'B/L/D', highlights: ['First sight of Phu and its dzong', 'The Phu Gate (Pupigyal Kwe)'], tips: 'The valley opens out; Tibetan country now.' },
+    { day: 4, title: 'Phu — acclimatisation & village day', from: 'Phu (4,080 m)', to: 'Phu (4,080 m)', distanceKm: '≈ 8 km', walkHours: '3–5 hrs', startEle: 4080, endEle: 4400, terrain: 'Walk to the Tashi Lhakhang Gompa and the Himlung viewpoint', stay: 'Tea house / camp', meals: 'B/L/D', highlights: ['Tashi Lhakhang Gompa', 'Himlung Himal (7,126 m) at the valley head'], tips: 'Climb a little above the village and come back to sleep.' },
+    { day: 5, title: 'Phu to Nar Phedi', from: 'Phu (4,080 m)', to: 'Nar Phedi (≈ 3,490 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 4080, endEle: 3490, terrain: 'Retrace the valley, then turn up the Nar side valley', stay: 'Monastery guest house / camp', meals: 'B/L/D', highlights: ['Nar Phedi nunnery, where you may be hosted'], tips: 'A day of descent and re-ascent.' },
+    { day: 6, title: 'Nar Phedi to Nar', from: 'Nar Phedi (3,490 m)', to: 'Nar (≈ 4,110 m)', distanceKm: '≈ 7 km', walkHours: '3–4 hrs', startEle: 3490, endEle: 4110, terrain: 'A steep climb past a line of chortens to the village', stay: 'Tea house / homestay / camp', meals: 'B/L/D', highlights: ['The chorten gateway to Nar', 'Three village gompas and terraced fields'], tips: 'A short day; the afternoon is for the village.' },
+    { day: 7, title: 'Nar — acclimatisation day', from: 'Nar (4,110 m)', to: 'Nar (4,110 m)', distanceKm: '≈ 6 km', walkHours: '3–4 hrs', startEle: 4110, endEle: 4500, terrain: 'Acclimatisation walk toward the Kang La and back', stay: 'Tea house / homestay / camp', meals: 'B/L/D', highlights: ['Views toward Kang Guru and the Damodar peaks'], tips: 'The final preparation for the pass.' },
+    { day: 8, title: 'Nar to Kang La Phedi', from: 'Nar (4,110 m)', to: 'Kang La Phedi (≈ 4,530 m)', distanceKm: '≈ 6 km', walkHours: '3–4 hrs', startEle: 4110, endEle: 4530, terrain: 'Pasture and moraine to a base camp below the pass', stay: 'Camp', meals: 'B/L/D', highlights: ['The Kang La wall ahead'], tips: 'An early night before the crossing.' },
+    { day: 9, title: 'Cross the Kang La to Ngawal', from: 'Kang La Phedi (4,530 m)', to: 'Ngawal (≈ 3,660 m)', distanceKm: '≈ 12 km', walkHours: '7–9 hrs', startEle: 4530, endEle: 3660, terrain: 'Steep climb to the Kang La (≈ 5,320 m), then a long, steep descent to the Annapurna Circuit', stay: 'Tea house', meals: 'B/L/D', highlights: ['Kang La (≈ 5,320 m)', 'Annapurna II, III and IV across the valley'], tips: 'Pre-dawn start. Microspikes if there is snow; poles for the descent.' },
+    { day: 10, title: 'Ngawal to Manang, or begin the exit', from: 'Ngawal (3,660 m)', to: 'Manang (≈ 3,540 m) or Chame', distanceKm: '≈ 10 km', walkHours: '3–5 hrs', startEle: 3660, endEle: 3540, terrain: 'Rejoin the Annapurna Circuit trail', stay: 'Tea house', meals: 'B/L/D', highlights: ['Braga Gompa and the Manang bakery'], tips: 'From here you can continue the Circuit over the Thorong La, or exit by jeep.' },
+    { day: 11, title: 'Drive Manang / Chame to Pokhara', from: 'Manang or Chame', to: 'Pokhara (≈ 820 m)', distanceKm: '—', walkHours: '7–9 hr drive', startEle: 3540, endEle: 820, terrain: 'Rough jeep road down the Marsyangdi, then highway', stay: 'Hotel', meals: 'B/L', highlights: ['Trek complete'], tips: 'A vehicle change at Besisahar; a full travel day.' },
+    { day: 12, title: 'Contingency / travel day', from: 'Pokhara', to: 'Kathmandu or fly home', distanceKm: '—', walkHours: '—', startEle: 820, endEle: 1400, terrain: 'Road or flight', stay: 'Hotel', meals: 'B', highlights: ['Spare day for the Kang La'], tips: 'Build this in — the pass can force a wait at Nar.' }
+  ],
+  routePoints: [
+    { name: 'Koto checkpoint', elevation: '≈ 2,600 m', day: 2, walkTime: '2–3 hrs from Chame', stay: 'On the Circuit', highlight: 'Where the restricted area begins', warning: 'No entry into Nar–Phu without the special permit and a guide.' },
+    { name: 'Phu', elevation: '≈ 4,080 m', day: 3, walkTime: '2 days from Koto', stay: 'A few basic lodges + camping', highlight: 'A fortified Tibetan village below a ruined dzong', warning: 'Real altitude — take the acclimatisation day.' },
+    { name: 'Nar', elevation: '≈ 4,110 m', day: 6, walkTime: '2 days from Phu', stay: 'Basic lodges / homestay / camping', highlight: 'A living farming village with three gompas', warning: 'The launch point for the Kang La; two nights around here.' },
+    { name: 'Kang La', elevation: '≈ 5,320 m', day: 9, walkTime: '4–5 hrs up from Kang La Phedi', stay: 'Pass — no shelter', highlight: 'The crossing back to the Annapurna Circuit', warning: 'Snow closes it; a steep, long descent to Ngawal. Height figures vary a little between sources — verify.' }
+  ],
+  permits: [
+    { name: 'Nar–Phu Restricted Area Permit', where: 'Kathmandu, through a licensed operator only', feeNote: 'Per-week fee, higher in Sep–Nov, set by the government — verify', notes: 'Requires a group of at least two trekkers and a licensed guide; independent trekking is not allowed.' },
+    { name: 'Annapurna Conservation Area Permit (ACAP)', where: 'Kathmandu or Pokhara', feeNote: 'Fixed area fee — verify', notes: 'Covers the approach on the Circuit and the exit over the Kang La. Carry passport and photos.' }
+  ],
+  cost: {
+    note: 'A restricted-area trek with a per-week permit and difficult jeep access at both ends. Pricier than a standard Annapurna trek. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / teahouse', rangeUSD: '$1,300–$1,900', includes: ['Licensed guide', 'Both permits', 'Ground transport', 'Tea houses and basic lodges, tents where needed', 'Main meals'] },
+      { name: 'Comfort', rangeUSD: '$2,000–$2,800', includes: ['Private guide + porter', 'Camping crew for the high section', 'Better food and equipment', 'City 4★'] },
+      { name: 'Premium', rangeUSD: '$3,400+', includes: ['Private trip', 'Annapurna Circuit + Thorong La continuation', 'Extra rest days', 'Helicopter contingency'] }
+    ],
+    breakdown: [
+      { item: 'Restricted-area permit', note: 'Per week, seasonally priced — the dominant permit cost' },
+      { item: 'ACAP', note: 'The Annapurna conservation-area fee' },
+      { item: 'Transport', note: 'Long jeep rides up and down the Marsyangdi, with a vehicle change at Besisahar' },
+      { item: 'Guide (+ porter, + camp crew)', note: 'A guide is mandatory; camping support for the Kang La section' },
+      { item: 'Lodging + meals', note: 'Basic lodges in Phu and Nar, tents for Kang La Phedi' },
+      { item: 'Tips', note: 'Customary at the end' }
+    ],
+    independentVsGuided: 'Independent trekking is not permitted. The Nar–Phu restricted-area permit is issued only to groups of two or more with a licensed guide through a registered operator.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Chame', mode: 'Private jeep (bus + jeep)', duration: '9–10 hrs', note: 'The upper Marsyangdi road is rough and can be cut by monsoon damage.' },
+      { from: 'Manang / Chame', to: 'Pokhara', mode: 'Shared or private jeep', duration: '7–9 hrs', note: 'A vehicle change at Besisahar; onward to Kathmandu is a further 3–4 hrs from Pokhara.' }
+    ],
+    note: 'A single contingency day is wise for the Kang La, and the access roads are also slow and weather-dependent.'
+  },
+  equipment: [
+    { item: 'Sleeping bag to ≈ −15°C', need: 'essential', note: 'The high villages and Kang La Phedi are very cold.' },
+    { item: 'Microspikes / light crampons', need: 'recommended', note: 'The Kang La often holds snow.' },
+    { item: 'Down jacket + warm gloves', need: 'essential', note: 'For the pre-dawn pass start.' },
+    { item: 'Trekking poles', need: 'essential', note: 'The descent from the Kang La to Ngawal is long and steep.' },
+    { item: 'Sun protection (hat, glacier glasses, SPF 50+)', need: 'essential', note: 'The high desert light is fierce.' },
+    { item: 'Personal water treatment', need: 'essential', note: 'Stream and spring water only above Koto.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The Kang La', note: 'A 5,320 m pass with no shelter and a long, steep descent. Snow closes it; a good guide holds at Nar for a window.' },
+      { name: 'Altitude', note: 'You sleep above 4,000 m for several nights and cross above 5,300 m. The Phu and Nar acclimatisation days are the safety margin.' },
+      { name: 'Gorge trails', note: 'The Nar Khola sections are exposed, with cantilevered bridges and rockfall-prone cliffs.' },
+      { name: 'Basic facilities', note: 'Phu and Nar have only a handful of simple lodges; food and choice are limited, and there is no health post.' },
+      { name: 'Cold injury', note: 'Frostnip risk on the pass morning without proper gloves and boots.' }
+    ],
+    turnaround: 'If the Kang La is snowed in, the group can retrace the gorge to Koto and exit on the Circuit — a longer walk but no pass. A trekker not acclimatising at Phu or Nar does not go to the pass.',
+    note: 'Carry a satellite messenger — coverage is thin above Koto. Helicopter evacuation is possible from Phu, Nar and (weather permitting) the pass area.'
+  },
+  faq: [
+    { q: 'Is Nar Phu a restricted-area trek?', a: 'Yes. It needs a Nar–Phu Restricted Area Permit (charged per week), an Annapurna Conservation Area Permit, a licensed guide and a group of at least two. Independent trekking is not allowed.' },
+    { q: 'How high and hard is it?', a: 'The villages sit above 4,000 m and the Kang La is ≈ 5,320 m, so it is a genuinely high trek despite being short. It is strenuous rather than technical, but you need previous altitude experience.' },
+    { q: 'Can I combine it with the Annapurna Circuit?', a: 'Yes — that is the classic way to do it. Cross the Kang La onto the Circuit at Ngawal and continue over the Thorong La for a three-week loop. Both permits cover this.' },
+    { q: 'What is the accommodation like?', a: 'Simple tea houses and basic village lodges in Phu and Nar, with tents carried for the Kang La Phedi camp. It is more basic than the Circuit.' },
+    { q: 'When is the best time to trek Nar Phu?', a: 'March–May and September–November. October is the most settled. Winter snow closes the Kang La; the monsoon makes the gorge trails hazardous.' },
+    { q: 'How much does the permit cost?', a: 'The restricted-area permit is charged per week and is higher in September–November. The government sets the rate — confirm the current figure with your operator.' },
+    { q: 'Is there mobile coverage?', a: 'Patchy in the gorge and around Phu and Nar; none on the pass. Carry a satellite messenger.' }
+  ],
+  relatedTreks: ['annapurna-circuit', 'manaslu-circuit', 'tilicho-lake-trek', 'upper-mustang'],
+  relatedDestinations: [
+    { name: 'Annapurna Circuit', note: 'The route Nar–Phu hides behind; cross the Kang La and continue over the Thorong La.' },
+    { name: 'Himlung Himal (7,126 m)', note: 'The 7,000 m peak at the head of the Phu valley — climbed from a base camp above Phu.' },
+    { name: 'Tilicho Lake', note: 'The high lake on the far side of the Circuit — a natural pairing for a longer trip.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu and Pokhara hotels. The trail is basic tea houses and village lodges, with tents for the Kang La camp. Ask us about continuing over the Thorong La for the full Circuit.'
+};
+
+TREKS['tilicho-lake-trek'] = {
+  slug: 'tilicho-lake-trek',
+  popular: true,
+  name: 'Tilicho Lake Trek',
+  tagline: 'To one of the highest large lakes on earth',
+  province: 'gandaki',
+  region: 'Annapurna',
+  heroImage: '/images/treks/annapurna-circuit.jpg',
+  summary: 'A 14–16 day trek up the Marsyangdi and Manang valley to Tilicho Lake (≈ 4,919 m), a two-kilometre turquoise lake below the north face of the Annapurnas. Tea houses the whole way, a notorious landslide traverse to Tilicho Base Camp, and the option to return to Manang or push on over the Thorong La.',
+  stats: {
+    duration: '14–16 days (11–13 on the trail)',
+    difficulty: 'Challenging',
+    maxAltitude: '≈ 5,000 m',
+    maxAltitudePoint: 'Tilicho Lake shore / viewpoint',
+    bestSeason: 'Mar–May · Oct–Nov',
+    startPoint: 'Besisahar / Chame (drive from Kathmandu or Pokhara)',
+    endPoint: 'Manang, then Jomsom / Pokhara — or continue over the Thorong La',
+    distanceKm: '≈ 110–130 km',
+    walkHours: '5–7 hrs/day'
+  },
+  seo: {
+    title: 'Tilicho Lake Trek — Nepal | Itinerary, Base Camp Landslide, Cost, Difficulty & Best Time',
+    description: 'The Tilicho Lake trek in the Annapurna region to a ≈ 4,919 m glacial lake. Tea-house itinerary, the Tilicho Base Camp landslide section, altitude, permits, cost, best season and FAQ.'
+  },
+  overview: [
+    'Tilicho Lake sits at around 4,919 m in a bowl below the north wall of Tilicho Peak and the Grande Barrière, west of Manang. It is roughly four kilometres long, frozen for much of the year, and one of the highest lakes of its size anywhere. The trek to it follows the Annapurna Circuit as far as Manang, then branches west up the Marsyangdi headwaters to Khangsar and Tilicho Base Camp before the final climb to the lake.',
+    'The route is tea houses throughout, which makes it more comfortable than the region’s camping treks, but it is not easy. The traverse from Khangsar to Tilicho Base Camp crosses a wide, active landslide of loose scree that is re-routed most years, and the base camp itself sits at around 4,150 m with the lake a further steep 800 m of ascent above it. Most people walk up to the lake and back to base camp in a long day.',
+    'From Manang you can walk out down the Circuit by jeep, or — if you are acclimatised and equipped — continue over the Thorong La (5,416 m) to Muktinath and Jomsom, turning the trek into a full high loop.'
+  ],
+  highlights: [
+    'Tilicho Lake (≈ 4,919 m) — a two-kilometre turquoise lake in a glacial cirque',
+    'The north faces of the Annapurnas and the Grande Barrière above the lake',
+    'Manang (3,540 m) — a Tibetan-Buddhist town with a bakery, a gompa and Ice Lake day walks',
+    'The Khangsar landslide traverse — spectacular, and re-cut most seasons',
+    'Braga Gompa, the oldest and largest monastery on the Circuit',
+    'The option to link straight onto the Thorong La for a longer loop'
+  ],
+  suitability: {
+    physical: 7, technical: 1, altitude: 8, remoteness: 4,
+    walkHours: '5–7 hours a day, with a long lake day of 7–9 hours',
+    terrain: 'Well-made Circuit trails, then a loose scree landslide traverse and a steep zig-zag climb to the lake. Non-technical but exposed on the landslide section.',
+    weatherExposure: 'High and open above Tilicho Base Camp; wind and cold at the lake, and snow on the trail in the shoulder seasons.',
+    goodFor: [
+      'Trekkers with reasonable fitness and some altitude experience',
+      'Anyone wanting a 5,000 m point on a tea-house trek rather than a camping trip',
+      'Circuit walkers who want to add the region’s best side trip'
+    ],
+    notIdeal: [
+      'First-time trekkers with no altitude experience — the lake day is high and long',
+      'Anyone very uneasy on loose, exposed scree',
+      'Tight schedules that cannot absorb a weather day at base camp'
+    ]
+  },
+  why: {
+    lead: 'Most people see Tilicho Lake as a rushed side trip. It rewards being treated as the destination.',
+    paragraphs: [
+      'Done properly — with an acclimatisation day in Manang, a night at Khangsar, and time to sit by the lake rather than sprint up and back — Tilicho is one of the great set-pieces of the Annapurna region. The walk in from Manang is gentle and scenic, the landslide traverse is genuinely exciting, and the lake itself, ringed by 7,000 m walls and often part-frozen, is a place worth lingering.',
+      'It also solves a common Circuit problem: how to get properly acclimatised for the Thorong La without just marking time in Manang. Two or three nights working up to Tilicho Base Camp and the lake is the best altitude preparation the region offers.'
+    ],
+    gallery: [
+      { img: '/images/treks/annapurna-circuit.jpg', caption: 'Tilicho Lake below the Grande Barrière' },
+      { img: '/images/treks/tilicho-lake-2.webp', caption: 'The Khangsar landslide traverse to base camp' },
+      { img: '/images/treks/tilicho-lake-3.webp', caption: 'Manang, with the Annapurnas behind' }
+    ]
+  },
+  acclimatization: {
+    days: [7, 9],
+    note: 'This trek has a strong acclimatisation profile if it is not rushed: two nights at Manang (≈ 3,540 m) with a day walk to Ice Lake or Kicho Tal, a night at Khangsar (≈ 3,730 m), and a night at Tilicho Base Camp (≈ 4,150 m) before the lake day. The lake, at ≈ 4,919 m, is reached and left in a day so that no one sleeps that high. Anyone struggling drops back to Manang.'
+  },
+  itinerary: [
+    { day: 1, title: 'Drive Kathmandu to Chame', from: 'Kathmandu (1,400 m)', to: 'Chame (≈ 2,670 m)', distanceKm: '—', walkHours: '9–10 hr drive', startEle: 1400, endEle: 2670, terrain: 'Highway to Besisahar, then a jeep road up the Marsyangdi', stay: 'Tea house', meals: 'B/L/D', highlights: ['The Marsyangdi gorge'], tips: 'A long day; some itineraries break it at Besisahar or start the walk lower.' },
+    { day: 2, title: 'Chame to Upper Pisang', from: 'Chame (2,670 m)', to: 'Upper Pisang (≈ 3,300 m)', distanceKm: '≈ 14 km', walkHours: '5–6 hrs', startEle: 2670, endEle: 3300, terrain: 'Pine forest and the Paungda Danda rock face', stay: 'Tea house', meals: 'B/L/D', highlights: ['The Swargadwari rock slab', 'Upper Pisang’s old village and gompa'], tips: 'Take the high (upper) trail for the views.' },
+    { day: 3, title: 'Upper Pisang to Manang', from: 'Upper Pisang (3,300 m)', to: 'Manang (≈ 3,540 m)', distanceKm: '≈ 16 km', walkHours: '6–7 hrs', startEle: 3300, endEle: 3540, terrain: 'The high route via Ghyaru and Ngawal, with a big Annapurna panorama', stay: 'Tea house', meals: 'B/L/D', highlights: ['Ghyaru and Ngawal — old fortified villages', 'Braga Gompa near Manang'], tips: 'The upper trail is harder but far better.' },
+    { day: 4, title: 'Manang — acclimatisation day (Ice Lake or Kicho Tal)', from: 'Manang (3,540 m)', to: 'Manang (3,540 m)', distanceKm: '≈ 10–14 km', walkHours: '5–7 hrs', startEle: 3540, endEle: 4600, terrain: 'Steep climb to Ice Lake (Kicho Tal, ≈ 4,600 m) or Gangapurna Lake and back', stay: 'Tea house', meals: 'B/L/D', highlights: ['Ice Lake and the Annapurna III face'], tips: 'The key acclimatisation day — climb high, sleep low.' },
+    { day: 5, title: 'Manang to Khangsar', from: 'Manang (3,540 m)', to: 'Khangsar (≈ 3,730 m)', distanceKm: '≈ 8 km', walkHours: '3–4 hrs', startEle: 3540, endEle: 3730, terrain: 'Gentle climb up the Marsyangdi headwaters to the last village', stay: 'Tea house', meals: 'B/L/D', highlights: ['Khangsar — “the last village of Nepal” on the old signboard', 'The ruined Gunsang gompa above'], tips: 'A short day; rest for the landslide traverse.' },
+    { day: 6, title: 'Khangsar to Tilicho Base Camp', from: 'Khangsar (3,730 m)', to: 'Tilicho Base Camp (≈ 4,150 m)', distanceKm: '≈ 10 km', walkHours: '5–6 hrs', startEle: 3730, endEle: 4150, terrain: 'The landslide traverse — a wide, loose scree slope, re-routed most years', stay: 'Tea house', meals: 'B/L/D', highlights: ['The landslide crossing', 'Tilicho Peak’s north face above camp'], tips: 'Cross the scree early, before the sun loosens it. Two lodges only — a guide phoning ahead matters.' },
+    { day: 7, title: 'Tilicho Base Camp to Tilicho Lake and back', from: 'Tilicho Base Camp (4,150 m)', to: 'Tilicho Base Camp (4,150 m)', distanceKm: '≈ 14 km', walkHours: '7–9 hrs', startEle: 4150, endEle: 4919, terrain: 'A steep zig-zag climb of ≈ 770 m to the lake, then the same in reverse', stay: 'Tea house', meals: 'B/L/D', highlights: ['Tilicho Lake (≈ 4,919 m)', 'The Grande Barrière and Tilicho Peak reflected on a still day'], tips: 'Pre-dawn start for the best light and to be down before the wind. Microspikes if there is snow.' },
+    { day: 8, title: 'Tilicho Base Camp to Yak Kharka (via Khangsar) or back to Manang', from: 'Tilicho Base Camp (4,150 m)', to: 'Yak Kharka (≈ 4,050 m) or Manang', distanceKm: '≈ 14–18 km', walkHours: '6–7 hrs', startEle: 4150, endEle: 4050, terrain: 'Retrace the landslide traverse, then rejoin the Circuit', stay: 'Tea house', meals: 'B/L/D', highlights: ['Decision point: continue over the Thorong La or exit via Manang'], tips: 'If continuing the Circuit, this positions you for the pass; if exiting, drop to Manang for the jeep.' },
+    { day: 9, title: 'Option A — exit: drive Manang to Pokhara', from: 'Manang (3,540 m)', to: 'Pokhara (≈ 820 m)', distanceKm: '—', walkHours: '8–9 hr drive', startEle: 3540, endEle: 820, terrain: 'Rough jeep road down the Marsyangdi, then highway', stay: 'Hotel', meals: 'B/L', highlights: ['Trek complete'], tips: 'A vehicle change at Besisahar.' },
+    { day: 10, title: 'Option B — continue: Yak Kharka to Thorong Phedi', from: 'Yak Kharka (4,050 m)', to: 'Thorong Phedi (≈ 4,500 m)', distanceKm: '≈ 7 km', walkHours: '3–4 hrs', startEle: 4050, endEle: 4500, terrain: 'Circuit trail to the base of the Thorong La', stay: 'Tea house', meals: 'B/L/D', highlights: ['The Thorong La wall ahead'], tips: 'Only if you are well acclimatised from Tilicho.' },
+    { day: 11, title: 'Option B — cross the Thorong La to Muktinath', from: 'Thorong Phedi (4,500 m)', to: 'Muktinath (≈ 3,760 m)', distanceKm: '≈ 15 km', walkHours: '7–9 hrs', startEle: 4500, endEle: 3760, terrain: 'The long climb to the Thorong La (5,416 m), then a steep descent to Muktinath', stay: 'Tea house', meals: 'B/L/D', highlights: ['Thorong La (5,416 m)', 'Muktinath temple complex'], tips: 'Pre-dawn start. The Tilicho acclimatisation makes this pass much safer.' },
+    { day: 12, title: 'Option B — Muktinath to Jomsom, fly / drive to Pokhara', from: 'Muktinath (3,760 m)', to: 'Pokhara (≈ 820 m)', distanceKm: '—', walkHours: 'Walk / jeep + flight or drive', startEle: 3760, endEle: 820, terrain: 'Kali Gandaki valley to Jomsom, then a flight or a long drive', stay: 'Hotel', meals: 'B/L', highlights: ['Trek complete'], tips: 'Jomsom flights are morning-only and wind-dependent.' },
+    { day: 13, title: 'Contingency / travel day', from: 'Pokhara', to: 'Kathmandu or fly home', distanceKm: '—', walkHours: '—', startEle: 820, endEle: 1400, terrain: 'Road or flight', stay: 'Hotel', meals: 'B', highlights: ['Spare day for weather'], tips: 'Useful for the lake day and, on Option B, the Thorong La.' }
+  ],
+  routePoints: [
+    { name: 'Manang', elevation: '≈ 3,540 m', day: 3, walkTime: '3 days from Chame', stay: 'Many tea houses', highlight: 'The acclimatisation hub, with a bakery, gompa and day walks', warning: 'Do not skip a full acclimatisation day here.' },
+    { name: 'Khangsar', elevation: '≈ 3,730 m', day: 5, walkTime: '3–4 hrs from Manang', stay: 'A handful of tea houses', highlight: 'The last village before the landslide traverse', warning: 'Limited beds — book ahead through a guide.' },
+    { name: 'Tilicho Base Camp', elevation: '≈ 4,150 m', day: 6, walkTime: '5–6 hrs from Khangsar', stay: 'Two lodges only', highlight: 'The staging point for the lake', warning: 'Crossed by the active landslide traverse; the lodges fill fast in season.' },
+    { name: 'Tilicho Lake', elevation: '≈ 4,919 m', day: 7, walkTime: '4–5 hrs up from base camp', stay: 'Day visit — no accommodation', highlight: 'The high point of the trek', warning: 'Cold and windy; there is nothing there, so time it for a calm morning and be down by early afternoon.' }
+  ],
+  permits: [
+    { name: 'Annapurna Conservation Area Permit (ACAP)', where: 'Kathmandu or Pokhara', feeNote: 'Fixed area fee — verify', notes: 'Carry passport and photos. Checked at Dharapani and Manang.' },
+    { name: 'Guide / TIMS arrangements', where: 'Through a registered operator', feeNote: 'Included in a booked trip — verify', notes: 'Nepal now requires a licensed guide on this route; your operator arranges the current paperwork.' }
+  ],
+  cost: {
+    note: 'A tea-house trek with only the ACAP permit, so mid-range for the region. The main cost drivers are the long jeep access and, on the Thorong La option, the extra days. Confirm a quote for your dates.',
+    tiers: [
+      { name: 'Group / teahouse', rangeUSD: '$900–$1,400', includes: ['Licensed guide', 'ACAP permit', 'Ground transport', 'Tea houses', 'Main meals'] },
+      { name: 'Comfort', rangeUSD: '$1,500–$2,100', includes: ['Private guide + porter', 'Better lodges where they exist', 'Jomsom flight on the Thorong La option', 'City 4★'] },
+      { name: 'Premium', rangeUSD: '$2,500+', includes: ['Private trip', 'Full Annapurna Circuit with Tilicho and the Thorong La', 'Extra rest days', 'Helicopter contingency'] }
+    ],
+    breakdown: [
+      { item: 'ACAP permit', note: 'The only permit for this trek' },
+      { item: 'Transport', note: 'Jeep up the Marsyangdi, jeep or flight out from Manang / Jomsom' },
+      { item: 'Guide (+ porter)', note: 'A guide is required; a porter is optional' },
+      { item: 'Lodging + meals', note: 'Tea houses; prices climb steeply above Manang' },
+      { item: 'Tips', note: 'Customary at the end' }
+    ],
+    independentVsGuided: 'The route is tea houses throughout and can be walked with just a guide and a light day pack. A porter or camping crew is not required.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu / Pokhara', to: 'Chame or Manang', mode: 'Private jeep (bus + jeep)', duration: '8–12 hrs', note: 'The Marsyangdi jeep road now reaches Manang; many trips drive in and walk the rest.' },
+      { from: 'Manang or Jomsom', to: 'Pokhara', mode: 'Jeep (or Jomsom–Pokhara flight)', duration: '8–9 hr jeep, or a 20 min flight from Jomsom', note: 'Jomsom flights are morning-only and cancel in wind.' }
+    ],
+    note: 'The road has shortened this trek considerably; a contingency day covers the lake weather and, on the Thorong La option, the pass.'
+  },
+  equipment: [
+    { item: 'Sleeping bag to ≈ −12°C', need: 'essential', note: 'Tilicho Base Camp is cold at night.' },
+    { item: 'Microspikes', need: 'recommended', note: 'The final climb to the lake often holds snow and ice.' },
+    { item: 'Down jacket + warm hat and gloves', need: 'essential', note: 'For the pre-dawn lake day.' },
+    { item: 'Trekking poles', need: 'recommended', note: 'The landslide traverse and the lake descent.' },
+    { item: 'Category 4 sunglasses + SPF 50+', need: 'essential', note: 'Snow-glare at the lake is severe.' },
+    { item: 'Water bottles (2–3 L)', need: 'essential', note: 'There is no water on the lake climb.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The landslide traverse', note: 'The slope between Khangsar and Tilicho Base Camp is loose scree that shifts every year. Cross it early in the day, one at a time on the worst sections, and follow the guide’s line.' },
+      { name: 'Altitude', note: 'The lake day climbs to ≈ 4,919 m. A proper acclimatisation day in Manang and a night at base camp are essential; do not rush the side trip.' },
+      { name: 'Weather at the lake', note: 'High, open and windy, with nothing to shelter behind. A calm morning is safe; an afternoon storm is not.' },
+      { name: 'Base camp crowding', note: 'Only two lodges. In peak season they overflow, and an under-prepared trekker can end up sleeping in the dining room.' },
+      { name: 'The Thorong La (Option B)', note: 'If you continue the Circuit, the pass is 5,416 m and a serious undertaking in its own right — but the Tilicho acclimatisation makes it much safer.' }
+    ],
+    turnaround: 'If the weather is poor or a member is unwell, the lake day is simply skipped or delayed and the trek returns to Manang. Nothing about the route is committing.',
+    note: 'Carry a phone with offline maps; coverage reaches Manang and patchily beyond. The HRA runs a seasonal aid post in Manang.'
+  },
+  faq: [
+    { q: 'How high is Tilicho Lake?', a: 'About 4,919 m. It is one of the highest lakes of its size in the world. The trek’s high point is the lake shore and the viewpoint just above it, around 5,000 m.' },
+    { q: 'How hard is the Tilicho Lake trek?', a: 'Challenging. The trail is tea houses throughout and non-technical, but the lake day is long (7–9 hours) and high, and the landslide traverse to base camp is loose and exposed. Some altitude experience helps.' },
+    { q: 'Is the Khangsar landslide dangerous?', a: 'It needs respect. It is an active scree slope that is re-cut most years. Crossed early in the day, with a guide setting the pace, it is manageable — but it is the crux of the trek.' },
+    { q: 'Can I combine Tilicho with the Thorong La?', a: 'Yes, and it is the best way to acclimatise for the pass. From Tilicho Base Camp you can traverse to Yak Kharka and continue over the Thorong La to Muktinath and Jomsom.' },
+    { q: 'Do I need a special permit?', a: 'No — just the Annapurna Conservation Area Permit and a licensed guide. Tilicho is not a restricted area.' },
+    { q: 'When is the best time?', a: 'March–May and October–November. The lake is often frozen and beautiful into the spring; deep winter and the monsoon are not recommended.' },
+    { q: 'Where do I sleep near the lake?', a: 'At Tilicho Base Camp (≈ 4,150 m), which has two lodges. There is no accommodation at the lake itself — it is a day trip up and back.' }
+  ],
+  relatedTreks: ['annapurna-circuit', 'nar-phu-valley-trek', 'mesokanto-la-pass-trek', 'annapurna-base-camp'],
+  relatedDestinations: [
+    { name: 'Annapurna Circuit', note: 'Tilicho is the Circuit’s best side trip; continue over the Thorong La for the full loop.' },
+    { name: 'Mesokanto La', note: 'The high, quiet pass from Tilicho to Jomsom — the adventurous alternative to the Thorong La.' },
+    { name: 'Ice Lake (Kicho Tal)', note: 'The acclimatisation day walk above Manang.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu and Pokhara hotels. The trail is tea houses throughout. Ask us about combining Tilicho with the Thorong La, or with the Mesokanto La for a wilder finish.'
+};
+
+TREKS['mesokanto-la-pass-trek'] = {
+  slug: 'mesokanto-la-pass-trek',
+  name: 'Mesokanto La Pass Trek',
+  tagline: 'The wild back door from Tilicho Lake to the Kali Gandaki',
+  province: 'gandaki',
+  region: 'Annapurna',
+  heroImage: '/images/treks/annapurna-circuit.jpg',
+  summary: 'A demanding 16–18 day trek that combines Tilicho Lake with a crossing of the Mesokanto La — a high, exposed pass (figures range from about 5,100 m to 5,340 m) that drops from the Tilicho basin into the Kali Gandaki at Jomsom. Two nights camping above the lake, no lodges on the pass, and a route walked by only a few groups a year.',
+  stats: {
+    duration: '16–18 days (13–15 on the trail)',
+    difficulty: 'Strenuous',
+    maxAltitude: '≈ 5,100–5,340 m (verify)',
+    maxAltitudePoint: 'Mesokanto La',
+    bestSeason: 'Oct–Nov · Apr–May',
+    startPoint: 'Besisahar / Chame (drive from Kathmandu or Pokhara)',
+    endPoint: 'Jomsom (fly / drive to Pokhara)',
+    distanceKm: '≈ 120–140 km',
+    walkHours: '5–8 hrs/day, one long pass day'
+  },
+  seo: {
+    title: 'Mesokanto La Pass Trek — Nepal | Tilicho to Jomsom Over a High Pass | Itinerary & Best Time',
+    description: 'The Mesokanto La Pass trek linking Tilicho Lake with the Kali Gandaki at Jomsom over a high, exposed pass. Camping itinerary, difficulty, gear, permits, best season and FAQ — with the pass elevation flagged for verification.'
+  },
+  overview: [
+    'The Mesokanto La is the alternative to the Thorong La for getting from the Manang side of the Annapurna Circuit to the Kali Gandaki. Instead of the busy trade-route pass, it climbs west out of the Tilicho Lake basin over a high, wind-scoured col and descends a long, remote valley to Jomsom. Almost nobody uses it: there are no lodges between Tilicho Base Camp and Jomsom, the pass is often snowbound, and the route needs a guide who knows the ground.',
+    'Sources disagree on how high the pass is — figures from about 5,100 m to 5,340 m appear on different maps, partly because there are two cols (a lower and a higher Mesokanto) used depending on conditions. What is not in doubt is that it is a serious crossing: a high camp beyond the lake, a pre-dawn start, and a long descent on the far side with route-finding through moraine and yak country to the Kali Gandaki.',
+    'The first part of the trek is the Tilicho Lake route — Marsyangdi, Manang, Khangsar, Tilicho Base Camp and the lake. After that it goes where the tea houses stop. It suits fit, experienced trekkers who want the Tilicho scenery and a genuinely wild finish rather than the crowds of the Thorong La.'
+  ],
+  highlights: [
+    'Tilicho Lake (≈ 4,919 m) as the centrepiece, with time to camp above it',
+    'The Mesokanto La — a high, empty pass with a Dhaulagiri and Nilgiri panorama',
+    'A long, trailless descent into the Kali Gandaki, the deepest valley on earth',
+    'Finishing in Jomsom and the apple country of the lower Mustang valley',
+    'A crossing between two major regions with, most days, no other trekkers',
+    'The Annapurna Circuit highlights of Manang, Braga Gompa and Ice Lake on the way in'
+  ],
+  suitability: {
+    physical: 8, technical: 3, altitude: 9, remoteness: 7,
+    walkHours: '5–8 hours a day, with a 9–11 hour pass day',
+    terrain: 'Tea-house Circuit trails and the Tilicho landslide traverse, then high camps, a snow pass and a long trailless descent through moraine and pasture.',
+    weatherExposure: 'Severe on the Mesokanto La — a wind-exposed col with no shelter, snowbound much of the year.',
+    goodFor: [
+      'Fit, experienced trekkers with previous high-altitude and multi-day camping experience',
+      'Anyone who wants Tilicho and a wilderness finish instead of the Thorong La',
+      'Walkers comfortable with two or three cold camps and uncertain route-finding'
+    ],
+    notIdeal: [
+      'First-time trekkers or anyone new to altitude',
+      'Trips with no contingency time — the pass forces waits and turnarounds',
+      'Anyone wanting lodge comfort throughout — the second half is camping'
+    ]
+  },
+  why: {
+    lead: 'Everyone crosses the Thorong La. The Mesokanto La is for the people who would rather not.',
+    paragraphs: [
+      'The Thorong La is a fine pass, but on an October morning there can be two hundred people on it. The Mesokanto La is the same watershed, a few kilometres south, and you will very likely have it to yourself. You trade the tea-house comfort and the safety-in-numbers for two cold camps, a harder route and a much stronger sense of crossing the range on your own terms.',
+      'It also lets you make Tilicho Lake the heart of the trip rather than a rushed side trip — camping above the lake, crossing the pass straight from there, and coming down the other side into the Kali Gandaki. It is one of the most satisfying ways to link the Manang and Mustang sides of the Annapurna region.'
+    ],
+    gallery: [
+      { img: '/images/treks/annapurna-circuit.jpg', caption: 'The Mesokanto La col above the Tilicho basin' },
+      { img: '/images/treks/mesokanto-la-2.webp', caption: 'High camp beyond Tilicho Lake' },
+      { img: '/images/treks/mesokanto-la-3.webp', caption: 'The descent toward the Kali Gandaki and Jomsom' }
+    ]
+  },
+  passes: [{ name: 'Mesokanto La', elevation: '≈ 5,100–5,340 m (verify)', day: 10 }],
+  acclimatization: {
+    days: [7, 9],
+    note: 'The Tilicho approach acclimatises well: two nights at Manang (≈ 3,540 m) with an Ice Lake day walk, a night at Khangsar, a night at Tilicho Base Camp (≈ 4,150 m), and the lake day to ≈ 4,919 m. A further night is spent at a high camp beyond the lake (≈ 4,900–5,000 m) before the pass, with an acclimatisation or contingency day built in. The pass day is the highest point and the section that leaves no margin for altitude illness.'
+  },
+  itinerary: [
+    { day: 1, title: 'Drive Kathmandu to Chame', from: 'Kathmandu (1,400 m)', to: 'Chame (≈ 2,670 m)', distanceKm: '—', walkHours: '9–10 hr drive', startEle: 1400, endEle: 2670, terrain: 'Highway to Besisahar, then a jeep road up the Marsyangdi', stay: 'Tea house', meals: 'B/L/D', highlights: ['The Marsyangdi gorge'], tips: 'A long travel day.' },
+    { day: 2, title: 'Chame to Upper Pisang', from: 'Chame (2,670 m)', to: 'Upper Pisang (≈ 3,300 m)', distanceKm: '≈ 14 km', walkHours: '5–6 hrs', startEle: 2670, endEle: 3300, terrain: 'Pine forest and the Paungda Danda rock face', stay: 'Tea house', meals: 'B/L/D', highlights: ['Upper Pisang’s old village and gompa'], tips: 'Take the upper trail.' },
+    { day: 3, title: 'Upper Pisang to Manang', from: 'Upper Pisang (3,300 m)', to: 'Manang (≈ 3,540 m)', distanceKm: '≈ 16 km', walkHours: '6–7 hrs', startEle: 3300, endEle: 3540, terrain: 'The high route via Ghyaru and Ngawal', stay: 'Tea house', meals: 'B/L/D', highlights: ['Ghyaru and Ngawal', 'Braga Gompa'], tips: 'The upper trail is worth the extra climb.' },
+    { day: 4, title: 'Manang — acclimatisation day (Ice Lake)', from: 'Manang (3,540 m)', to: 'Manang (3,540 m)', distanceKm: '≈ 10–14 km', walkHours: '5–7 hrs', startEle: 3540, endEle: 4600, terrain: 'Steep climb to Ice Lake (≈ 4,600 m) and back', stay: 'Tea house', meals: 'B/L/D', highlights: ['Ice Lake and the Annapurna III face'], tips: 'The key acclimatisation day.' },
+    { day: 5, title: 'Manang to Khangsar', from: 'Manang (3,540 m)', to: 'Khangsar (≈ 3,730 m)', distanceKm: '≈ 8 km', walkHours: '3–4 hrs', startEle: 3540, endEle: 3730, terrain: 'Gentle climb to the last village', stay: 'Tea house', meals: 'B/L/D', highlights: ['Khangsar and the ruined Gunsang gompa'], tips: 'A short day before the traverse.' },
+    { day: 6, title: 'Khangsar to Tilicho Base Camp', from: 'Khangsar (3,730 m)', to: 'Tilicho Base Camp (≈ 4,150 m)', distanceKm: '≈ 10 km', walkHours: '5–6 hrs', startEle: 3730, endEle: 4150, terrain: 'The landslide traverse — loose scree, re-routed most years', stay: 'Tea house', meals: 'B/L/D', highlights: ['The landslide crossing', 'Tilicho Peak above camp'], tips: 'Cross the scree early. Last lodge before the camping starts.' },
+    { day: 7, title: 'Tilicho Base Camp to Tilicho Lake, camp beyond', from: 'Tilicho Base Camp (4,150 m)', to: 'High camp beyond the lake (≈ 4,950 m)', distanceKm: '≈ 12 km', walkHours: '6–8 hrs', startEle: 4150, endEle: 4950, terrain: 'Steep climb to the lake, then along its northern shore to a first high camp', stay: 'Camp', meals: 'B/L/D', highlights: ['Tilicho Lake (≈ 4,919 m)', 'Camping in the cirque'], tips: 'A big day; the camping section begins here. The exact camp depends on conditions.' },
+    { day: 8, title: 'Acclimatisation / contingency day at the high camp', from: 'High camp (4,950 m)', to: 'High camp (4,950 m)', distanceKm: '≈ 4 km', walkHours: '2–4 hrs', startEle: 4950, endEle: 5100, terrain: 'Short walk toward the pass to check the route and conditions', stay: 'Camp', meals: 'B/L/D', highlights: ['A held day for weather and acclimatisation'], tips: 'If the forecast is good, some groups cross a day early.' },
+    { day: 9, title: 'Move to the pass camp', from: 'High camp (4,950 m)', to: 'Pass camp (≈ 5,000 m)', distanceKm: '≈ 6 km', walkHours: '4–5 hrs', startEle: 4950, endEle: 5000, terrain: 'Moraine and old glacier to the last camp below the col', stay: 'Camp', meals: 'B/L/D', highlights: ['The Mesokanto La wall ahead'], tips: 'A short day on purpose — an early night.' },
+    { day: 10, title: 'Cross the Mesokanto La to Thini / Jomsom side', from: 'Pass camp (5,000 m)', to: 'Camp above the Kali Gandaki (≈ 4,000 m)', distanceKm: '≈ 14 km', walkHours: '9–11 hrs', startEle: 5000, endEle: 4000, terrain: 'Steep snow and scree to the col (≈ 5,100–5,340 m), then a long, trailless descent through moraine and pasture', stay: 'Camp', meals: 'B/L/D', highlights: ['Mesokanto La', 'Dhaulagiri and Nilgiri filling the view west'], tips: 'Pre-dawn start. Microspikes; poles for the descent. The camp position on the far side depends on how far the group gets.' },
+    { day: 11, title: 'Descend to Jomsom', from: 'Camp above the Kali Gandaki (4,000 m)', to: 'Jomsom (≈ 2,720 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 4000, endEle: 2720, terrain: 'Continue the descent, joining trails above Thini village and dropping to the Kali Gandaki', stay: 'Lodge', meals: 'B/L/D', highlights: ['Thini village and the Dhumba Lake area', 'Jomsom — the district headquarters, with an airstrip'], tips: 'Back on trails and among lodges — the wild section is done.' },
+    { day: 12, title: 'Jomsom to Pokhara (fly or drive)', from: 'Jomsom (2,720 m)', to: 'Pokhara (≈ 820 m)', distanceKm: '—', walkHours: '20 min flight or 8–9 hr drive', startEle: 2720, endEle: 820, terrain: 'Flight over the Kali Gandaki, or a long jeep road', stay: 'Hotel', meals: 'B/L', highlights: ['Trek complete'], tips: 'Jomsom flights are morning-only and cancel in wind — the jeep is the fallback.' },
+    { day: 13, title: 'Contingency day', from: 'Pokhara or Jomsom', to: 'Kathmandu or fly home', distanceKm: '—', walkHours: '—', startEle: 820, endEle: 1400, terrain: 'Road or flight', stay: 'Hotel', meals: 'B', highlights: ['Spare day for the pass or the flight'], tips: 'Two buffer days are advised — the Mesokanto La and the Jomsom flight both carry delay risk.' }
+  ],
+  routePoints: [
+    { name: 'Manang', elevation: '≈ 3,540 m', day: 3, walkTime: '3 days from Chame', stay: 'Many tea houses', highlight: 'The acclimatisation hub', warning: 'Take a full acclimatisation day here.' },
+    { name: 'Tilicho Base Camp', elevation: '≈ 4,150 m', day: 6, walkTime: '2 days from Manang', stay: 'Two lodges', highlight: 'The last lodge; the launch point for the lake and the pass', warning: 'Reached by the landslide traverse; the camping section starts here.' },
+    { name: 'Tilicho Lake', elevation: '≈ 4,919 m', day: 7, walkTime: '4–5 hrs from base camp', stay: 'Camp on the shore / beyond', highlight: 'The centrepiece of the trek', warning: 'High, cold and exposed — a calm-weather camp only.' },
+    { name: 'Mesokanto La', elevation: '≈ 5,100–5,340 m (verify)', day: 10, walkTime: '3–4 hrs from the pass camp', stay: 'Pass — no shelter', highlight: 'The crossing to the Kali Gandaki', warning: 'Snowbound much of the year; a long trailless descent on the far side. Elevation figures differ significantly between sources — confirm with your operator.' }
+  ],
+  permits: [
+    { name: 'Annapurna Conservation Area Permit (ACAP)', where: 'Kathmandu or Pokhara', feeNote: 'Fixed area fee — verify', notes: 'Covers the whole route. Carry passport and photos.' },
+    { name: 'Guide / TIMS arrangements', where: 'Through a registered operator', feeNote: 'Included in a booked trip — verify', notes: 'A licensed guide is required; the trailless pass section makes it essential in practice.' }
+  ],
+  cost: {
+    note: 'The Tilicho tea-house trek plus a camped high crossing with a crew and pass equipment. More than the standard Tilicho or Thorong La trek because of the camping and the extra days. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / teahouse + camping', rangeUSD: '$1,600–$2,300', includes: ['Licensed guide + camping crew for the pass', 'ACAP permit', 'Ground transport and the Jomsom flight', 'Tea houses on the approach, tents on the crossing', 'Main meals'] },
+      { name: 'Comfort', rangeUSD: '$2,400–$3,200', includes: ['Private guide + porter', 'Assistant guide on the pass day', 'Better tents and food', 'City 4★'] },
+      { name: 'Premium', rangeUSD: '$3,800+', includes: ['Private trip', 'Extra rest days and a spare pass day', 'Larger crew', 'Helicopter contingency'] }
+    ],
+    breakdown: [
+      { item: 'Guide + camping crew', note: 'A crew is needed for the three or four camped days over the pass' },
+      { item: 'ACAP permit', note: 'The only permit for this route' },
+      { item: 'Transport + Jomsom flight', note: 'Jeep in, flight (or long jeep) out from Jomsom' },
+      { item: 'Lodging + meals', note: 'Tea houses to Tilicho Base Camp, tents thereafter' },
+      { item: 'Pass equipment', note: 'Group snow gear and a rope if conditions require it' },
+      { item: 'Contingency', note: 'Buffer days for the pass and the Jomsom flight' }
+    ],
+    independentVsGuided: 'The approach can be walked with a guide only, but the Mesokanto La crossing needs a camping crew for the trailless, lodge-free section over the pass. It is done as a supported trip.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu / Pokhara', to: 'Chame or Manang', mode: 'Private jeep (bus + jeep)', duration: '8–12 hrs', note: 'The Marsyangdi jeep road reaches Manang.' },
+      { from: 'Jomsom', to: 'Pokhara', mode: 'Domestic flight (or jeep)', duration: '20 min flight, or an 8–9 hr jeep', note: 'Jomsom flights are morning-only and wind-dependent; the jeep down the Kali Gandaki is the fallback.' }
+    ],
+    note: 'Two weather-dependent links (the pass and the Jomsom flight). Build in at least two contingency days.'
+  },
+  equipment: [
+    { item: 'Four-season sleeping bag (≈ −18°C)', need: 'essential', note: 'Three or four camps above 4,000 m, two near 5,000 m.' },
+    { item: 'Microspikes / light crampons', need: 'essential', note: 'The Mesokanto La is usually snow.' },
+    { item: 'Down jacket + insulated trousers', need: 'recommended', note: 'The pass morning is bitterly cold and windy.' },
+    { item: 'Trekking poles', need: 'essential', note: 'The long trailless descent to the Kali Gandaki.' },
+    { item: 'Satellite messenger / phone', need: 'essential', note: 'No coverage between Tilicho Base Camp and Jomsom.' },
+    { item: 'Category 4 sunglasses + SPF 50+', need: 'essential', note: 'Snow-glare on the pass day is severe.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The Mesokanto La', note: 'A high, wind-scoured, frequently snowbound col with no shelter, followed by a long trailless descent. Crossed only on a settled forecast; a good crew will wait or turn back.' },
+      { name: 'Altitude', note: 'Two camps near 5,000 m before a pass that may be above 5,300 m. The Tilicho and high-camp acclimatisation is the margin, and there is none to spare on the pass day.' },
+      { name: 'Route-finding', note: 'There is no marked trail on the far side of the pass. A guide who has crossed it recently is essential.' },
+      { name: 'The landslide traverse', note: 'The Khangsar–Tilicho Base Camp scree, as on the Tilicho Lake trek — cross it early and follow the guide’s line.' },
+      { name: 'Isolation', note: 'From Tilicho Base Camp to Jomsom there are no lodges, no shops and no health post. Evacuation is a helicopter from a high clearing, weather permitting.' }
+    ],
+    turnaround: 'If the pass is out of condition, the group returns to Tilicho Base Camp and exits via Manang, or crosses the Thorong La instead if acclimatised and equipped for it. The Mesokanto La is never forced.',
+    note: 'Carry a satellite messenger for the crossing. The nearest medical facilities are the HRA post in Manang and the hospital in Jomsom.'
+  },
+  faq: [
+    { q: 'How high is the Mesokanto La?', a: 'Sources differ — figures from about 5,100 m to 5,340 m appear on different maps, partly because there is a lower and a higher col used depending on conditions. Confirm the height and the intended col with your operator; it does not change how serious the day is.' },
+    { q: 'How does it compare with the Thorong La?', a: 'Similar altitude, but the Mesokanto La has no lodges, no marked trail on the far side, and almost no other trekkers. It is a camping crossing that needs a crew; the Thorong La is a tea-house pass.' },
+    { q: 'Do I need a special permit?', a: 'No — just the Annapurna Conservation Area Permit and a licensed guide. It is not a restricted area.' },
+    { q: 'How much of the trek is camping?', a: 'The approach to Tilicho Base Camp is tea houses. From the lake to Jomsom — three to four days — is camping with a crew.' },
+    { q: 'When is the best time?', a: 'October–November and April–May, and even then only in a settled-weather window. The pass is not attempted in winter or the monsoon.' },
+    { q: 'Can I do Tilicho Lake without the pass?', a: 'Yes — the Tilicho Lake trek visits the lake from base camp and returns to Manang, all on tea-house trails. The Mesokanto La is the harder, wilder finish.' },
+    { q: 'How fit do I need to be?', a: 'Very fit, with previous high-altitude trekking and some camping experience. Expect a 9–11 hour pass day at over 5,000 m and a long descent with a pack.' }
+  ],
+  relatedTreks: ['tilicho-lake-trek', 'annapurna-circuit', 'nar-phu-valley-trek', 'upper-mustang'],
+  relatedDestinations: [
+    { name: 'Tilicho Lake', note: 'The centrepiece of this trek and a standalone route in its own right.' },
+    { name: 'Annapurna Circuit', note: 'The Thorong La is the standard crossing; the Mesokanto La is the wild alternative.' },
+    { name: 'Jomsom & Lower Mustang', note: 'Where the trek ends — apple orchards, Marpha village and the Kali Gandaki.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu and Pokhara hotels. The approach is tea houses; the pass section is camping with a crew. A contingency day for the pass and one for the Jomsom flight are strongly advised.'
+};
+
+TREKS['manaslu-tsum-valley-trek'] = {
+  slug: 'manaslu-tsum-valley-trek',
+  restricted: true,
+  popular: true,
+  name: 'Manaslu–Tsum Valley Trek',
+  tagline: 'The full circuit, plus the sacred hidden valley',
+  province: 'gandaki',
+  region: 'Manaslu',
+  heroImage: '/images/manaslu_real.jpg',
+  summary: 'A 22–24 day restricted-area trek combining the Manaslu Circuit with the Tsum Valley — the deeply Buddhist side valley on the Tibetan border. Up the Budhi Gandaki, a week exploring Tsum’s monasteries, then back onto the circuit for the villages of Sama Gaon and Samdo and the crossing of the Larke La (5,106 m).',
+  stats: {
+    duration: '22–24 days (18–20 on the trail)',
+    difficulty: 'Strenuous',
+    maxAltitude: '5,106 m',
+    maxAltitudePoint: 'Larke La (Larkya La)',
+    bestSeason: 'Mar–May · Sep–Nov',
+    startPoint: 'Machha Khola / Soti Khola (drive from Kathmandu)',
+    endPoint: 'Dharapani, then Besisahar / Pokhara',
+    distanceKm: '≈ 230–260 km',
+    walkHours: '5–8 hrs/day, one long pass day'
+  },
+  seo: {
+    title: 'Manaslu–Tsum Valley Trek — Nepal | 22-Day Combined Itinerary, Restricted Permits, Cost & Best Time',
+    description: 'The combined Manaslu Circuit and Tsum Valley trek: two restricted areas, a 22–24 day itinerary over the Larke La (5,106 m), the monasteries of Tsum, difficulty, permit cost, best season and FAQ.'
+  },
+  overview: [
+    'This is the Manaslu region done in full. The Manaslu Circuit alone is a superb trek around the world’s eighth-highest mountain; adding the Tsum Valley — which branches off low down at Lokpa — turns it into one of the richest cultural and mountain journeys in Nepal. Both the circuit and Tsum are restricted areas, each needing its own special permit, a licensed guide and a group of at least two.',
+    'The trek starts up the Budhi Gandaki gorge, then turns into Tsum: a broad, hidden valley walled against Tibet, with a distinct Tsumba culture, the monasteries of Rachen and Mu Gompa, the Milarepa-linked cave hermitage of Piren Phu, and a long-standing local ban on hunting and slaughter. After five or six days there, the route drops back to the main trail and continues up the circuit — Namrung, Lho, the acclimatisation base of Sama Gaon, the Tibetan trade village of Samdo — before crossing the Larke La (5,106 m) into the Annapurna region.',
+    'It is a long, committing trek. Expect three weeks on the trail, basic lodges, big daily distances, and a serious glaciated pass at the end. It suits fit, experienced trekkers who want depth over speed and have three or more weeks to give it.'
+  ],
+  highlights: [
+    'The Tsum Valley — Rachen and Mu Gompa, Piren Phu cave, and the Tsumba way of life',
+    'The Larke La (5,106 m) — a big, wild, glaciated pass to finish',
+    'Manaslu (8,163 m) from Lho, Sama Gaon and the Base Camp day walk',
+    'The Budhi Gandaki gorge: cliff trails, waterfalls and long suspension bridges',
+    'Birendra Tal and Pungyen Gompa as acclimatisation day walks from Sama Gaon',
+    'Two restricted valleys, back to back, with a fraction of the Annapurna Circuit’s crowds'
+  ],
+  suitability: {
+    physical: 8, technical: 2, altitude: 9, remoteness: 7,
+    walkHours: '5–8 hours a day for three weeks, one 8–10 hour pass day',
+    terrain: 'Gorge trails with exposure and landslide sections, broad valley walking in Tsum, then alpine moraine and a glacier shelf on the Larke La. Non-technical but long and demanding.',
+    weatherExposure: 'High on the Larke La — snow can close it, and there is no shelter for hours.',
+    goodFor: [
+      'Fit, experienced trekkers who have done a big route before and have 3+ weeks',
+      'Anyone who wants the deepest cultural immersion the Manaslu region offers',
+      'Walkers comfortable with basic lodges, long days and a serious pass'
+    ],
+    notIdeal: [
+      'First-time trekkers or anyone new to altitude',
+      'Solo trekkers — both restricted-area permits need a group of two',
+      'Shorter trips — this is a three-week commitment, minimum'
+    ]
+  },
+  why: {
+    lead: 'The Manaslu Circuit is a great trek. With the Tsum Valley on the front of it, it is a great journey.',
+    paragraphs: [
+      'Tsum is the reason to give this trip the extra week. It is a self-contained world — its own dialect, its own dress, its own history as a semi-independent Buddhist enclave — and because it is a dead-end side valley rather than a through-route, the people who live there see very few trekkers. Days spent walking between its gompas, past its long mani walls and up to Mu Gompa near the Tibet border, are the cultural heart of the trip.',
+      'Then the circuit gives you the mountain. After Tsum you rejoin the main trail and climb into the high country beneath Manaslu, acclimatise at Sama Gaon and Samdo, and finish over the Larke La — a proper glaciated pass that delivers the sense of completion that an out-and-back valley trek never can. Few three-week treks in Nepal combine culture and altitude this well.'
+    ],
+    gallery: [
+      { img: '/images/manaslu_real.jpg', caption: 'Mu Gompa at the head of the Tsum Valley' },
+      { img: '/images/manaslu_real.jpg', caption: 'Manaslu from Samagaon' },
+      { img: '/images/manaslu.png', caption: 'The Larke La on the crossing to Bimthang' }
+    ]
+  },
+  passes: [{ name: 'Larke La (Larkya La)', elevation: '5,106 m', day: 18 }],
+  acclimatization: {
+    days: [13, 15],
+    note: 'The Tsum Valley section, topping out around 3,700 m at Mu Gompa, is gentle acclimatisation for the higher circuit that follows. On the circuit, two nights at Sama Gaon (3,530 m) — with a day walk to Manaslu Base Camp (≈ 4,800 m) or Pungyen Gompa — and a night at Samdo (3,875 m) with an acclimatisation walk toward the Tibet border set you up for the Larke La. The pass is crossed from Dharamsala (Larke Phedi, ≈ 4,470 m) the following morning.'
+  },
+  itinerary: [
+    { day: 1, title: 'Drive Kathmandu to Machha Khola', from: 'Kathmandu (1,400 m)', to: 'Machha Khola (≈ 870 m)', distanceKm: '—', walkHours: '8–9 hr drive', startEle: 1400, endEle: 870, terrain: 'Highway, then rough road up the Budhi Gandaki', stay: 'Tea house', meals: 'B/L/D', highlights: ['The valley narrows into the gorge'], tips: 'A long, bumpy day.' },
+    { day: 2, title: 'Machha Khola to Jagat', from: 'Machha Khola (870 m)', to: 'Jagat (≈ 1,340 m)', distanceKm: '≈ 22 km', walkHours: '6–7 hrs', startEle: 870, endEle: 1340, terrain: 'Gorge trail, cliff paths, the Tatopani hot springs', stay: 'Tea house', meals: 'B/L/D', highlights: ['Tatopani hot springs', 'The MCAP checkpoint at Jagat'], tips: 'The restricted area begins at Jagat.' },
+    { day: 3, title: 'Jagat to Lokpa', from: 'Jagat (1,340 m)', to: 'Lokpa (≈ 2,040 m)', distanceKm: '≈ 15 km', walkHours: '5–6 hrs', startEle: 1340, endEle: 2040, terrain: 'Gorge climbs and descents to the Tsum Valley junction', stay: 'Tea house', meals: 'B/L/D', highlights: ['First mani walls', 'Lokpa — where the Tsum Valley branches off'], tips: 'Tomorrow the route turns into Tsum.' },
+    { day: 4, title: 'Lokpa to Chumling', from: 'Lokpa (2,040 m)', to: 'Chumling (≈ 2,390 m)', distanceKm: '≈ 10 km', walkHours: '4–5 hrs', startEle: 2040, endEle: 2390, terrain: 'A narrow, forested side-valley trail with exposure', stay: 'Tea house / homestay', meals: 'B/L/D', highlights: ['Lower Tsum and its first gompa', 'Ganesh Himal appearing ahead'], tips: 'The trail into Tsum is rougher than the main gorge.' },
+    { day: 5, title: 'Chumling to Chhokang Paro', from: 'Chumling (2,390 m)', to: 'Chhokang Paro (≈ 3,030 m)', distanceKm: '≈ 14 km', walkHours: '5–6 hrs', startEle: 2390, endEle: 3030, terrain: 'The valley opens into upper Tsum — fields, villages and long mani walls', stay: 'Homestay', meals: 'B/L/D', highlights: ['The Tsum “window” view of Ganesh Himal and Himalchuli', 'Traditional Tsumba houses'], tips: 'Homestays here — a real window into the culture.' },
+    { day: 6, title: 'Chhokang Paro to Nile / Chhule', from: 'Chhokang Paro (3,030 m)', to: 'Nile (≈ 3,360 m)', distanceKm: '≈ 12 km', walkHours: '4–5 hrs', startEle: 3030, endEle: 3360, terrain: 'Upper Tsum, past Rachen Gompa and Milarepa’s cave', stay: 'Homestay / gompa guest house', meals: 'B/L/D', highlights: ['Rachen Gompa (a large nunnery)', 'Piren Phu — Milarepa’s meditation cave'], tips: 'The most sacred stretch of the valley.' },
+    { day: 7, title: 'Nile to Mu Gompa and back', from: 'Nile (3,360 m)', to: 'Nile (3,360 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 3360, endEle: 3700, terrain: 'Day walk to Mu Gompa (≈ 3,700 m) near the Tibet border, and the Dhephyudonma hermitage', stay: 'Homestay / gompa guest house', meals: 'B/L/D', highlights: ['Mu Gompa — the highest and largest monastery in Tsum', 'Views to the Tibetan frontier passes'], tips: 'The turnaround point of the Tsum section.' },
+    { day: 8, title: 'Nile to Chhokang Paro / Gho', from: 'Nile (3,360 m)', to: 'Gho (≈ 2,570 m)', distanceKm: '≈ 16 km', walkHours: '5–6 hrs', startEle: 3360, endEle: 2570, terrain: 'Retrace lower through Tsum, visiting gompas missed on the way up', stay: 'Homestay', meals: 'B/L/D', highlights: ['Gumba Lungdang or Dephyudonma Gompa side visits'], tips: 'A relaxed descent day.' },
+    { day: 9, title: 'Gho to Lokpa, rejoin the circuit', from: 'Gho (2,570 m)', to: 'Deng (≈ 1,860 m)', distanceKm: '≈ 18 km', walkHours: '6–7 hrs', startEle: 2570, endEle: 1860, terrain: 'Back down the Tsum trail to Lokpa, then onto the main Budhi Gandaki trail', stay: 'Tea house', meals: 'B/L/D', highlights: ['Back on the Manaslu Circuit'], tips: 'A long day rejoining the main route.' },
+    { day: 10, title: 'Deng to Namrung', from: 'Deng (1,860 m)', to: 'Namrung (≈ 2,630 m)', distanceKm: '≈ 20 km', walkHours: '6–7 hrs', startEle: 1860, endEle: 2630, terrain: 'Forest and gorge, then a steady climb', stay: 'Tea house', meals: 'B/L/D', highlights: ['The gorge opens out', 'Namrung checkpoint'], tips: 'You feel the altitude for the first time.' },
+    { day: 11, title: 'Namrung to Lho', from: 'Namrung (2,630 m)', to: 'Lho (≈ 3,180 m)', distanceKm: '≈ 11 km', walkHours: '4–5 hrs', startEle: 2630, endEle: 3180, terrain: 'Villages, fields and pine forest', stay: 'Tea house', meals: 'B/L/D', highlights: ['First full view of Manaslu from Lho', 'Ribung Gompa'], tips: 'Sunset on Manaslu from Lho is a highlight.' },
+    { day: 12, title: 'Lho to Samagaon', from: 'Lho (3,180 m)', to: 'Samagaon (≈ 3,530 m)', distanceKm: '≈ 12 km', walkHours: '4–5 hrs', startEle: 3180, endEle: 3530, terrain: 'Through Shyala with a 360° peak panorama', stay: 'Tea house', meals: 'B/L/D', highlights: ['Shyala’s mountain amphitheatre', 'Samagaon — the largest village on the route'], tips: 'Arrive with the afternoon free.' },
+    { day: 13, title: 'Samagaon — acclimatisation (Manaslu Base Camp or Pungyen Gompa)', from: 'Samagaon (3,530 m)', to: 'Samagaon (3,530 m)', distanceKm: '≈ 12–16 km', walkHours: '6–7 hrs', startEle: 3530, endEle: 4800, terrain: 'Steep climb to MBC (≈ 4,800 m) or to Pungyen Gompa', stay: 'Tea house', meals: 'B/L/D', highlights: ['Manaslu Base Camp and the Manaslu Glacier', 'Birendra Tal glacial lake'], tips: 'Climb high, sleep low — the key acclimatisation day.' },
+    { day: 14, title: 'Samagaon to Samdo', from: 'Samagaon (3,530 m)', to: 'Samdo (≈ 3,875 m)', distanceKm: '≈ 8 km', walkHours: '3–4 hrs', startEle: 3530, endEle: 3875, terrain: 'Open valley, past the Larke trade route junction', stay: 'Tea house', meals: 'B/L/D', highlights: ['Samdo — the last village, a Tibetan refugee settlement'], tips: 'A short day; rest for the pass.' },
+    { day: 15, title: 'Samdo — acclimatisation day', from: 'Samdo (3,875 m)', to: 'Samdo (3,875 m)', distanceKm: '≈ 6–8 km', walkHours: '3–4 hrs', startEle: 3875, endEle: 4200, terrain: 'Walk toward the Tibet border pass (Rui La) and back', stay: 'Tea house', meals: 'B/L/D', highlights: ['Views into Tibet', 'Blue sheep and, sometimes, wolves'], tips: 'Second acclimatisation day — go high, come back down.' },
+    { day: 16, title: 'Samdo to Dharamsala (Larke Phedi)', from: 'Samdo (3,875 m)', to: 'Dharamsala (≈ 4,470 m)', distanceKm: '≈ 7 km', walkHours: '3–4 hrs', startEle: 3875, endEle: 4470, terrain: 'Moraine climb to a single basic lodge', stay: 'Basic lodge / tents', meals: 'B/L/D', highlights: ['The pass wall ahead'], tips: 'Very basic, crowded shelter — an early night before the pass.' },
+    { day: 17, title: 'Contingency day / acclimatisation at Dharamsala', from: 'Dharamsala (4,470 m)', to: 'Dharamsala (4,470 m)', distanceKm: '≈ 3 km', walkHours: '1–3 hrs', startEle: 4470, endEle: 4600, terrain: 'Held for weather; short walk toward the pass', stay: 'Basic lodge / tents', meals: 'B/L/D', highlights: ['A buffer day for the Larke La'], tips: 'If the forecast is clear, the pass may be crossed a day early.' },
+    { day: 18, title: 'Cross the Larke La to Bimthang', from: 'Dharamsala (4,470 m)', to: 'Bimthang (≈ 3,720 m)', distanceKm: '≈ 16 km', walkHours: '8–10 hrs', startEle: 4470, endEle: 3720, terrain: 'Long moraine and glacier-shelf climb to 5,106 m, then a steep, long descent', stay: 'Tea house', meals: 'B/L/D', highlights: ['Larke La (5,106 m)', 'Himlung, Cheo and Kang Guru on the descent'], tips: 'Pre-dawn start. Microspikes for the glacier shelf. Poles for the descent.' },
+    { day: 19, title: 'Bimthang to Dharapani', from: 'Bimthang (3,720 m)', to: 'Dharapani (≈ 1,960 m)', distanceKm: '≈ 19 km', walkHours: '6–7 hrs', startEle: 3720, endEle: 1960, terrain: 'Forest and river descent, rejoining the Annapurna Circuit', stay: 'Tea house', meals: 'B/L/D', highlights: ['Back among trees and thicker air'], tips: 'A long descent, but a beautiful one.' },
+    { day: 20, title: 'Drive Dharapani to Besisahar / Pokhara', from: 'Dharapani (1,960 m)', to: 'Pokhara (≈ 820 m)', distanceKm: '—', walkHours: '6–8 hr drive', startEle: 1960, endEle: 820, terrain: 'Rough jeep road, then highway', stay: 'Hotel', meals: 'B/L', highlights: ['Trek complete'], tips: 'Jeep to Besisahar, then a vehicle change for Pokhara or Kathmandu.' },
+    { day: 21, title: 'Contingency / travel day', from: 'Pokhara / Besisahar', to: 'Kathmandu or Pokhara', distanceKm: '—', walkHours: '—', startEle: 820, endEle: 1400, terrain: 'Road or flight', stay: 'Hotel', meals: 'B', highlights: ['Spare day for pass weather'], tips: 'Build this in — the Larke La can force a wait.' }
+  ],
+  routePoints: [
+    { name: 'Jagat', elevation: '≈ 1,340 m', day: 2, walkTime: '6–7 hrs from Machha Khola', stay: 'Lodges + MCAP checkpoint', highlight: 'The restricted area begins here', warning: 'No entry beyond without both restricted-area permits and a guide.' },
+    { name: 'Lokpa', elevation: '≈ 2,040 m', day: 3, walkTime: '5–6 hrs from Jagat', stay: 'Lodges', highlight: 'Where the Tsum Valley branches off the main circuit', warning: 'The Tsum trail is narrower and rougher than the main gorge.' },
+    { name: 'Mu Gompa', elevation: '≈ 3,700 m', day: 7, walkTime: 'Day walk from Nile', stay: 'Day visit', highlight: 'The highest monastery in Tsum, near the Tibet border', warning: 'The turnaround point of the Tsum section.' },
+    { name: 'Samagaon', elevation: '≈ 3,530 m', day: 12, walkTime: '4–5 hrs from Lho', stay: 'The biggest lodge cluster on the route', highlight: 'Two acclimatisation nights; MBC and Birendra Tal day walks', warning: 'Do not skip a night here.' },
+    { name: 'Dharamsala (Larke Phedi)', elevation: '≈ 4,470 m', day: 16, walkTime: '3–4 hrs from Samdo', stay: 'One very basic, overcrowded lodge (+ tents)', highlight: 'The pass launch point', warning: 'Minimal shelter and food; a rough, cold night.' },
+    { name: 'Larke La', elevation: '5,106 m', day: 18, walkTime: '4–5 hrs up from Dharamsala', stay: 'Pass — no shelter', highlight: 'The high point and completion of the circuit', warning: 'Snow closes it; high wind and cold; a long glacier-shelf traverse.' }
+  ],
+  permits: [
+    { name: 'Manaslu Restricted Area Permit', where: 'Kathmandu, through a licensed operator only', feeNote: 'Per-week fee, higher in Sep–Nov, set by the government — verify', notes: 'Requires a group of at least two trekkers and a licensed guide; independent trekking is not allowed.' },
+    { name: 'Tsum Valley Restricted Area Permit', where: 'Kathmandu, through a licensed operator only', feeNote: 'Per-week fee (a separate charge from the Manaslu permit) — verify', notes: 'The Tsum Valley is its own restricted area with its own permit.' },
+    { name: 'Manaslu Conservation Area Permit (MCAP)', where: 'Kathmandu (NTB) or the Jagat checkpoint', feeNote: 'Fixed area fee — verify', notes: 'Covers the conservation area for both the circuit and Tsum.' },
+    { name: 'Annapurna Conservation Area Permit (ACAP)', where: 'Kathmandu or Pokhara', feeNote: 'Fixed area fee — verify', notes: 'Needed for the final section from Dharapani, inside the Annapurna area.' }
+  ],
+  cost: {
+    note: 'Two separate restricted-area permits, a three-week trek and difficult access — the priciest option in the Manaslu region. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / teahouse', rangeUSD: '$2,100–$2,900', includes: ['Licensed guide', 'All four permits', 'Ground transport', 'Tea houses and homestays', 'Main meals'] },
+      { name: 'Comfort', rangeUSD: '$3,000–$4,000', includes: ['Private guide + porter', 'Assistant guide on the pass day', 'Better lodges where they exist', 'City 4★'] },
+      { name: 'Premium', rangeUSD: '$4,800+', includes: ['Private trip', 'Extra crew and rest days', 'Gumba Lungdang and other Tsum side visits', 'Helicopter contingency'] }
+    ],
+    breakdown: [
+      { item: 'Two restricted-area permits', note: 'Manaslu and Tsum, each charged per week and seasonally priced — the dominant cost' },
+      { item: 'MCAP + ACAP', note: 'Two conservation-area permits' },
+      { item: 'Transport', note: 'Jeep in from Kathmandu; jeep out from Dharapani to Besisahar' },
+      { item: 'Guide (+ porter, + assistant)', note: 'A guide is mandatory; a second guide helps on the pass' },
+      { item: 'Lodging + meals', note: '18–20 nights, homestays in Tsum, very basic at Dharamsala' },
+      { item: 'Tips', note: 'Customary at the end' }
+    ],
+    independentVsGuided: 'Independent trekking is not permitted in either area. Both restricted-area permits are issued only to groups of two or more with a licensed guide through a registered operator.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Machha Khola / Soti Khola', mode: 'Private jeep (or bus + jeep)', duration: '8–10 hrs', note: 'The last stretch up the Budhi Gandaki is rough and can be cut by monsoon damage.' },
+      { from: 'Dharapani', to: 'Besisahar', mode: 'Shared or private jeep', duration: '3–4 hrs', note: 'Very rough. From Besisahar, onward vehicles run to Pokhara (3–4 hrs) or Kathmandu (5–6 hrs).' }
+    ],
+    note: 'A contingency day is wise for the Larke La; the access roads are also slow and weather-dependent.'
+  },
+  equipment: [
+    { item: 'Sleeping bag to ≈ −18°C', need: 'essential', note: 'Dharamsala and the pass morning are extremely cold.' },
+    { item: 'Microspikes / light crampons', need: 'essential', note: 'The Larke La glacier shelf is usually snow or ice.' },
+    { item: 'Down jacket + insulated trousers', need: 'recommended', note: 'For the pre-dawn pass start.' },
+    { item: 'Trekking poles', need: 'essential', note: 'The Bimthang descent from the pass is long and steep.' },
+    { item: 'Modest, respectful clothing for the monasteries', need: 'recommended', note: 'Tsum is deeply religious — shoulders and knees covered in villages and gompas.' },
+    { item: 'Satellite messenger', need: 'recommended', note: 'Coverage is thin on the high and remote sections.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The Larke La', note: 'A long, exposed, glaciated pass with no shelter for hours. Snow closes it, and guides regularly hold at Samdo or Dharamsala for a window. Trust the wait.' },
+      { name: 'Altitude', note: 'Three weeks of trekking with a week sleeping above 3,500 m and a 5,106 m pass. The Tsum section is gentle acclimatisation; the Samagaon and Samdo days are the critical margin.' },
+      { name: 'Trip length and fatigue', note: 'Twenty days on the trail is tiring in itself. Big daily distances in the gorge and on the Deng–Namrung stretch wear people down before the pass.' },
+      { name: 'Gorge trails and landslides', note: 'The Budhi Gandaki cliff sections are exposed and slide-prone, especially in and after rain.' },
+      { name: 'Dharamsala', note: 'One overcrowded, basic lodge before the pass, at 4,470 m — a poor place to be unwell. Good operators carry tents as backup.' }
+    ],
+    turnaround: 'If the Larke La is snowed in, the group waits at Samdo, and if the window does not come, the trek retraces down the Budhi Gandaki — a long out-and-back that still includes all of Tsum. A trekker not acclimatising at Samagaon does not go to Samdo or the pass.',
+    note: 'Carry a satellite messenger. Helicopter evacuation is available from Samagaon, Samdo and, weather permitting, the pass area; the HRA runs a seasonal aid post at Samagaon.'
+  },
+  faq: [
+    { q: 'How long is the Manaslu–Tsum Valley trek?', a: 'Around 22–24 days including travel and a contingency day, with 18–20 days on the trail. The Tsum Valley adds roughly a week to the standard Manaslu Circuit.' },
+    { q: 'Do I need two permits?', a: 'Yes. The Manaslu Circuit and the Tsum Valley are separate restricted areas, each with its own permit (both charged per week), plus MCAP and ACAP conservation permits, a licensed guide and a group of at least two.' },
+    { q: 'Is it harder than the Manaslu Circuit alone?', a: 'It is longer and more tiring, but not more technical. The Tsum section is at modest altitude; the crux is still the Larke La (5,106 m) at the end, and the cumulative fatigue of three weeks on the trail.' },
+    { q: 'What makes the Tsum Valley special?', a: 'It is a hidden Buddhist valley with its own Tsumba culture, several important monasteries (Rachen, Mu Gompa), the Milarepa-linked cave of Piren Phu, and a local ban on killing animals. Because it is a dead-end valley, it sees very few trekkers.' },
+    { q: 'What is the accommodation like?', a: 'Tea houses on the circuit and homestays in Tsum, improving each year but basic in the upper villages and very basic at Dharamsala before the pass. Book through a guide.' },
+    { q: 'When is the best time to go?', a: 'March–May and September–November. October is the most stable. Winter snow closes the Larke La; the monsoon makes the gorge trails dangerous.' },
+    { q: 'Can I do just the Tsum Valley?', a: 'Yes — the Tsum Valley trek on its own is about 14 days and does not cross the Larke La. This combined route is for people who want both.' }
+  ],
+  relatedTreks: ['manaslu-circuit', 'tsum-valley', 'annapurna-circuit', 'nar-phu-valley-trek'],
+  relatedDestinations: [
+    { name: 'Manaslu Circuit', note: 'The standard 18-day loop without the Tsum Valley extension.' },
+    { name: 'Tsum Valley', note: 'The 14-day standalone trek into the hidden valley, without the Larke La.' },
+    { name: 'Annapurna Circuit', note: 'The routes join at Dharapani; some trekkers continue toward Manang.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu hotels and a Pokhara or Kathmandu night at the end. The trail is tea houses and homestays, with tents carried as backup for Dharamsala. This is a three-week commitment — talk to us about fitness and timing.'
+};
+
 /* ========================= KARNALI PROVINCE ========================= */
 
 TREKS['upper-dolpo'] = {
   slug: 'upper-dolpo',
+  restricted: true,
   name: 'Upper Dolpo Trek',
   tagline: 'The trans-Himalayan far west, beyond Shey Gompa',
   province: 'karnali',
@@ -3555,7 +4995,7 @@ TREKS['upper-dolpo'] = {
     { q: 'What if I get altitude sickness?', a: 'You descend to the nearest lower valley — the route always has a downward option, though it may be slow — recover, and either continue on a reduced plan or arrange a helicopter. The buffer and rest days exist to prevent this.' },
     { q: 'How many spare days should I budget?', a: 'Two to three, mostly for the Juphal flight, plus the buffer days already built into the itinerary for the passes.' }
   ],
-  relatedTreks: ['lower-dolpo', 'shey-phoksundo-lake', 'rara-lake-trek', 'limi-valley'],
+  relatedTreks: ['lower-dolpo', 'shey-phoksundo-lake', 'rara-lake-trek', 'limi-valley', 'kagmara-pass-trek'],
   relatedDestinations: [
     { name: 'Lower Dolpo', note: 'The shorter, permit-light version of the same region.' },
     { name: 'Jomsom & Upper Mustang', note: 'The eastern exit variant links Dolpo to Mustang — another trans-Himalayan region.' },
@@ -3566,6 +5006,7 @@ TREKS['upper-dolpo'] = {
 
 TREKS['lower-dolpo'] = {
   slug: 'lower-dolpo',
+  restricted: true,
   name: 'Lower Dolpo Trek',
   tagline: 'Phoksundo Lake and the Tarap valley, without the big permit',
   province: 'karnali',
@@ -3718,7 +5159,7 @@ TREKS['lower-dolpo'] = {
     { q: 'What if I get altitude sickness before the passes?', a: 'You descend to Phoksundo Lake or lower to recover, then either attempt the passes or complete the trip as a lake out-and-back.' },
     { q: 'How many spare days should I budget?', a: 'Two to three — mainly for the Juphal flight, plus one for pass weather.' }
   ],
-  relatedTreks: ['upper-dolpo', 'shey-phoksundo-lake', 'rara-lake-trek', 'limi-valley'],
+  relatedTreks: ['upper-dolpo', 'shey-phoksundo-lake', 'rara-lake-trek', 'limi-valley', 'kagmara-pass-trek'],
   relatedDestinations: [
     { name: 'Upper Dolpo', note: 'The full plateau trek, for those with more time and budget.' },
     { name: 'Rara Lake', note: 'The other great far-western lake trek, reachable from the same region.' },
@@ -3871,7 +5312,7 @@ TREKS['shey-phoksundo-lake'] = {
     { q: 'Is it suitable as a first camping trek?', a: 'Yes, for a fit walker — it is the gentlest Dolpo option, with no passes. Be prepared for the remoteness and the exposed trail sections.' },
     { q: 'How many spare days should I budget?', a: 'One to two, mainly for the Juphal flight.' }
   ],
-  relatedTreks: ['lower-dolpo', 'upper-dolpo', 'rara-lake-trek', 'limi-valley'],
+  relatedTreks: ['lower-dolpo', 'upper-dolpo', 'rara-lake-trek', 'limi-valley', 'kagmara-pass-trek'],
   relatedDestinations: [
     { name: 'Lower & Upper Dolpo', note: 'Continue from the lake for the full Dolpo experience.' },
     { name: 'Rara Lake', note: 'The other great far-western lake — different, and larger.' },
@@ -4034,6 +5475,7 @@ TREKS['rara-lake-trek'] = {
 
 TREKS['limi-valley'] = {
   slug: 'limi-valley',
+  restricted: true,
   name: 'Limi Valley Trek',
   tagline: 'A hidden loop on the Tibetan border in Humla',
   province: 'karnali',
@@ -4199,6 +5641,165 @@ TREKS['limi-valley'] = {
   hotelsNote: 'Trips include Kathmandu and Nepalgunj hotels; the trek is fully camp-supported for around two weeks. This is planned as an expedition — talk to us well ahead about dates, group size and the Simikot flight.'
 };
 
+TREKS['kagmara-pass-trek'] = {
+  slug: 'kagmara-pass-trek',
+  restricted: true,
+  name: 'Kagmara Pass Trek',
+  tagline: 'Over the Kagmara La into the Phoksundo country of Dolpo',
+  province: 'karnali',
+  region: 'Dolpo',
+  heroImage: '/images/hero-mountain.jpg',
+  summary: 'A 14–16 day restricted-area camping trek in Lower Dolpo, crossing the Kagmara La (≈ 5,115 m) from the Bheri valley into the Pungmo valley and on to the turquoise lake of Phoksundo. A wilder, higher alternative to the standard Lower Dolpo circuit, through some of the emptiest country in Nepal.',
+  stats: {
+    duration: '14–16 days (11–13 on the trail)',
+    difficulty: 'Strenuous',
+    maxAltitude: '≈ 5,115 m',
+    maxAltitudePoint: 'Kagmara La',
+    bestSeason: 'May–Oct (Dolpo rain-shadow)',
+    startPoint: 'Juphal (fly Kathmandu–Nepalgunj–Juphal)',
+    endPoint: 'Juphal',
+    distanceKm: '≈ 120–140 km',
+    walkHours: '6–8 hrs/day, one long pass day'
+  },
+  seo: {
+    title: 'Kagmara Pass Trek — Nepal | Lower Dolpo Itinerary, Kagmara La, Restricted Permits & Best Time',
+    description: 'The Kagmara Pass trek in Lower Dolpo, crossing the Kagmara La (≈ 5,115 m) to Phoksundo Lake. Restricted-area permits and cost, camping itinerary, difficulty, best season and FAQ.'
+  },
+  overview: [
+    'The Kagmara La is the high way into Dolpo. Instead of following the Suli Gad gorge straight to Phoksundo Lake, this route climbs the Jagdula and Kagmara valleys from the Bheri, crosses the Kagmara La (≈ 5,115 m) on the shoulder of the Kagmara peaks, and drops into the Pungmo valley — a Bön and Buddhist valley of stone villages — before reaching the lake from the south. It is a restricted area: you need a Lower Dolpo permit, a Shey Phoksundo National Park permit, a licensed guide and a group of at least two, and every night is camping.',
+    'Dolpo sits in the rain shadow behind the Dhaulagiri massif, so it can be trekked through the summer when the rest of Nepal is under the monsoon — the villages of Lower Dolpo hold their traditional Tibetan-Buddhist and Bön culture, and the landscape is high, dry and vast. Phoksundo Lake itself, at 3,600 m, is one of the deepest and most vividly coloured lakes in the country, held by a natural dam with the village of Ringmo and the Bön monastery of Tshowa on its shore.',
+    'It is a committing trek. There are no lodges, the daily distances are long, the Kagmara La is a serious pass, and Dolpo’s remoteness means help is days away. It suits fit, experienced trekkers who are comfortable camping for two weeks with a crew.'
+  ],
+  highlights: [
+    'The Kagmara La (≈ 5,115 m) — a high pass between the Kagmara peaks',
+    'Phoksundo Lake (3,600 m) — a turquoise lake ringed by cliffs, with the Bön gompa of Tshowa',
+    'The Pungmo valley — Bön and Buddhist stone villages rarely visited by trekkers',
+    'Ringmo village and the Suli Gad waterfall, one of the highest in Nepal',
+    'The high, dry, Tibetan landscape of Lower Dolpo — trekkable even in the monsoon',
+    'Blue sheep, and the country of the snow leopard'
+  ],
+  suitability: {
+    physical: 8, technical: 2, altitude: 8, remoteness: 9,
+    walkHours: '6–8 hours a day, with a long pass day',
+    terrain: 'Forest and river trails, then yak pasture, moraine and a snow pass. Non-technical but rough, remote and with big daily height changes.',
+    weatherExposure: 'High on the Kagmara La — no shelter, and snow can close it even in summer.',
+    goodFor: [
+      'Fit, experienced trekkers who have done a major Himalayan route before',
+      'Anyone happy to camp for two weeks with a crew and no lodges',
+      'Walkers wanting a summer-trekkable route when the rest of Nepal is wet'
+    ],
+    notIdeal: [
+      'First-time trekkers or anyone new to altitude',
+      'Solo trekkers — the restricted-area permit needs a group of two',
+      'Tight schedules that cannot absorb a weather day on the pass'
+    ]
+  },
+  why: {
+    lead: 'Dolpo is the Nepal that the roads and the crowds have not reached, and the Kagmara La goes in over the top of it.',
+    paragraphs: [
+      'Most Lower Dolpo treks walk up the Suli Gad to Phoksundo and back. The Kagmara route takes the harder line — up an empty side valley, over a 5,000 m pass, and down into Pungmo — which means several extra days of walking with, most likely, nobody else on the trail. It is Dolpo at its most Dolpo: high, dry, Buddhist and Bön, and a very long way from anywhere.',
+      'And because Dolpo lies behind Dhaulagiri in the rain shadow, this is one of the few genuinely high treks in Nepal you can do in July and August. When the Annapurna and Everest trails are socked in, the Kagmara La can be under a blue sky.'
+    ],
+    gallery: [
+      { img: '/images/hero-mountain.jpg', caption: 'The Kagmara La on the way into Dolpo' },
+      { img: '/images/treks/kagmara-pass-2.webp', caption: 'Phoksundo Lake and Ringmo village' },
+      { img: '/images/treks/kagmara-pass-3.webp', caption: 'A Bön village in the Pungmo valley' }
+    ]
+  },
+  passes: [{ name: 'Kagmara La', elevation: '≈ 5,115 m', day: 7 }],
+  acclimatization: {
+    days: [5, 6],
+    note: 'The route gains height steadily up the Jagdula and Kagmara valleys. Most itineraries build in an acclimatisation day at Kagmara Phedi (≈ 4,000 m) or Toijem, and keep a slow pace on the approach to the pass camp. The Kagmara La is the highest point of the trek, and Phoksundo (3,600 m) afterwards is a gentle descent that gives the body a break before the walk out.'
+  },
+  itinerary: [
+    { day: 1, title: 'Fly Kathmandu–Nepalgunj', from: 'Kathmandu (1,400 m)', to: 'Nepalgunj (≈ 150 m)', distanceKm: '—', walkHours: '1 hr flight', startEle: 1400, endEle: 150, terrain: 'Flight to the western Terai', stay: 'Hotel', meals: 'B/D', highlights: ['The lowland border town — the staging post for the far west'], tips: 'Hot and humid; the mountains come tomorrow.' },
+    { day: 2, title: 'Fly Nepalgunj–Juphal, trek to Dunai', from: 'Nepalgunj (150 m)', to: 'Dunai (≈ 2,140 m)', distanceKm: '≈ 8 km', walkHours: '35 min flight + 2–3 hrs', startEle: 150, endEle: 2140, terrain: 'Mountain flight to the Juphal airstrip, then a trail down to the Bheri', stay: 'Camp', meals: 'B/L/D', highlights: ['First views of the Dolpo hills', 'Dunai — the Dolpa district headquarters'], tips: 'Juphal flights are morning-only and weather-sensitive.' },
+    { day: 3, title: 'Dunai to Tarakot', from: 'Dunai (2,140 m)', to: 'Tarakot (≈ 2,540 m)', distanceKm: '≈ 13 km', walkHours: '5–6 hrs', startEle: 2140, endEle: 2540, terrain: 'Bheri river trail, the Lower Dolpo permit checkpoint', stay: 'Camp', meals: 'B/L/D', highlights: ['Tarakot fort (Dzong) above the village'], tips: 'The restricted area begins here — permits and guide checked.' },
+    { day: 4, title: 'Tarakot to Laini / Jagdula Khola', from: 'Tarakot (2,540 m)', to: 'Laini (≈ 3,160 m)', distanceKm: '≈ 12 km', walkHours: '6–7 hrs', startEle: 2540, endEle: 3160, terrain: 'Turn up the Jagdula (Barbung) side valley on a narrow, climbing trail', stay: 'Camp', meals: 'B/L/D', highlights: ['Leaving the last permanent villages behind'], tips: 'The trail steepens and narrows.' },
+    { day: 5, title: 'Laini to Toijem', from: 'Laini (3,160 m)', to: 'Toijem (≈ 3,860 m)', distanceKm: '≈ 12 km', walkHours: '6–7 hrs', startEle: 3160, endEle: 3860, terrain: 'Forest and pasture as the valley climbs toward the pass', stay: 'Camp', meals: 'B/L/D', highlights: ['The Kagmara peaks appearing ahead'], tips: 'A big height-gain day — go slowly.' },
+    { day: 6, title: 'Toijem to Kagmara Phedi', from: 'Toijem (3,860 m)', to: 'Kagmara Phedi (≈ 4,000 m)', distanceKm: '≈ 8 km', walkHours: '4–5 hrs', startEle: 3860, endEle: 4000, terrain: 'Moraine and glacial-valley walking to the base of the pass', stay: 'Camp', meals: 'B/L/D', highlights: ['The Kagmara La wall above camp'], tips: 'A short day with an acclimatisation walk in the afternoon — rest for the pass.' },
+    { day: 7, title: 'Cross the Kagmara La to Kagmara', from: 'Kagmara Phedi (4,000 m)', to: 'Kagmara (≈ 3,800 m)', distanceKm: '≈ 14 km', walkHours: '8–10 hrs', startEle: 4000, endEle: 3800, terrain: 'A long climb over snow and moraine to the Kagmara La (≈ 5,115 m), then a steep descent into the Pungmo drainage', stay: 'Camp', meals: 'B/L/D', highlights: ['Kagmara La (≈ 5,115 m)', 'Kanjiroba Himal and, far off, Dhaulagiri'], tips: 'Pre-dawn start. Microspikes; poles for the descent. The exact camp on the far side depends on conditions.' },
+    { day: 8, title: 'Kagmara to Pungmo', from: 'Kagmara (3,800 m)', to: 'Pungmo (≈ 3,480 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 3800, endEle: 3480, terrain: 'Descend the Pungmo valley to the first village since Tarakot', stay: 'Camp', meals: 'B/L/D', highlights: ['Pungmo — a Bön and Buddhist stone village', 'The Pungmo gompa'], tips: 'Back among people; the hard ground is behind you.' },
+    { day: 9, title: 'Pungmo to Ringmo / Phoksundo Lake', from: 'Pungmo (3,480 m)', to: 'Ringmo (≈ 3,640 m)', distanceKm: '≈ 12 km', walkHours: '5–6 hrs', startEle: 3480, endEle: 3640, terrain: 'Down to the Suli Gad, then a climb to the lake and Ringmo village', stay: 'Camp', meals: 'B/L/D', highlights: ['First sight of Phoksundo’s turquoise water', 'Ringmo village and the Tshowa (Bön) monastery'], tips: 'One of the great arrivals in Nepal trekking.' },
+    { day: 10, title: 'Phoksundo Lake — rest & explore day', from: 'Ringmo (3,640 m)', to: 'Ringmo (3,640 m)', distanceKm: '≈ 8 km', walkHours: '3–5 hrs', startEle: 3640, endEle: 3800, terrain: 'Walk along the lakeshore trail and up to a viewpoint', stay: 'Camp', meals: 'B/L/D', highlights: ['The lakeshore cliff path toward Upper Dolpo', 'Tshowa Gompa and the Ringmo chortens'], tips: 'A well-earned rest day at the centrepiece of the trek.' },
+    { day: 11, title: 'Ringmo to Chhepka', from: 'Ringmo (3,640 m)', to: 'Chhepka (≈ 2,720 m)', distanceKm: '≈ 16 km', walkHours: '6–7 hrs', startEle: 3640, endEle: 2720, terrain: 'The Suli Gad gorge — past the Suli Gad waterfall — descending steeply', stay: 'Camp', meals: 'B/L/D', highlights: ['The Suli Gad waterfall, one of the highest in Nepal'], tips: 'A long descent on a rough trail — poles help.' },
+    { day: 12, title: 'Chhepka to Juphal', from: 'Chhepka (2,720 m)', to: 'Juphal (≈ 2,500 m)', distanceKm: '≈ 18 km', walkHours: '6–7 hrs', startEle: 2720, endEle: 2500, terrain: 'Suli Gad and Bheri trails back to the airstrip', stay: 'Camp / guest house', meals: 'B/L/D', highlights: ['Trek complete'], tips: 'A long final walking day; camp or a basic room near the airstrip.' },
+    { day: 13, title: 'Fly Juphal–Nepalgunj–Kathmandu', from: 'Juphal (2,500 m)', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '2 flights', startEle: 2500, endEle: 1400, terrain: 'Mountain flight to Nepalgunj, then to Kathmandu', stay: 'Hotel', meals: 'B', highlights: ['Back in the city'], tips: 'Juphal flights are unreliable — build in a contingency day here.' },
+    { day: 14, title: 'Contingency day', from: 'Juphal or Nepalgunj', to: 'Kathmandu (1,400 m)', distanceKm: '—', walkHours: '—', startEle: 1400, endEle: 1400, terrain: 'Buffer', stay: 'Hotel', meals: 'B', highlights: ['Spare day for the pass or the flights'], tips: 'Two buffer days are wise — Juphal weather can strand a group for days.' }
+  ],
+  routePoints: [
+    { name: 'Tarakot', elevation: '≈ 2,540 m', day: 3, walkTime: '5–6 hrs from Dunai', stay: 'Camp + checkpoint', highlight: 'The Lower Dolpo restricted area begins here', warning: 'No entry beyond without permits and a guide.' },
+    { name: 'Kagmara Phedi', elevation: '≈ 4,000 m', day: 6, walkTime: '4–5 hrs from Toijem', stay: 'Camp — no facilities', highlight: 'The base camp for the pass', warning: 'A cold, exposed camp; the crew carries everything from Tarakot.' },
+    { name: 'Kagmara La', elevation: '≈ 5,115 m', day: 7, walkTime: '4–5 hrs up from Kagmara Phedi', stay: 'Pass — no shelter', highlight: 'The high point and the crossing into the Phoksundo country', warning: 'Snow can close it even in summer; a long, exposed day. Height figures vary between sources — verify.' },
+    { name: 'Pungmo', elevation: '≈ 3,480 m', day: 8, walkTime: '5–6 hrs from the pass', stay: 'Camp', highlight: 'A Bön and Buddhist stone village — the first since Tarakot', warning: 'No resupply; the crew carries all food.' },
+    { name: 'Phoksundo Lake (Ringmo)', elevation: '≈ 3,640 m', day: 9, walkTime: '5–6 hrs from Pungmo', stay: 'Camp', highlight: 'The turquoise lake, Ringmo village and Tshowa Gompa', warning: 'A national-park zone — camp only in designated areas.' }
+  ],
+  permits: [
+    { name: 'Lower Dolpo Restricted Area Permit', where: 'Kathmandu, through a licensed operator only', feeNote: 'Per-week fee, set by the government — verify', notes: 'Requires a group of at least two trekkers and a licensed guide; independent trekking is not allowed.' },
+    { name: 'Shey Phoksundo National Park entry permit', where: 'Kathmandu (NTB) or the park checkpoint', feeNote: 'Fixed park fee — verify', notes: 'Covers Phoksundo Lake and the Pungmo and Suli Gad valleys.' },
+    { name: 'Local rural municipality fees', where: 'At checkpoints along the route', feeNote: 'Small local levies — verify', notes: 'Carry passport and photos.' }
+  ],
+  cost: {
+    note: 'A fully supported camping trek into a restricted area, with two expensive domestic flight legs (Kathmandu–Nepalgunj–Juphal) and a full crew. Priced well above a teahouse trek. Confirm a quote for your dates and group size.',
+    tiers: [
+      { name: 'Group / camping', rangeUSD: '$2,400–$3,400', includes: ['Licensed guide + full camping crew', 'Restricted-area and national park permits', 'All camping equipment and meals', 'Kathmandu–Nepalgunj–Juphal flights'] },
+      { name: 'Comfort', rangeUSD: '$3,600–$4,600', includes: ['Larger crew and rest days', 'Better tents and camp comforts', 'Assistant guide', 'City 4★ hotels'] },
+      { name: 'Premium', rangeUSD: '$5,200+', includes: ['Private departure', 'Extra contingency days', 'Upper Dolpo or Shey Gompa extension', 'Helicopter evacuation cover arranged'] }
+    ],
+    breakdown: [
+      { item: 'Restricted-area permit', note: 'Per week for Lower Dolpo — a significant cost' },
+      { item: 'National park + local fees', note: 'Shey Phoksundo National Park and municipality levies' },
+      { item: 'Domestic flights', note: 'Kathmandu–Nepalgunj–Juphal and back — expensive and weather-prone' },
+      { item: 'Full camping crew', note: 'Guide, cook, kitchen and camp staff, porters or pack animals' },
+      { item: 'Food + fuel carried in', note: 'No shops between Tarakot and Ringmo' },
+      { item: 'Tips', note: 'Customary for the whole crew at the end' }
+    ],
+    independentVsGuided: 'Not possible independently. The Lower Dolpo restricted-area permit is issued only to groups of two or more with a licensed guide through a registered operator, and the route has no lodge network.'
+  },
+  transport: {
+    steps: [
+      { from: 'Kathmandu', to: 'Nepalgunj', mode: 'Domestic flight', duration: '1 hr', note: 'An overnight in Nepalgunj is usual before the early Juphal flight.' },
+      { from: 'Nepalgunj', to: 'Juphal', mode: 'Domestic flight (small aircraft)', duration: '35 min', note: 'Morning-only and highly weather-dependent — delays and cancellations are common.' }
+    ],
+    note: 'The Juphal flights are the biggest logistical risk on this trek. Build in at least two contingency days.'
+  },
+  equipment: [
+    { item: 'Four-season sleeping bag (≈ −18°C)', need: 'essential', note: 'All nights are camping; the high camps are very cold.' },
+    { item: 'Microspikes / light crampons', need: 'essential', note: 'The Kagmara La usually holds snow.' },
+    { item: 'Down jacket + warm gloves', need: 'essential', note: 'For the pre-dawn pass start.' },
+    { item: 'Trekking poles', need: 'essential', note: 'Long, rough descents on both sides of the pass and in the Suli Gad.' },
+    { item: 'Satellite messenger', need: 'essential', note: 'There is no mobile coverage for most of the route.' },
+    { item: 'Sun protection (hat, glacier glasses, SPF 50+)', need: 'essential', note: 'The Dolpo light is intense at altitude.' }
+  ],
+  safety: {
+    risks: [
+      { name: 'The Kagmara La', note: 'A long, exposed, high crossing with no shelter. Snow can close it even in summer, and a good crew will wait for a window.' },
+      { name: 'Remoteness', note: 'Dolpo is one of the remotest regions in Nepal. You are days from a road and, for stretches, from a helicopter landing site. Self-sufficiency is the norm.' },
+      { name: 'Altitude', note: 'The trek sleeps above 3,000 m for a week and crosses above 5,000 m. The Kagmara Phedi acclimatisation is the margin.' },
+      { name: 'Flight disruption', note: 'The Juphal flights are frequently delayed or cancelled. A stranded group can lose two or three days at either end.' },
+      { name: 'Cold injury', note: 'Frostnip risk on the pass morning without proper gloves, boots and face cover.' }
+    ],
+    turnaround: 'If the Kagmara La is closed, the group can retrace to Tarakot and take the standard Suli Gad route to Phoksundo instead — still a superb trip. A trekker not acclimatising at Kagmara Phedi does not go to the pass.',
+    note: 'Carry a satellite messenger. There is no aid post on the route; the nearest medical facilities are in Dunai and, better, back in Nepalgunj or Kathmandu.'
+  },
+  faq: [
+    { q: 'How is the Kagmara Pass trek different from the standard Lower Dolpo trek?', a: 'The standard Lower Dolpo circuit reaches Phoksundo Lake via the Suli Gad gorge. The Kagmara route takes the high line — up the Jagdula and Kagmara valleys and over the Kagmara La (≈ 5,115 m) — adding several remote, higher days and a serious pass before it reaches the lake.' },
+    { q: 'Is it a restricted-area trek?', a: 'Yes. It needs a Lower Dolpo Restricted Area Permit, a Shey Phoksundo National Park permit, a licensed guide and a group of at least two. Independent trekking is not allowed.' },
+    { q: 'Can it be trekked in the monsoon?', a: 'Yes — Dolpo lies in the rain shadow behind Dhaulagiri, so May to October, including the summer monsoon months, is the trekking window. The Kagmara La can still catch fresh snow, so the itinerary carries buffer days.' },
+    { q: 'Do I sleep in lodges or tents?', a: 'Tents throughout, with a full camping crew. There are no lodges between Tarakot and Ringmo.' },
+    { q: 'How high is the pass?', a: 'Around 5,115 m. Sources give figures a little higher or lower; confirm with your operator.' },
+    { q: 'How do I get to the trailhead?', a: 'Fly Kathmandu–Nepalgunj (1 hr), overnight, then a small aircraft to the Juphal airstrip (35 min). Both legs, especially Juphal, are weather-dependent.' },
+    { q: 'Can I extend it into Upper Dolpo?', a: 'Yes. From Phoksundo you can continue over the Kang La and Baga La toward Shey Gompa and the Upper Dolpo circuit, turning it into a 3–4 week expedition. Upper Dolpo needs its own, more expensive permit.' }
+  ],
+  relatedTreks: ['lower-dolpo', 'shey-phoksundo-lake', 'upper-dolpo', 'rara-lake-trek'],
+  relatedDestinations: [
+    { name: 'Phoksundo Lake', note: 'The centrepiece of the trek; the standalone Shey Phoksundo Lake trek reaches it by the direct gorge route.' },
+    { name: 'Upper Dolpo', note: 'The Shey Gompa circuit beyond the lake — a natural extension for a longer expedition.' },
+    { name: 'Rara Lake', note: 'The other great lake of the far west, in neighbouring Mugu — often paired for a two-lake Karnali trip.' }
+  ],
+  hotelsNote: 'Trips include Kathmandu and Nepalgunj hotels. The trail is camping throughout, with a full crew. Ask us about extending into Upper Dolpo or pairing it with Rara Lake.'
+};
+
 /* ========================= LUMBINI PROVINCE ========================= */
 
 TREKS['lumbini-pilgrimage-circuit'] = {
@@ -4348,7 +5949,7 @@ TREKS['bardiya-national-park-safari'] = {
   province: 'lumbini',
   region: 'Bardiya',
   lowland: true,
-  heroImage: '/images/itinerary.png',
+  heroImage: '/images/treks/bardiya-national-park-safari.jpg',
   summary: 'A 3–5 day wildlife trip into Bardiya National Park — the largest and least-visited protected area in the Terai — with jungle walks, jeep drives and river trips on the Karnali, offering Nepal’s best chance of seeing a wild Bengal tiger, alongside one-horned rhino, wild elephant and Gangetic dolphin.',
   stats: {
     duration: '3–5 days (part of a wider Nepal trip)',
@@ -4642,7 +6243,7 @@ TREKS['janakpur-temple-circuit'] = {
   province: 'madhesh',
   region: 'Janakpur (Mithila)',
   lowland: true,
-  heroImage: '/images/footer.png',
+  heroImage: '/images/treks/janakpur-temple-circuit.jpg',
   summary: 'A 1–3 day walking tour of Janakpur — the Terai temple city sacred to Hindus as the birthplace of Sita and the site of her marriage to Rama — taking in the Janaki Mandir, the Ram Mandir, dozens of sacred ponds, and the living Mithila (Maithili) art and culture of the surrounding villages.',
   stats: {
     duration: '1–3 days (part of a wider Nepal trip)',

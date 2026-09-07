@@ -7,6 +7,9 @@
     <meta name="description" content="A complete, category-by-category packing list for a Himalayan trek — documents, clothing, footwear, sleep system, hydration, electronics, first aid and equipment. Tick items off; your progress is saved.">
     <link rel="canonical" href="https://himalayanmagic.com/gear">
 
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="icon" type="image/png" href="/images/logo-icon.png">
+    <link rel="apple-touch-icon" href="/images/logo-icon.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,28 +22,46 @@
         .lbl { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
         .sec-h { font-family:'Oswald',sans-serif; font-weight:300; text-transform:uppercase; letter-spacing:-.02em; line-height:.95; }
         @media print { header, footer, #gear-toolbar, .no-print, #theme-fab { display:none !important; } body { background:#fff; color:#000; } }
+        /* route selector + essentials filter — see REVERT § 5w */
+        #gear-trek { background:#1b1e22; }
+        .light-mode #gear-trek { background:#fff; }
+        #gear-grid.ess-only label:not(.is-ess) { display:none; }
+        #gear-grid.ess-only > div:not(:has(label.is-ess)) { display:none; }
     </style>
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
-<header class="relative z-40 border-b border-border bg-[#16181b]">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto object-contain">
-            <div>
-                <span class="block font-heading text-sm font-light tracking-widest text-white uppercase">Himalayan Magic Adventure</span>
-                <span class="block text-[9px] text-accent tracking-[0.3em] uppercase">Gear &amp; Packing · Est. 1993</span>
-            </div>
+<!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Gear &amp; Packing · Est. 1993</span>
+            </span>
         </a>
-        <nav class="hidden lg:flex items-center gap-7 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            <a href="/" class="hover:text-accent transition-colors">Home</a>
-            <a href="/treks" class="hover:text-accent transition-colors">Trekking Trails</a>
-            <a href="/expeditions" class="hover:text-accent transition-colors">Expeditions</a>
-            <a href="/compare" class="hover:text-accent transition-colors">Compare</a>
-            <a href="/altitude-safety" class="hover:text-accent transition-colors">Safety</a>
-            <a href="/contact" class="hover:text-accent transition-colors">Contact</a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink">Treks</a>
+            <div class="hme-navgroup">
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <div class="hme-navdrop">
+                    <a href="/expeditions" class="hme-navdrop-all">The Full Atlas</a>
+                    <span class="hme-navdrop-sep"></span>
+                    <a href="/expeditions/8000m">8,000 m +<span class="hme-navdrop-n">14 peaks</span></a>
+                    <a href="/expeditions/7000m">7,000 m +<span class="hme-navdrop-n">9 peaks</span></a>
+                    <a href="/expeditions/6000m">6,000 m +<span class="hme-navdrop-n">8 peaks</span></a>
+                    <a href="/expeditions/trekking-peaks">Trekking Peaks<span class="hme-navdrop-n">Soon</span></a>
+                </div>
+            </div>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/stories" class="hme-navlink">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
         </nav>
-        <a href="/contact" class="hidden sm:inline-flex items-center justify-center border border-accent hover:bg-accent hover:text-background text-[10px] font-mono uppercase tracking-widest px-4 py-2 transition-all">Plan a Trek</a>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
     </div>
 </header>
 
@@ -49,15 +70,20 @@
         <span class="kicker">Gear &amp; Packing</span>
         <h1 class="sec-h text-white text-4xl md:text-6xl mt-3">The Himalayan<br><span class="text-accent">trek loadout</span></h1>
         <p class="max-w-2xl font-sans text-sm md:text-base text-white/75 mt-5 leading-relaxed">
-            A category-by-category list for a tea-house trek to around 5,000 m. Tick items as you pack — your progress is saved on this device. <span class="text-accent">Essential</span> items are the ones you should not leave Kathmandu without. Individual trek pages carry route-specific additions.
+            A category-by-category list for a tea-house trek to around 5,000 m. Tick items as you pack — your progress is saved on this device. <span class="text-accent">Essential</span> items are the ones you should not leave Kathmandu without. Pick your route in the bar below to fold in its route-specific kit.
         </p>
+        <div id="gear-context" class="mt-5 flex flex-wrap gap-2"></div>
     </div>
 </section>
 
 <div id="gear-toolbar" class="sticky top-0 z-30 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
-    <div class="max-w-6xl mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-4">
+    <div class="max-w-6xl mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-3 md:gap-4">
+        <select id="gear-trek" class="border border-border font-mono text-[11px] text-foreground px-3 py-2 outline-none focus:border-accent max-w-[14rem]" aria-label="Fold in a route's specific kit"></select>
+        <label class="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground cursor-pointer select-none">
+            <input type="checkbox" id="gear-ess" class="h-3.5 w-3.5 accent-[color:var(--accent)]"> Essentials only
+        </label>
         <span class="lbl"><span id="gear-done" class="text-accent">0</span> / <span id="gear-total">0</span> packed</span>
-        <div class="flex-1 min-w-[120px] h-1.5 bg-border max-w-xs"><div id="gear-bar" class="h-full bg-accent" style="width:0%"></div></div>
+        <div class="flex-1 min-w-[100px] h-1.5 bg-border max-w-xs"><div id="gear-bar" class="h-full bg-accent" style="width:0%"></div></div>
         <button id="gear-print" class="border border-border font-mono text-[10px] uppercase tracking-widest px-3 py-2 text-muted-foreground hover:border-accent hover:text-accent transition-all">Print list</button>
         <button id="gear-reset" class="border border-border font-mono text-[10px] uppercase tracking-widest px-3 py-2 text-muted-foreground hover:border-accent hover:text-accent transition-all">Reset</button>
     </div>
@@ -95,7 +121,7 @@
                 <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
                 <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
                 <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
-                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a></div>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 38 trails →</a></div>
             <div><span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
                 <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
                 <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
@@ -139,61 +165,132 @@ function hmeGearApplyTheme() {
 }
 hmeGearApplyTheme();
 </script>
-<script src="/treks.js?v=2"></script>
+<script src="/treks.js?v=4"></script>
 <script>
 (function () {
   'use strict';
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-  var LIST = (window.TREK_DEFAULTS && window.TREK_DEFAULTS.packingList) || [];
-  var KEY = 'vo_gear_general';
-  var state = {};
+  var GEN = (window.TREK_DEFAULTS && window.TREK_DEFAULTS.packingList) || [];
+  var TREKS = window.TREKS || {};
+  var KEY = 'vo_gear_general';                       // generic list ticks
+  var TKEY = 'vo_gear_trek';                         // selected route slug
+  var RKEY = function (s) { return 'vo_gear_route_' + s; }; // per-route add-on ticks
+  var NEED2TIER = { essential: 'essential', recommended: 'recommended', optional: 'optional' };
+
+  var gridEl = document.getElementById('gear-grid');
+  var sel = document.getElementById('gear-trek');
+  var essEl = document.getElementById('gear-ess');
+  var state = {}, rstate = {}, routeSlug = '';
   try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  try { routeSlug = localStorage.getItem(TKEY) || ''; } catch (e) {}
 
-  var total = 0;
-  LIST.forEach(function (c) { total += (c.items || []).length; });
-  document.getElementById('gear-total').textContent = total;
+  var treklist = Object.keys(TREKS).map(function (k) { return TREKS[k]; })
+    .filter(function (t) { return t && t.name && Array.isArray(t.equipment) && t.equipment.length; })
+    .sort(function (a, b) { return String(a.name).localeCompare(String(b.name)); });
+  sel.innerHTML = '<option value="">General trek loadout</option>' +
+    treklist.map(function (t) { return '<option value="' + esc(t.slug) + '">' + esc(t.name) + '</option>'; }).join('');
+  if (routeSlug && TREKS[routeSlug]) sel.value = routeSlug; else routeSlug = '';
 
-  function itemId(ci, ii) { return 'g' + ci + '_' + ii; }
-  function render() {
-    document.getElementById('gear-grid').innerHTML = LIST.map(function (cat, ci) {
-      return '<div><span class="lbl block mb-3 text-accent">' + esc(cat.category) + '</span>' +
-        (cat.items || []).map(function (it, ii) {
-          var id = itemId(ci, ii), on = state[id] === true;
-          return '<label class="flex items-start gap-3 py-2 border-b border-border/60 cursor-pointer group">' +
-            '<input type="checkbox" data-id="' + id + '" ' + (on ? 'checked' : '') + ' class="mt-1 h-3.5 w-3.5 accent-[color:var(--accent)] shrink-0">' +
-            '<span class="font-mono text-[11px] leading-relaxed ' + (on ? 'line-through text-muted-foreground' : 'text-foreground') + ' group-hover:text-accent transition-colors">' + esc(it.name) +
-            (it.tier ? ' <span class="ml-1 lbl ' + (it.tier === 'essential' ? 'text-accent' : '') + '">' + esc(it.tier) + '</span>' : '') +
-            '</span></label>';
-        }).join('') + '</div>';
-    }).join('');
-    updateProgress();
+  function loadRoute() {
+    rstate = {};
+    if (routeSlug) { try { rstate = JSON.parse(localStorage.getItem(RKEY(routeSlug)) || '{}'); } catch (e) {} }
   }
+  loadRoute();
+
+  function routeCategory() {
+    if (!routeSlug) return null;
+    var t = TREKS[routeSlug];
+    if (!t || !Array.isArray(t.equipment) || !t.equipment.length) return null;
+    return {
+      category: 'Route-specific · ' + t.name,
+      items: t.equipment.map(function (e) {
+        return { name: e.item + (e.note ? ' — ' + e.note : ''), tier: NEED2TIER[e.need] || 'recommended' };
+      })
+    };
+  }
+
+  function gid(ci, ii) { return 'g' + ci + '_' + ii; }
+  function rid(ii) { return 'r' + ii; }
+  function row(id, it, on) {
+    var ess = it.tier === 'essential';
+    return '<label class="flex items-start gap-3 py-2 border-b border-border/60 cursor-pointer group' + (ess ? ' is-ess' : '') + '">' +
+      '<input type="checkbox" data-id="' + id + '" ' + (on ? 'checked' : '') + ' class="mt-1 h-3.5 w-3.5 accent-[color:var(--accent)] shrink-0">' +
+      '<span class="font-mono text-[11px] leading-relaxed ' + (on ? 'line-through text-muted-foreground' : 'text-foreground') + ' group-hover:text-accent transition-colors">' + esc(it.name) +
+      (it.tier ? ' <span class="ml-1 lbl ' + (ess ? 'text-accent' : '') + '">' + esc(it.tier) + '</span>' : '') +
+      '</span></label>';
+  }
+
+  function render() {
+    var html = GEN.map(function (cat, ci) {
+      return '<div><span class="lbl block mb-3 text-accent">' + esc(cat.category) + '</span>' +
+        (cat.items || []).map(function (it, ii) { return row(gid(ci, ii), it, state[gid(ci, ii)] === true); }).join('') + '</div>';
+    }).join('');
+    var rc = routeCategory();
+    if (rc) {
+      html += '<div class="border border-accent/30 bg-accent/5 p-4"><span class="lbl block mb-3 text-accent">' + esc(rc.category) + '</span>' +
+        rc.items.map(function (it, ii) { return row(rid(ii), it, rstate[rid(ii)] === true); }).join('') + '</div>';
+    }
+    gridEl.innerHTML = html;
+    updateProgress();
+    renderContext();
+  }
+
   function updateProgress() {
-    var done = 0;
-    LIST.forEach(function (c, ci) { (c.items || []).forEach(function (_, ii) { if (state[itemId(ci, ii)]) done++; }); });
+    var done = 0, total = 0;
+    GEN.forEach(function (c, ci) { (c.items || []).forEach(function (_, ii) { total++; if (state[gid(ci, ii)]) done++; }); });
+    var rc = routeCategory();
+    if (rc) rc.items.forEach(function (_, ii) { total++; if (rstate[rid(ii)]) done++; });
     document.getElementById('gear-done').textContent = done;
+    document.getElementById('gear-total').textContent = total;
     document.getElementById('gear-bar').style.width = (total ? (done / total * 100) : 0) + '%';
   }
 
-  document.getElementById('gear-grid').addEventListener('change', function (e) {
+  function renderContext() {
+    var box = document.getElementById('gear-context');
+    if (!box) return;
+    var t = routeSlug && TREKS[routeSlug];
+    if (!t) { box.innerHTML = ''; return; }
+    var chips = [];
+    if (t.stats && t.stats.maxAltitude) chips.push(['Max altitude', t.stats.maxAltitude]);
+    if (t.stats && t.stats.bestSeason) chips.push(['Best season', t.stats.bestSeason]);
+    if (t.stats && t.stats.difficulty) chips.push(['Grade', t.stats.difficulty]);
+    box.innerHTML = chips.map(function (c) {
+      return '<span class="inline-flex items-center gap-2 border border-border px-2.5 py-1 font-mono text-[10px] text-muted-foreground">' +
+        '<span class="text-accent uppercase tracking-widest text-[8px]">' + esc(c[0]) + '</span>' + esc(c[1]) + '</span>';
+    }).join('') + '<a href="/treks/' + esc(routeSlug) + '" class="inline-flex items-center px-2.5 py-1 font-mono text-[10px] text-accent hover:underline">Route notes &rarr;</a>';
+  }
+
+  gridEl.addEventListener('change', function (e) {
     var cb = e.target;
     if (!cb.dataset || !cb.dataset.id) return;
-    state[cb.dataset.id] = cb.checked;
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (x) {}
+    var id = cb.dataset.id;
+    if (id.charAt(0) === 'r') { rstate[id] = cb.checked; try { localStorage.setItem(RKEY(routeSlug), JSON.stringify(rstate)); } catch (x) {} }
+    else { state[id] = cb.checked; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (x) {} }
     var span = cb.parentElement.querySelector('span');
     if (span) { span.classList.toggle('line-through', cb.checked); span.classList.toggle('text-muted-foreground', cb.checked); }
     updateProgress();
   });
+
+  sel.addEventListener('change', function () {
+    routeSlug = sel.value;
+    try { routeSlug ? localStorage.setItem(TKEY, routeSlug) : localStorage.removeItem(TKEY); } catch (x) {}
+    loadRoute(); render();
+  });
+  essEl.addEventListener('change', function () { gridEl.classList.toggle('ess-only', essEl.checked); });
+
   document.getElementById('gear-reset').addEventListener('click', function () {
-    state = {}; try { localStorage.removeItem(KEY); } catch (x) {} render();
+    state = {}; try { localStorage.removeItem(KEY); } catch (x) {}
+    if (routeSlug) { rstate = {}; try { localStorage.removeItem(RKEY(routeSlug)); } catch (x) {} }
+    render();
   });
   document.getElementById('gear-print').addEventListener('click', function () { window.print(); });
 
-  if (!LIST.length) {
-    document.getElementById('gear-grid').innerHTML = '<p class="font-sans text-sm text-muted-foreground">Packing list unavailable.</p>';
-  } else render();
+  if (!GEN.length) gridEl.innerHTML = '<p class="font-sans text-sm text-muted-foreground">Packing list unavailable.</p>';
+  else render();
 })();
 </script>
-<script src="/menu.js?v=4"></script>
+<script src="/menu.js?v=7"></script>
+<script src="/compass-nav.js?v=2"></script>
+<script src="/theme.js?v=2"></script>
 </body>
 </html>

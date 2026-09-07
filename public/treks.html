@@ -7,6 +7,9 @@
     <meta name="description" content="Discover every trekking trail we guide in Nepal — from Everest Base Camp and the Annapurna Circuit to Dolpo, Kanchenjunga and the mid-hills. Filter by region, difficulty, duration and season; each trail has a full route guide.">
     <link rel="canonical" href="https://himalayanmagic.com/treks">
 
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="icon" type="image/png" href="/images/logo-icon.png">
+    <link rel="apple-touch-icon" href="/images/logo-icon.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -65,30 +68,42 @@
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
-<header class="relative z-40 border-b border-border bg-[#16181b]">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3 group">
-            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto object-contain">
-            <div>
-                <span class="block font-heading text-sm font-light tracking-widest text-white uppercase">Himalayan Magic Adventure</span>
-                <span class="block text-[9px] text-accent tracking-[0.3em] uppercase">Trekking Trails of Nepal · Est. 1993</span>
-            </div>
+<!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Trekking Trails of Nepal · Est. 1993</span>
+            </span>
         </a>
-        <nav class="hidden lg:flex items-center gap-7 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            <a href="/" class="hover:text-accent transition-colors">Home</a>
-            <a href="/about" class="hover:text-accent transition-colors">About</a>
-            <a href="/treks" class="text-accent">Trekking Trails</a>
-            <a href="/expeditions" class="hover:text-accent transition-colors">Expeditions</a>
-            <a href="/altitude-safety" class="hover:text-accent transition-colors">Safety</a>
-            <a href="/dispatches" class="hover:text-accent transition-colors">Stories</a>
-            <a href="/contact" class="hover:text-accent transition-colors">Contact</a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink is-active">Treks</a>
+            <div class="hme-navgroup">
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <div class="hme-navdrop">
+                    <a href="/expeditions" class="hme-navdrop-all">The Full Atlas</a>
+                    <span class="hme-navdrop-sep"></span>
+                    <a href="/expeditions/8000m">8,000 m +<span class="hme-navdrop-n">14 peaks</span></a>
+                    <a href="/expeditions/7000m">7,000 m +<span class="hme-navdrop-n">9 peaks</span></a>
+                    <a href="/expeditions/6000m">6,000 m +<span class="hme-navdrop-n">8 peaks</span></a>
+                    <a href="/expeditions/trekking-peaks">Trekking Peaks<span class="hme-navdrop-n">Soon</span></a>
+                </div>
+            </div>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/stories" class="hme-navlink">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
         </nav>
-        <a href="/contact" class="hidden sm:inline-flex items-center justify-center border border-accent hover:bg-accent hover:text-background text-[10px] font-mono uppercase tracking-widest px-4 py-2 transition-all">Plan a Trek</a>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
     </div>
 </header>
 
 <!-- HERO -->
-<section class="relative border-b border-border overflow-hidden">
+<section data-media class="relative border-b border-border overflow-hidden">
     <div class="absolute inset-0 z-0"><img src="/images/annapurna_real.jpg" alt="Trekkers beneath the Annapurna massif, Nepal" class="h-full w-full object-cover opacity-40"></div>
     <div class="absolute inset-0 z-0 bg-gradient-to-t from-[#1b1e22] via-[#1b1e22]/70 to-[#1b1e22]/45"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
@@ -98,7 +113,7 @@
             Every route we guide, from the eight-thousander base camps to the trans-Himalayan valleys and the quiet mid-hills. Filter by region, difficulty, duration or season — every trail opens to a full route guide.
         </p>
         <div class="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-            <span><span class="text-accent text-sm font-heading mr-1" id="hero-count">28</span> trails</span>
+            <span><span class="text-accent text-sm font-heading mr-1" id="hero-count">38</span> trails</span>
             <span><span class="text-accent text-sm font-heading mr-1">6</span> provinces</span>
             <span><span class="text-accent text-sm font-heading mr-1">8</span> eight-thousanders</span>
         </div>
@@ -189,7 +204,7 @@
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -203,19 +218,19 @@
                 <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
                 <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
                 <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
-                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+                <a href="/stories" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
             </div>
             <div>
                 <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
                 <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
                 <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
                 <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
-                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 38 trails →</a>
             </div>
             <div>
                 <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
                 <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
-                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/about#sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
                 <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
                 <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
             </div>
@@ -240,12 +255,26 @@
     </div>
 </footer>
 
-<script src="/treks.js?v=2"></script>
+<script src="/treks.js?v=5"></script>
 <script>
 (function () {
   'use strict';
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); };
   var firstInt = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
+  /* branded placeholder for treks whose photograph has not been sourced yet — never borrows another trek's image */
+  function phImg(label) {
+    var t = String(label || '').toUpperCase().replace(/[<>&]/g, '').slice(0, 30);
+    return 'data:image/svg+xml,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">' +
+      '<defs><radialGradient id="g" cx="28%" cy="22%" r="90%"><stop offset="0" stop-color="#f06225" stop-opacity="0.16"/><stop offset="1" stop-color="#1b1e22" stop-opacity="0"/></radialGradient></defs>' +
+      '<rect width="800" height="600" fill="#1b1e22"/><rect width="800" height="600" fill="url(#g)"/>' +
+      '<path d="M0 430 L170 250 L320 380 L470 210 L620 360 L800 260 L800 600 L0 600Z" fill="#ffffff" fill-opacity="0.035"/>' +
+      '<path d="M0 470 L220 330 L380 430 L540 300 L700 410 L800 350" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="2"/>' +
+      '<text x="44" y="536" font-family="monospace" font-size="21" fill="#9ca3af" letter-spacing="2">' + t + '</text>' +
+      '<text x="44" y="565" font-family="monospace" font-size="11" fill="#5f636b" letter-spacing="3">PHOTOGRAPHY PENDING</text>' +
+      '</svg>'
+    );
+  }
   var T = window.TREKS || {}, P = window.TREK_PROVINCES || {};
   var ORDER = ['koshi', 'bagmati', 'gandaki', 'karnali', 'lumbini', 'madhesh', 'sudurpashchim'];
   if (localStorage.getItem('vo_theme') === 'light') document.body.classList.add('light-mode');
@@ -285,14 +314,29 @@
       difficulty: s.difficulty || '', durShort: durShort, altShort: altShort,
       priceFrom: priceFrom, seasonShort: seasonWords.join(' / '), bestSeason: s.bestSeason || '',
       durationDays: dm, maxAltM: alt, season: season,
-      featured: !!t.featured, popular: !!t.popular,
+      featured: !!t.featured, popular: !!t.popular, restricted: !!t.restricted,
       remoteness: su.remoteness || 0, physical: su.physical || 0, technical: su.technical || 0, altitudeScore: su.altitude || 0,
       peakNames: ((t.acclimatization || {}), (t.highlights || []).join(' ') + ' ' + (t.summary || ''))
     };
   });
 
   /* ---------- filter state ---------- */
-  var st = { q: '', region: '', diff: '', dur: '', season: '', cat: 'all', sort: 'rec' };
+  var st = { q: '', region: '', regionGroup: '', diff: '', dur: '', season: '', cat: 'all', sort: 'rec' };
+
+  /* Mountain-region groups — mirrors exploreGeo on the homepage Explore map.
+     Keyed to the free-text trek.region strings each group absorbs, so
+     /treks#<group> lands on exactly the trails the map panel listed. */
+  var GEO_REGION_GROUPS = {
+    'west':         { label: 'Far West & Dolpo', regions: ['Dolpo', 'Rara', 'Humla'] },
+    'dhaulagiri':   { label: 'Dhaulagiri', regions: ['Dhaulagiri'] },
+    'annapurna':    { label: 'Annapurna & Mustang', regions: ['Annapurna', 'Annapurna (Nar–Phu)', 'Mustang'] },
+    'manaslu':      { label: 'Manaslu & Ganesh', regions: ['Manaslu', 'Manaslu (Tsum)', 'Ganesh Himal / Ruby Valley'] },
+    'langtang':     { label: 'Langtang & Helambu', regions: ['Langtang', 'Langtang / Gosaikunda', 'Langtang (Tamang Heritage)', 'Langtang (Jugal Himal)', 'Helambu'] },
+    'rolwaling':    { label: 'Rolwaling', regions: ['Rolwaling'] },
+    'everest':      { label: 'Everest & Makalu', regions: ['Khumbu (Everest)', 'Makalu–Barun', 'Makalu (Barun)'] },
+    'kanchenjunga': { label: 'Kanchenjunga', regions: ['Kanchenjunga', 'Kanchenjunga–Makalu'] },
+    'terai':        { label: 'Terai & Lowlands', regions: ['Lumbini', 'Bardiya', 'Rukum–Rolpa', 'Janakpur (Mithila)'] }
+  };
 
   var CATS = [
     { id: 'all', label: 'All trails', img: '/images/annapurna_real.jpg', test: function () { return true; } },
@@ -300,6 +344,8 @@
     { id: 'everest', label: 'Everest region', img: '/images/everest_real.jpg', test: function (t) { return /khumbu|everest/i.test(t.region); } },
     { id: 'annapurna', label: 'Annapurna & Mustang', img: '/images/annapurna.png', test: function (t) { return /annapurna|mustang/i.test(t.region); } },
     { id: 'offbeat', label: 'Off the beaten path', img: '/images/manaslu_real.jpg', test: function (t) { return t.remoteness >= 8; } },
+    { id: 'restricted', label: 'Restricted area', img: '/images/manaslu.png', test: function (t) { return t.restricted; } },
+    { id: 'passes', label: 'Pass crossings', img: '/images/hero-mountain.jpg', test: function (t) { return /\bla\b|pass|col/i.test(t.name); } },
     { id: 'short', label: 'Short treks', img: '/images/langtang_real.jpg', test: function (t) { return t.durationDays && t.durationDays <= 9; } },
     { id: 'high', label: 'High altitude', img: '/images/hero-mountain.jpg', test: function (t) { return t.maxAltM && t.maxAltM >= 5000; } },
     { id: 'beginner', label: 'Beginner friendly', img: '/images/itinerary.png', test: function (t) { return t.physical <= 5 && t.technical <= 2 && t.altitudeScore <= 6; } }
@@ -315,6 +361,8 @@
       return '<option value="' + p + '">' + esc(n) + ' (' + c + ')</option>';
     }).join('');
     document.getElementById('f-region').innerHTML = opts;
+    var hc = document.getElementById('hero-count'); if (hc) hc.textContent = LIST.length;
+    var pc = document.querySelector('#tk-hero-provinces'); if (pc) pc.textContent = provs.length;
 
     document.getElementById('tk-cats').innerHTML = CATS.map(function (c) {
       var n = c.id === 'all' ? LIST.length : LIST.filter(c.test).length;
@@ -345,11 +393,11 @@
   function card(t, cls, big) {
     var meta = [t.durShort, t.difficulty, '<span class="text-accent">' + esc(t.altShort) + '</span>'];
     if (big && t.seasonShort) meta.push('Best: ' + esc(t.seasonShort));
-    var badge = (t.featured ? 'Signature route' : (t.popular ? 'Popular' : ''));
+    var badge = (t.featured ? 'Signature route' : (t.restricted ? 'Restricted area' : (t.popular ? 'Popular' : '')));
     return '<a href="/treks/' + esc(t.slug) + '" class="tk group relative block overflow-hidden border border-border bg-card ' + cls + '" ' +
       'aria-label="' + esc(t.name + ' — ' + t.region + '. ' + t.durShort + ', ' + t.difficulty + ', maximum altitude ' + t.altShort) + '">' +
       '<div class="tk-shimmer absolute inset-0"></div>' +
-      '<img class="tk-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" decoding="async" src="' + esc(t.img) + '" alt="' + esc(t.name + ', ' + t.region + ', Nepal') + '">' +
+      '<img class="tk-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" decoding="async" data-ph="' + esc(t.name) + '" src="' + esc(t.img) + '" alt="' + esc(t.name + ', ' + t.region + ', Nepal') + '">' +
       '<div class="tk-scrim absolute inset-0"></div>' +
       (badge ? '<span class="tk-badge absolute top-3 left-3 z-10 bg-black/35 border border-white/15 px-2 py-1 font-mono text-[8px] uppercase tracking-[0.2em] text-white">' + esc(badge) + '</span>' : '') +
       '<div class="relative z-10 flex h-full flex-col justify-end p-4 md:p-5">' +
@@ -377,6 +425,7 @@
       if (st.dur === 'm' && !(t.durationDays && t.durationDays >= 10 && t.durationDays <= 16)) return false;
       if (st.dur === 'l' && !(t.durationDays && t.durationDays >= 17)) return false;
       if (st.season && !t.season[st.season]) return false;
+      if (st.regionGroup && GEO_REGION_GROUPS[st.regionGroup] && GEO_REGION_GROUPS[st.regionGroup].regions.indexOf(t.region) < 0) return false;
       if (st.cat && st.cat !== 'all' && catById[st.cat] && !catById[st.cat].test(t)) return false;
       if (q) {
         var hay = (t.name + ' ' + t.region + ' ' + t.provinceName + ' ' + t.tagline + ' ' + t.peakNames).toLowerCase();
@@ -409,7 +458,7 @@
       empty.classList.remove('hidden');
       document.getElementById('tk-suggest').innerHTML = LIST.filter(function (t) { return t.popular; }).slice(0, 4).map(function (t) {
         return '<a href="/treks/' + esc(t.slug) + '" class="tk group relative block overflow-hidden border border-border bg-card h-40" aria-label="' + esc(t.name) + '">' +
-          '<img class="tk-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" src="' + esc(t.img) + '" alt="' + esc(t.name) + '">' +
+          '<img class="tk-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" data-ph="' + esc(t.name) + '" src="' + esc(t.img) + '" alt="' + esc(t.name) + '">' +
           '<div class="tk-scrim absolute inset-0"></div>' +
           '<div class="relative z-10 flex h-full items-end p-3"><span class="font-heading text-base font-light uppercase text-white leading-tight">' + esc(t.name) + '</span></div></a>';
       }).join('');
@@ -434,7 +483,10 @@
     document.querySelectorAll('#tk-grid .tk-img, #tk-suggest .tk-img').forEach(function (img) {
       if (img.complete && img.naturalWidth) { img.classList.add('loaded'); return; }
       img.addEventListener('load', function () { img.classList.add('loaded'); }, { once: true });
-      img.addEventListener('error', function () { img.classList.add('loaded'); img.style.opacity = 1; }, { once: true });
+      img.addEventListener('error', function () {
+        if (img.dataset.ph && !img.dataset.phDone) { img.dataset.phDone = '1'; img.src = phImg(img.dataset.ph); }
+        img.classList.add('loaded'); img.style.opacity = 1;
+      }, { once: true });
     });
   }
 
@@ -446,6 +498,7 @@
     if (st.diff) chips.push(['diff', st.diff]);
     if (st.dur) chips.push(['dur', st.dur === 's' ? 'Under 10 days' : st.dur === 'm' ? '10–16 days' : '17+ days']);
     if (st.season) chips.push(['season', st.season.charAt(0).toUpperCase() + st.season.slice(1)]);
+    if (st.regionGroup && GEO_REGION_GROUPS[st.regionGroup]) chips.push(['regionGroup', GEO_REGION_GROUPS[st.regionGroup].label]);
     if (st.q.trim()) chips.push(['q', '“' + st.q.trim() + '”']);
 
     if (!chips.length) { box.classList.add('hidden'); box.innerHTML = ''; return; }
@@ -458,8 +511,9 @@
   }
 
   function clearKey(k) {
-    if (k === 'all') { st = { q: '', region: '', diff: '', dur: '', season: '', cat: 'all', sort: st.sort }; syncControls(); }
+    if (k === 'all') { st = { q: '', region: '', regionGroup: '', diff: '', dur: '', season: '', cat: 'all', sort: st.sort }; syncControls(); }
     else if (k === 'cat') st.cat = 'all';
+    else if (k === 'regionGroup') st.regionGroup = '';
     else if (k === 'region') { st.region = ''; document.getElementById('f-region').value = ''; }
     else if (k === 'diff') { st.diff = ''; document.getElementById('f-diff').value = ''; }
     else if (k === 'dur') { st.dur = ''; document.getElementById('f-dur').value = ''; }
@@ -510,19 +564,21 @@
   });
   document.getElementById('tk-clear2').addEventListener('click', function () { clearKey('all'); });
 
-  /* ---------- deep link: /treks#<province> ---------- */
+  /* ---------- deep link: /treks#<province>  or  #<mountain-region> (from the homepage Explore map) ---------- */
   (function () {
-    var h = (location.hash || '').replace('#', '');
-    if (h && P[h] && LIST.some(function (t) { return t.provinceKey === h; })) {
-      st.region = h;
-    }
+    var h = decodeURIComponent((location.hash || '').replace('#', '')).trim().toLowerCase();
+    if (!h) return;
+    if (P[h] && LIST.some(function (t) { return t.provinceKey === h; })) { st.region = h; return; }
+    if (GEO_REGION_GROUPS[h]) { st.regionGroup = h; }
   })();
 
   syncControls();
   apply();
 })();
 </script>
-<script src="/announce.js?v=1"></script>
-<script src="/menu.js?v=4"></script>
+<script src="/announce.js?v=2"></script>
+<script src="/menu.js?v=7"></script>
+<script src="/compass-nav.js?v=2"></script>
+<script src="/theme.js?v=2"></script>
 </body>
 </html>

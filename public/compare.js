@@ -9,6 +9,19 @@
   var MAX = 3;
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var firstInt = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
+  /* branded placeholder for a trek whose photo has not been sourced yet — never another trek's image */
+  function phImg(label) {
+    var tx = String(label || '').toUpperCase().replace(/[<>&]/g, '').slice(0, 28);
+    return 'data:image/svg+xml,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450">' +
+      '<defs><radialGradient id="g" cx="28%" cy="22%" r="90%"><stop offset="0" stop-color="#f06225" stop-opacity="0.16"/><stop offset="1" stop-color="#1b1e22" stop-opacity="0"/></radialGradient></defs>' +
+      '<rect width="800" height="450" fill="#1b1e22"/><rect width="800" height="450" fill="url(#g)"/>' +
+      '<path d="M0 330 L170 190 L320 290 L470 160 L620 270 L800 200 L800 450 L0 450Z" fill="#ffffff" fill-opacity="0.035"/>' +
+      '<text x="40" y="400" font-family="monospace" font-size="19" fill="#9ca3af" letter-spacing="2">' + tx + '</text>' +
+      '<text x="40" y="426" font-family="monospace" font-size="10" fill="#5f636b" letter-spacing="3">PHOTOGRAPHY PENDING</text>' +
+      '</svg>'
+    );
+  }
 
   var MODEL = Object.keys(T).map(function (slug) {
     var t = T[slug], s = t.stats || {}, su = t.suitability || {};
@@ -124,7 +137,7 @@
         '<th class="sticky left-0 z-10 bg-background text-left p-3 lbl align-bottom w-40">Trail</th>' +
         ms.map(function (m) {
           return '<th class="p-3 text-left align-bottom ' + colW + ' border-l border-border">' +
-            '<div class="aspect-[16/9] w-full overflow-hidden border border-border mb-3"><img src="' + esc(m.img) + '" alt="' + esc(m.name) + '" loading="lazy" class="h-full w-full object-cover"></div>' +
+            '<div class="aspect-[16/9] w-full overflow-hidden border border-border mb-3"><img src="' + esc(m.img) + '" alt="' + esc(m.name) + '" loading="lazy" class="h-full w-full object-cover" onerror="this.onerror=null;this.src=\'' + phImg(m.name).replace(/'/g, '%27') + '\'"></div>' +
             '<a href="/treks/' + esc(m.slug) + '" class="font-heading text-lg md:text-xl uppercase text-white hover:text-accent transition-colors leading-tight block">' + esc(m.name) + '</a>' +
             '<a href="/treks/' + esc(m.slug) + '" class="mt-2 inline-flex items-center gap-1.5 border border-border px-2.5 py-1 font-mono text-[9px] uppercase tracking-widest text-muted-foreground hover:border-accent hover:text-accent transition-all">View trek →</a>' +
           '</th>';

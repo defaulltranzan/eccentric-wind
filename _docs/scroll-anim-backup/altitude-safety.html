@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Altitude Medicine & Rescue Logistics — Himalayan Magic Adventure</title>
+    <link rel="canonical" href="https://himalayanmagic.com/altitude-safety">
+    <!-- Tailwind CSS -->
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="stylesheet" href="/tailwind.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --background: #1b1e22;
+            --foreground: #f3f4f6;
+            --card: #22252a;
+            --border: #2e3239;
+            --accent: #f06225;
+            --accent-hover: #d04e1b;
+            --muted: #272b32;
+            --muted-foreground: #9ca3af;
+        }
+        .light-mode {
+            --background: #f9fafb;
+            --foreground: #111827;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --accent: #e04f1a;
+            --accent-hover: #c23e11;
+            --muted: #f3f4f6;
+            --muted-foreground: #4b5563;
+        }
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1.6;
+            transition: none; /* theme switch is instant — see tw-input.css note */
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- TOP BAR -->
+    <!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+    <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+            <a href="/" class="group flex shrink-0 items-center gap-3">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <span class="hidden flex-col leading-none sm:flex">
+                    <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                    <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Altitude Safety Protocols</span>
+                </span>
+            </a>
+            <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+                <a href="/" class="hme-navlink">Home</a>
+                <a href="/treks" class="hme-navlink">Treks</a>
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <a href="/altitude-safety" class="hme-navlink is-active">Safety</a>
+                <a href="/dispatches" class="hme-navlink">Stories</a>
+                <a href="/about" class="hme-navlink">About</a>
+            </nav>
+            <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+                <span class="relative z-10">Find your route</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- FULLSCREEN OVERLAY MENU TRIGGER -->
+    <button onclick="toggleMenu()" id="menu-trigger" class="fixed right-6 top-28 z-50 flex h-14 w-14 items-center justify-center rounded-full border border-accent/40 bg-background/80 backdrop-blur-md transition-all hover:border-accent hover:bg-accent/10 shadow-2xl">
+        <div class="relative flex h-8 w-8 items-center justify-center">
+            <span id="menu-dot" class="h-1.5 w-1.5 rounded-full bg-accent transition-all duration-300"></span>
+        </div>
+    </button>
+
+    <!-- FULLSCREEN OVERLAY MENU -->
+    <div id="fullscreen-menu" class="fixed inset-0 z-40 flex items-center justify-center bg-background/95 backdrop-blur-xl transition-all duration-500 transform translate-x-full">
+        <div class="pointer-events-none absolute left-1/2 top-1/2 h-[72vh] w-px -translate-x-1/2 -translate-y-1/2 bg-gradient-to-b from-accent/60 via-accent/20 to-transparent"></div>
+        <div class="relative flex flex-col items-start gap-6 px-6">
+            <span class="mb-2 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Himalayan Magic Adventure Route</span>
+            <a href="/" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">01</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Home</span></a>
+            <a href="/expeditions" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">02</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Expeditions</span></a>
+            <a href="/altitude-safety" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-accent">03</span><span class="font-heading text-4xl uppercase tracking-tightest text-accent md:text-6xl">Altitude Safety</span></a>
+            <a href="/about-sherpa" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">04</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Sherpa Heritage</span></a>
+            <a href="/dispatches" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">05</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Dispatches</span></a>
+            <a href="/#trek-finder" class="group flex items-baseline gap-6"><span class="w-10 font-mono text-[10px] text-muted-foreground group-hover:text-accent">06</span><span class="font-heading text-4xl uppercase tracking-tightest group-hover:text-accent md:text-6xl">Find Your Route</span></a>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="relative px-6 py-20 md:px-20 md:py-28 border-b border-border bg-[#191b1f]">
+        <div class="max-w-7xl mx-auto space-y-6">
+            <span class="font-mono text-[10px] uppercase tracking-[0.4em] text-accent">[ MEDICAL PROTOCOLS & RESCUE STANDARDS ]</span>
+            <h1 class="font-heading text-5xl md:text-7xl font-light uppercase tracking-tightest text-foreground">
+                HIGH ALTITUDE MEDICINE & <span class="font-semibold text-accent">RESCUE LOGISTICS</span>
+            </h1>
+            <p class="max-w-3xl font-mono text-xs md:text-sm text-muted-foreground leading-relaxed">
+                Above 3,500 meters, barometric air pressure drops and atmospheric oxygen levels fall below 60% of sea level. Our medical protocols are formulated under Wilderness Medical Society (WMS) and UIAA Mountain Medicine guidelines.
+            </p>
+        </div>
+    </section>
+
+    <!-- 4 PILLARS OF SAFETY -->
+    <section class="px-6 py-20 md:px-20 border-b border-border bg-background">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div>
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03.1 — CORE DEFENSES</span>
+                <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white mt-2">
+                    THE FOUR PILLARS OF <span class="font-semibold text-accent">EXPEDITION SURVIVAL</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
+                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Daily Oximeter SpO2 Audits</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        Every morning and evening, your lead Sherpa records your blood oxygen saturation (SpO2) and resting pulse on our medical telemetry log to preempt AMS.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
+                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
+                        <i class="fa-solid fa-person-hiking"></i>
+                    </div>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Paced Acclimatization</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        We strictly enforce the "Climb High, Sleep Low" protocol. Maximum daily sleeping elevation gains are limited to 400m above 3,000 meters with built-in rest days.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
+                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
+                        <i class="fa-solid fa-satellite-dish"></i>
+                    </div>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Garmin Satellite SOS</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        Dual Iridium satellite transceivers accompany every crew. Real-time GPS coordinate tracking connects directly to our Kathmandu emergency dispatch center.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
+                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
+                        <i class="fa-solid fa-helicopter"></i>
+                    </div>
+                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">24/7 Helicopter Evacuation</h3>
+                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
+                        High-altitude Airbus H125 (Eurocopter AS350 B3e) helicopter standby teams equipped with oxygen baskets capable of landing at 6,000m for immediate airlift.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE LAKE LOUISE AMS ASSESSMENT SIMULATOR -->
+    <section class="px-6 py-20 md:px-20 border-b border-border bg-[#191b1f]">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="text-center space-y-2">
+                <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03.2 — INTERACTIVE CLINICAL TOOL</span>
+                <h2 class="font-heading text-4xl uppercase tracking-tightest text-white">
+                    LAKE LOUISE <span class="font-semibold text-accent">AMS SYMPTOM AUDITOR</span>
+                </h2>
+                <p class="font-mono text-xs text-muted-foreground max-w-xl mx-auto">
+                    The international clinical standard for diagnosing Acute Mountain Sickness (AMS) during high-altitude ascent.
+                </p>
+            </div>
+
+            <div class="p-8 border border-border bg-card space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 font-mono text-xs">
+                    <div class="space-y-2">
+                        <label class="block text-white uppercase text-[10px] tracking-wider">1. Headache Intensity</label>
+                        <select id="ams-headache" onchange="calculateAMS()" class="w-full bg-[#1b1e22] border border-border p-2.5 text-foreground outline-none focus:border-accent">
+                            <option value="0">0 — None</option>
+                            <option value="1">1 — Mild headache</option>
+                            <option value="2">2 — Moderate headache</option>
+                            <option value="3">3 — Severe / Incapacitating</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-white uppercase text-[10px] tracking-wider">2. Gastrointestinal Symptoms</label>
+                        <select id="ams-gi" onchange="calculateAMS()" class="w-full bg-[#1b1e22] border border-border p-2.5 text-foreground outline-none focus:border-accent">
+                            <option value="0">0 — Good appetite</option>
+                            <option value="1">1 — Poor appetite / mild nausea</option>
+                            <option value="2">2 — Moderate nausea / vomiting</option>
+                            <option value="3">3 — Severe nausea & persistent vomiting</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-white uppercase text-[10px] tracking-wider">3. Fatigue / Weakness</label>
+                        <select id="ams-fatigue" onchange="calculateAMS()" class="w-full bg-[#1b1e22] border border-border p-2.5 text-foreground outline-none focus:border-accent">
+                            <option value="0">0 — Not tired or weak</option>
+                            <option value="1">1 — Mild fatigue</option>
+                            <option value="2">2 — Moderate fatigue / heavy limbs</option>
+                            <option value="3">3 — Severe weakness / bedridden</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-white uppercase text-[10px] tracking-wider">4. Dizziness / Lightheadedness</label>
+                        <select id="ams-dizziness" onchange="calculateAMS()" class="w-full bg-[#1b1e22] border border-border p-2.5 text-foreground outline-none focus:border-accent">
+                            <option value="0">0 — None</option>
+                            <option value="1">1 — Mild dizziness</option>
+                            <option value="2">2 — Moderate dizziness</option>
+                            <option value="3">3 — Severe dizziness / loss of balance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Result Box -->
+                <div id="ams-result-box" class="p-6 border border-border bg-[#1b1e22] flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground block">Clinical Score Analysis</span>
+                        <h4 id="ams-status-text" class="font-heading text-2xl uppercase tracking-tight text-green-400">Score 0 / 12 — Optimal Acclimatization</h4>
+                        <p id="ams-action-text" class="font-mono text-[11px] text-muted-foreground mt-1">Clear for continuous ascent pacing. Maintain 4-5 liters of daily hydration.</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span id="ams-score-num" class="font-heading text-5xl font-light text-accent">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+        <div class="mt-10 text-center">
+            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
+        </div>
+    </div>
+</footer>
+
+    <!-- BOTTOM-RIGHT FLOATING LANGUAGE DROPDOWN & THEME CONTROLS -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        <button onclick="toggleTheme()" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all transform hover:scale-105">
+            <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+        </button>
+        <div class="relative" id="lang-dropdown-wrapper">
+            <button onclick="toggleLangDropdown()" id="lang-dropdown-btn" class="h-11 px-4 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground font-mono text-xs flex items-center gap-2.5 shadow-2xl hover:border-accent transition-all group">
+                <i class="fa-solid fa-globe text-accent text-sm"></i>
+                <span id="current-lang-label" class="font-medium tracking-wider">English</span>
+                <i class="fa-solid fa-chevron-up text-[10px] text-muted-foreground group-hover:text-foreground transition-transform duration-200" id="lang-chevron"></i>
+            </button>
+            <div id="lang-dropdown-menu" class="absolute right-0 bottom-14 w-44 rounded-xl border border-border bg-card/95 backdrop-blur-xl p-1.5 shadow-2xl space-y-1 hidden">
+                <button onclick="selectLanguage('en')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors">
+                    <span class="flex items-center gap-2"><span>🇺🇸</span> English</span>
+                </button>
+                <button onclick="selectLanguage('np')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors">
+                    <span class="flex items-center gap-2"><span>🇳🇵</span> नेपाली</span>
+                </button>
+                <button onclick="selectLanguage('zh')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors">
+                    <span class="flex items-center gap-2"><span>🇨🇳</span> 中文</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        function calculateAMS() {
+            const h = parseInt(document.getElementById('ams-headache').value);
+            const g = parseInt(document.getElementById('ams-gi').value);
+            const f = parseInt(document.getElementById('ams-fatigue').value);
+            const d = parseInt(document.getElementById('ams-dizziness').value);
+            const total = h + g + f + d;
+
+            document.getElementById('ams-score-num').innerText = total;
+            const statusEl = document.getElementById('ams-status-text');
+            const actionEl = document.getElementById('ams-action-text');
+
+            if (total === 0) {
+                statusEl.className = "font-heading text-2xl uppercase tracking-tight text-green-400";
+                statusEl.innerText = "Score 0 / 12 — Optimal Acclimatization";
+                actionEl.innerText = "Clear for continuous ascent pacing. Maintain 4-5 liters of daily hydration.";
+            } else if (total <= 3 && h > 0) {
+                statusEl.className = "font-heading text-2xl uppercase tracking-tight text-yellow-400";
+                statusEl.innerText = `Score ${total} / 12 — Mild Acute Mountain Sickness`;
+                actionEl.innerText = "HALT ASCENT. Rest at current altitude, hydrate, take mild analgesics (ibuprofen/paracetamol). Do not ascend until score returns to 0.";
+            } else if (total <= 5) {
+                statusEl.className = "font-heading text-2xl uppercase tracking-tight text-orange-400";
+                statusEl.innerText = `Score ${total} / 12 — Moderate Acute Mountain Sickness`;
+                actionEl.innerText = "PREPARE TO DESCEND. Administer Diamox (250mg) and consider supplemental oxygen. Immediate descent of 500m-1000m required if no improvement.";
+            } else {
+                statusEl.className = "font-heading text-2xl uppercase tracking-tight text-red-500 animate-pulse";
+                statusEl.innerText = `Score ${total} / 12 — Severe AMS / HAPE / HACE Emergency`;
+                actionEl.innerText = "CRITICAL EMERGENCY: Immediate descent mandatory. Initiate Gamow Bag hyperbaric therapy, emergency bottled oxygen, and activate 24/7 Heli SOS Evacuation.";
+            }
+        }
+
+        // Fullscreen Menu Toggle
+        let isMenuOpen = false;
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            const menu = document.getElementById('fullscreen-menu');
+            const dot = document.getElementById('menu-dot');
+            if (isMenuOpen) {
+                menu.classList.remove('translate-x-full');
+                dot.classList.add('scale-[3]', 'bg-accent');
+            } else {
+                menu.classList.add('translate-x-full');
+                dot.classList.remove('scale-[3]');
+            }
+        }
+
+        // Theme Toggle
+        let currentTheme = localStorage.getItem('vo_theme') || 'dark';
+        function initTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            if (currentTheme === 'light') {
+                body.classList.add('light-mode');
+                if (icon) icon.className = "fa-solid fa-sun text-sm text-accent";
+            } else {
+                body.classList.remove('light-mode');
+                if (icon) icon.className = "fa-solid fa-moon text-sm";
+            }
+        }
+        function toggleTheme() {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('vo_theme', currentTheme);
+            initTheme();
+        }
+
+        // Language Dropdown
+        let currentLang = localStorage.getItem('vo_lang') || 'en';
+        let isLangDropdownOpen = false;
+        function toggleLangDropdown() {
+            isLangDropdownOpen = !isLangDropdownOpen;
+            const menu = document.getElementById('lang-dropdown-menu');
+            const chevron = document.getElementById('lang-chevron');
+            if (isLangDropdownOpen) {
+                menu.classList.remove('hidden');
+                chevron.classList.add('rotate-180');
+            } else {
+                menu.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+            }
+        }
+        function selectLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('vo_lang', lang);
+            if (isLangDropdownOpen) toggleLangDropdown();
+            const label = document.getElementById('current-lang-label');
+            if (lang === 'np') label.innerText = 'नेपाली';
+            else if (lang === 'zh') label.innerText = '中文';
+            else label.innerText = 'English';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            selectLanguage(currentLang);
+        });
+    </script>
+<script src="/menu.js?v=4"></script>
+<script src="/reveal.js?v=1"></script>
+<script src="/compass-nav.js?v=1"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>
