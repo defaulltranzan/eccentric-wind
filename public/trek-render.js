@@ -29,6 +29,26 @@
   var has = function (v) { return Array.isArray(v) ? v.length > 0 : (v != null && v !== ''); };
   var num = function (s) { var m = String(s || '').replace(/,/g, '').match(/-?\d+(\.\d+)?/); return m ? parseFloat(m[0]) : null; };
 
+  /* branded placeholder for a trek whose photo has not been sourced yet — never another trek's image */
+  function phImg(label) {
+    var tx = String(label || '').toUpperCase().replace(/[<>&]/g, '').slice(0, 30);
+    return 'data:image/svg+xml,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">' +
+      '<defs><radialGradient id="g" cx="26%" cy="20%" r="95%"><stop offset="0" stop-color="#f06225" stop-opacity="0.16"/><stop offset="1" stop-color="#1b1e22" stop-opacity="0"/></radialGradient></defs>' +
+      '<rect width="1200" height="800" fill="#1b1e22"/><rect width="1200" height="800" fill="url(#g)"/>' +
+      '<path d="M0 560 L260 320 L470 500 L700 280 L920 470 L1200 340 L1200 800 L0 800Z" fill="#ffffff" fill-opacity="0.035"/>' +
+      '<path d="M0 610 L330 430 L560 560 L800 390 L1040 530 L1200 460" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="2.5"/>' +
+      '<text x="64" y="710" font-family="monospace" font-size="30" fill="#9ca3af" letter-spacing="3">' + tx + '</text>' +
+      '<text x="64" y="748" font-family="monospace" font-size="14" fill="#5f636b" letter-spacing="4">PHOTOGRAPHY PENDING</text>' +
+      '</svg>'
+    );
+  }
+  function imgTag(src, alt, cls, phLabel) {
+    var s = src || '/images/hero-mountain.jpg';
+    return '<img src="' + esc(s) + '" alt="' + esc(alt) + '" class="' + cls + '"' +
+      (phLabel ? ' onerror="this.onerror=null;this.src=\'' + phImg(phLabel).replace(/'/g, '%27') + '\'"' : '') + '>';
+  }
+
   function section(id, kicker, heading, bodyHtml, opts) {
     opts = opts || {};
     return '' +
@@ -78,6 +98,10 @@
   var root = document.getElementById('trek-root');
 
   if (!t) {
+    var rb = document.createElement('meta');
+    rb.name = 'robots'; rb.content = 'noindex, follow';
+    document.head.appendChild(rb);
+    document.title = 'Trail not found — Himalayan Magic Adventure';
     root.innerHTML = '<div class="max-w-3xl mx-auto px-6 py-32 text-center">' +
       '<span class="kicker">Trail not found</span>' +
       '<h1 class="sec-h text-4xl md:text-6xl text-foreground mt-4 mb-6">This route isn’t here yet</h1>' +
@@ -106,13 +130,14 @@
 
   /* ---- HERO ---- */
   out.push('' +
-    '<section class="relative min-h-[88vh] flex flex-col justify-end overflow-hidden border-b border-border">' +
-    '<div class="absolute inset-0 z-0"><img src="' + esc(t.heroImage || '/images/hero-mountain.jpg') + '" alt="' + esc(t.name) + '" class="h-full w-full object-cover"></div>' +
+    '<section data-media class="relative min-h-[88vh] flex flex-col justify-end overflow-hidden border-b border-border">' +
+    '<div class="absolute inset-0 z-0">' + imgTag(t.heroImage, t.name, 'h-full w-full object-cover', t.name) + '</div>' +
     '<div class="absolute inset-0 z-10 bg-gradient-to-t from-[#1b1e22] via-[#1b1e22]/55 to-[#1b1e22]/25"></div>' +
     '<div class="absolute inset-0 z-10 bg-gradient-to-r from-[#1b1e22]/70 to-transparent"></div>' +
     '<div class="relative z-20 max-w-6xl mx-auto w-full px-6 md:px-10 pt-28 pb-12">' +
     '<nav class="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 mb-6"><a href="/" class="hover:text-accent">Home</a> / <a href="/treks" class="hover:text-accent">Trekking Trails</a> / <a href="/treks#' + esc(t.province) + '" class="hover:text-accent">' + esc(prov.name.replace(" Province", "")) + '</a> / <span class="text-white/90">' + esc(t.name) + '</span></nav>' +
     '<span class="kicker text-accent">Trekking · Nepal · ' + esc(prov.name) + '</span>' +
+    (t.restricted ? '<div class="mt-3"><span class="inline-flex items-center gap-2 border border-accent/50 bg-accent/10 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Restricted area · licensed guide + group required</span></div>' : '') +
     '<h1 class="font-heading font-light uppercase tracking-tightest leading-[0.9] text-white text-5xl md:text-7xl mt-3">' + esc(t.name) + '</h1>' +
     (t.tagline ? '<p class="font-heading font-light text-xl md:text-2xl text-accent mt-3 tracking-wide">' + esc(t.tagline) + '</p>' : '') +
     (t.summary ? '<p class="max-w-2xl font-sans text-sm md:text-base text-white/80 mt-5 leading-relaxed">' + esc(t.summary) + '</p>' : '') +
@@ -128,7 +153,7 @@
     '<a href="/contact" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Plan This Trek</a>' +
     '<a href="#itinerary" class="inline-flex items-center gap-2 border border-white/40 text-white font-mono text-[11px] uppercase tracking-widest px-6 py-3 hover:border-accent hover:text-accent transition-all">View Itinerary</a>' +
     '<button id="btn-save" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-regular fa-bookmark"></i><span>Save</span></button>' +
-    '<button id="btn-share" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-solid fa-arrow-up-from-bracket"></i><span>Share</span></button>' +
+    '<button id="btn-share" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-solid fa-share-nodes"></i><span>Share</span></button>' +
     '</div>' +
     '</div></section>');
 
@@ -201,7 +226,7 @@
       '</div>';
     if (has(t.why.gallery)) {
       w += '<div class="mt-10 -mx-6 md:mx-0 px-6 md:px-0 flex gap-4 overflow-x-auto snapx pb-2">' +
-        t.why.gallery.map(function (g) { return '<figure class="shrink-0 w-[80%] sm:w-[46%] lg:w-[32%]"><div class="aspect-[4/3] overflow-hidden border border-border"><img src="' + esc(g.img) + '" alt="' + esc(g.caption || t.name) + '" class="h-full w-full object-cover"></div>' + (g.caption ? '<figcaption class="lbl mt-2">' + esc(g.caption) + '</figcaption>' : '') + '</figure>'; }).join('') +
+        t.why.gallery.map(function (g) { return '<figure class="shrink-0 w-[80%] sm:w-[46%] lg:w-[32%]"><div class="aspect-[4/3] overflow-hidden border border-border">' + imgTag(g.img, g.caption || t.name, 'h-full w-full object-cover', g.caption || t.name) + '</div>' + (g.caption ? '<figcaption class="lbl mt-2">' + esc(g.caption) + '</figcaption>' : '') + '</figure>'; }).join('') +
         '</div>';
     }
     out.push(section('why', '03 — Why this route', 'Why trek ' + esc(t.name.replace(/ Trek$/, '')), w));
@@ -267,7 +292,8 @@
 
   /* ---- PERMITS ---- */
   if (has(t.permits)) {
-    var pm = '<div class="overflow-x-auto border border-border mb-8"><table class="w-full text-left font-mono text-[12px]"><thead class="bg-[#16181b] text-[10px] uppercase tracking-widest text-accent border-b border-border"><tr><th class="p-3">Permit</th><th class="p-3">Where</th><th class="p-3">Fee</th><th class="p-3">Notes</th></tr></thead><tbody class="divide-y divide-border text-muted-foreground">' +
+    var pm = (t.restricted ? '<div class="border border-accent/40 bg-accent/5 p-4 mb-8"><span class="lbl text-accent block mb-1">Restricted-area route</span><span class="font-sans text-[13px] text-muted-foreground">This trail lies inside a government restricted area. Independent trekking is not permitted: a Restricted Area Permit is issued only to a group of two or more travelling with a licensed Nepali guide, arranged through a registered operator. We handle the paperwork end to end.</span></div>' : '') +
+      '<div class="overflow-x-auto border border-border mb-8"><table class="w-full text-left font-mono text-[12px]"><thead class="bg-[#16181b] text-[10px] uppercase tracking-widest text-accent border-b border-border"><tr><th class="p-3">Permit</th><th class="p-3">Where</th><th class="p-3">Fee</th><th class="p-3">Notes</th></tr></thead><tbody class="divide-y divide-border text-muted-foreground">' +
       t.permits.map(function (p) { return '<tr><td class="p-3 text-white">' + esc(p.name) + '</td><td class="p-3">' + esc(p.where) + '</td><td class="p-3 text-accent">' + esc(p.feeNote) + '</td><td class="p-3">' + esc(p.notes || '') + '</td></tr>'; }).join('') +
       '</tbody></table></div>' +
       '<div class="border border-accent/30 bg-accent/5 p-4 mb-8"><span class="lbl text-accent block mb-1">Verify before departure</span><span class="font-sans text-[13px] text-muted-foreground">Permit fees and rules are set by the government and change. Your operator arranges and carries every permit for a booked trip; confirm current amounts and any restricted-area conditions before you travel.</span></div>' +
@@ -471,7 +497,7 @@
     if (has(t.relatedTreks)) {
       body += '<span class="lbl block mb-3">Alternative trails</span><div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">' + t.relatedTreks.map(function (rs) {
         var rt = TREKS[rs]; if (!rt) return '';
-        return '<a href="/treks/' + esc(rs) + '" class="group border border-border bg-card hover:border-accent transition-all block"><div class="aspect-[4/3] overflow-hidden"><img src="' + esc(rt.heroImage || '/images/hero-mountain.jpg') + '" alt="' + esc(rt.name) + '" class="h-full w-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"></div><div class="p-4"><span class="lbl block">' + esc((TREK_PROVINCES[rt.province] || {}).name || '') + '</span><span class="block font-heading text-lg uppercase text-white group-hover:text-accent transition-colors mt-1 leading-tight">' + esc(rt.name.replace(/ Trek$/, '')) + '</span><span class="block font-mono text-[10px] text-muted-foreground mt-1">' + esc((rt.stats || {}).duration || '') + '</span></div></a>';
+        return '<a href="/treks/' + esc(rs) + '" class="group border border-border bg-card hover:border-accent transition-all block"><div class="aspect-[4/3] overflow-hidden">' + imgTag(rt.heroImage, rt.name, 'h-full w-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500', rt.name) + '</div><div class="p-4"><span class="lbl block">' + esc((TREK_PROVINCES[rt.province] || {}).name || '') + '</span><span class="block font-heading text-lg uppercase text-white group-hover:text-accent transition-colors mt-1 leading-tight">' + esc(rt.name.replace(/ Trek$/, '')) + '</span><span class="block font-mono text-[10px] text-muted-foreground mt-1">' + esc((rt.stats || {}).duration || '') + '</span></div></a>';
       }).join('') + '</div>';
     }
     if (has(t.relatedDestinations)) {
@@ -686,7 +712,7 @@
     if (navigator.share) navigator.share(data).catch(function () {});
     else if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(function () {
       shareBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied</span>';
-      setTimeout(function () { shareBtn.innerHTML = '<i class="fa-solid fa-arrow-up-from-bracket"></i><span>Share</span>'; }, 1800);
+      setTimeout(function () { shareBtn.innerHTML = '<i class="fa-solid fa-share-nodes"></i><span>Share</span>'; }, 1800);
     });
   });
 

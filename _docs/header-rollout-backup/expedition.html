@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedition — Himalayan Magic Adventure</title>
+    <meta name="description" content="A factual expedition guide to one of the world's 14 eight-thousand-metre mountains — elevation and rank, the normal route, camps, first-ascent history, season, hazards and planning orientation.">
+    <link rel="canonical" id="canonical-link" href="https://himalayanmagic.com/expeditions/">
+
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="stylesheet" href="/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --background:#15171a; --foreground:#f3f4f6; --card:#1d1f23; --border:#2b2e34; --accent:#f06225; --accent-hover:#d04e1b; --muted:#23262b; --muted-foreground:#9399a2; --ink:16,18,21; --ice:#8fb3c9; }
+        .light-mode { --background:#f4f5f6; --foreground:#111827; --card:#ffffff; --border:#e2e4e7; --accent:#e04f1a; --accent-hover:#c23e11; --muted:#eceef0; --muted-foreground:#4b5563; --ink:17,24,39; --ice:#3c6d8c; }
+        body { background: var(--background); color: var(--foreground); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.65; }
+        .prose-x p { margin-bottom: 1.1rem; color: var(--muted-foreground); }
+        .prose-x p:last-child { margin-bottom: 0; }
+        ::-webkit-scrollbar { width:6px; height:6px; } ::-webkit-scrollbar-track { background: var(--background); } ::-webkit-scrollbar-thumb { background: var(--accent); border-radius:3px; }
+        .kicker { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.3em; color:var(--accent); }
+        .lbl { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        .sec-h { font-family:'Oswald',sans-serif; font-weight:300; text-transform:uppercase; letter-spacing:-.02em; line-height:.95; }
+        .fade-up { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+        .fade-up.in { opacity:1; transform:none; }
+        details.acc > summary { list-style:none; cursor:pointer; }
+        details.acc > summary::-webkit-details-marker { display:none; }
+        details.acc[open] .acc-plus { transform:rotate(45deg); }
+        .hx-nav-link.active { color: var(--accent); }
+        @media (prefers-reduced-motion: reduce) { .fade-up { opacity:1; transform:none; transition:none; } }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+<div id="read-progress" class="fixed left-0 top-0 z-[60] h-0.5 bg-accent" style="width:0%"></div>
+
+<header class="relative z-40 border-b border-border bg-[#101215]">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto object-contain">
+            <div>
+                <span class="block font-heading text-sm font-light tracking-widest text-white uppercase">Himalayan Magic Adventure</span>
+                <span class="block text-[9px] text-accent tracking-[0.3em] uppercase">Mountaineering Expeditions · Est. 1993</span>
+            </div>
+        </a>
+        <nav class="hidden lg:flex items-center gap-7 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            <a href="/" class="hover:text-accent transition-colors">Home</a>
+            <a href="/about" class="hover:text-accent transition-colors">About</a>
+            <a href="/treks" class="hover:text-accent transition-colors">Trekking Trails</a>
+            <a href="/expeditions" class="text-accent">Expeditions</a>
+            <a href="/altitude-safety" class="hover:text-accent transition-colors">Safety</a>
+            <a href="/dispatches" class="hover:text-accent transition-colors">Stories</a>
+            <a href="/contact" class="hover:text-accent transition-colors">Contact</a>
+        </nav>
+        <a href="/contact" class="hidden sm:inline-flex items-center justify-center border border-accent hover:bg-accent hover:text-background text-[10px] font-mono uppercase tracking-widest px-4 py-2 transition-all">Plan an Expedition</a>
+    </div>
+</header>
+
+<main id="mtn-root" class="flex-1"></main>
+
+<div id="mobile-cta" class="fixed bottom-0 left-0 right-0 z-50 lg:hidden border-t border-border bg-[#101215]/95 backdrop-blur-md px-4 py-3 flex items-center gap-3 translate-y-full transition-transform">
+    <div class="flex-1 min-w-0">
+        <span class="lbl block">Expedition</span>
+        <span id="mcta-name" class="block font-heading text-sm uppercase text-white truncate">—</span>
+    </div>
+    <a href="/contact" class="shrink-0 bg-accent text-background font-mono text-[10px] uppercase tracking-widest font-semibold px-4 py-2.5">Plan this Climb</a>
+</div>
+
+<footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+        <div class="mt-10 text-center">
+            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
+        </div>
+    </div>
+</footer>
+
+<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <button onclick="hxToggleTheme()" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all">
+        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+    </button>
+</div>
+
+<script src="/mountains.js?v=1"></script>
+<script src="/treks.js?v=2"></script>
+<script src="/expedition-render.js?v=1"></script>
+<script src="/menu.js?v=4"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>

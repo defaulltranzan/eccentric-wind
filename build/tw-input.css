@@ -57,3 +57,350 @@ button[disabled],
 button[aria-disabled="true"] {
   cursor: not-allowed;
 }
+
+/* ============================================================================
+   PRIMARY HEADER NAV — brand-colour hover treatment  (2026-09-01)
+   Shared by every page's <header>. `.hme-navlink` = the five nav links,
+   `.hme-cta` = the "Find your route" button. All colours are brand tokens
+   (var(--accent) / var(--background)) so they re-tint under .light-mode.
+   Revert: delete this block + rebuild; restore each page's <header>.
+   ========================================================================== */
+.hme-navlink {
+  position: relative;
+  display: inline-block;
+  padding: 4px 1px;
+  color: inherit;
+  white-space: nowrap;
+  transition: color .25s ease, transform .28s cubic-bezier(.2,.7,.3,1),
+              text-shadow .25s ease;
+}
+.hme-navlink::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform .38s cubic-bezier(.2,.7,.3,1);
+}
+.hme-navlink:hover,
+.hme-navlink:focus-visible {
+  color: var(--accent);
+  transform: translateY(-1px);
+  text-shadow: 0 0 20px rgba(240,98,37,.35);
+}
+.hme-navlink:hover::after,
+.hme-navlink:focus-visible::after,
+.hme-navlink.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+.hme-navlink.is-active { color: #fff; }
+body.light-mode .hme-navlink.is-active { color: var(--foreground); }
+
+.hme-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.hme-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .4s cubic-bezier(.2,.7,.3,1);
+}
+.hme-cta:hover,
+.hme-cta:focus-visible {
+  color: var(--background);
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px -10px rgba(240,98,37,.55);
+}
+.hme-cta:hover::before,
+.hme-cta:focus-visible::before { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hme-navlink, .hme-navlink::after, .hme-cta, .hme-cta::before { transition: none; }
+  .hme-navlink:hover { transform: none; }
+}
+
+/* ============================================================================
+   HEADER NAV DROPDOWN  —  "Expeditions" → elevation bands  (2026-09-02)
+   Desktop only (the nav itself is lg:flex). Pure CSS, brand-token colours,
+   an invisible hover-bridge so the cursor can travel to the panel.
+   ========================================================================== */
+.hme-navgroup { position: relative; }
+.hme-navgroup::after {                 /* hover bridge trigger→panel */
+  content: ""; position: absolute; left: -8px; right: -8px; top: 100%; height: 12px;
+}
+.hme-navdrop {
+  position: absolute; top: calc(100% + 12px); left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  min-width: 15rem; padding: .45rem;
+  background: #16181b; border: 1px solid var(--border);
+  box-shadow: 0 26px 55px -14px rgba(0,0,0,.65);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .18s ease, transform .2s cubic-bezier(.2,.7,.3,1), visibility .18s;
+  z-index: 60;
+}
+body.light-mode .hme-navdrop { background: #ffffff; }
+.hme-navgroup:hover .hme-navdrop,
+.hme-navgroup:focus-within .hme-navdrop,
+.hme-navgroup.is-open .hme-navdrop {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+/* caret button that click-toggles the panel (hover still opens it too) */
+.hme-navdrop-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-left: .3rem; padding: 3px; border: 0; background: none;
+  color: inherit; cursor: pointer; line-height: 0;
+  transition: color .2s ease, transform .25s ease;
+}
+.hme-navdrop-toggle:hover, .hme-navdrop-toggle:focus-visible { color: var(--accent); outline: none; }
+.hme-navgroup.is-open .hme-navdrop-toggle { color: var(--accent); transform: rotate(180deg); }
+.hme-navdrop a {
+  display: flex; align-items: center; justify-content: space-between; gap: 1.6rem;
+  padding: .62rem .7rem;
+  font-family: "Oswald", sans-serif; font-weight: 500; text-transform: uppercase;
+  font-size: 12px; letter-spacing: .1em; color: var(--foreground);
+  transition: background-color .18s ease, color .18s ease, padding-left .18s ease;
+  white-space: nowrap;
+}
+.hme-navdrop a:hover, .hme-navdrop a:focus-visible {
+  background: rgba(240,98,37,.1); color: var(--accent);
+  padding-left: 1rem; outline: none;
+}
+.hme-navdrop .hme-navdrop-n {
+  font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: .1em;
+  color: var(--muted-foreground);
+}
+.hme-navdrop a:hover .hme-navdrop-n { color: var(--accent); }
+.hme-navdrop-sep { display: block; height: 1px; margin: .35rem .2rem; background: var(--border); }
+.hme-navdrop-all {
+  font-family: "IBM Plex Mono", monospace !important; font-weight: 500 !important;
+  font-size: 9px !important; letter-spacing: .2em !important; color: var(--muted-foreground) !important;
+}
+.hme-navdrop-all:hover { color: var(--accent) !important; }
+@media (prefers-reduced-motion: reduce) {
+  .hme-navdrop { transition: opacity .12s ease, visibility .12s; transform: translateX(-50%); }
+  .hme-navgroup:hover .hme-navdrop, .hme-navgroup:focus-within .hme-navdrop { transform: translateX(-50%); }
+  .hme-navdrop a:hover { padding-left: .7rem; }
+}
+
+/* ============================================================================
+   LIGHT MODE
+   A retrofit layer: the markup hard-codes a dark surface ladder
+   (#1b1e22 … #101215) plus `text-white`, `border-white/x`, etc. This layer
+   (a) swaps the design tokens to a warm-neutral light palette and
+   (b) remaps every hard-coded dark value to a light equivalent.
+   Sections that sit over photography stay dark — they carry `data-media`
+   (or are `.hme-flag` / `.tk` image tiles) and get a nested dark token scope
+   so their contents keep working unchanged.
+   Toggled by `.light-mode` on <html> and <body> (see theme.js + the inline
+   head guard). Revert: delete this whole block and rebuild the CSS.
+   ========================================================================== */
+
+/* ---- 1 · tokens ---------------------------------------------------------- */
+html.light-mode, body.light-mode {
+  --background: #fcfcfb;
+  --foreground: #1c1e21;
+  --card: #ffffff;
+  --border: #e6e4df;
+  --accent: #d64d16;          /* deepened for AA contrast on white */
+  --accent-hover: #b83f0d;
+  --muted: #f1efea;
+  --muted-foreground: #5f6068;
+  color-scheme: light;
+}
+
+/* The switch is intentionally instant for anything whose colour resolves
+   through a CSS var() — Chrome fails to re-resolve a var()-derived `color`
+   or `background-color` mid-transition and the element sticks on the old
+   theme (same bug that removed the body background transition earlier).
+   Only literal-valued surfaces get a transition. */
+@media (prefers-reduced-motion: no-preference) {
+  .light-mode [class*="bg-[#"] { transition: background-color .3s ease; }
+  .light-mode .hme-region, .light-mode .hme-terai, .light-mode .hme-ridge, .light-mode .hme-peak-tri { transition: fill .35s ease, stroke .35s ease; }
+}
+/* theme.js adds this for two frames around the token swap */
+.hme-theme-switching, .hme-theme-switching *, .hme-theme-switching *::before, .hme-theme-switching *::after {
+  transition: none !important;
+  animation-duration: 0s !important;
+}
+
+/* ---- 2 · dark surface ladder → light ---------------------------------- */
+body.light-mode .bg-\[\#1b1e22\] { background-color: #ffffff; }
+body.light-mode .bg-\[\#191b1f\] { background-color: #f6f4f0; }
+body.light-mode .bg-\[\#16181b\] { background-color: #f1eee9; }
+body.light-mode .bg-\[\#15171a\] { background-color: #f3f1ec; }
+body.light-mode .bg-\[\#181a1e\] { background-color: #ffffff; }
+body.light-mode .bg-\[\#141619\],
+body.light-mode .bg-\[\#14161a\] { background-color: #edeae4; }
+body.light-mode .bg-\[\#121417\] { background-color: #eae7e1; }
+body.light-mode .bg-\[\#101215\] { background-color: #e8e5de; }
+body.light-mode .bg-\[\#1e2227\] { background-color: #f2efe9; }
+body.light-mode .bg-\[\#1d2025\] { background-color: #f2efe9; }
+body.light-mode .bg-\[\#20242a\] { background-color: #f4f1ec; }
+body.light-mode .bg-\[\#22252a\] { background-color: #ffffff; }
+
+/* translucent dark chips / overlays that are NOT over media */
+body.light-mode .bg-\[\#1b1e22\]\/90,
+body.light-mode .bg-\[\#1b1e22\]\/95,
+body.light-mode .bg-\[\#14161a\]\/95,
+body.light-mode .bg-\[\#16181b\]\/95 { background-color: rgba(255,255,255,.92); }
+
+/* gradients built from the dark ladder → light wash */
+body.light-mode [class*="from-[#1b1e22]"] { --tw-gradient-from: #ffffff var(--tw-gradient-from-position); --tw-gradient-to: rgba(255,255,255,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [class*="via-[#1b1e22]"]  { --tw-gradient-to: rgba(255,255,255,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), #ffffff var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode [class*="to-[#1b1e22]"]   { --tw-gradient-to: #ffffff var(--tw-gradient-to-position); }
+body.light-mode [class*="from-[#191b1f]"] { --tw-gradient-from: #f6f4f0 var(--tw-gradient-from-position); --tw-gradient-to: rgba(246,244,240,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [class*="via-[#191b1f]"]  { --tw-gradient-stops: var(--tw-gradient-from), #f6f4f0 var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode [class*="to-[#191b1f]"]   { --tw-gradient-to: #f6f4f0 var(--tw-gradient-to-position); }
+body.light-mode [class*="from-[#16181b]"] { --tw-gradient-from: #f1eee9 var(--tw-gradient-from-position); --tw-gradient-to: rgba(241,238,233,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [class*="via-[#16181b]"]  { --tw-gradient-stops: var(--tw-gradient-from), #f1eee9 var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode [class*="to-[#16181b]"]   { --tw-gradient-to: #f1eee9 var(--tw-gradient-to-position); }
+body.light-mode [class*="from-[#121417]"] { --tw-gradient-from: #eae7e1 var(--tw-gradient-from-position); --tw-gradient-to: rgba(234,231,225,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [class*="to-[#121417]"]   { --tw-gradient-to: #eae7e1 var(--tw-gradient-to-position); }
+body.light-mode [class*="from-[#101215]"] { --tw-gradient-from: #e8e5de var(--tw-gradient-from-position); --tw-gradient-to: rgba(232,229,222,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [class*="to-[#101215]"]   { --tw-gradient-to: #e8e5de var(--tw-gradient-to-position); }
+
+/* ---- 3 · white text / borders / dim greys (outside media) ------------ */
+body.light-mode .text-white,
+body.light-mode .text-white\/95,
+body.light-mode .text-white\/90,
+body.light-mode .text-white\/80 { color: var(--foreground); }
+body.light-mode .text-white\/70,
+body.light-mode .text-white\/60,
+body.light-mode .text-white\/50 { color: var(--muted-foreground); }
+
+body.light-mode .border-white\/10 { border-color: rgba(0,0,0,.07); }
+body.light-mode .border-white\/15 { border-color: rgba(0,0,0,.09); }
+body.light-mode .border-white\/20 { border-color: rgba(0,0,0,.11); }
+body.light-mode .border-white\/30 { border-color: rgba(0,0,0,.16); }
+
+body.light-mode .text-\[\#777\],
+body.light-mode .text-\[\#666\],
+body.light-mode .text-\[\#5f636b\],
+body.light-mode .text-\[\#6f727a\],
+body.light-mode .text-\[\#7a7d84\],
+body.light-mode .text-\[\#8b8e95\] { color: #6c6d75; }
+/* footer build-credit stays whisper-faint */
+body.light-mode .text-\[\#5b5e66\] { color: #b4b3b8; }
+
+/* keep white where the element itself is an accent pill */
+body.light-mode .bg-accent.text-white,
+body.light-mode .bg-accent .text-white,
+body.light-mode .bg-accent-hover .text-white { color: #fff; }
+
+/* ---- 4 · media islands: keep a dark scope --------------------------- */
+body.light-mode [data-media],
+body.light-mode .hme-flag,
+body.light-mode .tk,
+body.light-mode #hero,
+body.light-mode .expedition-hero {
+  --background: #16181b;
+  --foreground: #f3f4f6;
+  --card: #20232a;
+  --border: #33373e;
+  --muted: #272b32;
+  --muted-foreground: #9ca3af;
+  color-scheme: dark;
+}
+body.light-mode [data-media] .text-white,
+body.light-mode [data-media] .text-white\/95,
+body.light-mode [data-media] .text-white\/90,
+body.light-mode .hme-flag .text-white,
+body.light-mode .tk .text-white { color: #f3f4f6; }
+body.light-mode [data-media] [class*="bg-[#1b1e22]"],
+body.light-mode .hme-flag[class*="bg-[#181a1e]"],
+body.light-mode .hme-flag [class*="bg-[#181a1e]"] { background-color: #16181b; }
+body.light-mode a.hme-flag { background-color: #181a1e; }
+body.light-mode [data-media] .border-white\/10 { border-color: rgba(255,255,255,.10); }
+body.light-mode [data-media] .border-white\/20 { border-color: rgba(255,255,255,.18); }
+body.light-mode [data-media] .border-white\/30 { border-color: rgba(255,255,255,.28); }
+/* flagship tile gradient + trek-tile scrim stay dark */
+body.light-mode .hme-flag [class*="from-[#181a1e]"] { --tw-gradient-from: #16181b var(--tw-gradient-from-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode .hme-flag [class*="via-[#181a1e]"]  { --tw-gradient-stops: var(--tw-gradient-from), rgba(22,24,27,.78) var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode .hme-flag [class*="to-[#181a1e]"]   { --tw-gradient-to: rgba(22,24,27,.20) var(--tw-gradient-to-position); }
+
+/* media sections: undo the light flips the global rules applied. Re-assert
+   dark solids + dark vignette gradients for every ladder shade. */
+body.light-mode [data-media] .bg-\[\#1b1e22\],  body.light-mode [data-media].bg-\[\#1b1e22\]  { background-color: #1b1e22; }
+body.light-mode [data-media] .bg-\[\#191b1f\],  body.light-mode [data-media].bg-\[\#191b1f\]  { background-color: #191b1f; }
+body.light-mode [data-media] .bg-\[\#16181b\],  body.light-mode [data-media].bg-\[\#16181b\]  { background-color: #16181b; }
+body.light-mode [data-media] .bg-\[\#15171a\],  body.light-mode [data-media].bg-\[\#15171a\]  { background-color: #15171a; }
+body.light-mode [data-media] .bg-\[\#101215\],  body.light-mode [data-media].bg-\[\#101215\]  { background-color: #101215; }
+body.light-mode [data-media] .bg-background,    body.light-mode [data-media].bg-background    { background-color: #16181b; }
+body.light-mode [data-media] .bg-\[\#1b1e22\]\/85,
+body.light-mode [data-media] .bg-\[\#1b1e22\]\/90 { background-color: rgba(27,30,34,.9); }
+
+body.light-mode [data-media] [class*="from-[#1b1e22]"] { --tw-gradient-from: #1b1e22 var(--tw-gradient-from-position); --tw-gradient-to: rgba(27,30,34,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="via-[#1b1e22]"]  { --tw-gradient-stops: var(--tw-gradient-from), #1b1e22 var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="to-[#1b1e22]"]   { --tw-gradient-to: #1b1e22 var(--tw-gradient-to-position); }
+body.light-mode [data-media] [class*="from-[#191b1f]"] { --tw-gradient-from: #191b1f var(--tw-gradient-from-position); --tw-gradient-to: rgba(25,27,31,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="via-[#191b1f]"]  { --tw-gradient-stops: var(--tw-gradient-from), #191b1f var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="to-[#191b1f]"]   { --tw-gradient-to: #191b1f var(--tw-gradient-to-position); }
+body.light-mode [data-media] [class*="from-[#16181b]"] { --tw-gradient-from: #16181b var(--tw-gradient-from-position); --tw-gradient-to: rgba(22,24,27,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="via-[#16181b]"]  { --tw-gradient-stops: var(--tw-gradient-from), #16181b var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="to-[#16181b]"]   { --tw-gradient-to: #16181b var(--tw-gradient-to-position); }
+body.light-mode [data-media] [class*="from-[#15171a]"] { --tw-gradient-from: #15171a var(--tw-gradient-from-position); --tw-gradient-to: rgba(21,23,26,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="via-[#15171a]"]  { --tw-gradient-stops: var(--tw-gradient-from), #15171a var(--tw-gradient-via-position), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="to-[#15171a]"]   { --tw-gradient-to: #15171a var(--tw-gradient-to-position); }
+body.light-mode [data-media] [class*="from-[#101215]"] { --tw-gradient-from: #101215 var(--tw-gradient-from-position); --tw-gradient-to: rgba(16,18,21,0) var(--tw-gradient-to-position); --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+body.light-mode [data-media] [class*="to-[#101215]"]   { --tw-gradient-to: #101215 var(--tw-gradient-to-position); }
+
+/* ---- 5 · components ------------------------------------------------- */
+/* depth: dark mode leaned on darker fills, light mode needs shadow */
+body.light-mode .border.border-border,
+body.light-mode [class*="border-border"].bg-card,
+body.light-mode article.bg-card { box-shadow: 0 1px 2px rgba(20,22,26,.04), 0 8px 24px -16px rgba(20,22,26,.12); }
+
+/* shared fullscreen menu (menu.js injects its own <style>; beat it on specificity) */
+body.light-mode #hme-menu { background: rgba(252,252,251,.975); backdrop-filter: blur(18px); }
+body.light-mode #hme-menu a.hme-nav { color: #1c1e21; }
+body.light-mode #hme-menu a.hme-nav .hme-dot { background: currentColor; }
+body.light-mode #hme-menu-btn { background: rgba(255,255,255,.82); color: var(--accent); border-color: rgba(214,77,22,.5); }
+body.light-mode #hme-menu-close { background: rgba(255,255,255,.9); color: #1c1e21; }
+
+/* announcement bar stays on accent — just soften the inner chip */
+body.light-mode #hme-annc-tag { background: rgba(0,0,0,.16); }
+
+/* explore map SVG */
+body.light-mode .hme-region { fill: #ece9e3; stroke: rgba(214,77,22,.28); }
+body.light-mode .hme-region:hover { fill: rgba(214,77,22,.10); }
+body.light-mode .hme-terai { fill: #e7e0cf; }
+body.light-mode .hme-map[data-active] .hme-region.is-active,
+body.light-mode .hme-region.is-active { fill: rgba(214,77,22,.14); stroke: var(--accent); }
+body.light-mode .hme-ridge { stroke: rgba(28,30,33,.28); }
+body.light-mode .hme-peak-tri { fill: #ffffff; }
+
+/* scrollbars */
+body.light-mode ::-webkit-scrollbar-track { background: #f1efea; }
+body.light-mode .hme-hscroll::-webkit-scrollbar-track,
+body.light-mode .hme-xpanel::-webkit-scrollbar-track { background: rgba(20,22,26,.06); }
+body.light-mode .hme-flag-nav { background: rgba(255,255,255,.92); }
+
+/* dispatch card image badges (bright art underneath) */
+body.light-mode .bg-\[\#1b1e22\]\/90 { background-color: rgba(255,255,255,.92); }
+
+/* selection */
+body.light-mode ::selection { background: var(--accent); color: #fff; }
+
+/* ---- 6 · decorative background imagery ---------------------------- */
+/* the faint grayscale mountain washes read muddy on white — lift them */
+body.light-mode section > .absolute img[aria-hidden="true"],
+body.light-mode [class*="opacity-[0.0"] { opacity: .04; }
+body.light-mode #hero-image { filter: grayscale(1) contrast(1.02) brightness(1.04); }
+
+/* form controls */
+body.light-mode select,
+body.light-mode input[type="text"],
+body.light-mode input[type="email"],
+body.light-mode textarea { background-color: #fff; color: var(--foreground); border-color: var(--border); }
+body.light-mode .tk-sel { background-color: #fff; }

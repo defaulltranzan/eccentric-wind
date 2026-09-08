@@ -6,6 +6,7 @@
     <title>Sherpa Heritage & Guide Masters — Himalayan Magic Adventure</title>
     <link rel="canonical" href="https://himalayanmagic.com/about-sherpa">
     <!-- Tailwind CSS -->
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
     <link rel="stylesheet" href="/tailwind.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -37,7 +38,7 @@
             color: var(--foreground);
             font-family: 'IBM Plex Mono', monospace;
             line-height: 1.6;
-            transition: color 0.3s ease;
+            transition: none; /* theme switch is instant — see tw-input.css note */
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -55,26 +56,26 @@
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
     <!-- TOP BAR -->
-    <header class="relative z-40 border-b border-border bg-[#16181b]">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-12 w-auto object-contain transition-transform group-hover:scale-105">
-                <div>
-                    <span class="block font-heading text-base font-light tracking-widest text-white uppercase">Himalayan Magic Adventure</span>
-                    <span class="block text-[9px] text-accent tracking-[0.3em] uppercase">SHERPA GUARDIANS</span>
-                </div>
+    <!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+    <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+            <a href="/" class="group flex shrink-0 items-center gap-3">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <span class="hidden flex-col leading-none sm:flex">
+                    <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                    <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Sherpa Guardians</span>
+                </span>
             </a>
-            <nav class="hidden lg:flex items-center gap-8 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                <a href="/" class="hover:text-accent transition-colors">Home</a>
-                <a href="/about" class="hover:text-accent transition-colors">About</a>
-                <a href="/services" class="hover:text-accent transition-colors">Services</a>
-                <a href="/treks" class="hover:text-accent transition-colors">Trekking Trails</a>
-                <a href="/expeditions" class="hover:text-accent transition-colors">Expeditions</a>
-                <a href="/altitude-safety" class="hover:text-accent transition-colors">Safety</a>
-                <a href="/dispatches" class="hover:text-accent transition-colors">Stories</a>
+            <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+                <a href="/" class="hme-navlink">Home</a>
+                <a href="/treks" class="hme-navlink">Treks</a>
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <a href="/altitude-safety" class="hme-navlink">Safety</a>
+                <a href="/dispatches" class="hme-navlink">Stories</a>
+                <a href="/about" class="hme-navlink is-active">About</a>
             </nav>
-            <a href="/#trek-finder" class="hidden sm:inline-flex items-center justify-center border border-accent hover:bg-accent hover:text-background text-[10px] font-mono uppercase tracking-widest px-4 py-2 transition-all">
-                Find Your Route
+            <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+                <span class="relative z-10">Find your route</span>
             </a>
         </div>
     </header>
@@ -387,5 +388,8 @@
         });
     </script>
 <script src="/menu.js?v=4"></script>
+<script src="/reveal.js?v=1"></script>
+<script src="/compass-nav.js?v=1"></script>
+<script src="/theme.js?v=2"></script>
 </body>
 </html>

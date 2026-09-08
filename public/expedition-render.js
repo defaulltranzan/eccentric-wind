@@ -25,14 +25,26 @@
   var M = window.MOUNTAINS || {};
   var D = window.EXPED_DEFAULTS || {};
   var TREKS = window.TREKS || {};
-  var m = M[slug];
-  var root = document.getElementById('mtn-root');
+  var PD = window.PEAKS_DATA || {};
+  var root = document.getElementById('mtn-root') || document.getElementById('peak-root');
+
+  // The same template renders the 14 eight-thousanders (window.MOUNTAINS) and the
+  // 7,000 / 6,000 m peaks (window.PEAKS_DATA — same field shape). `isBand` tells
+  // the few 8000-specific bits apart.
+  var m = M[slug] || PD[slug];
+  var isBand = !!(m && !M[slug]);
+  var CAT = isBand && window.getCategory ? window.getCategory(m.category) : null;
+  var baseUrl = isBand ? '/expeditions/peaks/' : '/expeditions/';
 
   if (!m) {
+    var rb = document.createElement('meta');
+    rb.name = 'robots'; rb.content = 'noindex, follow';
+    document.head.appendChild(rb);
+    document.title = 'Peak not found — Himalayan Magic Adventure';
     root.innerHTML = '<div class="max-w-3xl mx-auto px-6 py-32 text-center">' +
       '<span class="kicker">Peak not found</span>' +
-      '<h1 class="sec-h text-4xl md:text-6xl text-foreground mt-4 mb-6">This mountain isn’t in the atlas</h1>' +
-      '<a href="/expeditions" class="inline-flex border border-accent text-accent hover:bg-accent hover:text-background font-mono text-[11px] uppercase tracking-widest px-6 py-3 transition-all">Back to the 14 eight-thousanders</a></div>';
+      '<h1 class="sec-h text-4xl md:text-6xl text-foreground mt-4 mb-6">This peak isn’t in the database yet</h1>' +
+      '<a href="/expeditions" class="inline-flex border border-accent text-accent hover:bg-accent hover:text-background font-mono text-[11px] uppercase tracking-widest px-6 py-3 transition-all">Back to Expeditions</a></div>';
     return;
   }
 
@@ -40,7 +52,7 @@
   var md = document.querySelector('meta[name="description"]');
   if (md && m.seo && m.seo.description) md.setAttribute('content', m.seo.description);
   var canon = document.getElementById('canonical-link');
-  if (canon) canon.setAttribute('href', 'https://himalayanmagic.com/expeditions/' + m.slug);
+  if (canon) canon.setAttribute('href', 'https://himalayanmagic.com' + baseUrl + m.slug);
 
   function section(id, kicker, heading, body, opts) {
     opts = opts || {};
@@ -56,20 +68,30 @@
   var out = [];
 
   /* ---------- HERO ---------- */
+  var heroBg = m.heroImage
+    ? '<div class="absolute inset-0 z-0"><img src="' + esc(m.heroImage) + '" alt="' + esc(m.name + ', ' + (m.range || '')) + '" class="h-full w-full object-cover"></div>'
+    : '<div class="absolute inset-0 z-0 bg-[#0d0f11]"><div class="absolute inset-0 opacity-[0.5] bg-[radial-gradient(circle_at_28%_18%,rgba(240,98,37,0.16),transparent_55%),repeating-linear-gradient(118deg,rgba(255,255,255,0.045)_0_1px,transparent_1px_28px)]"></div></div>';
+  var heroKicker = isBand
+    ? ((CAT ? CAT.tag + ' · ' : '') + esc(m.range || m.region || '') + (CAT ? ' expedition' : ''))
+    : ('Expedition · ' + esc(m.range) + ' · Rank #' + m.rank + ' of 14');
   out.push('' +
-    '<section class="relative min-h-[86vh] flex flex-col justify-end overflow-hidden border-b border-border">' +
-    '<div class="absolute inset-0 z-0"><img src="' + esc(m.heroImage) + '" alt="' + esc(m.name + ', ' + m.range) + '" class="h-full w-full object-cover"></div>' +
+    '<section data-media class="relative min-h-[80vh] md:min-h-[86vh] flex flex-col justify-end overflow-hidden border-b border-border">' +
+    heroBg +
     '<div class="absolute inset-0 z-10 bg-gradient-to-t from-[#15171a] via-[#15171a]/55 to-[#15171a]/20"></div>' +
     '<div class="absolute inset-0 z-10 bg-gradient-to-r from-[#15171a]/75 to-transparent"></div>' +
     '<div class="relative z-20 max-w-6xl mx-auto w-full px-6 md:px-10 pt-28 pb-12">' +
-    '<nav class="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55 mb-6"><a href="/" class="hover:text-accent">Home</a> / <a href="/expeditions" class="hover:text-accent">Expeditions</a> / <span class="text-white/90">' + esc(m.name) + '</span></nav>' +
-    '<span class="kicker">Expedition · ' + esc(m.range) + ' · Rank #' + m.rank + ' of 14</span>' +
+    '<nav class="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55 mb-6"><a href="/" class="hover:text-accent">Home</a> / <a href="/expeditions" class="hover:text-accent">Expeditions</a>' +
+      (isBand && CAT ? ' / <a href="/expeditions/' + CAT.slug + '" class="hover:text-accent">' + esc(CAT.short) + '</a>' : '') +
+      ' / <span class="text-white/90">' + esc(m.name) + '</span></nav>' +
+    '<span class="kicker">' + heroKicker + '</span>' +
     '<h1 class="sec-h text-white text-5xl md:text-7xl mt-3">' + esc(m.name) + '</h1>' +
     (m.aka ? '<p class="font-mono text-xs md:text-sm text-white/60 mt-2 tracking-wide">' + esc(m.aka) + '</p>' : '') +
     (m.tagline ? '<p class="font-heading font-light text-xl md:text-2xl text-accent mt-3 tracking-wide">' + esc(m.tagline) + '</p>' : '') +
     (m.summary ? '<p class="max-w-2xl font-sans text-sm md:text-base text-white/80 mt-5 leading-relaxed">' + esc(m.summary) + '</p>' : '') +
     '<div class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-border border border-border max-w-4xl">' +
-    hs('Elevation', m.elevationLabel) + hs('Rank', '#' + m.rank + ' / 14') + hs('Country', m.countryLabel) +
+    hs('Elevation', m.elevationLabel) +
+    (isBand ? hs('Category', CAT && CAT.short) : hs('Rank', '#' + m.rank + ' / 14')) +
+    hs('Country', m.countryLabel) +
     hs('Range', m.range) + hs('Season', (m.season && m.season.primary + ' · ' + m.season.window)) + hs('First ascent', (m.firstAscent && m.firstAscent.year)) +
     '</div>' +
     '<div class="mt-8 flex flex-wrap items-center gap-3">' +
@@ -79,7 +101,7 @@
   function hs(l, v) { if (!has(v)) return ''; return '<div class="bg-[#101215]/90 p-3"><span class="lbl block">' + esc(l) + '</span><span class="block font-mono text-[11px] text-white mt-1 leading-snug">' + esc(v) + '</span></div>'; }
 
   /* ---------- SUBNAV ---------- */
-  var nav = [['overview', 'The mountain'], ['difficulty', 'Difficulty'], ['route', 'Route'], ['camps', 'Camps'], ['season', 'Season'], ['hazards', 'Hazards'], ['permits', 'Permits'], ['history', 'History'], ['faq', 'FAQ']];
+  var nav = [['overview', 'The mountain'], ['difficulty', 'Difficulty'], ['route', 'Route'], ['camps', 'Camps'], ['itinerary', 'Itinerary'], ['season', 'Season'], ['hazards', 'Hazards'], ['permits', 'Permits'], ['history', 'History'], ['faq', 'FAQ']];
   out.push('<nav id="subnav" class="sticky top-0 z-30 border-b border-border bg-[#101215]/95 backdrop-blur-md">' +
     '<div class="max-w-6xl mx-auto px-4 md:px-10 flex items-center gap-1 overflow-x-auto">' +
     nav.map(function (n) { return '<a href="#' + n[0] + '" data-nav="' + n[0] + '" class="hx-nav-link shrink-0 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground hover:text-accent px-3 py-3.5 transition-colors">' + esc(n[1]) + '</a>'; }).join('') +
@@ -89,9 +111,16 @@
   out.push('<section class="border-b border-border bg-[#101215]"><div class="max-w-6xl mx-auto px-6 md:px-10 py-8 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">' +
     qf('Elevation', m.elevationLabel) + qf('Feet', m.elevationFt ? m.elevationFt.toLocaleString() + ' ft' : '') +
     qf('Base camp', m.baseCampM ? m.baseCampM.toLocaleString() + ' m' : '') + qf('Season', m.season && m.season.window) +
-    qf('Duration', m.typicalDurationDays) + qf('Coordinates', m.coordinates ? m.coordinates.lat.toFixed(2) + '°N ' + m.coordinates.lon.toFixed(2) + '°E' : '') +
+    qf('Duration', m.typicalDurationDays) + qf('Coordinates', m.coordinates ? (m.coordinates.approx ? '≈ ' : '') + m.coordinates.lat.toFixed(2) + '°N ' + m.coordinates.lon.toFixed(2) + '°E' : '') +
     qf('Region', m.region) +
     '</div></section>');
+  if (isBand && has(m.verify)) {
+    out.push('<section class="border-b border-border bg-[#15171a]"><div class="max-w-6xl mx-auto px-6 md:px-10 py-6">' +
+      '<div class="border border-accent/25 bg-accent/[0.04] px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">' +
+      '<span class="lbl text-accent shrink-0">Being confirmed</span>' +
+      '<span class="font-sans text-[12px] text-muted-foreground leading-relaxed">The route, history, camps and season below are drawn from the mountaineering record. Still to confirm for your trip: ' + m.verify.join('; ') + '.</span>' +
+      '</div></div></section>');
+  }
   function qf(l, v) { if (!has(v)) return ''; return '<div><span class="lbl block">' + esc(l) + '</span><span class="block font-heading text-base text-white mt-1 leading-tight">' + esc(v) + '</span></div>'; }
 
   /* ---------- OVERVIEW ---------- */
@@ -149,6 +178,49 @@
       (m.approach ? '<p class="font-sans text-[13px] text-muted-foreground leading-relaxed max-w-2xl">' + esc(m.approach) + '</p>' : '') +
       (m.acclimatisation ? '<div class="mt-6 border-l-2 border-accent pl-4 max-w-2xl"><span class="lbl block mb-1">Acclimatisation strategy</span><span class="font-sans text-[13px] text-foreground leading-relaxed">' + esc(m.acclimatisation) + '</span></div>' : '');
     out.push(section('camps', '04 — Camps &amp; approach', 'The altitude ladder', body, { alt: true }));
+  }
+
+  /* ---------- ITINERARY (phased expedition timeline) ----------
+     Uses m.itinerary if the record carries one; otherwise synthesises the
+     standard phased timeline from the approach / camps / acclimatisation
+     facts already in the record — no invented detail. */
+  var itin = m.itinerary;
+  if (!has(itin) && (m.approach || has(m.camps))) {
+    var gw = /pakistan|karakoram|baltoro/i.test((m.range || '') + (m.region || '') + (m.approach || ''));
+    var startCity = gw ? 'Islamabad' : (isBand && /china|pamir/i.test(m.countryLabel || '') ? 'Kashgar' : (isBand && /india|ladakh/i.test(m.countryLabel || '') ? 'Leh' : 'Kathmandu'));
+    var startAlt = startCity === 'Leh' ? 3500 : (startCity === 'Kashgar' ? 1300 : (startCity === 'Islamabad' ? 500 : 1400));
+    var bc = m.baseCampM || (has(m.camps) ? m.camps[0].altM : null);
+    var topAlt = has(m.camps) ? m.camps[m.camps.length - 1].altM : m.elevationM;
+    var summitCampAlt = has(m.camps) && m.camps.length > 2 ? m.camps[m.camps.length - 2].altM : null;
+    var total = m.typicalDurationDays || '';
+    var big = /\b(5[0-9]|6[0-9])\b/.test(total);
+    itin = [
+      { phase: 1, title: startCity + ' — arrival & briefing', days: '2–3', altM: startAlt, detail: 'Permits and liaison-officer formalities, an expedition briefing, and a final gear check before leaving the city.' },
+      { phase: 2, title: 'Approach to Base Camp', days: big ? '8–12' : '5–9', altM: bc, detail: (m.approach || '') + ' The approach is also the first phase of acclimatisation.' },
+      { phase: 3, title: 'Base Camp established', days: '2–3', altM: bc, detail: 'Build a stocked Base Camp, rest, run puja with the Sherpa team, and make a first short acclimatisation walk.' },
+      { phase: 4, title: 'Acclimatisation rotations', days: big ? '18–26' : '10–16', altM: summitCampAlt || topAlt, detail: (m.acclimatisation || 'Several rotations up the route to progressively higher camps, returning to Base Camp to recover between them.') },
+      { phase: 5, title: 'Rest & weather window', days: '4–7', altM: bc, detail: 'Descend to Base Camp — or lower — to recover fully, while the team watches the forecast for a settled summit window.' },
+      { phase: 6, title: 'Summit push', days: big ? '5–8' : '4–6', altM: m.elevationM, detail: 'Move back up the route to the top camp' + (summitCampAlt ? ' (~' + summitCampAlt.toLocaleString() + ' m)' : '') + ', then a long summit day' + (has(m.season) ? ' on the chosen window' : '') + ', and descent.' },
+      { phase: 7, title: 'Descent & return', days: '3–6', altM: startAlt, detail: 'Clear the mountain, trek or drive out, return to ' + startCity + ' and debrief.' }
+    ];
+  }
+  if (has(itin)) {
+    var itRows = itin.map(function (p, i) {
+      return '<div class="relative pl-7 pb-7 border-l border-border last:pb-0">' +
+        '<span class="absolute -left-[6px] top-1 h-3 w-3 rounded-full bg-accent"></span>' +
+        '<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">' +
+          '<span class="font-mono text-[10px] text-accent uppercase tracking-widest shrink-0">Phase ' + (p.phase || (i + 1)) + '</span>' +
+          '<span class="font-heading text-lg md:text-xl text-white uppercase leading-tight">' + esc(p.title) + '</span>' +
+          (p.days ? '<span class="font-mono text-[10px] text-muted-foreground">' + esc(p.days) + (/\d/.test(String(p.days)) ? ' days' : '') + '</span>' : '') +
+          (p.altM ? '<span class="font-mono text-[10px] text-white/45">to ~' + p.altM.toLocaleString() + ' m</span>' : '') +
+        '</div>' +
+        (p.detail ? '<p class="font-sans text-[13px] text-muted-foreground mt-1.5 leading-relaxed max-w-2xl">' + esc(p.detail) + '</p>' : '') +
+        '</div>';
+    }).join('');
+    var itBody = '<p class="font-sans text-[13px] text-muted-foreground leading-relaxed max-w-2xl mb-8">The shape of the expedition — the phases every ' + esc(m.name) + ' trip runs through, rather than a fixed day-by-day. Your leader issues the detailed daily plan against the route, the team and the forecast.</p>' +
+      '<div class="mb-6">' + itRows + '</div>' +
+      (m.typicalDurationDays ? '<div class="border border-border bg-card p-4 max-w-lg"><span class="lbl block mb-1">Typical total duration</span><span class="font-heading text-xl text-white">' + esc(m.typicalDurationDays) + '</span></div>' : '');
+    out.push(section('itinerary', '', 'The expedition timeline', itBody));
   }
 
   /* ---------- SEASON + WEATHER ---------- */
@@ -244,13 +316,42 @@
     if (body) out.push(section('related', '11 — Related', 'Where this connects', body));
   })();
 
-  /* ---------- OTHER EIGHT-THOUSANDERS ---------- */
+  /* ---------- RELATED PEAKS (cross-category, from the record) ---------- */
   (function () {
-    var others = Object.keys(M).map(function (k) { return M[k]; }).sort(function (a, b) { return a.rank - b.rank; }).filter(function (x) { return x.slug !== m.slug; });
-    var body = '<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">' + others.map(function (x) {
+    if (!window.getPeak || !has(m.relatedPeaks)) return;
+    var rel = m.relatedPeaks.map(function (s) { return window.getPeak(s); }).filter(Boolean);
+    if (!rel.length) return;
+    var body = '<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">' + rel.map(function (x) {
+      return '<a href="' + esc(x.href) + '" class="group relative overflow-hidden border border-border bg-[#181a1e] h-32 block">' +
+        (x.image ? '<img src="' + esc(x.image) + '" alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-45 group-hover:opacity-65 transition-opacity">' : '<div class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(240,98,37,0.12),transparent_55%),repeating-linear-gradient(115deg,rgba(255,255,255,0.04)_0_1px,transparent_1px_20px)]"></div>') +
+        '<div class="absolute inset-0 bg-gradient-to-t from-[#101215] to-transparent"></div>' +
+        '<div class="relative z-10 flex h-full flex-col justify-end p-3"><span class="font-mono text-[9px] text-white/60">' + esc((x.categoryLabel || '') + (x.elevationDisplay ? ' · ' + x.elevationDisplay : '')) + '</span><span class="font-heading text-sm font-light uppercase text-white leading-tight group-hover:text-accent transition-colors">' + esc(x.name) + '</span></div></a>';
+    }).join('') + '</div>';
+    out.push(section('related-peaks', '', 'Climbers also look at', body));
+  })();
+
+  /* ---------- OTHER PEAKS IN THE SAME BAND ---------- */
+  (function () {
+    var others, heading, allLink;
+    if (isBand && window.getPeaks) {
+      others = window.getPeaks({ category: m.category }).filter(function (x) { return x.slug !== m.slug; });
+      heading = 'The rest of the ' + (CAT ? CAT.short : '7,000 m') + ' collection';
+      allLink = CAT ? '/expeditions/' + CAT.slug : '/expeditions';
+      var body = '<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">' + others.map(function (x) {
+        return '<a href="' + esc(x.href) + '" class="group relative overflow-hidden border border-border bg-[#181a1e] h-32 block">' +
+          (x.image ? '<img src="' + esc(x.image) + '" alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-45 group-hover:opacity-65 transition-opacity">' : '<div class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(240,98,37,0.12),transparent_55%),repeating-linear-gradient(115deg,rgba(255,255,255,0.04)_0_1px,transparent_1px_20px)]"></div>') +
+          '<div class="absolute inset-0 bg-gradient-to-t from-[#101215] to-transparent"></div>' +
+          '<div class="relative z-10 flex h-full flex-col justify-end p-3"><span class="font-mono text-[9px] text-white/60">' + esc(x.elevationDisplay || '') + ' · ' + esc(x.countryLabel || '') + '</span><span class="font-heading text-sm font-light uppercase text-white leading-tight group-hover:text-accent transition-colors">' + esc(x.name) + '</span></div></a>';
+      }).join('') + '</div>' +
+      '<a href="' + allLink + '" class="mt-6 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent hover:text-accent-hover transition-colors">All ' + (CAT ? esc(CAT.short) : '') + ' peaks <span aria-hidden="true">&rarr;</span></a>';
+      out.push(section('others', '', heading, body, { alt: true }));
+      return;
+    }
+    others = Object.keys(M).map(function (k) { return M[k]; }).sort(function (a, b) { return a.rank - b.rank; }).filter(function (x) { return x.slug !== m.slug; });
+    var body2 = '<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">' + others.map(function (x) {
       return '<a href="/expeditions/' + esc(x.slug) + '" class="group relative overflow-hidden border border-border bg-card h-32 block"><img src="' + esc(x.heroImage) + '" alt="' + esc(x.name) + '" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-55 group-hover:opacity-75 transition-opacity"><div class="absolute inset-0 bg-gradient-to-t from-[#101215] to-transparent"></div><div class="relative z-10 flex h-full flex-col justify-end p-3"><span class="font-mono text-[9px] text-white/60">#' + x.rank + ' · ' + esc(x.elevationLabel) + '</span><span class="font-heading text-sm font-light uppercase text-white leading-tight group-hover:text-accent transition-colors">' + esc(x.name) + '</span></div></a>';
     }).join('') + '</div>';
-    out.push(section('others', '12 — The atlas', 'The other thirteen', body, { alt: true }));
+    out.push(section('others', '12 — The atlas', 'The other thirteen', body2, { alt: true }));
   })();
 
   /* ---------- CTA ---------- */

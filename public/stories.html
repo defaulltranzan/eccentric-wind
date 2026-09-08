@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Field Journal — Trekking &amp; Expedition Stories | Himalayan Magic Adventure</title>
+    <meta name="description" content="First-hand essays and practical guidance from Himalayan Magic Adventure — acclimatisation, pass crossings, route choice and life at altitude in the Nepal Himalaya.">
+    <meta name="keywords" content="Nepal trekking blog, Himalaya field journal, acclimatisation guide, Thorong La, Everest Base Camp stories, Gokyo Ri">
+    <link rel="canonical" href="https://himalayanmagic.com/stories">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://himalayanmagic.com/stories">
+    <meta property="og:title" content="The Field Journal — Himalayan Magic Adventure">
+    <meta property="og:description" content="First-hand essays from the trails and peaks of the Nepal Himalaya.">
+
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="icon" type="image/png" href="/images/logo-icon.png">
+    <link rel="apple-touch-icon" href="/images/logo-icon.png">
+    <link rel="stylesheet" href="/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --background: #1b1e22; --foreground: #f3f4f6; --card: #22252a;
+            --border: #2e3239; --accent: #f06225; --accent-hover: #d04e1b;
+            --muted: #272b32; --muted-foreground: #9ca3af;
+            --sp-xs: 1.25rem; --sp-s: 2rem;
+            --sp-m: 3.25rem; --sp-l: clamp(3.75rem, 7vw, 6rem);
+        }
+        .light-mode {
+            --background: #f9fafb; --foreground: #111827; --card: #ffffff;
+            --border: #e5e7eb; --accent: #e04f1a; --accent-hover: #c23e11;
+            --muted: #f3f4f6; --muted-foreground: #4b5563;
+        }
+        body { background-color: var(--background); color: var(--foreground); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.65; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--background); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+        .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .28em; color: var(--accent); }
+        .sec-h { font-family: 'Oswald', sans-serif; font-weight: 300; text-transform: uppercase; letter-spacing: -.02em; line-height: .96; }
+        .accent { color: var(--accent); font-weight: 600; }
+        .wrap { max-width: 1200px; margin-inline: auto; }
+        .sec  { padding-top: var(--sp-l); padding-bottom: var(--sp-l); }
+        .sec-m { padding-top: var(--sp-m); padding-bottom: var(--sp-m); }
+
+        .j-rule { display:inline-block; width:1.9rem; height:1px; background:var(--accent); vertical-align:middle; margin-right:.7rem; }
+        /* faint field-survey topo wash */
+        .j-topo { position:absolute; inset:0; opacity:.06; pointer-events:none;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='500'%3E%3Cg fill='none' stroke='%23f06225' stroke-width='1'%3E%3Cpath d='M-40 380 C 260 300 420 350 640 280 C 900 200 1100 250 1640 180'/%3E%3Cpath d='M-40 440 C 300 360 480 400 720 330 C 980 250 1180 300 1640 240'/%3E%3Cpath d='M-40 320 C 240 250 400 300 620 230 C 880 150 1080 200 1640 130'/%3E%3C/g%3E%3C/svg%3E");
+            background-size:cover; background-position:center; }
+
+        .fade-up { opacity: 0; transform: translateY(16px); transition: opacity .55s ease, transform .55s ease; }
+        .fade-up.in { opacity: 1; transform: none; }
+
+        /* filter chips + search */
+        .j-chip { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase;
+            color:var(--muted-foreground); border:1px solid var(--border); padding:.44rem .8rem; cursor:pointer; white-space:nowrap;
+            transition:color .2s, border-color .2s, background .2s; }
+        .j-chip:hover { color:var(--foreground); border-color:rgba(240,98,37,.5); }
+        .j-chip.is-on { background:var(--accent); border-color:var(--accent); color:#fff; }
+        .j-search { background:var(--background); border:1px solid var(--border); color:var(--foreground);
+            font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.04em; padding:.5rem .7rem .5rem 2rem; outline:none;
+            transition:border-color .2s, width .25s ease; }
+        .light-mode .j-search { background:#fff; }
+        .j-search:focus { border-color:var(--accent); }
+
+        /* story cards */
+        .j-card { display:flex; flex-direction:column; border:1px solid var(--border); background:var(--card); overflow:hidden; transition:border-color .25s ease, transform .25s ease; }
+        .j-card:hover { border-color:var(--accent); }
+        .j-card .j-img { transition:transform .45s ease, opacity .45s ease; }
+        .j-card:hover .j-img { transform:scale(1.05); opacity:1; }
+        .j-card .j-arrow { display:inline-block; transition:transform .25s ease; }
+        .j-card:hover .j-arrow { transform:translateX(4px); }
+        .j-clamp2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+        .j-clamp3 { display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+        .j-ribbon { position:absolute; top:.6rem; left:.6rem; font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.18em; text-transform:uppercase; background:var(--accent); color:#fff; padding:.22rem .5rem; }
+
+        /* featured */
+        .j-feat-img { transition:transform .5s ease; }
+        .j-feat:hover .j-feat-img { transform:scale(1.03); }
+        .j-feat .j-underline { position:relative; }
+        .j-feat .j-underline::after { content:""; position:absolute; left:0; bottom:-3px; height:1px; width:0; background:var(--accent); transition:width .35s ease; }
+        .j-feat:hover .j-underline::after { width:100%; }
+
+        /* destination tiles / field-note list */
+        .j-dest { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted-foreground);
+            border:1px solid var(--border); padding:.7rem .9rem; cursor:pointer; transition:color .2s, border-color .2s; white-space:nowrap; }
+        .j-dest:hover, .j-dest.is-on { color:var(--accent); border-color:var(--accent); }
+        .j-note-row { transition:border-color .2s ease, padding-left .2s ease; }
+        .j-note-row:hover { border-color:var(--accent); padding-left:.4rem; }
+
+        .j-chevron { animation: jbob 1.8s ease-in-out infinite; }
+        @keyframes jbob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up { opacity:1 !important; transform:none !important; transition:none; }
+            .j-chevron { animation:none; }
+            .j-card .j-img, .j-card:hover .j-img, .j-feat .j-feat-img, .j-feat:hover .j-feat-img { transition:none; transform:none; }
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+<!-- MAIN BRAND HEADER & NAVIGATION -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <span class="inline-flex h-16 md:h-20 shrink-0 items-center overflow-hidden rounded-2xl bg-white p-1 shadow-sm ring-1 ring-black/5 transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="Himalayan Magic Adventure" width="520" height="473" class="h-full w-auto object-contain"></span>
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">The Field Journal · Est. 1993</span>
+            </span>
+        </a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink">Treks</a>
+            <div class="hme-navgroup">
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <div class="hme-navdrop">
+                    <a href="/expeditions" class="hme-navdrop-all">The Full Atlas</a>
+                    <span class="hme-navdrop-sep"></span>
+                    <a href="/expeditions/8000m">8,000 m +<span class="hme-navdrop-n">14 peaks</span></a>
+                    <a href="/expeditions/7000m">7,000 m +<span class="hme-navdrop-n">9 peaks</span></a>
+                    <a href="/expeditions/6000m">6,000 m +<span class="hme-navdrop-n">8 peaks</span></a>
+                </div>
+            </div>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/stories" class="hme-navlink is-active">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
+        </nav>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent xl:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
+    </div>
+</header>
+
+<main class="flex-1">
+
+    <!-- HERO -->
+    <section class="relative overflow-hidden border-b border-border bg-[#191b1f] px-6 md:px-10">
+        <div class="absolute inset-0 z-0">
+            <img src="/images/hero-mountain.jpg" alt="" aria-hidden="true" class="h-full w-full object-cover object-center opacity-[0.14] [filter:grayscale(1)_contrast(1.1)]">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#191b1f]/70 via-[#191b1f]/85 to-[#191b1f]"></div>
+        </div>
+        <div class="j-topo"></div>
+        <div class="wrap relative z-10" style="padding-top:var(--sp-l);padding-bottom:var(--sp-m)">
+            <span class="kicker"><span class="j-rule"></span>The Field Journal</span>
+            <h1 class="mt-4 sec-h text-foreground" style="font-size:clamp(2rem,5.5vw,3.4rem);text-wrap:balance">
+                Stories From <span class="accent">The High Places</span>
+            </h1>
+            <p class="mt-5 max-w-xl font-sans text-[1.0625rem] md:text-lg leading-relaxed text-muted-foreground" id="j-intro">
+                Long-form notes from the trail and the mountain — written by the guides and doctors who work these routes.
+            </p>
+            <div class="mt-7 flex items-center gap-5">
+                <a href="#journal" class="inline-flex items-center gap-2 border border-accent px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-background transition-all">
+                    Explore the Journal <i class="fa-solid fa-arrow-down text-[10px] j-chevron"></i>
+                </a>
+                <span class="hidden sm:block font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground" id="j-count-hint"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section class="border-b border-border bg-background px-6 md:px-10">
+        <div class="wrap sec-m">
+            <span class="kicker"><span class="j-rule"></span>Featured Story</span>
+            <a id="j-feat" class="j-feat group mt-6 grid gap-7 md:grid-cols-[1.55fr_1fr] md:items-center md:gap-10" href="#"></a>
+        </div>
+    </section>
+
+    <!-- EXPLORE BAR (sticky) -->
+    <div id="journal" class="sticky top-0 z-30 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+        <div class="wrap px-6 md:px-10">
+            <div class="flex items-center gap-3 py-3">
+                <div id="j-chips" class="flex flex-1 items-center gap-2 overflow-x-auto"></div>
+                <div class="relative shrink-0">
+                    <i class="fa-solid fa-magnifying-glass pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground"></i>
+                    <input id="j-search" type="search" autocomplete="off" placeholder="Search the journal…" aria-label="Search the field journal"
+                           class="j-search w-40 focus:w-56 md:w-52 md:focus:w-64">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID -->
+    <section class="border-b border-border bg-background px-6 md:px-10">
+        <div class="wrap sec-m">
+            <div class="flex items-baseline justify-between gap-4">
+                <span class="kicker" id="j-grid-label">Latest Stories</span>
+                <button type="button" id="j-clear" class="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground hover:text-accent transition-colors">Clear filter ×</button>
+            </div>
+            <div id="j-grid" class="mt-7 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-6"></div>
+            <div id="j-empty" class="hidden py-14 text-center font-mono text-xs text-muted-foreground"></div>
+        </div>
+    </section>
+
+    <!-- DESTINATION NAVIGATOR -->
+    <section class="border-b border-border bg-[#191b1f] px-6 md:px-10">
+        <div class="wrap sec-m">
+            <span class="kicker"><span class="j-rule"></span>Stories by Destination</span>
+            <p class="mt-3 max-w-lg font-sans text-[14px] leading-relaxed text-muted-foreground">Follow the journal to a single valley — the writing there connects straight through to the trails we guide.</p>
+            <div id="j-dests" class="mt-6 flex flex-wrap gap-2.5"></div>
+        </div>
+    </section>
+
+    <!-- FIELD NOTES -->
+    <section class="border-b border-border bg-background px-6 md:px-10">
+        <div class="wrap sec-m">
+            <span class="kicker"><span class="j-rule"></span>The Field Notes</span>
+            <p class="mt-3 max-w-lg font-sans text-[14px] leading-relaxed text-muted-foreground">Short, practical pieces — the things worth knowing before you book.</p>
+            <div id="j-notes" class="mt-7 grid grid-cols-1 gap-x-12 gap-y-1 md:grid-cols-2"></div>
+        </div>
+    </section>
+
+    <!-- JOURNAL CTA -->
+    <section class="border-b border-border bg-[#191b1f] px-6 md:px-10">
+        <div class="wrap" style="padding-top:var(--sp-m);padding-bottom:var(--sp-m)">
+            <div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+                <div>
+                    <h2 class="sec-h text-2xl md:text-[1.9rem] text-foreground">Join the Field Journal</h2>
+                    <p class="mt-2 font-sans text-[14px] leading-relaxed text-muted-foreground max-w-md">New essays from the trail, a few times a season. No noise.</p>
+                </div>
+                <form id="j-news" class="flex w-full max-w-md gap-2 md:w-auto">
+                    <input id="j-news-email" type="email" required placeholder="name@domain.com" aria-label="Email address"
+                           class="j-search flex-1 !pl-3 md:w-56">
+                    <button type="submit" class="shrink-0 border border-accent bg-accent px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-background font-semibold hover:bg-accent-hover transition-colors">Subscribe</button>
+                </form>
+            </div>
+            <p id="j-news-msg" class="mt-3 hidden font-mono text-[11px] uppercase tracking-[0.15em] text-accent"></p>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="bg-background px-6 md:px-10">
+        <div class="wrap sec-m text-center">
+            <h2 class="sec-h text-xl md:text-2xl text-foreground">Planning a trek or an expedition?</h2>
+            <p class="mt-2 font-sans text-[14px] text-muted-foreground">The planning desk in Kathmandu answers within a day.</p>
+            <a href="/contact" class="mt-6 inline-flex border border-accent px-6 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-background transition-all">Talk to us</a>
+        </div>
+    </section>
+</main>
+
+<footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <span class="inline-flex h-28 items-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-sm ring-1 ring-black/5 transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="Himalayan Magic Adventure" width="520" height="473" class="h-full w-auto object-contain"></span>
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/stories" class="block py-1 hover:text-accent transition-colors">The Field Journal</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 38 trails →</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about#sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <button onclick="hmeToggleTheme()" aria-label="Toggle theme" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all">
+        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+    </button>
+</div>
+
+<script src="/stories.js?v=2"></script>
+<script>
+(function () {
+    'use strict';
+    /* ---------- theme ---------- */
+    window.hmeToggleTheme = function () {
+        var t = (localStorage.getItem('vo_theme') === 'light') ? 'dark' : 'light';
+        localStorage.setItem('vo_theme', t); applyTheme();
+    };
+    function applyTheme() {
+        var light = localStorage.getItem('vo_theme') === 'light';
+        document.body.classList.toggle('light-mode', light);
+        var i = document.getElementById('theme-icon');
+        if (i) i.className = 'fa-solid ' + (light ? 'fa-sun' : 'fa-moon') + ' text-sm' + (light ? ' text-accent' : '');
+    }
+    applyTheme();
+
+    var esc = function (s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    };
+    var fmtDate = window.formatStoryDate || function (s) { return s; };
+    var D = window.STORY_DEFAULTS || {};
+    if (D.intro) { var iEl = document.getElementById('j-intro'); if (iEl) iEl.textContent = D.intro; }
+
+    function phImg(label) {
+        var tx = String(label || '').toUpperCase().replace(/[<>&]/g, '').slice(0, 30);
+        return 'data:image/svg+xml,' + encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750">' +
+            '<rect width="1200" height="750" fill="#1b1e22"/>' +
+            '<path d="M0 520 L280 300 L470 470 L720 260 L940 440 L1200 320 L1200 750 L0 750Z" fill="#ffffff" fill-opacity="0.04"/>' +
+            '<text x="48" y="690" font-family="monospace" font-size="24" fill="#9ca3af" letter-spacing="3">' + tx + '</text>' +
+            '<text x="48" y="720" font-family="monospace" font-size="12" fill="#5f636b" letter-spacing="3">PHOTOGRAPHY PENDING</text></svg>');
+    }
+    function img(src, alt, cls, ph) {
+        return '<img src="' + esc(src || '') + '" alt="' + esc(alt || '') + '" class="' + cls + '" loading="lazy" decoding="async" ' +
+            'onerror="this.onerror=null;this.src=\'' + phImg(ph || alt).replace(/'/g, '%27') + '\'">';
+    }
+
+    var ALL = (window.getStories ? window.getStories() : []);
+    if (!ALL.length) return;
+    var newest = ALL[0].slug;
+
+    var hint = document.getElementById('j-count-hint');
+    if (hint) hint.textContent = ALL.length + (ALL.length === 1 ? ' story' : ' stories') + ' · updated ' + fmtDate(ALL[0].date);
+
+    /* ---------- taxonomy ---------- */
+    var TOPICS = [
+        ['all', 'All'], ['trekking', 'Trekking'], ['expeditions', 'Expeditions'],
+        ['planning', 'Planning'], ['culture', 'Culture'], ['safety', 'Safety']
+    ];
+    var DEST_LABELS = {
+        everest: 'Everest', gokyo: 'Gokyo', annapurna: 'Annapurna', mustang: 'Mustang',
+        langtang: 'Langtang', manaslu: 'Manaslu', dolpo: 'Dolpo', kanchenjunga: 'Kanchenjunga'
+    };
+
+    var state = { topic: 'all', dest: null, q: '' };
+
+    function ribbonFor(s) {
+        if (s.slug === newest) return 'Latest';
+        if ((s.topics || []).indexOf('planning') > -1) return 'Guide';
+        if (s.readMinutes && s.readMinutes <= 6) return 'Field Note';
+        if (s.editorsPick) return "Editor's Pick";
+        return '';
+    }
+
+    /* ---------- featured ---------- */
+    var feat = (window.getFeaturedStory ? window.getFeaturedStory() : ALL[0]);
+    var fEl = document.getElementById('j-feat');
+    fEl.href = '/stories/' + feat.slug;
+    fEl.innerHTML =
+        '<div class="overflow-hidden border border-border">' +
+            '<div class="aspect-[16/10] overflow-hidden">' +
+                img(feat.heroImage, feat.heroAlt || feat.title, 'j-feat-img h-full w-full object-cover opacity-85', feat.title) +
+            '</div>' +
+        '</div>' +
+        '<div>' +
+            '<span class="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">' + (feat.editorsPick ? "Editor's Pick &nbsp;·&nbsp; " : '') + esc(feat.category) + '</span>' +
+            '<h2 class="mt-3 sec-h text-foreground group-hover:text-accent transition-colors" style="font-size:clamp(1.7rem,3.2vw,2.5rem);text-wrap:balance">' + esc(feat.title) + '</h2>' +
+            '<p class="j-clamp3 mt-3 max-w-prose font-sans text-[1.0625rem] leading-relaxed" style="color:#c6cad0">' + esc(feat.excerpt) + '</p>' +
+            '<div class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">' +
+                '<span class="text-foreground/90">' + esc(feat.author) + '</span><span class="text-border">·</span>' +
+                '<span>' + esc(fmtDate(feat.date)) + '</span>' +
+                (feat.readMinutes ? '<span class="text-border">·</span><span>' + esc(feat.readMinutes) + ' min read</span>' : '') +
+            '</div>' +
+            '<span class="j-underline mt-6 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-accent">Read story <span class="j-arrow" aria-hidden="true">&rarr;</span></span>' +
+        '</div>';
+
+    /* ---------- chips ---------- */
+    var chipWrap = document.getElementById('j-chips');
+    chipWrap.innerHTML = TOPICS.map(function (t) {
+        return '<button type="button" class="j-chip' + (t[0] === 'all' ? ' is-on' : '') + '" data-topic="' + t[0] + '">' + t[1] + '</button>';
+    }).join('') + '<button type="button" class="j-chip" data-dest-toggle>Destinations</button>';
+
+    chipWrap.addEventListener('click', function (e) {
+        var b = e.target.closest('.j-chip');
+        if (!b) return;
+        if (b.hasAttribute('data-dest-toggle')) {
+            document.getElementById('j-dests').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        state.topic = b.dataset.topic;
+        state.dest = null;
+        chipWrap.querySelectorAll('.j-chip').forEach(function (c) { c.classList.toggle('is-on', c === b); });
+        syncDests();
+        render();
+    });
+
+    /* ---------- search ---------- */
+    var search = document.getElementById('j-search');
+    var deb;
+    search.addEventListener('input', function () {
+        clearTimeout(deb);
+        deb = setTimeout(function () { state.q = search.value.trim().toLowerCase(); render(); }, 140);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === '/' && document.activeElement !== search && !/^(input|textarea|select)$/i.test((document.activeElement || {}).tagName || '')) {
+            e.preventDefault(); search.focus();
+        }
+        if (e.key === 'Escape' && document.activeElement === search) { search.value = ''; state.q = ''; render(); search.blur(); }
+    });
+
+    /* ---------- destinations ---------- */
+    var destWrap = document.getElementById('j-dests');
+    var DESTS = (window.getStoryDestinations ? window.getStoryDestinations() : []);
+    destWrap.innerHTML = DESTS.map(function (d) {
+        return '<button type="button" class="j-dest" data-dest="' + d + '">' + esc(DEST_LABELS[d] || d) + '</button>';
+    }).join('');
+    destWrap.addEventListener('click', function (e) {
+        var b = e.target.closest('.j-dest'); if (!b) return;
+        var d = b.dataset.dest;
+        state.dest = (state.dest === d) ? null : d;
+        state.topic = 'all'; state.q = ''; search.value = '';
+        chipWrap.querySelectorAll('.j-chip').forEach(function (c) { c.classList.toggle('is-on', c.dataset.topic === 'all'); });
+        syncDests();
+        render();
+        document.getElementById('journal').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    function syncDests() {
+        destWrap.querySelectorAll('.j-dest').forEach(function (c) { c.classList.toggle('is-on', c.dataset.dest === state.dest); });
+    }
+
+    /* ---------- field notes ---------- */
+    var notes = ALL.filter(function (s) { return (s.readMinutes && s.readMinutes <= 6) || (s.topics || []).indexOf('planning') > -1 || (s.topics || []).indexOf('safety') > -1; }).slice(0, 6);
+    document.getElementById('j-notes').innerHTML = notes.map(function (s, i) {
+        return '<a href="/stories/' + esc(s.slug) + '" class="j-note-row group flex items-baseline gap-4 border-b border-border py-4">' +
+            '<span class="shrink-0 font-mono text-[10px] tracking-[0.2em] text-accent">' + String(i + 1).padStart(2, '0') + '</span>' +
+            '<span class="flex-1 font-heading text-[1.05rem] uppercase tracking-tight text-foreground group-hover:text-accent transition-colors leading-tight">' + esc(s.title) + '</span>' +
+            '<span class="j-arrow shrink-0 font-mono text-[11px] text-accent">&rarr;</span>' +
+        '</a>';
+    }).join('');
+
+    /* ---------- newsletter ---------- */
+    var nForm = document.getElementById('j-news');
+    nForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = document.getElementById('j-news-email').value.trim();
+        var msg = document.getElementById('j-news-msg');
+        var done = function () {
+            msg.textContent = 'You’re on the list — first essay lands next season.';
+            msg.classList.remove('hidden');
+            nForm.reset();
+        };
+        try {
+            fetch('/api/inquiry', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: 'Journal subscriber', email: email, message: 'Field Journal newsletter signup' })
+            }).then(done).catch(done);
+        } catch (x) { done(); }
+    });
+
+    /* ---------- grid render ---------- */
+    var grid = document.getElementById('j-grid');
+    var emptyEl = document.getElementById('j-empty');
+    var clearBtn = document.getElementById('j-clear');
+    var gridLabel = document.getElementById('j-grid-label');
+    var io = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.06 });
+
+    function spanFor(i) {
+        if (i === 0) return 'md:col-span-4';
+        if (i === 1) return 'md:col-span-2';
+        var k = (i - 2) % 7;
+        return (k >= 4) ? 'md:col-span-2' : 'md:col-span-3';
+    }
+    function sizeFor(cls) {
+        if (cls.indexOf('col-span-4') > -1) return 'lg';
+        if (cls.indexOf('col-span-2') > -1) return 'sm';
+        return 'md';
+    }
+    function card(s, i) {
+        var span = spanFor(i), size = sizeFor(span);
+        var rib = ribbonFor(s);
+        var aspect = size === 'lg' ? 'aspect-[16/9]' : (size === 'sm' ? 'aspect-[4/3]' : 'aspect-[16/10]');
+        var titleSize = size === 'lg' ? 'text-2xl md:text-[1.7rem]' : (size === 'sm' ? 'text-[1.05rem]' : 'text-[1.3rem]');
+        return '<a href="/stories/' + esc(s.slug) + '" class="j-card fade-up group ' + span + '">' +
+            '<div class="relative ' + aspect + ' overflow-hidden">' +
+                img(s.heroImage, s.heroAlt || s.title, 'j-img h-full w-full object-cover opacity-75', s.title) +
+                (rib ? '<span class="j-ribbon">' + esc(rib) + '</span>' : '') +
+            '</div>' +
+            '<div class="flex flex-1 flex-col p-5' + (size === 'lg' ? ' md:p-6' : '') + '">' +
+                '<span class="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">' + esc(s.category) + '</span>' +
+                '<h3 class="mt-1.5 font-heading uppercase tracking-tight text-foreground leading-[1.14] group-hover:text-accent transition-colors ' + titleSize + '">' + esc(s.title) + '</h3>' +
+                (size !== 'sm' ? '<p class="j-clamp2 mt-2 flex-1 font-sans text-[13px] leading-relaxed text-muted-foreground">' + esc(s.excerpt) + '</p>' : '<span class="flex-1"></span>') +
+                '<div class="mt-4 flex items-center justify-between border-t border-border pt-3.5 font-mono text-[10px] uppercase tracking-widest">' +
+                    '<span class="text-muted-foreground truncate">' + esc(fmtDate(s.date)) + (s.readMinutes ? ' · ' + s.readMinutes + ' min' : '') + '</span>' +
+                    '<span class="text-accent shrink-0">Read <span class="j-arrow">&rarr;</span></span>' +
+                '</div>' +
+            '</div></a>';
+    }
+
+    function currentList() {
+        var list = ALL.slice();
+        if (state.dest) list = list.filter(function (s) { return (s.destinations || []).indexOf(state.dest) > -1; });
+        if (state.topic && state.topic !== 'all') list = list.filter(function (s) { return (s.topics || []).indexOf(state.topic) > -1; });
+        if (state.q) {
+            list = list.filter(function (s) {
+                var hay = (s.title + ' ' + s.excerpt + ' ' + s.category + ' ' + s.author + ' ' + (s.tags || []).join(' ') + ' ' + (s.destinations || []).join(' ')).toLowerCase();
+                return hay.indexOf(state.q) > -1;
+            });
+        }
+        return list;
+    }
+
+    function render() {
+        var list = currentList();
+        var filtered = state.topic !== 'all' || state.dest || state.q;
+        clearBtn.classList.toggle('hidden', !filtered);
+        gridLabel.textContent = state.dest ? (DEST_LABELS[state.dest] || state.dest) + ' — stories'
+            : state.q ? 'Search results'
+            : state.topic !== 'all' ? (TOPICS.filter(function (t) { return t[0] === state.topic; })[0] || ['', ''])[1] + ' stories'
+            : 'Latest Stories';
+
+        if (!list.length) {
+            grid.innerHTML = '';
+            emptyEl.classList.remove('hidden');
+            emptyEl.innerHTML = 'Nothing in the journal for this yet — <button type="button" class="text-accent underline" data-reset>see everything</button>.';
+            return;
+        }
+        emptyEl.classList.add('hidden');
+        grid.innerHTML = list.map(card).join('');
+        grid.querySelectorAll('.fade-up').forEach(function (el) { io.observe(el); });
+    }
+
+    function resetAll() {
+        state = { topic: 'all', dest: null, q: '' };
+        search.value = '';
+        chipWrap.querySelectorAll('.j-chip').forEach(function (c) { c.classList.toggle('is-on', c.dataset.topic === 'all'); });
+        syncDests();
+        render();
+    }
+    clearBtn.addEventListener('click', resetAll);
+    emptyEl.addEventListener('click', function (e) { if (e.target.closest('[data-reset]')) resetAll(); });
+
+    render();
+})();
+</script>
+<script src="/menu.js?v=8"></script>
+<script src="/back.js?v=1"></script>
+<script src="/compass-nav.js?v=2"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>

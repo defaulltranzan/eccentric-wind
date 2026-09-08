@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Himalayan Magic Adventure — Premier Himalayan Expeditions & High Passes of Nepal</title>
+    <meta name="description" content="Himalayan Magic Adventure — a Nepali-owned trekking and mountaineering operator since 1993. 28 trekking trails, the 14 eight-thousanders, and licensed local guides on every departure.">
+    <meta name="keywords" content="Nepal trekking, Everest Base Camp trek, Annapurna Circuit, Himalayan expeditions, Manaslu Circuit, Langtang trek, eight-thousanders, Nepal trekking company">
+    <link rel="canonical" href="https://himalayanmagic.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Himalayan Magic Adventure">
+    <meta property="og:url" content="https://himalayanmagic.com/">
+    <meta property="og:title" content="Himalayan Magic Adventure — Trekking &amp; Expeditions in Nepal">
+    <meta property="og:description" content="A Nepali-owned trekking and expedition operator since 1993. Discover, compare and plan Himalayan treks and 8,000 m expeditions.">
+    <meta property="og:image" content="https://himalayanmagic.com/images/hero-mountain.jpg">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Himalayan Magic Adventure — Trekking &amp; Expeditions in Nepal">
+    <meta name="twitter:description" content="A Nepali-owned trekking and expedition operator since 1993. Discover, compare and plan Himalayan treks and 8,000 m expeditions.">
+    <meta name="twitter:image" content="https://himalayanmagic.com/images/hero-mountain.jpg">
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "Himalayan Magic Adventure",
+      "alternateName": "Himalayan Magic Adventure",
+      "url": "https://himalayanmagic.com",
+      "logo": "https://himalayanmagic.com/images/logo-icon.png",
+      "image": "https://himalayanmagic.com/images/hero-mountain.jpg",
+      "description": "A Nepali-owned Himalayan trekking and mountaineering operator working the Himalaya and Karakoram since 1993.",
+      "foundingDate": "1993",
+      "telephone": "+977 01-5361254",
+      "email": "info@himalayanmagic.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "318 Thamel Marg",
+        "addressLocality": "Kathmandu",
+        "addressRegion": "Bagmati",
+        "postalCode": "44600",
+        "addressCountry": "NP"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.7154,
+        "longitude": 85.3123
+      },
+      "sameAs": []
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="stylesheet" href="/tailwind.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --background: #1b1e22;
+            --foreground: #f3f4f6;
+            --card: #22252a;
+            --border: #2e3239;
+            --accent: #f06225;
+            --accent-hover: #d04e1b;
+            --muted: #272b32;
+            --muted-foreground: #9ca3af;
+        }
+        
+        .light-mode {
+            --background: #f9fafb;
+            --foreground: #111827;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --accent: #e04f1a;
+            --accent-hover: #c23e11;
+            --muted: #f3f4f6;
+            --muted-foreground: #4b5563;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1.6;
+            /* NB: do not transition background-color — Chrome fails to re-resolve
+               a var()-derived value mid-transition, which leaves the body stuck
+               on the old theme's background. Colour transition is safe. */
+            transition: none; /* theme switch is instant — see tw-input.css note */
+        }
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        /* Animation: Drift */
+        @keyframes drift {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0); }
+        }
+        .animate-drift {
+            animation: drift 8s ease-in-out infinite;
+        }
+        /* Announcement Bar Scroll Behavior */
+        .announcement-bar {
+            transition: transform 0.3s ease-in-out;
+        }
+        .announcement-hidden {
+            transform: translateY(-100%);
+        }
+        /* Editing Highlights */
+        .editable-active {
+            outline: 1px dashed var(--accent) !important;
+            outline-offset: 4px;
+            cursor: text;
+        }
+        .editable-active:hover {
+            background-color: rgba(240, 98, 37, 0.05);
+        }
+
+        /* Flagship Expeditions — single-line scroller */
+        .hme-hscroll { scrollbar-width: thin; scrollbar-color: var(--accent) transparent; scroll-behavior: smooth; }
+        .hme-hscroll::-webkit-scrollbar { height: 4px; }
+        .hme-hscroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .hme-hscroll::-webkit-scrollbar-thumb { background: rgba(240,98,37,0.5); border-radius: 2px; }
+        .hme-hscroll::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+        .hme-flag-nav {
+            position: absolute; top: 42%; z-index: 20; height: 2.6rem; width: 2.6rem;
+            display: none; align-items: center; justify-content: center;
+            border: 1px solid var(--border); background: rgba(16,18,21,0.92); color: var(--foreground);
+            font-size: 20px; line-height: 1; cursor: pointer; backdrop-filter: blur(6px);
+            transition: border-color .2s, color .2s, transform .18s, opacity .25s;
+        }
+        .hme-flag-nav:hover { border-color: var(--accent); color: var(--accent); }
+        .hme-flag-nav:active { transform: scale(.92); }
+        .hme-flag-nav[disabled] { opacity: .3; pointer-events: none; }
+        @media (min-width: 1024px) { .hme-flag-nav { display: flex; } }
+        @media (max-width: 767px) { .hme-flag-extra { display: none !important; } }
+        @media (prefers-reduced-motion: reduce) { .hme-hscroll { scroll-behavior: auto; } }
+        /* .hme-navlink / .hme-cta header-nav hover styles now live in build/tw-input.css (shared by all pages) */
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden relative">
+
+    <!-- LEFT FIXED SCROLL ALTITUDE BAROMETER (1,300M -> 8,848M) -->
+    <div class="pointer-events-none fixed left-6 top-0 z-40 hidden h-screen flex-col items-center justify-center lg:flex">
+        <div class="relative flex h-[55vh] w-12 flex-col items-center">
+            <span class="absolute -top-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground">8,848m</span>
+            <div class="relative h-full w-px bg-border/60">
+                <div id="barometer-fill" class="absolute left-0 top-0 w-px bg-accent transition-all duration-150" style="height: 0%;"></div>
+            </div>
+            <div id="barometer-indicator" class="absolute left-1/2 flex -translate-x-1/2 flex-col items-center transition-all duration-150" style="top: 0%;">
+                <div class="relative flex h-3 w-3 items-center justify-center">
+                    <span class="absolute h-3 w-3 rounded-full bg-accent animate-ping opacity-75"></span>
+                    <span class="h-2 w-2 rounded-full bg-accent"></span>
+                </div>
+                <span id="barometer-alt-text" class="mt-2 whitespace-nowrap font-mono text-[10px] font-medium tracking-wide text-accent">1,300m</span>
+            </div>
+            <span class="absolute -bottom-8 font-mono text-[9px] uppercase tracking-widest text-muted-foreground">1,300m</span>
+        </div>
+    </div>
+
+    <!-- ANNOUNCEMENT BAR (Hides smoothly on scroll down, shows on scroll up) -->
+    <div id="announcement-bar" class="announcement-bar sticky top-0 z-50 bg-accent text-white text-[11px] font-mono py-2 px-6 shadow-md">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="bg-black/30 px-2 py-0.5 rounded text-[9px] uppercase tracking-wider font-semibold">2026 Expeditions</span>
+                <span class="hidden sm:inline">⚡ Autumn 2026 Sagarmatha & Annapurna Peak Booking Open — Guaranteed Small Groups</span>
+                <span class="sm:hidden">⚡ Autumn 2026 Bookings Open</span>
+            </div>
+            <div class="flex items-center gap-4 text-[10px] uppercase tracking-widest">
+                <a href="/expeditions" class="hover:underline font-semibold flex items-center gap-1">All Circuits <i class="fa-solid fa-arrow-right text-[8px]"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN BRAND HEADER & NAVIGATION  ·  redesigned 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+    <header class="relative z-30 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+            <!-- Brand lock-up -->
+            <a href="/" class="group flex shrink-0 items-center gap-3">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <span class="hidden flex-col leading-none sm:flex">
+                    <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                    <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">High corridors of Nepal · Est. 1993</span>
+                </span>
+            </a>
+
+            <!-- Primary navigation — the essentials; full index lives in the ⊕ menu -->
+            <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+                <a href="/" class="hme-navlink is-active">Home</a>
+                <a href="/treks" class="hme-navlink">Treks</a>
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <a href="/altitude-safety" class="hme-navlink">Safety</a>
+                <a href="/dispatches" class="hme-navlink">Stories</a>
+                <a href="/about" class="hme-navlink">About</a>
+            </nav>
+
+            <a href="#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+                <span class="relative z-10">Find your route</span>
+            </a>
+        </div>
+    </header>
+
+
+    <!-- 01 — THE HERO MANIFESTO  ·  redesigned 2026-09-01 (see _docs/REVERT-notes.md § "Hero redesign") -->
+    <!-- REVERT: restore public/index.html.prehero.bak (or `git checkout public/index.html`),
+         drop "IBM+Plex+Sans" from the Google Fonts <link> above, then `npm run build:css`. -->
+    <section id="manifesto" data-media class="relative min-h-[54vh] md:min-h-[62vh] flex flex-col overflow-hidden antialiased px-6 pt-8 pb-12 md:pt-10 md:pb-14 md:px-12 lg:px-20 border-b border-border bg-background">
+
+        <!-- Background: graded black-and-white Himalayan panorama -->
+        <div id="hero-bg-parallax" class="absolute inset-0 z-0 scale-[1.04] transition-transform duration-300 ease-out">
+            <img id="hero-image" src="/images/hero-mountain.jpg"
+                 onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=2400';"
+                 alt="Black-and-white panorama of the high Himalaya"
+                 class="h-full w-full object-cover object-center opacity-90 [filter:grayscale(1)_contrast(1.14)_brightness(0.78)]">
+        </div>
+        <!-- Scrims: symmetric edges + bottom anchor + a soft centre wash for legibility -->
+        <div class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#14161a]/85 via-[#14161a]/45 to-[#14161a]"></div>
+        <div class="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_rgba(20,22,26,0.55)_0%,_rgba(20,22,26,0.15)_45%,_transparent_75%)]"></div>
+        <div class="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[55vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.07] blur-[130px]"></div>
+
+        <!-- Cartographic frame: faint contour lines + corner registration marks -->
+        <svg class="pointer-events-none absolute inset-0 z-[2] h-full w-full opacity-[0.08] mix-blend-screen" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1200 800">
+            <g fill="none" stroke="#f06225" stroke-width="1">
+                <path d="M-40 640 C 220 560 380 604 560 540 C 760 470 940 512 1240 430"/>
+                <path d="M-40 704 C 240 636 420 672 620 604 C 840 528 1010 566 1240 500"/>
+                <path d="M-40 566 C 200 500 360 536 540 470 C 740 398 930 440 1240 360"/>
+                <path d="M-40 490 C 260 440 380 462 600 400 C 820 338 980 372 1240 300"/>
+            </g>
+        </svg>
+        <div class="pointer-events-none absolute left-4 top-4 z-[3] h-5 w-5 border-l border-t border-accent/45 md:left-8 md:top-8"></div>
+        <div class="pointer-events-none absolute right-4 top-4 z-[3] h-5 w-5 border-r border-t border-accent/45 md:right-8 md:top-8"></div>
+        <div class="pointer-events-none absolute bottom-4 left-4 z-[3] h-5 w-5 border-b border-l border-accent/45 md:bottom-8 md:left-8"></div>
+        <div class="pointer-events-none absolute bottom-4 right-4 z-[3] h-5 w-5 border-b border-r border-accent/45 md:bottom-8 md:right-8"></div>
+
+        <!-- Top telemetry rail -->
+        <div class="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between gap-4 border-b border-white/10 pb-3.5 font-mono text-[10px] uppercase tracking-[0.32em]">
+            <div class="flex items-center gap-2.5 text-accent">
+                <span class="relative flex h-1.5 w-1.5">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
+                </span>
+                <span id="hero-telemetry-coords" class="font-mono">27°59'N · 86°55'E</span>
+                <span class="hidden text-white/40 sm:inline">— Khumbu Himal</span>
+            </div>
+            <div class="hidden items-center gap-2 text-white/45 sm:flex">
+                <span class="text-white/70">1,350 m</span>
+                <i class="fa-solid fa-arrow-right-long text-[9px] text-accent"></i>
+                <span class="text-white/70">8,848 m</span>
+            </div>
+        </div>
+
+        <!-- Centred hero content -->
+        <div class="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center py-8 md:py-10 text-center">
+            <div class="flex items-center gap-3">
+                <span class="hidden h-px w-6 bg-accent/70 sm:block"></span>
+                <span id="hero-badge" data-key="hero.badge" class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-accent font-medium">EST. 1993 · 30 YEARS IN THE HIMALAYA</span>
+                <span class="hidden h-px w-6 bg-accent/70 sm:block"></span>
+            </div>
+
+            <h1 class="mt-5 flex flex-col items-center font-heading uppercase leading-[0.85] tracking-tightest text-foreground text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.75rem] xl:text-[6.5rem]">
+                <span id="hero-title-primary" data-key="hero.title_primary" class="block font-light text-white">HIMALAYAN</span>
+                <span class="my-2.5 block h-px w-14 bg-accent/70 md:my-3 md:w-24"></span>
+                <span id="hero-title-italic" data-key="hero.title_italic" class="block font-semibold text-accent">MAGIC ADVENTURE</span>
+            </h1>
+
+            <p id="hero-description" data-key="hero.description" class="mx-auto mt-5 max-w-xl font-sans text-[15px] md:text-base leading-relaxed text-white/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">
+                Nepal's trekking trails and 8,000-metre expeditions, run by the people who live beneath these mountains. Certified IFMGA / NMA guides, since 1993.
+            </p>
+
+            <!-- Two clear paths -->
+            <div class="mt-7 flex w-full max-w-md flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
+                <a href="/treks" class="group inline-flex items-center justify-center gap-3 border border-accent bg-accent px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] font-semibold text-background transition-colors hover:bg-accent-hover">
+                    <span>Trekking Trails</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                </a>
+                <a href="/expeditions" class="group inline-flex items-center justify-center gap-3 border border-white/30 bg-[#14161a]/55 px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white backdrop-blur-md transition-colors hover:border-accent hover:text-accent">
+                    <span>Expeditions</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                </a>
+            </div>
+
+            <a href="/contact" class="group mt-4 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55 hover:text-accent transition-colors">
+                <span>Plan a custom ascent</span>
+                <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- STATS MATRIX ROW -->
+    <section id="stats-grid" class="grid grid-cols-2 md:grid-cols-4 border-b border-border bg-[#1b1e22]">
+        <!-- Dynamically loaded stats -->
+    </section>
+
+    <!-- 02 — THE EXPEDITION MATRIX (Choose Your Corridor) -->
+    <section id="expeditions" class="relative py-16 md:py-24 border-b border-border bg-[#16181b] overflow-hidden">
+        <!-- Topographic Contour Lines Background & Compass Rose -->
+        <div class="pointer-events-none absolute inset-0 z-0 opacity-15 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent"></div>
+        <div class="pointer-events-none absolute top-10 right-10 z-0 opacity-25 hidden md:block text-muted-foreground font-mono text-[10px] tracking-widest text-center">
+            <div class="h-16 w-16 rounded-full border border-white/20 flex items-center justify-center relative">
+                <span class="absolute top-1 text-[8px]">N</span>
+                <span class="absolute bottom-1 text-[8px]">S</span>
+                <span class="absolute left-1 text-[8px]">W</span>
+                <span class="absolute right-1 text-[8px]">E</span>
+                <div class="h-1.5 w-1.5 rounded-full bg-accent"></div>
+            </div>
+        </div>
+
+        <div class="relative z-10 px-6 md:px-20">
+            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">02 — Flagship Expeditions</span>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-4">
+                <div>
+                    <h2 class="font-heading text-5xl font-light uppercase leading-[0.9] tracking-tightest text-foreground md:text-7xl">
+                        Choose Your<br><span class="text-accent">Summit</span>
+                    </h2>
+                    <p class="mt-6 max-w-md font-mono text-xs leading-relaxed text-muted-foreground md:text-sm">
+                        The eight-thousanders we run most. Each tile opens to a full expedition guide — the normal route, camps, season, hazards and history.
+                    </p>
+                </div>
+                <a href="/expeditions" class="group inline-flex items-center gap-2 border border-border px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:border-accent hover:text-accent transition-all">
+                    All 14 peaks <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <div class="relative mt-12">
+                <div id="flagship-grid" class="hme-hscroll flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 md:mx-0 md:px-0">
+                    <div class="h-[440px] w-[300px] shrink-0 border border-border bg-[#181a1e] animate-pulse"></div>
+                    <div class="h-[440px] w-[300px] shrink-0 border border-border bg-[#181a1e] animate-pulse"></div>
+                    <div class="h-[440px] w-[300px] shrink-0 border border-border bg-[#181a1e] animate-pulse"></div>
+                </div>
+                <div class="pointer-events-none absolute -right-2 top-0 bottom-4 w-20 bg-gradient-to-l from-[#16181b] to-transparent hidden md:block"></div>
+                <button type="button" onclick="scrollFlagship(-1)" aria-label="Previous peaks" class="hme-flag-nav -left-3 lg:-left-5">&#8249;</button>
+                <button type="button" onclick="scrollFlagship(1)" aria-label="More peaks" class="hme-flag-nav -right-3 lg:-right-5">&#8250;</button>
+            </div>
+            <p id="flagship-hint" class="mt-2 font-mono text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 md:hidden">Swipe for more &rarr;</p>
+
+            <div class="mt-8">
+                <a href="/contact" class="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/40 font-heading text-lg text-accent group-hover:bg-accent/10 transition-all">+</span>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.2em] leading-relaxed">Planning a peak-climbing objective, or a custom expedition?<br class="hidden sm:block">Talk to our expedition desk.</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- 03 — EXPLORE (Interactive Map of Nepal) -->
+    <section id="explore" class="relative px-6 py-16 md:px-20 md:py-24 border-b border-border bg-[#1b1e22] overflow-hidden">
+        <style>
+            .hme-region{fill:#23272d;stroke:rgba(240,98,37,.20);stroke-width:1.25;cursor:pointer;outline:none;transition:fill .35s ease,stroke .35s ease,opacity .35s ease;}
+            .hme-region:hover{fill:rgba(240,98,37,.13);}
+            .hme-map[data-active] .hme-region{opacity:.25;}
+            .hme-map[data-active] .hme-region.is-active{opacity:1;fill:rgba(240,98,37,.16);stroke:var(--accent);stroke-width:1.75;}
+            .hme-region.is-active{fill:rgba(240,98,37,.16);stroke:var(--accent);}
+            .hme-terai{fill:#2a2216;}
+            .hme-ridge{fill:none;stroke:rgba(243,244,246,.30);stroke-width:1;stroke-dasharray:2 3.5;}
+            .hme-peak-tri{fill:#0f1113;stroke:var(--accent);stroke-width:1.4;transition:transform .35s ease,fill .35s ease;transform-box:fill-box;transform-origin:50% 100%;}
+            .hme-map[data-active] .hme-peak{opacity:.28;transition:opacity .35s ease;}
+            .hme-map[data-active] .hme-peak.is-active{opacity:1;}
+            .hme-peak.is-active .hme-peak-tri{transform:scale(1.45);fill:var(--accent);}
+            .hme-region-label{transition:color .3s ease;}
+            .hme-region-label.is-active{color:var(--accent);}
+            .hme-xpanel{scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
+            .hme-xpanel::-webkit-scrollbar{width:4px;}
+            .hme-xpanel::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);border-radius:2px;}
+            @keyframes hmeXfade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+            .hme-xbody{animation:hmeXfade .4s cubic-bezier(.2,.7,.3,1);}
+            .hme-xrow{transition:border-color .2s ease,background .2s ease,transform .2s ease;}
+            .hme-xrow:hover{border-color:var(--accent);transform:translateX(3px);}
+            @media (prefers-reduced-motion: reduce){.hme-xbody{animation:none;}.hme-xrow:hover{transform:none;}}
+        </style>
+        <div class="pointer-events-none absolute inset-0 z-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03 — Explore Nepal</span>
+            <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <h2 class="font-heading text-5xl font-light uppercase leading-[0.9] tracking-tightest text-foreground md:text-7xl">
+                    Explore <span class="font-semibold text-accent">Nepal</span>
+                </h2>
+                <p class="max-w-md font-mono text-xs leading-relaxed text-muted-foreground md:text-sm">
+                    Start with a place, not a checklist. Tap any province to open what it&rsquo;s known for &mdash; the trails we guide there, the peaks above it, the towns and temples worth the detour.
+                </p>
+            </div>
+
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-[1.45fr_1fr] gap-8 md:gap-10">
+
+                <!-- Interactive Map -->
+                <div class="relative border border-border bg-[#16181b] p-4 md:p-7">
+                    <!-- Compass -->
+                    <div class="pointer-events-none absolute top-5 right-5 z-20 opacity-40 hidden md:block">
+                        <div class="h-12 w-12 rounded-full border border-white/20 flex items-center justify-center relative font-mono text-[8px] tracking-widest text-muted-foreground">
+                            <span class="absolute top-1">N</span>
+                            <span class="absolute bottom-1">S</span>
+                            <span class="absolute left-1.5">W</span>
+                            <span class="absolute right-1.5">E</span>
+                            <div class="h-1 w-1 rounded-full bg-accent"></div>
+                        </div>
+                    </div>
+
+                    <!-- Peak index (revealed on hover) -->
+                    <div id="hme-peak-index" class="pointer-events-none absolute left-4 top-4 z-20 hidden w-[220px] border border-accent/30 bg-[#14161a]/95 p-3 backdrop-blur-sm"></div>
+
+                    <div class="relative w-full" style="aspect-ratio: 1000 / 380;">
+                        <svg class="hme-map h-full w-full" viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                            <!-- 7 provinces, west to east -->
+                            <path class="hme-region" data-region="sudurpashchim" role="button" tabindex="0" aria-label="Sudurpashchim Province" onmouseenter="hoverExploreRegion('sudurpashchim')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('sudurpashchim')" onfocus="hoverExploreRegion('sudurpashchim')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('sudurpashchim');}" d="M40,150 L130,108 L212,132 L205,280 L165,268 L92,222 L45,174 Z"></path>
+                            <path class="hme-region" data-region="karnali" role="button" tabindex="0" aria-label="Karnali Province" onmouseenter="hoverExploreRegion('karnali')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('karnali')" onfocus="hoverExploreRegion('karnali')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('karnali');}" d="M212,132 L300,92 L382,118 L452,78 L462,192 L405,226 L300,238 L205,280 Z"></path>
+                            <path class="hme-region" data-region="lumbini" role="button" tabindex="0" aria-label="Lumbini Province" onmouseenter="hoverExploreRegion('lumbini')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('lumbini')" onfocus="hoverExploreRegion('lumbini')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('lumbini');}" d="M205,280 L300,238 L405,226 L462,192 L520,232 L560,220 L566,334 L470,342 L388,332 L314,315 L240,298 L165,268 Z"></path>
+                            <path class="hme-region" data-region="gandaki" role="button" tabindex="0" aria-label="Gandaki Province" onmouseenter="hoverExploreRegion('gandaki')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('gandaki')" onfocus="hoverExploreRegion('gandaki')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('gandaki');}" d="M452,78 L520,104 L586,68 L600,210 L560,220 L520,232 L462,192 Z"></path>
+                            <path class="hme-region" data-region="bagmati" role="button" tabindex="0" aria-label="Bagmati Province" onmouseenter="hoverExploreRegion('bagmati')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('bagmati')" onfocus="hoverExploreRegion('bagmati')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('bagmati');}" d="M586,68 L652,98 L712,60 L772,82 L770,235 L690,250 L600,210 Z"></path>
+                            <path class="hme-region hme-terai" data-region="madhesh" role="button" tabindex="0" aria-label="Madhesh Province" onmouseenter="hoverExploreRegion('madhesh')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('madhesh')" onfocus="hoverExploreRegion('madhesh')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('madhesh');}" d="M560,220 L600,210 L690,250 L770,235 L812,262 L745,298 L658,320 L566,334 Z"></path>
+                            <path class="hme-region" data-region="koshi" role="button" tabindex="0" aria-label="Koshi Province" onmouseenter="hoverExploreRegion('koshi')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('koshi')" onfocus="hoverExploreRegion('koshi')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('koshi');}" d="M772,82 L858,52 L900,60 L965,96 L965,150 L892,214 L812,262 L770,235 Z"></path>
+
+                            <!-- Northern ridgeline (Tibet border) -->
+                            <path class="hme-ridge" d="M40,150 L130,108 L212,132 L300,92 L382,118 L452,78 L520,104 L586,68 L652,98 L712,60 L772,82 L858,52 L900,60 L965,96"></path>
+
+                            <!-- The eight 8,000 m peaks -->
+                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M487,92 L481,104 L493,104 Z"></path></g>
+                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M517,112 L511,124 L523,124 Z"></path></g>
+                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M557,90 L551,102 L563,102 Z"></path></g>
+                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M806,98 L800,110 L812,110 Z"></path></g>
+                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M833,80 L825,94 L841,94 Z"></path></g>
+                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M847,102 L841,114 L853,114 Z"></path></g>
+                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M863,88 L857,100 L869,100 Z"></path></g>
+                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M940,82 L934,94 L946,94 Z"></path></g>
+                        </svg>
+
+                        <!-- Province labels (always visible) -->
+                        <div class="pointer-events-none absolute" style="left:11.5%; top:51.3%; transform:translate(-50%,-50%);">
+                            <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="sudurpashchim">Sudurpashchim</span>
+                        </div>
+                        <div class="pointer-events-none absolute" style="left:31.5%; top:45.3%; transform:translate(-50%,-50%);">
+                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="karnali">Karnali</span>
+                        </div>
+                        <div class="pointer-events-none absolute" style="left:35%; top:76.8%; transform:translate(-50%,-50%);">
+                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="lumbini">Lumbini</span>
+                        </div>
+                        <div class="pointer-events-none absolute" style="left:51.2%; top:39.5%; transform:translate(-50%,-50%);">
+                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="gandaki">Gandaki</span>
+                        </div>
+                        <div class="pointer-events-none absolute" style="left:67.2%; top:39.5%; transform:translate(-50%,-50%);">
+                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="bagmati">Bagmati</span>
+                        </div>
+                        <div class="pointer-events-none absolute" style="left:67.2%; top:75%; transform:translate(-50%,-50%);">
+                            <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="madhesh">Madhesh</span>
+                        </div>
+                        <div class="pointer-events-none absolute" style="left:88.5%; top:35.5%; transform:translate(-50%,-50%);">
+                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="koshi">Koshi</span>
+                        </div>
+                    </div>
+
+                    <p class="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
+                        <span class="md:hidden">Tap a province &middot;</span>
+                        <span><span class="text-accent">&#9650;</span> 8 peaks above 8,000 m</span>
+                        <span class="opacity-50">&mdash;</span>
+                        <span>5 in Koshi &middot; 3 in Gandaki</span>
+                    </p>
+                </div>
+
+                <!-- Info Panel -->
+                <div id="explore-panel" class="hme-xpanel border border-border bg-card p-6 md:p-8 flex flex-col min-h-[480px] lg:max-h-[68vh] lg:overflow-y-auto">
+                    <!-- Populated by JS: renderExploreRegion() -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 — COMPARE TREKS -->
+    <section id="compare-home" data-media class="relative px-6 py-16 md:px-20 md:py-24 border-b border-border bg-[#191b1f] overflow-hidden">
+        <div class="pointer-events-none absolute inset-0 z-0">
+            <img src="/images/langtang_real.jpg" class="h-full w-full object-cover object-[50%_40%] opacity-[0.07]" alt="" aria-hidden="true">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#191b1f] via-[#191b1f]/95 to-[#191b1f]"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">04 — Compare Treks</span>
+            <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div>
+                    <h2 class="font-heading text-5xl font-light uppercase leading-[0.9] tracking-tightest text-foreground md:text-7xl">
+                        Can&rsquo;t Choose?<br><span class="text-accent">Line Them Up</span>
+                    </h2>
+                    <p class="mt-6 max-w-md font-mono text-xs leading-relaxed text-muted-foreground md:text-sm">
+                        Duration, altitude, difficulty, season and cost side by side &mdash; then a plain read on which route fits you. Three classics below; build your own on the full tool.
+                    </p>
+                </div>
+                <a href="/compare" class="group inline-flex items-center gap-2 border border-accent px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-background transition-all">
+                    Build a comparison <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+            <div id="compare-home-table" class="mt-12 overflow-x-auto"></div>
+        </div>
+    </section>
+
+    <!-- 05 — FIND YOUR TREK -->
+    <section id="trek-finder" class="relative px-6 py-16 md:px-20 md:py-24 border-b border-border bg-[#16181b] overflow-hidden scroll-mt-16">
+        <div class="pointer-events-none absolute inset-0 z-0">
+            <img src="/images/annapurna.png" class="h-full w-full object-cover object-[80%_20%] opacity-[0.06]" alt="" aria-hidden="true">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#16181b] via-[#16181b]/95 to-[#16181b]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto">
+            <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">05 — Find Your Trek</span>
+            <h2 class="mt-4 font-heading text-5xl font-light uppercase leading-[0.9] tracking-tightest text-foreground md:text-7xl">
+                What Kind of<br><span class="font-semibold text-accent">Trekker Are You?</span>
+            </h2>
+            <p class="mt-6 max-w-xl font-mono text-xs leading-relaxed text-muted-foreground md:text-sm">
+                Answer as few or as many as you like. We score every one of our
+                <span class="text-foreground">28 trekking trails</span> against your answers and show your closest matches, with the reasoning.
+            </p>
+
+            <div class="mt-12 space-y-10">
+
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">01 &nbsp;/&nbsp; How much trekking experience do you have?</span>
+                    <div id="finder-experience-cards" class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        <button type="button" data-value="first" onclick="selectFinderCard('experience','first')" class="finder-card text-left border border-border p-5 transition-all hover:border-accent/60">
+                            <span class="finder-card-title block font-heading text-lg uppercase tracking-tight text-foreground transition-colors">First Timer</span>
+                            <span class="mt-1 block font-mono text-[11px] text-muted-foreground">I&rsquo;ve never done high-altitude trekking</span>
+                        </button>
+                        <button type="button" data-value="experienced" onclick="selectFinderCard('experience','experienced')" class="finder-card text-left border border-border p-5 transition-all hover:border-accent/60">
+                            <span class="finder-card-title block font-heading text-lg uppercase tracking-tight text-foreground transition-colors">Experienced</span>
+                            <span class="mt-1 block font-mono text-[11px] text-muted-foreground">I&rsquo;ve completed several multi-day treks</span>
+                        </button>
+                        <button type="button" data-value="alpinist" onclick="selectFinderCard('experience','alpinist')" class="finder-card text-left border border-border p-5 transition-all hover:border-accent/60">
+                            <span class="finder-card-title block font-heading text-lg uppercase tracking-tight text-foreground transition-colors">Alpinist</span>
+                            <span class="mt-1 block font-mono text-[11px] text-muted-foreground">I&rsquo;m comfortable with technical ground</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">02 &nbsp;/&nbsp; Where do you want to go?</span>
+                    <div id="finder-region-cards" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+                        <button type="button" data-value="everest" onclick="selectFinderCard('region','everest')" class="finder-card border border-border px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Everest</button>
+                        <button type="button" data-value="annapurna" onclick="selectFinderCard('region','annapurna')" class="finder-card border border-border px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Annapurna</button>
+                        <button type="button" data-value="langtang" onclick="selectFinderCard('region','langtang')" class="finder-card border border-border px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Langtang</button>
+                        <button type="button" data-value="manaslu" onclick="selectFinderCard('region','manaslu')" class="finder-card border border-border px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Manaslu</button>
+                        <button type="button" data-value="mustang" onclick="selectFinderCard('region','mustang')" class="finder-card border border-border px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Mustang</button>
+                        <button type="button" data-value="dolpo" onclick="selectFinderCard('region','dolpo')" class="finder-card border border-border px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Dolpo</button>
+                        <button type="button" data-value="farwest" onclick="selectFinderCard('region','farwest')" class="finder-card border border-border px-3 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Far West</button>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03 &nbsp;/&nbsp; When are you travelling?</span>
+                    <div id="finder-season-cards" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        <button type="button" data-value="Spring" onclick="selectFinderCard('season','Spring')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Spring<span class="block text-[9px] text-accent mt-0.5 normal-case tracking-normal">Mar&ndash;May</span></button>
+                        <button type="button" data-value="Summer" onclick="selectFinderCard('season','Summer')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Summer<span class="block text-[9px] text-accent mt-0.5 normal-case tracking-normal">Jun&ndash;Aug</span></button>
+                        <button type="button" data-value="Autumn" onclick="selectFinderCard('season','Autumn')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Autumn<span class="block text-[9px] text-accent mt-0.5 normal-case tracking-normal">Sep&ndash;Nov</span></button>
+                        <button type="button" data-value="Winter" onclick="selectFinderCard('season','Winter')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Winter<span class="block text-[9px] text-accent mt-0.5 normal-case tracking-normal">Dec&ndash;Feb</span></button>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">04 &nbsp;/&nbsp; How many days do you have?</span>
+                    <div id="finder-duration-cards" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        <button type="button" data-value="short" onclick="selectFinderCard('duration','short')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">5 &ndash; 10</button>
+                        <button type="button" data-value="mid" onclick="selectFinderCard('duration','mid')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">10 &ndash; 15</button>
+                        <button type="button" data-value="long" onclick="selectFinderCard('duration','long')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">15 &ndash; 20</button>
+                        <button type="button" data-value="epic" onclick="selectFinderCard('duration','epic')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">20+</button>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">05 &nbsp;/&nbsp; Approximate budget? <span class="normal-case tracking-normal text-muted-foreground/60">&mdash; guided, land cost, per person</span></span>
+                    <div id="finder-budget-cards" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        <button type="button" data-value="b1" onclick="selectFinderCard('budget','b1')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">Under $1,000</button>
+                        <button type="button" data-value="b2" onclick="selectFinderCard('budget','b2')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">$1,000 &ndash; $2,000</button>
+                        <button type="button" data-value="b3" onclick="selectFinderCard('budget','b3')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">$2,000 &ndash; $3,500</button>
+                        <button type="button" data-value="b4" onclick="selectFinderCard('budget','b4')" class="finder-card border border-border px-4 py-3 text-center font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">$3,500+</button>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">06 &nbsp;/&nbsp; What are you looking for? <span class="normal-case tracking-normal text-muted-foreground/60">&mdash; pick any</span></span>
+                    <div id="finder-style-cards" class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                        <button type="button" data-value="iconic" onclick="selectFinderCard('style','iconic')" class="finder-card border border-border px-4 py-3 text-left font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">&#127956;&nbsp; Iconic Himalayas</button>
+                        <button type="button" data-value="remote" onclick="selectFinderCard('style','remote')" class="finder-card border border-border px-4 py-3 text-left font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">&#127807;&nbsp; Remote wilderness</button>
+                        <button type="button" data-value="culture" onclick="selectFinderCard('style','culture')" class="finder-card border border-border px-4 py-3 text-left font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">&#127963;&nbsp; Culture</button>
+                        <button type="button" data-value="challenge" onclick="selectFinderCard('style','challenge')" class="finder-card border border-border px-4 py-3 text-left font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">&#129706;&nbsp; Challenging adventure</button>
+                        <button type="button" data-value="photo" onclick="selectFinderCard('style','photo')" class="finder-card border border-border px-4 py-3 text-left font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">&#128247;&nbsp; Photography</button>
+                        <button type="button" data-value="slow" onclick="selectFinderCard('style','slow')" class="finder-card border border-border px-4 py-3 text-left font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-all hover:border-accent/60">&#129496;&nbsp; Slow travel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 flex items-center justify-between border-t border-border pt-5">
+                <span id="finder-count" class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Answer a question above to see your matches</span>
+                <button type="button" id="finder-reset-btn" onclick="resetTrekFinder()" class="hidden border border-border px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-all hover:border-accent hover:text-accent active:scale-95">Reset answers</button>
+            </div>
+            <div id="finder-results" class="mt-6"></div>
+        </div>
+    </section>
+
+    <!-- 06 — THE DISPATCHES BOARD -->
+    <section id="dispatches" class="px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22]">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span id="dispatches-label" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">06 — dispatches</span>
+                    <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white md:text-5xl mt-2">
+                        STORIES FROM THE <span class="font-semibold text-accent">HIGH PLACES</span>
+                    </h2>
+                </div>
+                <button onclick="openAddDispatchModal()" id="btn-add-dispatch" class="hidden px-4 py-2 border border-accent text-accent font-mono text-[10px] uppercase tracking-widest hover:bg-accent transition-colors">
+                    + Write Dispatch
+                </button>
+            </div>
+            
+            <div id="dispatches-container" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Dynamically loaded dispatches -->
+            </div>
+        </div>
+    </section>
+
+    <!-- LEGACY COPY -->
+    <section id="about" class="px-6 py-14 md:px-20 md:py-20 bg-[#191b1f] border-b border-border">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span id="about-badge" data-key="about.badge" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">TRUSTED MOUNTAINEERING LEGACY</span>
+                <h3 id="about-title" data-key="about.title" class="font-heading text-4xl uppercase tracking-tightest text-white leading-none">THIRTY YEARS OF EXPERTISE</h3>
+                <p id="about-description" data-key="about.description" class="font-mono text-xs leading-relaxed text-muted-foreground">
+                    Himalayan Magic Adventure has been a pioneer of safe, sustainable, and immersive tourism across Nepal since its founding.
+                </p>
+                
+                <!-- Floating stat overlay -->
+                <div class="border-l-2 border-accent pl-6">
+                    <span id="about-floating-stat" data-key="about.floating_stat" class="block font-heading text-4xl text-accent">30+</span>
+                    <span id="about-floating-label" data-key="about.floating_label" class="block font-mono text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Years guiding high paths</span>
+                </div>
+            </div>
+            <div class="relative group aspect-[4/5] md:aspect-[3/4] overflow-hidden border border-border">
+                <img id="about-image" src="/images/itinerary.png" class="h-full w-full object-cover grayscale-[15%] contrast-[1.05] opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100" alt="Veteran Sherpa mountain guide">
+                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#191b1f]/60 via-transparent to-transparent"></div>
+                <div id="about-img-editor" class="hidden absolute bottom-4 left-4 right-4 bg-background/90 p-3 border border-border">
+                    <input type="text" id="about-img-input" class="w-full text-xs text-slate-800 p-2 border focus:outline-none" placeholder="About Image URL">
+                    <button onclick="updateAboutImage()" class="mt-2 w-full py-1.5 bg-accent text-white text-xs font-mono uppercase tracking-widest">Update Image</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER AND CONTACT DETAILS -->
+    <footer id="contact" class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+        <div class="pointer-events-none absolute inset-0 z-0">
+            <img src="/images/footer.png" class="h-full w-full object-cover object-bottom opacity-[0.12] grayscale" alt="" aria-hidden="true">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#121417] via-[#121417]/88 to-[#121417]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <!-- Brand row -->
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+                <a href="/" class="flex items-center gap-4 group">
+                    <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                    <div>
+                        <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                        <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                    </div>
+                </a>
+                <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">
+                    A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew, with a turnaround discipline we do not bend.
+                </p>
+            </div>
+
+            <!-- Link columns -->
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-10 py-12">
+                <div>
+                    <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                    <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                    <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                    <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">The 14 Eight-Thousanders</a>
+                    <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                    <a href="/dispatches" class="block py-1 hover:text-accent transition-colors">Field Notes</a>
+                </div>
+                <div>
+                    <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                    <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                    <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                    <a href="/treks#bagmati" class="block py-1 hover:text-accent transition-colors">Langtang &amp; Helambu</a>
+                    <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                    <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a>
+                </div>
+                <div>
+                    <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                    <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                    <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                    <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                    <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+                    <span class="block py-1 text-[#5f636b]">NMA · TAAN member</span>
+                </div>
+                <div>
+                    <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                    <span id="footer-hq-title" class="hidden"></span>
+                    <span id="contact-address" data-key="contact.address" class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                    <span id="contact-phones" data-key="contact.phones" class="block text-accent leading-relaxed"></span>
+                    <span id="contact-email" data-key="contact.email" class="block mt-2 hover:text-accent transition-colors"></span>
+                </div>
+                <div>
+                    <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">24/7 Emergency</span>
+                    <span id="footer-rescue-title" class="hidden"></span>
+                    <span id="contact-emergency" data-key="contact.emergency" class="block text-red-500 font-bold leading-relaxed mb-2"></span>
+                    <span class="block text-[10px] leading-relaxed text-[#6f727a]">Field teams file a daily check-in. We coordinate helicopter rescue with your insurer.</span>
+                    <span id="footer-regions-title" class="hidden"></span>
+                    <span id="contact-regions" data-key="contact.regions" class="hidden">Nepal, Tibet, Bhutan</span>
+                </div>
+            </div>
+
+            <!-- Legal bar -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+                <span>© 2026 Himalayan Magic Adventure · Registered trekking agency, Kathmandu</span>
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                    <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                    <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                    <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+                </div>
+            </div>
+
+            <!-- Build credit -->
+            <div class="mt-10 text-center">
+                <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;·&nbsp; 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ADD/EDIT TREK PACKAGE MODAL -->
+    <div id="trek-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md hidden">
+        <div class="bg-card border border-border p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto font-mono text-xs space-y-4">
+            <h3 id="trek-modal-title" class="font-heading text-2xl text-white uppercase tracking-widest">Edit Trek Package</h3>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1">
+                    <label class="text-[10px] text-muted-foreground uppercase">Trek Name</label>
+                    <input type="text" id="modal-title" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] text-muted-foreground uppercase">Region / Destination</label>
+                    <select id="modal-dest" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+                        <option value="nepal">Nepal</option>
+                        <option value="tibet">Tibet</option>
+                        <option value="bhutan">Bhutan</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] text-muted-foreground uppercase">Duration (Days)</label>
+                    <input type="number" id="modal-days" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] text-muted-foreground uppercase">Price (USD)</label>
+                    <input type="number" id="modal-price" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] text-muted-foreground uppercase">Difficulty</label>
+                    <select id="modal-diff" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+                        <option value="Moderate">Moderate</option>
+                        <option value="Challenging">Challenging</option>
+                        <option value="Strenuous">Strenuous</option>
+                    </select>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] text-muted-foreground uppercase">Image URL</label>
+                    <input type="text" id="modal-img" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+                </div>
+                <div class="space-y-1 col-span-2">
+                    <label class="text-[10px] text-muted-foreground uppercase">Max Altitude</label>
+                    <input type="text" id="modal-max-alt" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+                </div>
+            </div>
+
+            <!-- Inclusions / Exclusions / Itinerary -->
+            <div class="space-y-2">
+                <label class="text-[10px] text-muted-foreground uppercase">Itinerary (One item per line)</label>
+                <textarea id="modal-itinerary" rows="5" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="text-[10px] text-muted-foreground uppercase">Included (One per line)</label>
+                    <textarea id="modal-included" rows="4" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent"></textarea>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] text-muted-foreground uppercase">Excluded (One per line)</label>
+                    <textarea id="modal-excluded" rows="4" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent"></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-border">
+                <button onclick="closeTrekModal()" class="px-4 py-2 border border-border text-muted-foreground hover:text-white uppercase tracking-widest text-[10px]">Cancel</button>
+                <button onclick="saveTrekModal()" class="px-4 py-2 bg-accent text-background hover:bg-accent-hover font-bold uppercase tracking-widest text-[10px]">Save Package</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRITING A DISPATCH MODAL -->
+    <div id="dispatch-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md hidden">
+        <div class="bg-card border border-border p-6 max-w-md w-full font-mono text-xs space-y-4">
+            <h3 class="font-heading text-xl text-white uppercase tracking-widest">Write New Dispatch</h3>
+            <div class="space-y-1">
+                <label class="text-[10px] text-muted-foreground uppercase">Title</label>
+                <input type="text" id="dispatch-title-input" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+            </div>
+            <div class="space-y-1">
+                <label class="text-[10px] text-muted-foreground uppercase">Date</label>
+                <input type="text" id="dispatch-date-input" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent" placeholder="e.g. August 20, 2026">
+            </div>
+            <div class="space-y-1">
+                <label class="text-[10px] text-muted-foreground uppercase">Category</label>
+                <input type="text" id="dispatch-cat-input" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent" placeholder="e.g. EXPEDITION LOG">
+            </div>
+            <div class="space-y-1">
+                <label class="text-[10px] text-muted-foreground uppercase">Excerpt / Summary</label>
+                <textarea id="dispatch-excerpt-input" rows="3" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent"></textarea>
+            </div>
+            <div class="space-y-1">
+                <label class="text-[10px] text-muted-foreground uppercase">Image URL</label>
+                <input type="text" id="dispatch-img-input" class="w-full bg-[#1b1e22] border border-border p-2 text-white outline-none focus:border-accent">
+            </div>
+            <div class="flex justify-end gap-3 pt-4 border-t border-border">
+                <button onclick="closeDispatchModal()" class="px-4 py-2 border border-border text-muted-foreground hover:text-white uppercase tracking-widest text-[10px]">Cancel</button>
+                <button onclick="saveDispatchModal()" class="px-4 py-2 bg-accent text-background hover:bg-accent-hover font-bold uppercase tracking-widest text-[10px]">Add Dispatch</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM-RIGHT FLOATING LANGUAGE DROPDOWN & THEME CONTROLS -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        <!-- Theme Toggle Button -->
+        <button onclick="toggleTheme()" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all transform hover:scale-105" title="Toggle Light/Dark Theme">
+            <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+        </button>
+
+        <!-- Modern Language Dropdown Widget -->
+        <div class="relative" id="lang-dropdown-wrapper">
+            <button onclick="toggleLangDropdown()" id="lang-dropdown-btn" class="h-11 px-4 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground font-mono text-xs flex items-center gap-2.5 shadow-2xl hover:border-accent transition-all group">
+                <i class="fa-solid fa-globe text-accent text-sm"></i>
+                <span id="current-lang-label" class="font-medium tracking-wider">English</span>
+                <i class="fa-solid fa-chevron-up text-[10px] text-muted-foreground group-hover:text-foreground transition-transform duration-200" id="lang-chevron"></i>
+            </button>
+
+            <!-- Dropdown Menu (Opens Upward) -->
+            <div id="lang-dropdown-menu" class="absolute right-0 bottom-14 w-44 rounded-xl border border-border bg-card/95 backdrop-blur-xl p-1.5 shadow-2xl space-y-1 hidden transform transition-all duration-200">
+                <button onclick="selectLanguage('en')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors" id="opt-lang-en">
+                    <span class="flex items-center gap-2"><span>🇺🇸</span> English</span>
+                    <i class="fa-solid fa-check text-accent text-[11px]" id="check-lang-en"></i>
+                </button>
+                <button onclick="selectLanguage('np')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors" id="opt-lang-np">
+                    <span class="flex items-center gap-2"><span>🇳🇵</span> नेपाली</span>
+                    <i class="fa-solid fa-check text-accent text-[11px] hidden" id="check-lang-np"></i>
+                </button>
+                <button onclick="selectLanguage('zh')" class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-left font-mono text-xs text-foreground hover:bg-accent/15 hover:text-accent transition-colors" id="opt-lang-zh">
+                    <span class="flex items-center gap-2"><span>🇨🇳</span> 中文</span>
+                    <i class="fa-solid fa-check text-accent text-[11px] hidden" id="check-lang-zh"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOADER -->
+    <script src="/mountains.js?v=1"></script>
+    <script src="/treks.js?v=2"></script>
+    <script src="/edit.js?v=19.8"></script>
+    <script>
+    /* Homepage Compare-Treks preview table (04) */
+    (function () {
+      var box = document.getElementById('compare-home-table');
+      var T = window.TREKS || {};
+      if (!box || !Object.keys(T).length) return;
+      var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+      var firstInt = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
+      var slugs = ['everest-base-camp', 'annapurna-circuit', 'langtang-valley'].filter(function (s) { return T[s]; });
+      var vm = slugs.map(function (s) {
+        var t = T[s], st = t.stats || {};
+        var pr = (t.cost && t.cost.tiers && t.cost.tiers[0] && t.cost.tiers[0].rangeUSD) || '';
+        var pm = pr.match(/\$[\d,]+/); var pv = pm ? +pm[0].replace(/[$,]/g, '') : null;
+        var dm = String(st.duration || '').match(/(\d+)(?:\s*[–—-]\s*(\d+))?\s*days?/i);
+        var accNote = (t.accommodationNote || '').toLowerCase();
+        return {
+          slug: s, name: t.name.replace(/ Trek$/, ''), region: t.region || '',
+          dur: dm ? (dm[2] ? dm[1] + '–' + dm[2] + 'd' : dm[1] + 'd') : (st.duration || '').split('(')[0].trim(),
+          alt: (st.maxAltitude || '—').replace(/^[≈~\s]+/, '').split('(')[0].trim(),
+          diff: st.difficulty || '—', season: st.bestSeason || '—',
+          cost: pv == null ? '—' : pv < 1200 ? '$' : pv < 2200 ? '$$' : '$$$',
+          teahouse: !/camping/.test(accNote) || /tea ?house/.test(accNote)
+        };
+      });
+      var rows = [
+        ['Duration', function (m) { return esc(m.dur); }],
+        ['Max altitude', function (m) { return '<span class="text-accent">' + esc(m.alt) + '</span>'; }],
+        ['Difficulty', function (m) { return esc(m.diff); }],
+        ['Best season', function (m) { return esc(m.season); }],
+        ['Cost', function (m) { return '<span class="text-white">' + esc(m.cost) + '</span>'; }],
+        ['Tea houses', function (m) { return m.teahouse ? '<span class="text-accent">✓</span>' : '✗'; }]
+      ];
+      box.innerHTML = '<table class="w-full border-collapse font-mono text-xs bg-[#16181b] border border-border min-w-[520px]">' +
+        '<thead><tr><th class="text-left p-4 border-b border-border"></th>' +
+        vm.map(function (m) { return '<th class="text-left p-4 border-b border-l border-border"><a href="/treks/' + esc(m.slug) + '" class="font-heading text-lg md:text-xl uppercase text-white hover:text-accent transition-colors leading-tight block">' + esc(m.name) + '</a><span class="block text-[9px] uppercase tracking-widest text-muted-foreground mt-1">' + esc(m.region) + '</span></th>'; }).join('') + '</tr></thead><tbody>' +
+        rows.map(function (r, i) {
+          return '<tr class="' + (i % 2 ? 'bg-[#1b1e22]' : '') + '"><td class="p-4 text-[9px] uppercase tracking-[0.2em] text-muted-foreground border-b border-border/50">' + esc(r[0]) + '</td>' +
+            vm.map(function (m) { return '<td class="p-4 text-foreground/90 border-b border-l border-border/50">' + r[1](m) + '</td>'; }).join('') + '</tr>';
+        }).join('') + '</tbody></table>';
+    })();
+    </script>
+    <script src="/announce.js?v=1"></script>
+<script src="/menu.js?v=4"></script>
+<script src="/compass-nav.js?v=1"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>

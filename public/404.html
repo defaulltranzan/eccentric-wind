@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not Found — Himalayan Magic Adventure</title>
     <meta name="robots" content="noindex">
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="icon" type="image/png" href="/images/logo-icon.png">
+    <link rel="apple-touch-icon" href="/images/logo-icon.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -14,7 +17,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
     <a href="/" class="flex items-center gap-3 mb-10">
-        <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto object-contain">
+        <span class="inline-flex h-16 items-center overflow-hidden rounded-2xl bg-white p-1 shadow-sm ring-1 ring-black/5"><img src="/images/logo-badge.png" alt="Himalayan Magic Adventure" width="520" height="473" class="h-full w-auto object-contain"></span>
         <span class="font-heading text-sm font-light tracking-[0.2em] uppercase text-white">Himalayan Magic Adventure</span>
     </a>
     <span class="font-mono text-[10px] uppercase tracking-[0.35em] text-accent">Error 404 · Off the trail</span>
@@ -25,6 +28,8 @@
         <a href="/treks" class="border border-border text-foreground font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:border-accent hover:text-accent transition-all">Trekking Trails</a>
         <a href="/expeditions" class="border border-border text-foreground font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:border-accent hover:text-accent transition-all">Expeditions</a>
     </div>
-<script src="/menu.js?v=4"></script>
+<script src="/menu.js?v=8"></script>
+<script src="/back.js?v=1"></script>
+<script src="/theme.js?v=2"></script>
 </body>
 </html>

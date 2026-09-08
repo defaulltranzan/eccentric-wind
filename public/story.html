@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story — Himalayan Magic Adventure</title>
+    <meta name="description" content="A field-journal essay from Himalayan Magic Adventure — first-hand notes from the trails and peaks of the Nepal Himalaya.">
+    <link rel="canonical" id="canonical-link" href="https://himalayanmagic.com/stories/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://himalayanmagic.com/stories/">
+    <meta property="og:title" content="The Field Journal — Himalayan Magic Adventure">
+    <meta property="og:description" content="First-hand essays from the trails and peaks of the Nepal Himalaya.">
+    <meta property="og:image" content="">
+
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="icon" type="image/png" href="/images/logo-icon.png">
+    <link rel="apple-touch-icon" href="/images/logo-icon.png">
+    <link rel="stylesheet" href="/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --background: #1b1e22; --foreground: #f3f4f6; --card: #22252a;
+            --border: #2e3239; --accent: #f06225; --accent-hover: #d04e1b;
+            --muted: #272b32; --muted-foreground: #9ca3af;
+            --sp-m: 3.25rem; --sp-l: clamp(3.75rem, 7vw, 6rem);
+        }
+        .light-mode {
+            --background: #f9fafb; --foreground: #111827; --card: #ffffff;
+            --border: #e5e7eb; --accent: #e04f1a; --accent-hover: #c23e11;
+            --muted: #f3f4f6; --muted-foreground: #4b5563;
+        }
+        body { background-color: var(--background); color: var(--foreground); font-family: 'IBM Plex Sans', sans-serif; line-height: 1.65; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--background); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+        .kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .3em; color: var(--accent); }
+        .sec-h { font-family: 'Oswald', sans-serif; font-weight: 300; text-transform: uppercase; letter-spacing: -.02em; line-height: .98; }
+        .accent { color: var(--accent); font-weight: 600; }
+        .hme-a { color: var(--accent); }
+        .hme-a:hover { text-decoration: underline; }
+
+        /* ---- Editorial reading column ------------------------------------ */
+        /* Centered CONTAINER, left-aligned TEXT, ~760px measure on desktop. */
+        .article-wrap {
+            max-width: 46rem;            /* ~736px reading measure */
+            margin-inline: auto;
+            padding-inline: 1.4rem;      /* mobile gutters ~22px */
+        }
+        @media (min-width: 480px) { .article-wrap { padding-inline: 1.5rem; } }
+        @media (min-width: 820px) { .article-wrap { padding-inline: 0; } }
+
+        .article-prose {
+            font-size: 1.0625rem;        /* 17px mobile */
+            line-height: 1.78;
+            color: #c6cad0;
+            text-align: left;
+        }
+        .light-mode .article-prose { color: #34383f; }
+        @media (min-width: 768px) {
+            .article-prose { font-size: 1.25rem; line-height: 1.8; }  /* ~20px desktop */
+        }
+
+        .article-prose > *:first-child { margin-top: 0; }
+        .article-prose > *:last-child { margin-bottom: 0; }
+
+        .article-prose p { margin: 0 0 1.6rem; }
+        .article-prose strong { color: var(--foreground); font-weight: 600; }
+        .article-prose em { color: var(--foreground); font-style: italic; }
+        .article-prose a {
+            color: var(--accent); text-decoration: none;
+            border-bottom: 1px solid rgba(240, 98, 37, .35);
+            transition: border-color .15s ease;
+        }
+        .article-prose a:hover { border-bottom-color: var(--accent); }
+
+        .article-prose h2 {
+            font-family: 'Oswald', sans-serif; font-weight: 400;
+            text-transform: uppercase; letter-spacing: -.01em; line-height: 1.12;
+            color: var(--foreground); text-align: left; text-wrap: balance;
+            font-size: clamp(1.5rem, 1.15rem + 1.7vw, 1.95rem);
+            margin: 3.75rem 0 1.15rem;
+        }
+        .article-prose h3 {
+            font-family: 'Oswald', sans-serif; font-weight: 400;
+            text-transform: uppercase; letter-spacing: 0; line-height: 1.18;
+            color: var(--foreground); text-align: left; text-wrap: balance;
+            font-size: clamp(1.15rem, 1rem + 0.8vw, 1.4rem);
+            margin: 2.75rem 0 .8rem;
+        }
+        .article-prose h2 + p, .article-prose h3 + p { margin-top: 0; }
+
+        .article-prose ul, .article-prose ol { margin: 1.6rem 0; padding-left: 1.5rem; }
+        .article-prose ul { list-style: disc; }
+        .article-prose ol { list-style: decimal; }
+        .article-prose li { margin: 0 0 .6rem; padding-left: .3rem; }
+        .article-prose li:last-child { margin-bottom: 0; }
+        .article-prose li::marker { color: var(--accent); }
+
+        .article-prose blockquote {
+            margin: 3rem 0; padding: .1rem 0 .1rem 1.6rem;
+            border-left: 2px solid var(--accent);
+        }
+        .article-prose blockquote p {
+            font-family: 'Oswald', sans-serif; font-weight: 300;
+            text-transform: none; letter-spacing: 0;
+            font-size: clamp(1.3rem, 1.1rem + 1.1vw, 1.7rem); line-height: 1.38;
+            color: var(--foreground); margin: 0;
+        }
+        .article-prose blockquote cite {
+            display: block; margin-top: .85rem;
+            font-family: 'IBM Plex Mono', monospace; font-style: normal;
+            font-size: .7rem; text-transform: uppercase; letter-spacing: .18em;
+            color: var(--muted-foreground);
+        }
+
+        /* practical / altitude / warning callout — used sparingly */
+        .article-note {
+            margin: 3rem 0; padding: 1.4rem 1.5rem 1.45rem;
+            background-color: var(--card);
+            background-image: linear-gradient(100deg, rgba(240,98,37,.06), rgba(240,98,37,.012) 60%);
+            border: 1px solid var(--border); border-left: 2px solid var(--accent);
+            border-radius: 3px;
+        }
+        .light-mode .article-note { background-color: #fff8f4; }
+        .article-note-title {
+            display: block; font-family: 'IBM Plex Mono', monospace;
+            font-size: .66rem; text-transform: uppercase; letter-spacing: .22em;
+            color: var(--accent); margin-bottom: .55rem;
+        }
+        .article-note-body { font-size: .98rem; line-height: 1.72; color: var(--muted-foreground); }
+        .article-note-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(240,98,37,.35); }
+        .article-note-body a:hover { border-bottom-color: var(--accent); }
+
+        .article-figure { margin: 3rem 0; }
+        .article-figure img {
+            display: block; width: 100%; height: auto;
+            border: 1px solid var(--border); border-radius: 3px;
+        }
+        .article-figcaption {
+            margin-top: .65rem; font-family: 'IBM Plex Mono', monospace;
+            font-size: .7rem; text-transform: uppercase; letter-spacing: .12em;
+            color: var(--muted-foreground);
+        }
+
+        /* ==== 3-column editorial shell (2026-09-07 redesign) ==================== */
+        .story-shell { max-width: 1280px; margin-inline: auto; padding-inline: 1.4rem; }
+        @media (min-width: 480px) { .story-shell { padding-inline: 1.5rem; } }
+
+        /* mobile / tablet: article is a single centred reading column */
+        .story-grid > article { max-width: 44rem; margin-inline: auto; }
+        .story-rail-l, .story-rail-r { display: none; }
+        /* the right-rail cards appear inline in the article until the 3rd column exists */
+        .story-rail-r-inline { display: block; }
+
+        @media (min-width: 1024px) {
+            .story-grid { display: grid; grid-template-columns: 208px minmax(0, 1fr); column-gap: 2.5rem; align-items: start; }
+            .story-grid > article { max-width: none; margin: 0; }
+            .story-rail-l { display: block; position: sticky; top: 5.75rem; }
+        }
+        @media (min-width: 1280px) {
+            .story-grid { grid-template-columns: 210px minmax(0, 44rem) 224px; column-gap: 2.75rem; }
+            .story-rail-r { display: block; position: sticky; top: 5.75rem; }
+            .story-rail-r-inline { display: none; }
+        }
+
+        /* table of contents */
+        .toc-h { display:block; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin-bottom:.7rem; }
+        .toc-link { display:block; padding:.32rem 0 .32rem .85rem; border-left:1px solid var(--border);
+            font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.45; letter-spacing:.01em;
+            color:var(--muted-foreground); text-decoration:none; transition:color .2s, border-color .2s; }
+        .toc-link:hover { color:var(--foreground); }
+        .toc-link.is-active { color:var(--accent); border-left-color:var(--accent); }
+        .toc-link.lvl-3 { padding-left:1.7rem; font-size:10px; }
+        details.toc-mobile { margin: 2rem 0 0; border:1px solid var(--border); background:var(--card); }
+        details.toc-mobile summary { list-style:none; cursor:pointer; padding:.8rem 1rem; font-family:'IBM Plex Mono',monospace;
+            font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); display:flex; justify-content:space-between; }
+        details.toc-mobile summary::-webkit-details-marker { display:none; }
+        details.toc-mobile[open] summary { border-bottom:1px solid var(--border); }
+        details.toc-mobile .toc-link { padding-left:1rem; }
+        details.toc-mobile { padding-bottom:.4rem; }
+        details.toc-mobile > .toc-link:first-of-type { margin-top:.4rem; }
+        @media (min-width: 1024px) { details.toc-mobile { display:none; } }
+
+        /* share */
+        .share-h { display:block; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted-foreground); margin-bottom:.6rem; }
+        .share-btn { display:inline-flex; align-items:center; justify-content:center; width:2rem; height:2rem;
+            border:1px solid var(--border); color:var(--muted-foreground); background:transparent; cursor:pointer;
+            font-size:12px; transition:color .2s, border-color .2s; }
+        .share-btn:hover, .share-btn:focus-visible { color:var(--accent); border-color:var(--accent); outline:none; }
+
+        /* right-rail cards */
+        .rail-card { border:1px solid var(--border); background:var(--card); }
+        .rail-h { display:block; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); padding:.95rem 1rem .35rem; }
+        .qf-row { display:flex; justify-content:space-between; gap:1rem; align-items:baseline; padding:.55rem 1rem; border-top:1px solid var(--border); }
+        .qf-row:first-of-type { border-top:0; }
+        .qf-k { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted-foreground); }
+        .qf-v { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--foreground); text-align:right; }
+        .rail-link { display:flex; align-items:center; justify-content:space-between; gap:.8rem; padding:.6rem 1rem; border-top:1px solid var(--border);
+            font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--foreground); text-decoration:none; transition:color .2s, padding-left .2s; }
+        .rail-link:hover { color:var(--accent); padding-left:1.35rem; }
+
+        /* sticky mini-nav */
+        #story-mini { position:fixed; left:0; right:0; top:0; z-index:45; transform:translateY(-101%);
+            transition:transform .28s ease; background:rgba(22,24,27,.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); }
+        .light-mode #story-mini { background:rgba(255,255,255,.96); }
+        #story-mini.show { transform:translateY(0); }
+
+        /* body block extras */
+        .article-facts { margin:2.75rem 0; border:1px solid var(--border); background:var(--card); }
+        .article-facts .af-row { display:flex; justify-content:space-between; gap:1.5rem; padding:.72rem 1.1rem; border-top:1px solid var(--border); font-family:'IBM Plex Mono',monospace; }
+        .article-facts .af-row:first-child { border-top:0; }
+        .article-facts .af-k { color:var(--muted-foreground); text-transform:uppercase; letter-spacing:.12em; font-size:.66rem; }
+        .article-facts .af-v { color:var(--foreground); font-size:.82rem; text-align:right; }
+        .article-divider { margin:3.5rem 0; text-align:center; color:var(--accent); font-size:.72rem; letter-spacing:.3em; }
+        .article-divider::before, .article-divider::after { content:""; display:inline-block; width:2.5rem; height:1px; background:var(--border); vertical-align:middle; margin:0 .9rem; }
+        .article-gallery { margin:3rem 0; display:grid; grid-template-columns:repeat(2,1fr); gap:.55rem; }
+        @media (min-width:560px){ .article-gallery { grid-template-columns:repeat(3,1fr); } }
+        .article-gallery button { display:block; overflow:hidden; border:1px solid var(--border); cursor:zoom-in; padding:0; background:none; margin:0; }
+        .article-gallery img { width:100%; aspect-ratio:1/1; object-fit:cover; opacity:.85; transition:transform .4s ease, opacity .3s ease; display:block; }
+        .article-gallery button:hover img { transform:scale(1.06); opacity:1; }
+        .article-figure img { cursor:zoom-in; }
+        .article-note.is-safety { border-left-color:#ef4444; background-image:linear-gradient(100deg, rgba(239,68,68,.06), rgba(239,68,68,.012) 60%); }
+        .light-mode .article-note.is-safety { background-color:#fff5f5; }
+        .article-note.is-safety .article-note-title { color:#ef4444; }
+
+        /* lightbox */
+        #lightbox { position:fixed; inset:0; z-index:90; display:none; background:rgba(9,10,12,.96); }
+        #lightbox.open { display:flex; flex-direction:column; }
+        #lightbox .lb-stage { flex:1; display:flex; align-items:center; justify-content:center; padding:3.5rem 1rem 1rem; min-height:0; }
+        #lightbox .lb-stage img { max-width:100%; max-height:100%; object-fit:contain; }
+        #lightbox .lb-cap { text-align:center; padding:1rem; font-family:'IBM Plex Mono',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted-foreground); min-height:2.5rem; }
+        #lightbox .lb-btn { position:absolute; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.22); color:#fff; width:2.7rem; height:2.7rem; cursor:pointer; font-size:14px; transition:border-color .2s, color .2s; }
+        #lightbox .lb-btn:hover { border-color:var(--accent); color:var(--accent); }
+        #lb-close { top:1rem; right:1rem; }
+        #lb-prev { left:.6rem; top:50%; transform:translateY(-50%); }
+        #lb-next { right:.6rem; top:50%; transform:translateY(-50%); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .article-prose a, #story-mini, .article-gallery img, .rail-link, .toc-link { transition: none; }
+        }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+<div id="read-progress" class="fixed left-0 top-0 z-[60] h-[3px] bg-accent" style="width:0%"></div>
+
+<!-- Sticky compact nav — appears once the article header scrolls away -->
+<div id="story-mini">
+    <div class="max-w-[1200px] mx-auto px-6 h-12 flex items-center gap-4">
+        <a href="/stories" class="shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground hover:text-accent transition-colors">&larr; Journal</a>
+        <span id="story-mini-title" class="flex-1 truncate font-heading text-[13px] uppercase tracking-[0.06em] text-foreground"></span>
+        <button id="story-mini-share" type="button" aria-label="Share this story" class="shrink-0 share-btn"><i class="fa-solid fa-share-nodes"></i></button>
+    </div>
+</div>
+
+<!-- MAIN BRAND HEADER & NAVIGATION -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <span class="inline-flex h-16 md:h-20 shrink-0 items-center overflow-hidden rounded-2xl bg-white p-1 shadow-sm ring-1 ring-black/5 transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="Himalayan Magic Adventure" width="520" height="473" class="h-full w-auto object-contain"></span>
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">The Field Journal · Est. 1993</span>
+            </span>
+        </a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink">Treks</a>
+            <div class="hme-navgroup">
+                <a href="/expeditions" class="hme-navlink">Expeditions</a>
+                <div class="hme-navdrop">
+                    <a href="/expeditions" class="hme-navdrop-all">The Full Atlas</a>
+                    <span class="hme-navdrop-sep"></span>
+                    <a href="/expeditions/8000m">8,000 m +<span class="hme-navdrop-n">14 peaks</span></a>
+                    <a href="/expeditions/7000m">7,000 m +<span class="hme-navdrop-n">9 peaks</span></a>
+                    <a href="/expeditions/6000m">6,000 m +<span class="hme-navdrop-n">8 peaks</span></a>
+                    <a href="/expeditions/trekking-peaks">Trekking Peaks<span class="hme-navdrop-n">Soon</span></a>
+                </div>
+            </div>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/stories" class="hme-navlink is-active">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
+        </nav>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent xl:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
+    </div>
+</header>
+
+<main id="story-root" class="flex-1"></main>
+
+<footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <span class="inline-flex h-28 items-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-sm ring-1 ring-black/5 transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="Himalayan Magic Adventure" width="520" height="473" class="h-full w-auto object-contain"></span>
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/stories" class="block py-1 hover:text-accent transition-colors">The Field Journal</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 38 trails →</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about#sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/services" class="block py-1 hover:text-accent transition-colors">Services</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div>
+                <span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <button onclick="hmeToggleTheme()" aria-label="Toggle theme" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all">
+        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+    </button>
+</div>
+
+<!-- Image lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button id="lb-close" class="lb-btn" aria-label="Close">&times;</button>
+    <button id="lb-prev" class="lb-btn" aria-label="Previous image">&larr;</button>
+    <button id="lb-next" class="lb-btn" aria-label="Next image">&rarr;</button>
+    <div class="lb-stage"><img id="lb-img" src="" alt=""></div>
+    <div id="lb-cap" class="lb-cap"></div>
+</div>
+
+<script src="/stories.js?v=2"></script>
+<script src="/story-render.js?v=3"></script>
+<script src="/menu.js?v=8"></script>
+<script src="/back.js?v=1"></script>
+<script src="/compass-nav.js?v=2"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gear &amp; Packing — Himalayan Trek Loadout | Himalayan Magic Adventure</title>
+    <meta name="description" content="A complete, category-by-category packing list for a Himalayan trek — documents, clothing, footwear, sleep system, hydration, electronics, first aid and equipment. Tick items off; your progress is saved.">
+    <link rel="canonical" href="https://himalayanmagic.com/gear">
+
+    <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
+    <link rel="stylesheet" href="/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --background:#1b1e22; --foreground:#f3f4f6; --card:#22252a; --border:#2e3239; --accent:#f06225; --accent-hover:#d04e1b; --muted:#272b32; --muted-foreground:#9ca3af; }
+        .light-mode { --background:#f9fafb; --foreground:#111827; --card:#ffffff; --border:#e5e7eb; --accent:#e04f1a; --accent-hover:#c23e11; --muted:#f3f4f6; --muted-foreground:#4b5563; }
+        body { background:var(--background); color:var(--foreground); font-family:'IBM Plex Sans',sans-serif; }
+        ::-webkit-scrollbar { width:6px; height:6px; } ::-webkit-scrollbar-track { background:var(--background); } ::-webkit-scrollbar-thumb { background:var(--accent); border-radius:3px; }
+        .kicker { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.3em; color:var(--accent); }
+        .lbl { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        .sec-h { font-family:'Oswald',sans-serif; font-weight:300; text-transform:uppercase; letter-spacing:-.02em; line-height:.95; }
+        @media print { header, footer, #gear-toolbar, .no-print, #theme-fab { display:none !important; } body { background:#fff; color:#000; } }
+    </style>
+</head>
+<body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
+
+<!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
+<header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <a href="/" class="group flex shrink-0 items-center gap-3">
+            <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <span class="hidden flex-col leading-none sm:flex">
+                <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
+                <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Gear &amp; Packing · Est. 1993</span>
+            </span>
+        </a>
+        <nav class="hme-nav-primary hidden shrink-0 items-center gap-x-7 font-heading text-[13px] font-medium uppercase tracking-[0.13em] text-white/70 lg:flex xl:gap-x-9 xl:text-sm">
+            <a href="/" class="hme-navlink">Home</a>
+            <a href="/treks" class="hme-navlink">Treks</a>
+            <a href="/expeditions" class="hme-navlink">Expeditions</a>
+            <a href="/altitude-safety" class="hme-navlink">Safety</a>
+            <a href="/dispatches" class="hme-navlink">Stories</a>
+            <a href="/about" class="hme-navlink">About</a>
+        </nav>
+        <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+            <span class="relative z-10">Find your route</span>
+        </a>
+    </div>
+</header>
+
+<section class="border-b border-border bg-[#191b1f]">
+    <div class="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
+        <span class="kicker">Gear &amp; Packing</span>
+        <h1 class="sec-h text-white text-4xl md:text-6xl mt-3">The Himalayan<br><span class="text-accent">trek loadout</span></h1>
+        <p class="max-w-2xl font-sans text-sm md:text-base text-white/75 mt-5 leading-relaxed">
+            A category-by-category list for a tea-house trek to around 5,000 m. Tick items as you pack — your progress is saved on this device. <span class="text-accent">Essential</span> items are the ones you should not leave Kathmandu without. Individual trek pages carry route-specific additions.
+        </p>
+    </div>
+</section>
+
+<div id="gear-toolbar" class="sticky top-0 z-30 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-6 md:px-10 py-3 flex flex-wrap items-center gap-4">
+        <span class="lbl"><span id="gear-done" class="text-accent">0</span> / <span id="gear-total">0</span> packed</span>
+        <div class="flex-1 min-w-[120px] h-1.5 bg-border max-w-xs"><div id="gear-bar" class="h-full bg-accent" style="width:0%"></div></div>
+        <button id="gear-print" class="border border-border font-mono text-[10px] uppercase tracking-widest px-3 py-2 text-muted-foreground hover:border-accent hover:text-accent transition-all">Print list</button>
+        <button id="gear-reset" class="border border-border font-mono text-[10px] uppercase tracking-widest px-3 py-2 text-muted-foreground hover:border-accent hover:text-accent transition-all">Reset</button>
+    </div>
+</div>
+
+<main class="flex-1 bg-background">
+    <div class="max-w-6xl mx-auto px-6 md:px-10 py-10 md:py-14">
+        <div id="gear-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10"></div>
+        <div class="mt-14 border border-accent/30 bg-accent/5 p-5 max-w-3xl">
+            <span class="lbl text-accent block mb-2">Hiring &amp; buying in Kathmandu</span>
+            <p class="font-sans text-[13px] text-muted-foreground leading-relaxed">Thamel has everything — down jackets, sleeping bags, boots, poles — to buy or rent by the day. A −15 °C sleeping bag and a down jacket are the two items most worth hiring if you do not own good ones. Test any rented boots on a walk before the trek.</p>
+        </div>
+    </div>
+</main>
+
+<footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
+            <a href="/" class="flex items-center gap-4 group">
+                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <div>
+                    <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
+                    <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
+                </div>
+            </a>
+            <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years.</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
+            <div><span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Explore</span>
+                <a href="/treks" class="block py-1 hover:text-accent transition-colors">Trekking Trails</a>
+                <a href="/expeditions" class="block py-1 hover:text-accent transition-colors">Mountaineering Expeditions</a>
+                <a href="/compare" class="block py-1 hover:text-accent transition-colors">Compare Treks</a>
+                <a href="/gear" class="block py-1 text-accent transition-colors">Gear &amp; Packing</a></div>
+            <div><span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Trekking Regions</span>
+                <a href="/treks#koshi" class="block py-1 hover:text-accent transition-colors">Everest &amp; the Khumbu</a>
+                <a href="/treks#gandaki" class="block py-1 hover:text-accent transition-colors">Annapurna &amp; Mustang</a>
+                <a href="/treks#karnali" class="block py-1 hover:text-accent transition-colors">Dolpo &amp; the Far West</a>
+                <a href="/treks" class="block py-1 text-accent hover:text-accent-hover transition-colors">All 28 trails →</a></div>
+            <div><span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Company</span>
+                <a href="/about" class="block py-1 hover:text-accent transition-colors">About Us</a>
+                <a href="/about-sherpa" class="block py-1 hover:text-accent transition-colors">Sherpa Heritage</a>
+                <a href="/altitude-safety" class="block py-1 hover:text-accent transition-colors">Altitude &amp; Safety</a>
+                <a href="/contact" class="block py-1 hover:text-accent transition-colors">Contact</a></div>
+            <div><span class="block text-white text-[10px] uppercase tracking-[0.2em] mb-4">Kathmandu HQ</span>
+                <span class="block leading-relaxed mb-2 text-[#8b8e95]">318 Thamel Marg, Kathmandu, Nepal</span>
+                <span class="block text-accent">+977 01-5361254</span>
+                <span class="block mt-3 text-[10px] text-[#6f727a]">NMA · TAAN member · Registered trekking agency</span></div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-border pt-8 text-[10px] text-[#5f636b] uppercase tracking-widest">
+            <span>© 2026 Himalayan Magic Adventure — Verify time-sensitive details before departure.</span>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                <a href="/altitude-safety" class="hover:text-accent transition-colors">Responsible Travel</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Privacy</a>
+                <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
+            </div>
+        </div>
+        <div class="mt-10 text-center">
+            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
+        </div>
+    </div>
+</footer>
+
+<div id="theme-fab" class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <button onclick="hmeGearToggleTheme()" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all">
+        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+    </button>
+</div>
+
+<script>
+window.hmeGearToggleTheme = function () {
+    var t = (localStorage.getItem('vo_theme') === 'light') ? 'dark' : 'light';
+    localStorage.setItem('vo_theme', t); hmeGearApplyTheme();
+};
+function hmeGearApplyTheme() {
+    var light = localStorage.getItem('vo_theme') === 'light';
+    document.body.classList.toggle('light-mode', light);
+    var i = document.getElementById('theme-icon');
+    if (i) i.className = 'fa-solid ' + (light ? 'fa-sun' : 'fa-moon') + ' text-sm' + (light ? ' text-accent' : '');
+}
+hmeGearApplyTheme();
+</script>
+<script src="/treks.js?v=2"></script>
+<script>
+(function () {
+  'use strict';
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var LIST = (window.TREK_DEFAULTS && window.TREK_DEFAULTS.packingList) || [];
+  var KEY = 'vo_gear_general';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+
+  var total = 0;
+  LIST.forEach(function (c) { total += (c.items || []).length; });
+  document.getElementById('gear-total').textContent = total;
+
+  function itemId(ci, ii) { return 'g' + ci + '_' + ii; }
+  function render() {
+    document.getElementById('gear-grid').innerHTML = LIST.map(function (cat, ci) {
+      return '<div><span class="lbl block mb-3 text-accent">' + esc(cat.category) + '</span>' +
+        (cat.items || []).map(function (it, ii) {
+          var id = itemId(ci, ii), on = state[id] === true;
+          return '<label class="flex items-start gap-3 py-2 border-b border-border/60 cursor-pointer group">' +
+            '<input type="checkbox" data-id="' + id + '" ' + (on ? 'checked' : '') + ' class="mt-1 h-3.5 w-3.5 accent-[color:var(--accent)] shrink-0">' +
+            '<span class="font-mono text-[11px] leading-relaxed ' + (on ? 'line-through text-muted-foreground' : 'text-foreground') + ' group-hover:text-accent transition-colors">' + esc(it.name) +
+            (it.tier ? ' <span class="ml-1 lbl ' + (it.tier === 'essential' ? 'text-accent' : '') + '">' + esc(it.tier) + '</span>' : '') +
+            '</span></label>';
+        }).join('') + '</div>';
+    }).join('');
+    updateProgress();
+  }
+  function updateProgress() {
+    var done = 0;
+    LIST.forEach(function (c, ci) { (c.items || []).forEach(function (_, ii) { if (state[itemId(ci, ii)]) done++; }); });
+    document.getElementById('gear-done').textContent = done;
+    document.getElementById('gear-bar').style.width = (total ? (done / total * 100) : 0) + '%';
+  }
+
+  document.getElementById('gear-grid').addEventListener('change', function (e) {
+    var cb = e.target;
+    if (!cb.dataset || !cb.dataset.id) return;
+    state[cb.dataset.id] = cb.checked;
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (x) {}
+    var span = cb.parentElement.querySelector('span');
+    if (span) { span.classList.toggle('line-through', cb.checked); span.classList.toggle('text-muted-foreground', cb.checked); }
+    updateProgress();
+  });
+  document.getElementById('gear-reset').addEventListener('click', function () {
+    state = {}; try { localStorage.removeItem(KEY); } catch (x) {} render();
+  });
+  document.getElementById('gear-print').addEventListener('click', function () { window.print(); });
+
+  if (!LIST.length) {
+    document.getElementById('gear-grid').innerHTML = '<p class="font-sans text-sm text-muted-foreground">Packing list unavailable.</p>';
+  } else render();
+})();
+</script>
+<script src="/menu.js?v=4"></script>
+<script src="/reveal.js?v=1"></script>
+<script src="/compass-nav.js?v=1"></script>
+<script src="/theme.js?v=2"></script>
+</body>
+</html>
