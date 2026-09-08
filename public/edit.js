@@ -36,7 +36,7 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "EST. 1993 · 30 YEARS IN THE HIMALAYA",
+    heroBadge: "EST. 1993 · THREE DECADES IN THE HIMALAYA",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
     heroTagline: "Leave the ordinary behind and ascend into legend.",
@@ -148,7 +148,7 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "सन् १९९३ देखि · हिमालयमा ३० वर्ष",
+    heroBadge: "सन् १९९३ देखि · हिमालयमा तीन दशक",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
     heroTagline: "साधारणलाई पछाडि छोड्नुहोस्, किंवदन्तीमा चढ्नुहोस्।",
@@ -260,7 +260,7 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "自 1993 年 · 喜马拉雅 30 年",
+    heroBadge: "自 1993 年 · 深耕喜马拉雅三十余年",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
     heroTagline: "把平凡留在身后，攀上传奇之巅。",
@@ -907,10 +907,12 @@ function renderWebsite() {
   document.getElementById('contact-address').innerText = siteData.contact.address || "";
   document.getElementById('contact-regions').innerText = siteData.contact.regions || "";
 
-  // About Image
+  // About Image (the homepage legacy section is optional — guard the nodes)
   if (siteData.about && siteData.about.image) {
-    document.getElementById('about-image').src = siteData.about.image;
-    document.getElementById('about-img-input').value = siteData.about.image;
+    const abImg = document.getElementById('about-image');
+    const abInput = document.getElementById('about-img-input');
+    if (abImg) abImg.src = siteData.about.image;
+    if (abInput) abInput.value = siteData.about.image;
   }
 
   // Apply multilingual mappings
@@ -2488,10 +2490,13 @@ function setNestedKey(obj, path, value) {
 }
 
 function updateAboutImage() {
-  const url = document.getElementById('about-img-input').value.trim();
+  const input = document.getElementById('about-img-input');
+  if (!input) return;
+  const url = input.value.trim();
   if (url && siteData.about) {
     siteData.about.image = url;
-    document.getElementById('about-image').src = url;
+    const abImg = document.getElementById('about-image');
+    if (abImg) abImg.src = url;
   }
 }
 
@@ -2504,7 +2509,7 @@ function openAddTrekModal() {
   document.getElementById('modal-days').value = 14;
   document.getElementById('modal-price').value = 1200;
   document.getElementById('modal-diff').value = 'Moderate';
-  document.getElementById('modal-img').value = 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=400';
+  document.getElementById('modal-img').value = '';
   document.getElementById('modal-max-alt').value = '5,000m';
   document.getElementById('modal-itinerary').value = 'Day 1: Arrival in Kathmandu\nDay 2: Trek preparation\nDay 3: Final descent';
   document.getElementById('modal-included').value = 'Sherpa guides\nWarm camp food\nRescue logistics';

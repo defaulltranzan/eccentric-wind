@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://himalayanmagic.com/services">
     <meta property="og:title" content="Expedition Services & High-Altitude Operations — Himalayan Magic Adventure">
     <meta property="og:description" content="Certified IFMGA mountain guiding, trekking peak climbing, helicopter rescue charters, and custom Himalayan itineraries.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=80&w=1200">
+    <meta property="og:image" content="https://himalayanmagic.com/images/hero-mountain.jpg">
 
     <!-- Schema.org JSON-LD Service List -->
     <script type="application/ld+json">
@@ -127,9 +127,9 @@
     <!-- MAIN NAVIGATION -->
     <!-- MAIN BRAND HEADER & NAVIGATION  ·  unified 2026-09-01 (see _docs/REVERT-notes.md § 5k) -->
     <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
+        <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
             <a href="/" class="group flex shrink-0 items-center gap-3">
-                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-10 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <span class="inline-flex h-16 md:h-20 shrink-0 items-center overflow-hidden rounded-2xl bg-white p-1 shadow-sm ring-1 ring-black/5 transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="Himalayan Magic Adventure" width="520" height="473" class="h-full w-auto object-contain"></span>
                 <span class="hidden flex-col leading-none sm:flex">
                     <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
                     <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Expedition Services</span>
@@ -153,7 +153,7 @@
                 <a href="/stories" class="hme-navlink">Stories</a>
                 <a href="/about" class="hme-navlink">About</a>
             </nav>
-            <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent sm:inline-flex">
+            <a href="/#trek-finder" class="hme-cta hidden shrink-0 items-center justify-center border border-accent px-5 py-2 font-heading text-[12px] font-semibold uppercase tracking-[0.16em] text-accent xl:inline-flex">
                 <span class="relative z-10">Find your route</span>
             </a>
         </div>
@@ -316,7 +316,7 @@
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-icon.png" alt="Himalayan Magic Adventure" width="480" height="231" class="h-14 w-auto object-contain transition-transform group-hover:scale-105">
+                <span class="inline-flex h-28 items-center overflow-hidden rounded-2xl bg-white p-1.5 shadow-sm ring-1 ring-black/5 transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="Himalayan Magic Adventure" width="520" height="473" class="h-full w-auto object-contain"></span>
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -361,9 +361,6 @@
                 <a href="/contact" class="hover:text-accent transition-colors">Terms</a>
             </div>
         </div>
-        <div class="mt-10 text-center">
-            <span class="inline-block font-mono text-[10px] tracking-[0.3em] uppercase text-[#5b5e66]" style="filter:blur(0.4px)">Default &times; Eccentric Wind &nbsp;&middot;&nbsp; 2026</span>
-        </div>
     </div>
 </footer>
 
@@ -395,8 +392,14 @@
             }
         }
     </script>
+<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+    <button onclick="toggleTheme()" aria-label="Toggle light or dark theme" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all">
+        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+    </button>
+</div>
 <script src="/announce.js?v=2"></script>
-<script src="/menu.js?v=7"></script>
+<script src="/menu.js?v=8"></script>
+<script src="/back.js?v=1"></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
 </body>

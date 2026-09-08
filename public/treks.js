@@ -1383,11 +1383,6 @@ TREKS['lumba-sumba-pass-trek'] = {
     paragraphs: [
       'Most trekkers see Kanchenjunga or Makalu, then fly home. Lumba Sumba is the thread between them — a route that follows old salt-and-wool trade lines north to the border, crosses the range where the traders crossed it, and comes down the other side into a different valley system entirely. Olangchung Gola alone is worth the journey: a stone village of carved windows and prayer flags where the gompa still holds festivals and the mule trains still run to Tibet.',
       'The reward for the effort is space. For days at a time the only structures are your tents and the occasional herders’ shelter, and the trail is walked by yak caravans rather than trekking groups. It is eastern Nepal at its emptiest, and it asks for a real commitment in return.'
-    ],
-    gallery: [
-      { img: '/images/treks/kanchenjunga-base-camp.jpg', caption: 'The Lumba Sumba La watershed' },
-      { img: '/images/treks/lumba-sumba-pass-2.webp', caption: 'Olangchung Gola on the Tibet trade route' },
-      { img: '/images/treks/lumba-sumba-pass-3.webp', caption: 'Camp in the upper Tamor' }
     ]
   },
   passes: [{ name: 'Lumba Sumba La', elevation: '≈ 5,160 m', day: 10 }],
@@ -1545,11 +1540,6 @@ TREKS['sherpeni-col-pass-trek'] = {
     paragraphs: [
       'The Hongu basin in the middle of this traverse is one of the emptiest places in the Nepal Himalaya — a chain of glacial lakes ringed by 6,000 and 7,000 m walls, with no villages, no lodges and, usually, no other people. You reach it by abseiling off the West Col and you leave it by climbing the Amphu Labtsa, and in between you camp on moraine beneath Baruntse.',
       'For a climber, the appeal is the completeness of it: you start in the subtropical Arun, walk up to the foot of the world’s fifth-highest mountain, cross the range on ropes, and come down the other side onto the Everest Base Camp trail. Very few Himalayan journeys join up that neatly, and fewer still are this committing.'
-    ],
-    gallery: [
-      { img: '/images/everest_real.jpg', caption: 'Fixed rope on the Sherpani Col' },
-      { img: '/images/treks/sherpeni-col-2.webp', caption: 'The Hongu basin from the West Col' },
-      { img: '/images/treks/sherpeni-col-3.webp', caption: 'Amphu Labtsa, the final pass into the Khumbu' }
     ]
   },
   passes: [
@@ -2644,11 +2634,6 @@ TREKS['panch-pokhari-trek'] = {
     paragraphs: [
       'Panch Pokhari has the feel of a place that used to see more people. The pilgrim trail is well made, there are rest shelters and a pilgrim house by the lakes, and the villages have the bones of a tourism economy — but for most of the year you will have the ridge to yourself. The reward on a clear morning is a view that runs the length of the central Himalaya, with the Jugal Himal so close it fills half the sky.',
       'It also works as a first taste of Nepali trekking that does not involve a flight, a permit queue or a crowd. You walk out of a hill town, sleep in family homes, climb to a sacred lake, and are back in Kathmandu inside a week and a half.'
-    ],
-    gallery: [
-      { img: '/images/langtang_real.jpg', caption: 'The lakes of Panch Pokhari below the Jugal Himal' },
-      { img: '/images/treks/panch-pokhari-2.webp', caption: 'Ridge camp on the way up' },
-      { img: '/images/treks/panch-pokhari-3.webp', caption: 'Tamang home-stay village' }
     ]
   },
   acclimatization: {
@@ -2790,11 +2775,6 @@ TREKS['ganja-la-pass-trek'] = {
     paragraphs: [
       'Most people walk up to Kyanjin Gompa, climb a viewpoint, and walk back down the same trail. The Ganja La is the way out the other side: a hard morning on the pass, then a descent into a completely different valley system, and two days along a high, empty ridge before the first Helambu village. It turns a linear trek into a true crossing of the Himalaya.',
       'The Langtang valley also carries its own weight now. The 2015 earthquake buried the old village of Langtang under a landslide; the rebuilt village and its memorial are part of what you walk through. The valley has come back, the lodges are busy again, and the community is glad of the trekkers — the Ganja La adds a wilder second act to a trek that is meaningful in its own right.'
-    ],
-    gallery: [
-      { img: '/images/treks/ganja-la.webp', caption: 'The Ganja La under snow' },
-      { img: '/images/treks/ganja-la-2.webp', caption: 'Kyanjin Gompa at the head of the Langtang valley' },
-      { img: '/images/treks/ganja-la-3.webp', caption: 'Ridge camp at Keldang on the Helambu side' }
     ]
   },
   passes: [{ name: 'Ganja La', elevation: '≈ 5,122 m', day: 8 }],
@@ -2947,11 +2927,6 @@ TREKS['tashi-lapcha-pass-trek'] = {
     paragraphs: [
       'For a valley this close to Kathmandu, Rolwaling is astonishingly little visited. It is a dead-end unless you cross the Tashi Lapcha, and the villages — Beding at 3,690 m, Na at 4,180 m — still run on yak herding and potatoes, with a trickle of climbers heading for Pachermo or the pass. Walking up it feels like arriving somewhere before the road did.',
       'The pass is the payoff and the price. It is a proper glacier crossing, roped and crampon-shod, threading crevasses beneath the Tengi Ragi Tau icefall, and it drops you — after four or five days of camping — straight onto the Everest Base Camp trail at Thame. Few journeys in Nepal change gear so completely, from empty beyul to Khumbu bakery in a single high day.'
-    ],
-    gallery: [
-      { img: '/images/langtang_real.jpg', caption: 'The Tashi Lapcha glacier below the col' },
-      { img: '/images/treks/tashi-lapcha-2.webp', caption: 'Beding, in the Rolwaling valley' },
-      { img: '/images/treks/tashi-lapcha-3.webp', caption: 'Tsho Rolpa glacial lake' }
     ]
   },
   passes: [{ name: 'Tashi Lapcha', elevation: '≈ 5,755 m', day: 12 }],
@@ -4251,11 +4226,6 @@ TREKS['nar-phu-valley-trek'] = {
     paragraphs: [
       'Thousands of people walk past Koto every season on their way around the Annapurnas. A handful turn north into the gorge. The reward for that turn is one of the best-preserved Tibetan-Buddhist landscapes in Nepal — Phu with its dzong and its gompa, Nar with its chortens and its fields, and days of walking through country that looks and feels like the far side of the Himalaya, because it very nearly is.',
       'It also works beautifully as an add-on. Cross the Kang La back onto the Circuit and you can carry straight on over the Thorong La, turning a famous trek into a much richer three-week loop that most Circuit walkers never see.'
-    ],
-    gallery: [
-      { img: '/images/treks/annapurna-circuit.jpg', caption: 'Phu village below its ruined dzong' },
-      { img: '/images/treks/nar-phu-valley-2.webp', caption: 'The chorten gateway to Nar' },
-      { img: '/images/treks/nar-phu-valley-3.webp', caption: 'The Kang La, looking back at Annapurna II' }
     ]
   },
   passes: [{ name: 'Kang La', elevation: '≈ 5,320 m', day: 9 }],
@@ -4406,11 +4376,6 @@ TREKS['tilicho-lake-trek'] = {
     paragraphs: [
       'Done properly — with an acclimatisation day in Manang, a night at Khangsar, and time to sit by the lake rather than sprint up and back — Tilicho is one of the great set-pieces of the Annapurna region. The walk in from Manang is gentle and scenic, the landslide traverse is genuinely exciting, and the lake itself, ringed by 7,000 m walls and often part-frozen, is a place worth lingering.',
       'It also solves a common Circuit problem: how to get properly acclimatised for the Thorong La without just marking time in Manang. Two or three nights working up to Tilicho Base Camp and the lake is the best altitude preparation the region offers.'
-    ],
-    gallery: [
-      { img: '/images/treks/annapurna-circuit.jpg', caption: 'Tilicho Lake below the Grande Barrière' },
-      { img: '/images/treks/tilicho-lake-2.webp', caption: 'The Khangsar landslide traverse to base camp' },
-      { img: '/images/treks/tilicho-lake-3.webp', caption: 'Manang, with the Annapurnas behind' }
     ]
   },
   acclimatization: {
@@ -4559,11 +4524,6 @@ TREKS['mesokanto-la-pass-trek'] = {
     paragraphs: [
       'The Thorong La is a fine pass, but on an October morning there can be two hundred people on it. The Mesokanto La is the same watershed, a few kilometres south, and you will very likely have it to yourself. You trade the tea-house comfort and the safety-in-numbers for two cold camps, a harder route and a much stronger sense of crossing the range on your own terms.',
       'It also lets you make Tilicho Lake the heart of the trip rather than a rushed side trip — camping above the lake, crossing the pass straight from there, and coming down the other side into the Kali Gandaki. It is one of the most satisfying ways to link the Manang and Mustang sides of the Annapurna region.'
-    ],
-    gallery: [
-      { img: '/images/treks/annapurna-circuit.jpg', caption: 'The Mesokanto La col above the Tilicho basin' },
-      { img: '/images/treks/mesokanto-la-2.webp', caption: 'High camp beyond Tilicho Lake' },
-      { img: '/images/treks/mesokanto-la-3.webp', caption: 'The descent toward the Kali Gandaki and Jomsom' }
     ]
   },
   passes: [{ name: 'Mesokanto La', elevation: '≈ 5,100–5,340 m (verify)', day: 10 }],
@@ -5699,11 +5659,6 @@ TREKS['kagmara-pass-trek'] = {
     paragraphs: [
       'Most Lower Dolpo treks walk up the Suli Gad to Phoksundo and back. The Kagmara route takes the harder line — up an empty side valley, over a 5,000 m pass, and down into Pungmo — which means several extra days of walking with, most likely, nobody else on the trail. It is Dolpo at its most Dolpo: high, dry, Buddhist and Bön, and a very long way from anywhere.',
       'And because Dolpo lies behind Dhaulagiri in the rain shadow, this is one of the few genuinely high treks in Nepal you can do in July and August. When the Annapurna and Everest trails are socked in, the Kagmara La can be under a blue sky.'
-    ],
-    gallery: [
-      { img: '/images/hero-mountain.jpg', caption: 'The Kagmara La on the way into Dolpo' },
-      { img: '/images/treks/kagmara-pass-2.webp', caption: 'Phoksundo Lake and Ringmo village' },
-      { img: '/images/treks/kagmara-pass-3.webp', caption: 'A Bön village in the Pungmo valley' }
     ]
   },
   passes: [{ name: 'Kagmara La', elevation: '≈ 5,115 m', day: 7 }],

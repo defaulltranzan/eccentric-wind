@@ -20,10 +20,12 @@
   }
 
   // ── The whole site nav. `short` = header label, `name` = overlay label. ──
+  //    `overlayOnly: true` — keep the item in the "Explore" overlay but drop it
+  //    from the desktop header nav (used to keep the header lean).
   var NAV = [
     { name: 'Home', short: 'Home', href: '/' },
     { name: 'Trekking Trails', short: 'Treks', href: '/treks' },
-    { name: 'Compare Treks', short: 'Compare', href: '/compare' },
+    { name: 'Compare Treks', short: 'Compare', href: '/compare', overlayOnly: true },
     { name: 'Expedition Atlas', short: 'Expeditions', href: '/expeditions', children: [
       { name: 'The Full Atlas', href: '/expeditions', all: true },
       { name: '8,000 m +', href: '/expeditions/8000m', note: '14 peaks' },
@@ -52,7 +54,7 @@
   function renderPrimaryNav() {
     var nav = document.querySelector('nav.hme-nav-primary');
     if (!nav) return;
-    nav.innerHTML = NAV.map(function (it) {
+    nav.innerHTML = NAV.filter(function (it) { return !it.overlayOnly; }).map(function (it) {
       var active = isCurrent(it.href) ? ' is-active' : '';
       if (it.children) {
         var open = it.children.some(function (c) { return isCurrent(c.href) && c.href !== '/expeditions'; }) || isCurrent(it.href);

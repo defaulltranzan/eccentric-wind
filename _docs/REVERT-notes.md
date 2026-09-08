@@ -782,3 +782,152 @@ page (`/treks` reproduces it). Fix = gate it to `lg:`/`xl:` sitewide, separate p
 `cp _docs/blog-redesign-backup/{stories,story-render}.js public/`;
 `npm run build:css`; restart the server. (Article routes / bad-slug behaviour are
 unchanged, so no route edits to undo.)
+
+## § 5z — "Compare Treks" dropped from the desktop header nav (2026-09-07)
+
+`public/menu.js`: the `NAV` entry for Compare Treks got `overlayOnly: true`, and
+`renderPrimaryNav()` now does `NAV.filter(function(it){return !it.overlayOnly;})`
+before building the header. The item still appears in the "Explore" overlay
+(`overlayItem` / `NAV.map` untouched). Header nav is now Home · Treks · Expeditions ·
+Safety · Stories · About. `menu.js?v=7`→`?v=8` in all 14 HTML files.
+
+**Revert:** remove `overlayOnly: true` from the Compare entry in `menu.js` and the
+`.filter(...)` call in `renderPrimaryNav()`; bump the version back if desired.
+
+## § 5aa — Sitewide floating "Back" control (2026-09-08)
+
+New `public/back.js` (self-injecting, same pattern as `menu.js` / `announce.js`).
+Drops one fixed button top-left — the mirror of the ⊕ "Explore" button top-right —
+that calls `window.history.back()`.
+- Styling matches `#hme-menu-btn` exactly: `left:1.1rem; top:3.9rem; z-index:60`,
+  2.9rem tall, thin accent border, dark glass, IBM Plex Mono `BACK` micro-label
+  (label hidden < 400px → icon-only), accent chevron in the nav-caret stroke style.
+- Shows only when `history.length > 1` (hidden on a fresh tab), and only after
+  scrolling `SHOW_AFTER = 72` px so it never overlaps the header logo — identical
+  reveal logic to the Explore button. Hidden while the Explore overlay is open
+  (MutationObserver on `#hme-menu.open`). Respects `prefers-reduced-motion`.
+- Added `<script src="/back.js?v=1">` right after the `menu.js` tag in all 14
+  page HTML files.
+
+**Revert:** delete `public/back.js` and remove the 14 `<script src="/back.js?v=1">`
+tags (`sed -i '/back\.js?v=1/d' public/*.html`).
+
+## § 5ab — Site-wide bug + consistency sweep (2026-09-08)
+
+A pass for "bug-free, no weak links, consistent icons". No layout redesign — targeted
+fixes only.
+
+**Dead / broken links**
+- `public/treks.js`: removed 9 `gallery:` blocks that pointed at 22 non-existent
+  `/images/treks/*.webp` files (ganja-la, kagmara-pass, lumba-sumba, mesokanto-la,
+  nar-phu, panch-pokhari, sherpeni-col, tashi-lapcha, tilicho-lake). The template
+  just omits a missing gallery. `treks.js?v=5`→`?v=6` (7 HTML files).
+- `public/favicon.ico` + `public/apple-touch-icon.png` added (copies of
+  `images/logo-icon.png`) — every page was triggering a `/favicon.ico` 404.
+- `public/videos/hero.mp4` added (copy of the mis-named `hero.mp4.mp4`) — the
+  homepage route-carousel `<video>` `<source src="/videos/hero.mp4">` was 404-ing
+  on every load. (`hero 2.mp4` / `hero.mp4.mp4` left in place, unreferenced.)
+- All `images.unsplash.com` hot-links removed (were weak external deps, one 404-ing):
+  `about.html` (og:image + JSON-LD → local `hero-mountain.jpg`; ridge photo →
+  `everest_real.jpg`); `contact.html` + `services.html` og:image → local;
+  `index.html` hero `onerror` fallback → `/images/hero-art.jpg`; `edit.js` dead
+  modal default → `''`.
+
+**Icons / controls consistency**
+- Theme (light/dark) toggle was **missing** on `about`, `treks`, `contact`,
+  `services` (they read `vo_theme` but gave no way to change it). Added the standard
+  `fixed bottom-6 right-6` button (`onclick="toggleTheme()"`, `#theme-icon`
+  `fa-moon`/`fa-sun`) — `theme.js` already syncs the icon.
+- `trek-render.js` share button icon `fa-arrow-up-from-bracket` → `fa-share-nodes`
+  to match the story pages. `trek-render.js?v=3`→`?v=4`.
+
+**Content accuracy**
+- "30 YEARS / 30 Years" (Est. 1993 → 2026 is 33) → "THREE DECADES" everywhere:
+  `edit.js` `heroBadge` en/np/zh, `index.html` fallback, `about.html` `<title>` +
+  `og:title`. `edit.js?v=25.1`→`?v=25.2`.
+- `about.html` "Mountain Masters" cards: 3 portraits were stock/wrong images
+  (2 Unsplash — incl. a beach photo — + `itinerary.png`, all captioned as named
+  guides). Swapped to a brand "PORTRAIT / PHOTOGRAPHY PENDING" SVG placeholder
+  (inline data-URI, same look as `trek-render.js` `phImg`). Bio text kept for the
+  client to revise.
+
+**Footer**
+- Removed the blurred `Default × Eccentric Wind · 2026` vanity credit line from the
+  11 pages that still carried it (the newest pages had already dropped it).
+
+**Crawl result:** all page routes + every internal `href`/`src` across the site
+resolve (0 dead pages, 0 broken refs); console clean on every page type; no body
+h-scroll 1024–1440; `/expeditions/<8000er>` (mountains.js keys) all render.
+
+**Known, left as-is (not bugs):** `heroVideoSlides` + `#trek-modal` editor in
+`edit.js`/`index.html` are orphaned dead code (no trigger, `isEditMode` never set) —
+inert, flagged for a later cleanup, not removed here to avoid risk. `mountains.js`
++ `peaks.js` both touch `window.MOUNTAINS` by design (peaks.js reads it).
+
+**Revert:** `git checkout public/treks.js public/edit.js public/trek-render.js
+public/about.html public/contact.html public/services.html public/index.html
+public/altitude-safety.html public/collection.html public/compare.html
+public/expedition.html public/expeditions.html public/stories.html public/story.html
+public/404.html public/tailwind.css`; add back the theme buttons if wanted;
+`rm public/favicon.ico public/apple-touch-icon.png public/videos/hero.mp4`;
+`npm run build:css`.
+
+## § 5ad — Homepage "Connect" band + floating social rail + badge logo (2026-09-08)
+
+Three linked changes; brand tokens only, no redesign.
+
+**1 · Homepage `#about` section rewritten** (`index.html`). The old "TRUSTED
+MOUNTAINEERING LEGACY / thirty years of expertise" two-column block (image +
+floating stat) is replaced by a centred "— Connect with us / Talk to our expedition
+directors" band: the client's paragraph (three-decades wording, for consistency
+with § 5ab), an `About Us` → `/about` accent button + `Safety & Preparation` →
+`/altitude-safety` outline button, a thin rule, a 4-icon social row (FB / IG /
+WhatsApp / email) and a `Kathmandu HQ · info@himalayanmagic.com · Est. 1993` line.
+Faint `hero-mountain.jpg` wash behind. `id="about"` kept for anchors. Classes use
+only light-mode-covered utilities (`text-white/70`, `border-white/30`, `border-border`).
+- `edit.js`: the `about-image` / `about-img-input` accessors in `renderWebsite()`
+  and `updateAboutImage()` are now null-guarded (the section no longer carries those
+  nodes; all `about-*` i18n accessors were already guarded).
+
+**2 · New `public/social.js`** (`?v=1`) — self-injecting (menu.js/back.js pattern),
+loaded only on `index`, `about`, `treks`, `expeditions`. Fixed `#hme-social` rail,
+right edge, vertically centred, z-45 (clear of menu/back z-60, theme z-50, compass
+z-45 bottom-left). 4 links: `facebook.com/himalayanmagic1993`,
+`instagram.com/himalayanmagic1993`, `wa.me/9779841454599`,
+`mailto:info@himalayanmagic.com`. Fades in ~400 ms after load; `prefers-reduced-motion`
+keeps just the fade. `<script src="/social.js?v=1">` added after the back.js tag on
+those 4 files.
+
+**3 · Logo replaced + sized up** — the client's badge (hiker + pines + inverted
+orange triangle + "EXPERIENCE THE HIMALAYAS", 3rd revision) is at
+`public/images/logo-badge.png`, **cropped to its true content bbox** (was carrying
+~10 % transparent margin) + a 2 % breathing margin, 520×473 (aspect 1.10, ~92 KB).
+Because the header/footer are dark in dark mode / near-white in light mode and the
+badge is black line-art, the `<img>` sits on a **white rounded-square plate**
+(circle clipped the tabs/triangle, so `rounded-2xl` not `rounded-full`):
+`<span class="inline-flex h-16 md:h-20 shrink-0 items-center overflow-hidden
+rounded-2xl bg-white p-1 shadow-sm ring-1 ring-black/5 …"><img
+src="/images/logo-badge.png" width="520" height="473" class="h-full w-auto
+object-contain"></span>`. `w-auto` keeps the true aspect; nothing is cropped. Sizes:
+header plate `h-16` (64 px) mobile / `h-20` (80 px) desktop → visible logo ~62 px /
+~79 px wide (was ~52 px); footer plate `h-28` (112 px) → ~110 px; 404 header `h-16`.
+Header bar `h-20` → `h-20 md:h-24` (80 px mobile / 96 px desktop) so the bigger logo
+has breathing room without a tall navbar. Header is `relative`, not sticky — no
+scroll-shrink. `<a href="/">` wrap (→ home) + text wordmark unchanged; favicon
+`<link>`s still `logo-icon.png`. (Earlier `logo-badge.svg` recreation was deleted.) The plate is
+a visible coin on the dark header and blends on the light header while the badge
+stays legible in both. Applied in all 13 page headers/footers + the 404 header;
+`index.html` Organization JSON-LD `logo` → `logo-badge.png`. `<a href="/">` wrap
+(→ home) + text wordmark unchanged. Favicon `<link>`s still use `logo-icon.png`
+(unchanged); `logo-icon.png` kept. (An earlier mono-orange SVG recreation,
+`logo-badge.svg`, was replaced by this and deleted.)
+
+**Verified**: section copy + buttons + 4 socials, readable in dark AND light mode;
+logo loads + links home in header/footer on every page + 404; social rail on the 4
+target pages only, not on detail pages; no console errors; no body h-scroll;
+`renderWebsite()` still completes (stats/flagship/footer email all populate).
+
+**Revert:** `git checkout public/index.html public/edit.js public/*.html
+public/tailwind.css`; `rm public/social.js public/images/logo-badge.png`;
+`npm run build:css`. (The `*.html` checkout also strips the `social.js` tags and
+restores the `logo-icon.png` img src.)

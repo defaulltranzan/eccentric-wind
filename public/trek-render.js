@@ -153,7 +153,7 @@
     '<a href="/contact" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Plan This Trek</a>' +
     '<a href="#itinerary" class="inline-flex items-center gap-2 border border-white/40 text-white font-mono text-[11px] uppercase tracking-widest px-6 py-3 hover:border-accent hover:text-accent transition-all">View Itinerary</a>' +
     '<button id="btn-save" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-regular fa-bookmark"></i><span>Save</span></button>' +
-    '<button id="btn-share" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-solid fa-arrow-up-from-bracket"></i><span>Share</span></button>' +
+    '<button id="btn-share" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-solid fa-share-nodes"></i><span>Share</span></button>' +
     '</div>' +
     '</div></section>');
 
@@ -712,7 +712,7 @@
     if (navigator.share) navigator.share(data).catch(function () {});
     else if (navigator.clipboard) navigator.clipboard.writeText(location.href).then(function () {
       shareBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied</span>';
-      setTimeout(function () { shareBtn.innerHTML = '<i class="fa-solid fa-arrow-up-from-bracket"></i><span>Share</span>'; }, 1800);
+      setTimeout(function () { shareBtn.innerHTML = '<i class="fa-solid fa-share-nodes"></i><span>Share</span>'; }, 1800);
     });
   });
 
