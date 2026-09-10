@@ -155,7 +155,29 @@
     '<button id="btn-save" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-regular fa-bookmark"></i><span>Save</span></button>' +
     '<button id="btn-share" class="inline-flex items-center gap-2 border border-white/25 text-white/80 font-mono text-[11px] uppercase tracking-widest px-4 py-3 hover:border-accent hover:text-accent transition-all"><i class="fa-solid fa-share-nodes"></i><span>Share</span></button>' +
     '</div>' +
-    '</div></section>');
+    heroCredit(t.heroCredit) +
+    '</div>' +
+    '</section>');
+
+  /* Photo credit for licensed third-party imagery (CC BY-SA requires the
+     author, the licence, and a note that the file was changed). Most treks
+     use the client's own photography and carry no heroCredit at all.
+     In the hero's normal flow under the CTAs, not pinned to a corner — the
+     bottom-right holds the floating theme/language cluster and the bottom-left
+     the compass, so a corner credit collided with one of them.
+     Arbitrary colour, not a text-white/* step, so the light-mode remap in
+     tw-input.css leaves it alone on this always-dark [data-media] hero. */
+  function heroCredit(c) {
+    if (!c || !c.author) return '';
+    var lic = c.licenseUrl
+      ? '<a href="' + esc(c.licenseUrl) + '" target="_blank" rel="noopener noreferrer license" class="underline decoration-white/20 underline-offset-2 hover:text-accent transition-colors">' + esc(c.license) + '</a>'
+      : esc(c.license);
+    var who = c.sourceUrl
+      ? '<a href="' + esc(c.sourceUrl) + '" target="_blank" rel="noopener noreferrer" class="underline decoration-white/20 underline-offset-2 hover:text-accent transition-colors">' + esc(c.author) + '</a>'
+      : esc(c.author);
+    return '<p class="mt-6 font-mono text-[9px] uppercase tracking-[0.16em] text-[#8b9199]">' +
+      'Photo ' + who + ' · ' + lic + (c.changes ? ' · ' + esc(c.changes) : '') + '</p>';
+  }
 
   function heroStat(label, val) {
     if (!has(val)) return '';

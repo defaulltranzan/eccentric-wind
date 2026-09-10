@@ -116,7 +116,7 @@
       elevation: 7126, elevationLabel: '7,126 m', elevationFt: 23379,
       range: 'Peri Himal', region: 'Manaslu Region',
       coordinates: { lat: 28.755, lon: 84.451, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/himlung-himal.jpg', gallery: [],
       tagline: 'The gentle giant of the Nar–Phu',
       summary: 'A 7,126 m peak on the Nepal–Tibet border, at the head of the Nar–Phu valley north of Manaslu. First climbed in 1992. Its north-west ridge — snow slopes and a broad, non-technical summit ridge — has made Himlung one of the most popular introductions to 7,000 m climbing in Nepal, usually done as a single spring or autumn expedition of around four weeks.',
       seo: {
@@ -199,7 +199,7 @@
       elevation: 7246, elevationLabel: '7,246 m', elevationFt: 23773,
       range: 'Dhaulagiri Himal', region: 'Dhaulagiri Region',
       coordinates: { lat: 28.735, lon: 83.144, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/putha-hiunchuli.jpg', gallery: [],
       tagline: 'The western anchor of the Dhaulagiri wall',
       summary: 'At 7,246 m, Putha Hiunchuli is the westernmost major summit of the Dhaulagiri massif, above the edge of Dolpo. First climbed in 1954 by Herbert Tichy’s small Austrian party — the same expedition that made the first ascent of Cho Oyu. Its normal route, from the north-west, is a moderate glacier-and-snow climb that has kept the peak on the list of attainable 7,000ers, reached by a long and beautiful trek through Dolpo.',
       seo: {
@@ -278,7 +278,7 @@
       elevation: 7855, elevationLabel: '7,855 m', elevationFt: 25771,
       range: 'Mahalangur Himalaya', region: 'Everest Region',
       coordinates: { lat: 27.966, lon: 86.889, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/nuptse.jpg', gallery: [],
       tagline: 'The third wall of the Everest cirque',
       summary: 'Nuptse (7,855 m) is the western arm of the Everest–Lhotse–Nuptse horseshoe that rings the Western Cwm. It is barely a thousand metres lower than Everest but a far steeper and more technical mountain, first climbed in 1961 by a British expedition via the south face. It has no trade route: every line on Nuptse is a serious alpine undertaking, and it is climbed by only a small number of experienced parties.',
       seo: {
@@ -357,7 +357,7 @@
       elevation: 7129, elevationLabel: '7,129 m', elevationFt: 23389,
       range: 'Mahalangur Himalaya', region: 'Makalu Region',
       coordinates: { lat: 27.872, lon: 86.983, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/baruntse.jpg', gallery: [],
       tagline: 'The snow pyramid between Everest and Makalu',
       summary: 'Baruntse (7,129 m) is a symmetrical snow-and-ice peak in the heart of the Hongu and Barun valleys, ringed by Everest, Lhotse, Makalu and Ama Dablam. First climbed in 1954 by a New Zealand team. Its south-east ridge is a classic moderate 7,000 m route — fixed snow and ice, four camps, a defined summit day — usually reached across the Amphu Labtsa or Mera La, which makes it a superb combined trekking-and-climbing expedition.',
       seo: {
@@ -437,7 +437,7 @@
       elevation: 7525, elevationLabel: '7,525 m', elevationFt: 24688,
       range: 'Annapurna Himal', region: 'Annapurna Region',
       coordinates: { lat: 28.538, lon: 84.083, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/annapurna-iv.jpg', gallery: [],
       tagline: 'The north wall of the Annapurna massif',
       summary: 'Annapurna IV (7,525 m) stands on the long northern rampart of the Annapurna massif, sharing a high ridge with Annapurna II. First climbed in 1955 by a German expedition. The normal route, from the north, is a moderate glacier-and-snow climb, but the mountain is notorious for a heavily corniced and wind-scoured upper ridge that has turned back many strong parties short of the top.',
       seo: {
@@ -516,7 +516,7 @@
       elevation: 7027, elevationLabel: '7,027 m', elevationFt: 23054,
       range: 'Karakoram', region: 'Karakoram',
       coordinates: { lat: 36.020, lon: 75.100, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/spantik.jpg', gallery: [],
       tagline: 'The Karakoram’s friendly 7,000er',
       summary: 'Spantik (7,027 m), known locally as Golden Peak, rises above the Nagar valley in the Karakoram. First climbed in 1955 by a German expedition. Its south-east ridge — long, moderate-angled snow with a superb high camp — is one of the most popular routes to a Karakoram summit for climbers stepping up to 7,000 m, and the mountain’s dramatic north-west face (the "Golden Pillar") is a legendary hard alpine objective.',
       seo: {
@@ -598,7 +598,7 @@
       elevation: 7546, elevationLabel: '7,546 m', elevationFt: 24757,
       range: 'Pamir', region: 'Pamir',
       coordinates: { lat: 38.277, lon: 75.115, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/muztagh-ata.jpg', gallery: [],
       tagline: 'The great dome of the eastern Pamir',
       summary: 'Muztagh Ata (7,546 m) is a vast, gently-angled ice dome in the eastern Pamir of Xinjiang, near Kashgar. First climbed in 1956 by a large Soviet–Chinese expedition. Its west ridge is one of the most straightforward routes to a 7,500 m summit anywhere — broad snow slopes with no technical climbing — and the mountain is one of the classic ski-mountaineering objectives in the world.',
       seo: {
@@ -679,7 +679,7 @@
       elevation: 7132, elevationLabel: '7,132 m', elevationFt: 23399,
       range: 'Yoka Pahar (Gurans Himal)', region: 'Far West Nepal',
       coordinates: { lat: 30.005, lon: 80.938, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/api-himal.jpg', gallery: [],
       tagline: 'The high point of Nepal’s far west',
       summary: 'Api (7,132 m) is the highest mountain in far-western Nepal, in the Gurans (Yoka Pahar) sub-range near the point where Nepal, India and Tibet meet. First climbed in 1960 by a Japanese expedition. It is a serious, remote and infrequently-climbed peak: the normal route on the north-west face and ridge is a real mixed and snow climb, and the approach is one of the longest and least-developed in Nepal.',
       seo: {
@@ -758,7 +758,7 @@
       elevation: 7135, elevationLabel: '7,135 m', elevationFt: 23409,
       range: 'Zanskar Range', region: 'Indian Himalaya',
       coordinates: { lat: 33.996, lon: 76.023, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/nun-peak.jpg', gallery: [],
       tagline: 'The highest peak of the Indian Himalaya west of the Sutlej',
       summary: 'Nun (7,135 m) is the higher of the twin summits of the Nun–Kun massif in Ladakh, above the Suru valley on the road between Kargil and Padum. First climbed in 1953 by the Swiss guide Pierre Vittoz and the French climber Claude Kogan. Its normal route from the west is a moderate but sustained snow-and-ice climb, and its road-accessible Base Camp makes it one of the most logistically straightforward 7,000 m peaks in the greater Himalaya.',
       seo: {
@@ -851,7 +851,8 @@
       elevation: 6476, elevationLabel: '6,476 m', elevationFt: 21247,
       range: 'Mahalangur Himalaya', region: 'Everest Region (Hinku Valley)',
       coordinates: { lat: 27.708, lon: 86.872, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/mera-peak.jpg',
+      heroCredit: { author: 'Mark Horrell', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mera_Peak_Zatr_La.JPG', changes: 'cropped and compressed' }, gallery: [],
       tagline: 'The highest of Nepal’s trekking peaks',
       summary: 'At 6,476 m, Mera Peak is the highest of Nepal’s designated trekking peaks — a long glacier ascent above the remote Hinku valley, south of Everest. First climbed in 1953 by Jimmy Roberts and Sen Tenzing. The normal route is not technical: crampons, a rope for the crevassed glacier and one short steep pull onto the summit dome. Its difficulty is entirely altitude, cold and the length of the summit day, and from the top five 8,000 m peaks stand on the northern skyline.',
       seo: {
@@ -934,7 +935,8 @@
       elevation: 6119, elevationLabel: '6,119 m', elevationFt: 20076,
       range: 'Mahalangur Himalaya', region: 'Everest Region (Khumbu Valley)',
       coordinates: { lat: 27.949, lon: 86.789, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/lobuche-peak.jpg',
+      heroCredit: { author: 'Theprotrekker', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Lobuche_East_from_the_southeast.jpg', changes: 'cropped and compressed' }, gallery: [],
       tagline: 'A steep, corniced ridge above the Khumbu',
       summary: 'Lobuche East (6,119 m) stands directly above the Everest Base Camp trail near Lobuche village. Despite its trekking-peak status it is a genuine mountaineering objective — a sustained 45° snow-and-ice slope on fixed rope leads to a corniced, knife-edge summit ridge, and the true summit lies beyond a lower top where many parties stop. First climbed in 1984. It is usually done as an acclimatisation and skills climb alongside an Everest Base Camp trek.',
       seo: {
@@ -1014,7 +1016,8 @@
       elevation: 6160, elevationLabel: '6,160 m', elevationFt: 20210,
       range: 'Mahalangur Himalaya', region: 'Everest Region (Imja Valley)',
       coordinates: { lat: 27.922, lon: 86.938, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/island-peak.jpg',
+      heroCredit: { author: 'Rohit Sharma', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Island_Peak_(Imja_Tse)_from_Dingboche_Village.jpg', changes: 'cropped and compressed' }, gallery: [],
       tagline: 'The busiest 6,000er in Nepal',
       summary: 'Island Peak, or Imja Tse (6,160 m — some authorities give 6,189 m), rises from the glaciers of the Chhukung valley in the shadow of Lhotse. Named by Eric Shipton’s party in 1951 for its look of an island in a sea of ice, it was climbed in 1953 by a British group acclimatising for Everest. The route ends with a genuinely steep headwall on fixed rope and a short corniced ridge, making it a fair introduction to a real snow climb — and the most popular trekking peak in the country.',
       seo: {
@@ -1095,7 +1098,8 @@
       elevation: 6812, elevationLabel: '6,812 m', elevationFt: 22349,
       range: 'Mahalangur Himalaya', region: 'Everest Region (Khumbu Valley)',
       coordinates: { lat: 27.861, lon: 86.861, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/ama-dablam.jpg',
+      heroCredit: { author: 'Vyacheslav Argenberg', license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Ama_Dablam%2C_Nepal.jpg', changes: 'cropped and compressed' }, gallery: [],
       tagline: 'The Matterhorn of the Khumbu',
       summary: 'Ama Dablam (6,812 m — older sources give 6,856 m) is the striking, spired peak that dominates the Everest Base Camp trail above Pangboche. It is not a trekking peak but a Ministry-permitted expedition peak, and one of the most technical mountains regularly guided anywhere: the South-West Ridge involves steep granite, fixed rope on rock and ice, relentless exposure, and an upper mountain overhung by the hanging Dablam serac. First climbed in 1961.',
       seo: {
@@ -1181,7 +1185,8 @@
       elevation: 6584, elevationLabel: '6,584 m', elevationFt: 21601,
       range: 'Damodar Himal', region: 'Annapurna Region (Manang)',
       coordinates: { lat: 28.748, lon: 84.049, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/chulu-east.jpg',
+      heroCredit: { author: 'Jerome Bon', license: 'CC BY 2.0', licenseUrl: 'https://creativecommons.org/licenses/by/2.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Chulu_of_Nepal.jpg', changes: 'cropped and compressed' }, gallery: [],
       tagline: 'A high snow peak off the Annapurna Circuit',
       summary: 'Chulu East (commonly 6,584 m, though maps and permits vary) stands north of the Annapurna Circuit above Manang, in the Damodar Himal. It is climbed as an NMA trekking peak, usually built into a circuit trek: a glaciated approach from a base camp above the valley, a committing high camp on the ridge, and moderate snow slopes that steepen to 40–50° below the summit. Higher and more of a mountaineering undertaking than the Everest-region trekking peaks.',
       seo: {
@@ -1260,7 +1265,8 @@
       elevation: 6419, elevationLabel: '6,419 m', elevationFt: 21060,
       range: 'Damodar Himal', region: 'Annapurna Region (Manang)',
       coordinates: { lat: 28.730, lon: 83.982, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/chulu-west.jpg',
+      heroCredit: { author: 'Roman Yahodka', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Chulu_West_peak.jpg', changes: 'cropped and compressed' }, gallery: [],
       tagline: 'The longer, more committing Chulu',
       summary: 'Chulu West (commonly 6,419 m, though some sources give figures over 6,600 m) is the western and more serious of the two regularly climbed Chulu summits above Manang. It is an NMA trekking peak but a clear step up from Chulu East — a higher, more remote base camp, a committing high camp, and a north-west ridge of moderate snow with sustained sections to 45–50°. A good second Nepali climbing peak, usually linked with the Annapurna Circuit.',
       seo: {
@@ -1419,7 +1425,8 @@
       elevation: 6091, elevationLabel: '6,091 m', elevationFt: 19984,
       range: 'Peri Himal', region: 'Annapurna Region (Manang)',
       coordinates: { lat: 28.652, lon: 84.168, approx: true },
-      heroImage: null, gallery: [],
+      heroImage: '/images/peaks/pisang-peak.jpg',
+      heroCredit: { author: 'Mark Horrell', license: 'CC BY-SA 2.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/2.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Naar_fields_and_Pisang_Peak.jpg', changes: 'cropped and compressed' }, gallery: [],
       tagline: 'The clean pyramid above Pisang village',
       summary: 'Pisang Peak (6,091 m), also called Jong Ri, is the sharp pyramidal summit that rises directly above Pisang village on the Annapurna Circuit. It is an NMA trekking peak with a short but genuinely steep finish: a broad snow slope from a high camp leads to a final 45–50° rock-and-snow section on fixed rope to the narrow summit. Less altitude than the Chulu peaks, but more sustained climbing near the top, and easily built into a circuit trek.',
       seo: {

@@ -1154,6 +1154,7 @@ function selectFinderCard(group, value) {
       ? finderState.style.indexOf(btn.dataset.value) > -1
       : btn.dataset.value === finderState[group];
     btn.classList.toggle('is-on', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
 
   filterTrekFinder();
@@ -1162,6 +1163,8 @@ function selectFinderCard(group, value) {
 // <select> controls (region, budget).
 function setFinderValue(group, value) {
   finderState[group] = value || null;
+  const sel = document.getElementById('finder-' + group + '-sel');
+  if (sel) sel.classList.toggle('is-on', !!finderState[group]);
   filterTrekFinder();
 }
 
@@ -1296,10 +1299,13 @@ function filterTrekFinder() {
     return;
   }
 
+  applyFinderPersona(active);
+
   if (active === 0) {
     resultsEl.innerHTML = '';
     if (countEl) countEl.innerText = '38 trails';
-    if (hintEl) hintEl.innerText = 'Set a filter to rank your matches';
+    setFinderCountSub('In the catalogue');
+    if (hintEl) hintEl.innerText = 'Start exploring — select a few preferences';
     return;
   }
 
@@ -1333,7 +1339,9 @@ function filterTrekFinder() {
   matches = matches.slice(0, 4);
 
   if (countEl) countEl.innerText = matches.length + ' match' + (matches.length === 1 ? '' : 'es');
-  if (hintEl) hintEl.innerText = active + (active === 1 ? ' filter set' : ' filters set') + ' — top matches below';
+  setFinderCountSub('Of 38 trails');
+  if (hintEl) hintEl.innerText = 'Your matches are ready — ' + matches.length +
+    (matches.length === 1 ? ' trail matches' : ' trails match') + ' your style';
 
   const top = matches[0];
   const rest = matches.slice(1);
@@ -1397,6 +1405,81 @@ function filterTrekFinder() {
     '</div>';
 }
 
+/* ----------------------------------------------------------------------------
+   Trekking personality  (2026-09-10, REVERT-notes § 5af)
+   A read-out of what the user has already told us — it reads finderState and
+   changes nothing about the scoring. Purely a label on top of the same answers.
+   -------------------------------------------------------------------------- */
+function setFinderCountSub(txt) {
+  const el = document.getElementById('finder-count-sub');
+  if (el) el.innerText = txt;
+}
+
+function finderPersona() {
+  const st = finderState, sty = st.style || [];
+  const has = (v) => sty.indexOf(v) > -1;
+
+  if (st.experience === 'alpinist' || (has('challenge') && st.duration === 'epic'))
+    return ['The High-Altitude Explorer', 'Big vertical, long days and thin air — you go where the trail runs out.'];
+  if (has('remote') || st.region === 'dolpo' || st.region === 'farwest')
+    return ['The Remote Trail Seeker', 'Quiet trails. Big landscapes. Far fewer people.'];
+  if (has('culture') || st.region === 'mustang')
+    return ['The Cultural Wanderer', 'Monasteries, villages and the people of the high valleys, at walking pace.'];
+  if (has('photo'))
+    return ['The Light Chaser', 'You plan around the golden hour and walk for the view.'];
+  if (has('slow') || st.duration === 'short')
+    return ['The Slow Traveller', 'Shorter days, longer stops, and time to actually look around.'];
+  if (st.experience === 'first')
+    return ['The First-Time Himalayan', 'Well-marked trails, teahouse comfort and a genuinely big mountain view.'];
+  if (has('iconic') || st.region === 'everest' || st.region === 'annapurna')
+    return ['The Classic Himalayan Trekker', 'The routes that made Nepal famous — and still earn it.'];
+  if (st.experience === 'experienced' || has('challenge'))
+    return ['The Seasoned Highlander', 'You have the legs for passes and the patience for altitude.'];
+  return ['The Open-Minded Explorer', 'Still weighing it up — tell us a little more and we will narrow it down.'];
+}
+
+function applyFinderPersona(active) {
+  const box = document.getElementById('fdr-persona');
+  const sec = document.getElementById('trek-finder');
+  if (sec) sec.classList.toggle('is-touched', active > 0);
+  if (!box) return;
+  if (!active) { box.classList.remove('is-on'); return; }
+  const [title, line] = finderPersona();
+  const t = document.getElementById('fdr-persona-title');
+  const l = document.getElementById('fdr-persona-line');
+  if (t) t.innerText = title;
+  if (l) l.innerText = line;
+  box.classList.add('is-on');
+}
+
+/* Mobile sheet — the section is `hidden lg:block`, so on phones it is opened
+   from the Explore menu instead of living inline on the homepage. */
+function openTrekFinder() {
+  const sec = document.getElementById('trek-finder');
+  if (!sec) { window.location.href = '/treks'; return; }
+  if (typeof closeMenu === 'function') closeMenu();
+  sec.classList.add('fdr-open');
+  document.body.classList.add('fdr-locked');
+  sec.setAttribute('role', 'dialog');
+  sec.setAttribute('aria-modal', 'true');
+  sec.setAttribute('aria-label', 'What kind of trekker are you');
+  const close = document.getElementById('fdr-close');
+  if (close) close.focus();
+  document.addEventListener('keydown', finderEscHandler);
+}
+
+function closeTrekFinder() {
+  const sec = document.getElementById('trek-finder');
+  if (!sec) return;
+  sec.classList.remove('fdr-open');
+  document.body.classList.remove('fdr-locked');
+  sec.removeAttribute('role');
+  sec.removeAttribute('aria-modal');
+  document.removeEventListener('keydown', finderEscHandler);
+}
+
+function finderEscHandler(e) { if (e.key === 'Escape') closeTrekFinder(); }
+
 function resetTrekFinder() {
   finderState.experience = null;
   finderState.region = null;
@@ -1405,8 +1488,11 @@ function resetTrekFinder() {
   finderState.budget = null;
   finderState.style = [];
 
-  document.querySelectorAll('#trek-finder .finder-card').forEach((btn) => btn.classList.remove('is-on'));
-  document.querySelectorAll('#trek-finder select').forEach((s) => { s.value = ''; });
+  document.querySelectorAll('#trek-finder .finder-card').forEach((btn) => {
+    btn.classList.remove('is-on');
+    btn.setAttribute('aria-pressed', 'false');
+  });
+  document.querySelectorAll('#trek-finder select').forEach((s) => { s.value = ''; s.classList.remove('is-on'); });
 
   filterTrekFinder();
 }
@@ -2374,7 +2460,7 @@ function renderDispatches() {
 
   const fmt = window.formatStoryDate || (s => s);
   container.innerHTML = list.map(s => `
-    <a href="/stories/${escapeHtml(s.slug)}" class="group relative flex h-full flex-col border border-border bg-card overflow-hidden hover:border-accent transition-colors">
+    <a href="/stories/${escapeHtml(s.slug)}" class="group relative flex h-full w-[78vw] max-w-[300px] shrink-0 snap-start flex-col border border-border bg-card overflow-hidden hover:border-accent transition-colors md:w-auto md:max-w-none md:shrink">
       <div class="h-48 overflow-hidden relative">
         <img src="${escapeHtml(s.heroImage || '')}" onerror="this.style.display='none'" class="h-full w-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500" alt="${escapeHtml(s.heroAlt || s.title)}">
         <div class="absolute inset-0 bg-gradient-to-t from-card to-transparent"></div>
@@ -2390,7 +2476,7 @@ function renderDispatches() {
         </div>
       </div>
     </a>`).join('') +
-    `<a href="/stories" class="group col-span-full mt-2 flex items-center justify-center gap-3 border border-dashed border-border px-5 py-4 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground hover:border-accent hover:text-accent transition-all">
+    `<a href="/stories" class="group w-[78vw] max-w-[300px] shrink-0 snap-start flex flex-col items-center justify-center gap-3 border border-dashed border-border px-5 py-4 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground hover:border-accent hover:text-accent transition-all md:col-span-full md:w-auto md:max-w-none md:shrink md:mt-2 md:flex-row">
       Read the full field journal <span aria-hidden="true" class="group-hover:translate-x-1 transition-transform">&rarr;</span>
     </a>`;
 }
@@ -2723,23 +2809,8 @@ window.addEventListener('mousemove', (e) => {
   }
 });
 
-// Scroll Barometer (1,300m -> 8,848m)
-window.addEventListener('scroll', () => {
-  const scrollTop = window.scrollY || window.pageYOffset;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const ratio = docHeight > 0 ? Math.min(1, Math.max(0, scrollTop / docHeight)) : 0;
-  
-  const fill = document.getElementById('barometer-fill');
-  const ind = document.getElementById('barometer-indicator');
-  const txt = document.getElementById('barometer-alt-text');
-  
-  if (fill) fill.style.height = `${ratio * 100}%`;
-  if (ind) ind.style.top = `${ratio * 100}%`;
-  if (txt) {
-    const currentAlt = Math.round(1300 + (8848 - 1300) * ratio);
-    txt.innerText = `${currentAlt.toLocaleString()}m`;
-  }
-}, { passive: true });
+// Scroll barometer now lives in /altitude.js (self-injecting, all pages that
+// load it). Revert: REVERT-notes § 5af.
 
 // 3D Mountain Perspective Video Slider
 const heroVideoSlides = [
