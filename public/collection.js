@@ -38,6 +38,7 @@
       rank: r.rank || null,
       href: p.href || ('/expeditions/peaks/' + p.slug),
       heroImage: r.heroImage || null,
+      heroVideo: r.heroVideo || null,
       tagline: r.tagline || p.shortDescription || r.summary || '',
       coordinates: r.coordinates || p.coordinates || null,
       season: r.season || null,
@@ -70,7 +71,9 @@
   var BY = {}; LIST.forEach(function (m) { BY[m.slug] = m; });
 
   /* badge shown top-left on a tile: world rank for 8000, elevation order otherwise */
-  function badge(m) { return IS8000 && m.rank ? '#' + m.rank : m.ord + '/' + N; }
+  // 8000 m keeps its rank (#1–#14, the most meaningful label there); every other
+  // band shows the band tag — "6000m+" / "7000m+" — as the card's category chip.
+  function badge(m) { return IS8000 && m.rank ? '#' + m.rank : ((CAT && CAT.tag) || (m.ord + '/' + N)); }
   function rankMeta(m) { return IS8000 && m.rank ? '#' + m.rank + ' · ' + m.elevationLabel : m.elevationLabel; }
 
   /* -------- page-level SEO / hero copy -------- */
@@ -154,9 +157,15 @@
     var img = m.heroImage
       ? '<img class="mt-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" decoding="async" src="' + esc(m.heroImage) + '" alt="' + esc(m.name + ', ' + m.range) + '">'
       : tilePattern();
+    // Decorative hover clip. `data-src` (not src) so nothing is fetched until
+    // the pointer actually enters the card — bindVideos promotes it on hover.
+    var vid = m.heroVideo
+      ? '<video class="mt-video absolute inset-0 h-full w-full object-cover" muted loop playsinline preload="none" ' +
+        'aria-hidden="true" tabindex="-1" data-src="' + esc(m.heroVideo) + '"></video>'
+      : '';
     return '<a href="' + esc(m.href) + '" class="mt group relative block overflow-hidden border border-border bg-card ' + cls + '" ' +
       'aria-label="' + esc(m.name + ', ' + m.elevationLabel + ', ' + m.countryLabel + ', ' + m.range) + '">' +
-      '<div class="mt-shimmer absolute inset-0"></div>' + img +
+      '<div class="mt-shimmer absolute inset-0"></div>' + img + vid +
       '<div class="mt-scrim absolute inset-0"></div>' +
       '<span class="absolute top-3 left-3 z-10 bg-black/40 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-white">' + esc(badge(m)) + '</span>' +
       '<div class="relative z-10 flex h-full flex-col justify-end p-4 md:p-5">' +
@@ -239,7 +248,56 @@
     }).join('') + '<button type="button" class="ml-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground underline underline-offset-2 hover:text-accent" data-xclear="all">Clear all</button>';
   }
 
+  /* ------------------------------------------------------------------------
+     Hover clips (peaks carrying `heroVideo`).
+     Plays for exactly as long as the pointer is inside the card. The file is
+     only ever requested on the first hover, so a visitor who never hovers K2
+     pays nothing for it. Skipped entirely on touch (no true hover) and under
+     prefers-reduced-motion.
+     --------------------------------------------------------------------- */
+  var CAN_HOVER = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var NO_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var FADE_MS = 550;   // keep in step with .mt-video's opacity transition
+
+  function bindVideos(sel) {
+    if (!CAN_HOVER || NO_MOTION) return;
+    document.querySelectorAll((sel || '') + ' .mt-video').forEach(function (v) {
+      if (v.dataset.bound) return;
+      v.dataset.bound = '1';
+      var card = v.closest ? v.closest('.mt') : null;
+      if (!card) return;
+      var offTimer = null;
+
+      function start() {
+        if (offTimer) { clearTimeout(offTimer); offTimer = null; }
+        if (!v.src && v.dataset.src) v.src = v.dataset.src;   // first hover only
+        v.classList.add('is-playing');
+        var p = v.play();
+        // play() rejects if the pointer leaves before it resolves — not an error
+        if (p && p.catch) p.catch(function () {});
+      }
+
+      function stop() {
+        v.classList.remove('is-playing');
+        if (offTimer) clearTimeout(offTimer);
+        // hold playback until the fade has finished, so the frozen frame of a
+        // paused clip is never visible through the cross-fade
+        offTimer = setTimeout(function () {
+          offTimer = null;
+          v.pause();
+          try { v.currentTime = 0; } catch (e) {}
+        }, FADE_MS);
+      }
+
+      card.addEventListener('mouseenter', start);
+      card.addEventListener('mouseleave', stop);
+      card.addEventListener('focus', start);    // keyboard parity
+      card.addEventListener('blur', stop);
+    });
+  }
+
   function bindImgs(sel) {
+    bindVideos(sel);
     document.querySelectorAll((sel || '') + ' .mt-img').forEach(function (img) {
       if (img.complete && img.naturalWidth) { img.classList.add('loaded'); return; }
       img.addEventListener('load', function () { img.classList.add('loaded'); }, { once: true });

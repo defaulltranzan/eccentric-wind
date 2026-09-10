@@ -983,7 +983,7 @@ TREKS['makalu-base-camp'] = {
   tagline: 'A wild, near-empty trail to the fifth-highest mountain',
   province: 'koshi',
   region: 'Makalu–Barun',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/makalu-base-camp.jpg',
   summary: 'An 18-day expedition-style trek through the Makalu–Barun National Park to the base camp of Makalu (8,485 m). Remote, strenuous, sparsely lodged, and one of the least-walked major trails in Nepal.',
   stats: {
     duration: '18 days on the trail',
@@ -1332,7 +1332,7 @@ TREKS['lumba-sumba-pass-trek'] = {
   tagline: 'The wild link between Kanchenjunga and Makalu',
   province: 'koshi',
   region: 'Kanchenjunga–Makalu',
-  heroImage: '/images/treks/kanchenjunga-base-camp.jpg',
+  heroImage: '/images/treks/lumba-sumba-pass-trek.jpg',
   summary: 'A remote 18–20 day camping trek across far-eastern Nepal, crossing the Lumba Sumba La (≈ 5,160 m) between the Tamor and Arun watersheds — from the Kanchenjunga foothills, past the old Tibetan trade village of Olangchung Gola, over the pass and down into the Makalu Barun. A Great Himalaya Trail section walked by only a handful of groups each year.',
   stats: {
     duration: '18–20 days (14–16 on the trail)',
@@ -1489,7 +1489,7 @@ TREKS['sherpeni-col-pass-trek'] = {
   tagline: 'A mountaineering traverse from Makalu to the Khumbu',
   province: 'koshi',
   region: 'Makalu (Barun)',
-  heroImage: '/images/everest_real.jpg',
+  heroImage: '/images/treks/sherpeni-col-pass-trek.jpg',
   summary: 'A serious 22–24 day high-altitude traverse linking the Makalu Barun to the Everest region over three glaciated cols — the Sherpani Col (≈ 6,146 m), West Col (≈ 6,143 m) and Amphu Labtsa (≈ 5,845 m). Fixed ropes, crampons and a climbing crew are required. This is an alpine expedition, not a trek in the ordinary sense, and it is attempted by only a handful of parties each year.',
   stats: {
     duration: '22–24 days (18–20 on the trail)',
@@ -1659,7 +1659,7 @@ TREKS['langtang-valley'] = {
   tagline: 'The closest high valley to Kathmandu',
   province: 'bagmati',
   region: 'Langtang',
-  heroImage: '/images/langtang_real.jpg',
+  heroImage: '/images/treks/langtang-valley.jpg',
   summary: 'An 8-day trek into a glacier-carved valley a short drive north of Kathmandu, climbing through forest to the Tamang villages of Langtang and Kyanjin Gompa (3,870 m), with an optional dawn climb of Kyanjin Ri or Tserko Ri for a wall of 6,000–7,000 m peaks.',
   stats: {
     duration: '8 days (7 on the trail)',
@@ -2114,7 +2114,7 @@ TREKS['tamang-heritage-trail'] = {
   tagline: 'Tamang villages, hot springs and a border viewpoint',
   province: 'bagmati',
   region: 'Langtang (Tamang Heritage)',
-  heroImage: '/images/footer.png',
+  heroImage: '/images/treks/tamang-heritage-trail.jpg',
   summary: 'A 9-day cultural trek through the Tamang villages north-west of Syabrubesi — Gatlang, Tatopani, Nagthali, Briddim — with hot springs, home-stays, a Tibet-border viewpoint at Nagthali (3,165 m) and an optional link into the Langtang valley.',
   stats: {
     duration: '9 days (6–7 on the trail)',
@@ -2262,7 +2262,7 @@ TREKS['rolwaling-valley'] = {
   tagline: 'A hidden valley between Langtang and the Khumbu',
   province: 'bagmati',
   region: 'Rolwaling',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/rolwaling-valley.jpg',
   summary: 'A strenuous 14-day trek into the remote Rolwaling valley beneath Gauri Shankar (7,134 m), culminating — for experienced parties — in the crossing of the Tashi Lapcha pass (5,755 m) into the Khumbu. A serious, lightly-travelled route on the edge of mountaineering terrain.',
   stats: {
     duration: '14 days on the trail',
@@ -2583,7 +2583,7 @@ TREKS['panch-pokhari-trek'] = {
   tagline: 'Five sacred lakes under the Jugal Himal',
   province: 'bagmati',
   region: 'Langtang (Jugal Himal)',
-  heroImage: '/images/langtang_real.jpg',
+  heroImage: '/images/treks/panch-pokhari-trek.jpg',
   summary: 'A short, quiet 8–10 day trek north-east of Kathmandu to the five glacial lakes of Panch Pokhari (≈ 4,100 m), a Hindu and Buddhist pilgrimage site below the Jugal Himal. Home-stay villages, forest ridges and a high lake basin with views to Dorje Lakpa, Rolwaling and, on a clear day, Everest — with almost no other trekkers.',
   stats: {
     duration: '8–10 days (6–8 on the trail)',
@@ -2876,7 +2876,8 @@ TREKS['tashi-lapcha-pass-trek'] = {
   tagline: 'Over a glaciated 5,755 m pass from Rolwaling to the Khumbu',
   province: 'bagmati',
   region: 'Rolwaling',
-  heroImage: '/images/langtang_real.jpg',
+  heroImage: '/images/treks/tashi-lapcha-pass-trek.jpg',
+  heroCredit: { author: 'Santosh Mishra', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Rolwaling_range_Gaurishankar_conservation_area.jpg', changes: 'cropped and colour-adjusted' },
   summary: 'A serious 18–20 day traverse from the remote Rolwaling valley over the Tashi Lapcha (≈ 5,755 m) — a crevassed, roped glacier pass — into the Khumbu at Thame. Full camping on the high section with a climbing crew, and one of the harder pass crossings in Nepal outside of mountaineering routes.',
   stats: {
     duration: '18–20 days (15–17 on the trail)',
@@ -3358,7 +3359,7 @@ TREKS['mardi-himal'] = {
   tagline: 'A short high ridge under the Fishtail',
   province: 'gandaki',
   region: 'Annapurna',
-  heroImage: '/images/annapurna_real.jpg',
+  heroImage: '/images/treks/mardi-himal.jpg',
   summary: 'A 7-day trek on a forested ridge east of the Annapurna Sanctuary, climbing above the treeline to Mardi Himal Base Camp (4,500 m) directly beneath Machhapuchhre — the best short, quiet, high-view trek from Pokhara.',
   stats: {
     duration: '7 days (4–5 on the trail)',
@@ -3512,7 +3513,7 @@ TREKS['upper-mustang'] = {
   tagline: 'The walled kingdom in the Annapurna rain-shadow',
   province: 'gandaki',
   region: 'Mustang',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/upper-mustang.jpg',
   summary: 'A 12–14 day restricted-area trek north from Jomsom into the former Kingdom of Lo — a high, arid, Tibetan-Buddhist plateau of eroded canyons, cliff-cut cave dwellings and fortress villages, to the walled capital of Lo Manthang (3,840 m).',
   stats: {
     duration: '12–14 days (10–12 on the trail)',
@@ -3676,7 +3677,7 @@ TREKS['manaslu-circuit'] = {
   tagline: 'Around the eighth-highest mountain, over the Larke La',
   province: 'gandaki',
   region: 'Manaslu',
-  heroImage: '/images/manaslu_real.jpg',
+  heroImage: '/images/treks/manaslu-circuit.jpg',
   summary: 'An 18-day restricted-area trek circling Manaslu (8,163 m) — up the Budhi Gandaki gorge through Gurung and then Tibetan-Buddhist villages, over the Larke La (5,106 m), and down into the Annapurna region. A wilder, quieter alternative to the Annapurna Circuit.',
   stats: {
     duration: '18 days (14–15 on the trail)',
@@ -3843,7 +3844,7 @@ TREKS['tsum-valley'] = {
   tagline: 'A sacred hidden valley on the Tibetan border',
   province: 'gandaki',
   region: 'Manaslu (Tsum)',
-  heroImage: '/images/manaslu.png',
+  heroImage: '/images/treks/tsum-valley.jpg',
   summary: 'A 14-day restricted-area trek into the Tsum Valley — a remote, deeply Buddhist side valley off the Manaslu Circuit, walled off against the Tibetan border, with medieval monasteries, a hermitage linked to the yogi Milarepa, and a distinct Tsumba culture.',
   stats: {
     duration: '14 days (11–12 on the trail)',
@@ -4175,7 +4176,7 @@ TREKS['nar-phu-valley-trek'] = {
   tagline: 'Two hidden Tibetan villages north of the Annapurnas',
   province: 'gandaki',
   region: 'Annapurna (Nar–Phu)',
-  heroImage: '/images/treks/annapurna-circuit.jpg',
+  heroImage: '/images/treks/nar-phu-valley-trek.jpg',
   summary: 'A 12–14 day restricted-area trek into the Nar and Phu valleys — a walled-off Tibetan-Buddhist enclave behind the Annapurna Circuit, opened to trekkers only in 2003. Medieval stone villages, a hilltop gompa, and a crossing of the Kang La (≈ 5,320 m) back onto the Circuit at Ngawal.',
   stats: {
     duration: '12–14 days (9–11 on the trail)',
@@ -4325,7 +4326,7 @@ TREKS['tilicho-lake-trek'] = {
   tagline: 'To one of the highest large lakes on earth',
   province: 'gandaki',
   region: 'Annapurna',
-  heroImage: '/images/treks/annapurna-circuit.jpg',
+  heroImage: '/images/treks/tilicho-lake-trek.jpg',
   summary: 'A 14–16 day trek up the Marsyangdi and Manang valley to Tilicho Lake (≈ 4,919 m), a two-kilometre turquoise lake below the north face of the Annapurnas. Tea houses the whole way, a notorious landslide traverse to Tilicho Base Camp, and the option to return to Manang or push on over the Thorong La.',
   stats: {
     duration: '14–16 days (11–13 on the trail)',
@@ -4473,7 +4474,7 @@ TREKS['mesokanto-la-pass-trek'] = {
   tagline: 'The wild back door from Tilicho Lake to the Kali Gandaki',
   province: 'gandaki',
   region: 'Annapurna',
-  heroImage: '/images/treks/annapurna-circuit.jpg',
+  heroImage: '/images/treks/mesokanto-la-pass-trek.jpg',
   summary: 'A demanding 16–18 day trek that combines Tilicho Lake with a crossing of the Mesokanto La — a high, exposed pass (figures range from about 5,100 m to 5,340 m) that drops from the Tilicho basin into the Kali Gandaki at Jomsom. Two nights camping above the lake, no lodges on the pass, and a route walked by only a few groups a year.',
   stats: {
     duration: '16–18 days (13–15 on the trail)',
@@ -4625,7 +4626,8 @@ TREKS['manaslu-tsum-valley-trek'] = {
   tagline: 'The full circuit, plus the sacred hidden valley',
   province: 'gandaki',
   region: 'Manaslu',
-  heroImage: '/images/manaslu_real.jpg',
+  heroImage: '/images/treks/manaslu-tsum-valley-trek.jpg',
+  heroCredit: { author: 'Nabin K. Sapkota', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Larke_La_Manaslu_Circuit_01.jpg', changes: 'cropped and colour-adjusted' },
   summary: 'A 22–24 day restricted-area trek combining the Manaslu Circuit with the Tsum Valley — the deeply Buddhist side valley on the Tibetan border. Up the Budhi Gandaki, a week exploring Tsum’s monasteries, then back onto the circuit for the villages of Sama Gaon and Samdo and the crossing of the Larke La (5,106 m).',
   stats: {
     duration: '22–24 days (18–20 on the trail)',
@@ -4795,7 +4797,7 @@ TREKS['upper-dolpo'] = {
   tagline: 'The trans-Himalayan far west, beyond Shey Gompa',
   province: 'karnali',
   region: 'Dolpo',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/upper-dolpo.jpg',
   summary: 'A 22–26 day restricted-area camping trek into Upper Dolpo — a high, arid, culturally Tibetan region north of the main Himalayan chain, taking in Shey Phoksundo Lake, the ancient Shey Gompa, several 5,000 m passes and villages that still farm and trade as they have for centuries.',
   stats: {
     duration: '22–26 days (18–22 on the trail)',
@@ -4971,7 +4973,7 @@ TREKS['lower-dolpo'] = {
   tagline: 'Phoksundo Lake and the Tarap valley, without the big permit',
   province: 'karnali',
   region: 'Dolpo',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/lower-dolpo.jpg',
   summary: 'A 12–14 day camping trek into Lower Dolpo — Shey Phoksundo Lake, the Numa La (5,190 m) and Baga La (5,070 m) passes, and the fertile Tarap valley with its Bön and Buddhist villages. A shorter, more affordable window into the Dolpo world.',
   stats: {
     duration: '12–14 days (10–12 on the trail)',
@@ -5134,7 +5136,7 @@ TREKS['shey-phoksundo-lake'] = {
   tagline: 'Nepal’s deepest lake, in the far-western wilds',
   province: 'karnali',
   region: 'Dolpo',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/shey-phoksundo-lake.jpg',
   summary: 'A 9–12 day camping trek from Juphal to Shey Phoksundo Lake (3,610 m) — the deepest and most vividly coloured lake in Nepal, in Shey Phoksundo National Park — with the Bön village of Ringmo, Nepal’s highest waterfall, and the option of a high viewpoint above the lake. The gentlest way into Dolpo.',
   stats: {
     duration: '9–12 days (7–10 on the trail)',
@@ -5287,7 +5289,7 @@ TREKS['rara-lake-trek'] = {
   tagline: 'Nepal’s largest lake, in the empty far west',
   province: 'karnali',
   region: 'Rara',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/rara-lake-trek.jpg',
   summary: 'An 8–10 day trek to Rara Lake (2,990 m) — the largest lake in Nepal, a deep blue oval inside Rara National Park in remote Mugu district — through pine and juniper forest, Chhetri and Thakuri villages, and grassland where you may see nothing man-made for hours.',
   stats: {
     duration: '8–10 days (5–7 on the trail)',
@@ -5440,7 +5442,7 @@ TREKS['limi-valley'] = {
   tagline: 'A hidden loop on the Tibetan border in Humla',
   province: 'karnali',
   region: 'Humla',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/limi-valley.jpg',
   summary: 'An 18–20 day restricted-area camping trek in Humla — Nepal’s remote north-west corner — looping through the Limi Valley’s three Tibetan Buddhist villages, over the Nyalu La and Nara La passes (both around 4,900–5,000 m), close to Mount Kailash across the border.',
   stats: {
     duration: '18–20 days (14–16 on the trail)',
@@ -5608,7 +5610,8 @@ TREKS['kagmara-pass-trek'] = {
   tagline: 'Over the Kagmara La into the Phoksundo country of Dolpo',
   province: 'karnali',
   region: 'Dolpo',
-  heroImage: '/images/hero-mountain.jpg',
+  heroImage: '/images/treks/kagmara-pass-trek.jpg',
+  heroCredit: { author: 'Nir B. Gurung', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Shey-Phoksundo_lake.jpg', changes: 'cropped and colour-adjusted' },
   summary: 'A 14–16 day restricted-area camping trek in Lower Dolpo, crossing the Kagmara La (≈ 5,115 m) from the Bheri valley into the Pungmo valley and on to the turquoise lake of Phoksundo. A wilder, higher alternative to the standard Lower Dolpo circuit, through some of the emptiest country in Nepal.',
   stats: {
     duration: '14–16 days (11–13 on the trail)',
@@ -5764,7 +5767,7 @@ TREKS['lumbini-pilgrimage-circuit'] = {
   province: 'lumbini',
   region: 'Lumbini',
   lowland: true,
-  heroImage: '/images/footer.png',
+  heroImage: '/images/treks/lumbini-pilgrimage-circuit.jpg',
   summary: 'A gentle 1–3 day walking tour of the Lumbini sacred garden and monastic zone — the UNESCO-listed birthplace of Siddhartha Gautama — with optional extensions to the nearby archaeological sites of Tilaurakot (ancient Kapilavastu), Ramagrama and Devadaha.',
   stats: {
     duration: '1–3 days (part of a wider Nepal trip)',
@@ -6046,7 +6049,7 @@ TREKS['rolpa-rukum-hill-trail'] = {
   province: 'lumbini',
   region: 'Rukum–Rolpa',
   lowland: true,
-  heroImage: '/images/footer.png',
+  heroImage: '/images/treks/rolpa-rukum-hill-trail.jpg',
   summary: 'A 7–10 day community trek through the Magar heartland of Rolpa and Rukum — terraced mid-hill villages, oak and pine forest, the Sisne and Putha Hiunchuli skyline, and, for those interested, the recent history of the region — on quiet trails almost no foreign trekkers walk.',
   stats: {
     duration: '7–10 days (5–8 on the trail)',

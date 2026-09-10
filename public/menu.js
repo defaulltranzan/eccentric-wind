@@ -25,6 +25,13 @@
   var NAV = [
     { name: 'Home', short: 'Home', href: '/' },
     { name: 'Trekking Trails', short: 'Treks', href: '/treks' },
+    // Phone-only. The homepage's "What kind of trekker are you?" section is
+    // `hidden lg:block` (2026-09-10 declutter), so on a phone it is reached from
+    // here instead and opens as a sheet. Desktop keeps the inline section and
+    // never shows this row. Revert: delete this entry + the mobileOnly/action
+    // branches below, and drop `hidden lg:block` from #trek-finder.
+    { name: 'What kind of trekker are you?', href: '/#trek-finder',
+      overlayOnly: true, mobileOnly: true, action: 'openTrekFinder' },
     { name: 'Compare Treks', short: 'Compare', href: '/compare', overlayOnly: true },
     { name: 'Expedition Atlas', short: 'Expeditions', href: '/expeditions', children: [
       { name: 'The Full Atlas', href: '/expeditions', all: true },
@@ -132,6 +139,9 @@
     '#hme-menu .hme-sub-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}' +
     '#hme-menu .hme-sub{display:flex;flex-direction:column;gap:.1rem;padding:.4rem 0 .6rem 1.4rem;margin-bottom:.2rem}' +
     '#hme-menu .hme-sub[hidden]{display:none}' +
+    /* phone-only rows: the desktop keeps these as real page sections */
+    '@media(min-width:1024px){#hme-menu a.hme-nav-mobile{display:none}}' +
+    '#hme-menu a.hme-nav-mobile{font-size:clamp(1.15rem,4vw,1.5rem);color:var(--muted-foreground,#9399a2)}' +
     '#hme-menu a.hme-nav.hme-nav-sub{font-size:clamp(1rem,3.4vw,1.35rem);color:var(--muted-foreground,#9399a2);font-weight:400}' +
     '#hme-menu a.hme-nav.hme-nav-sub:hover,#hme-menu a.hme-nav.hme-nav-sub:focus-visible{color:var(--accent,#f06225)}' +
     '#hme-menu a.hme-nav .hme-dot{width:6px;height:6px;border-radius:9999px;background:currentColor;opacity:.45;flex:none;align-self:center}' +
@@ -170,7 +180,10 @@
           }).join('') +
         '</div>';
     }
-    return '<a href="' + it.href + '" class="hme-nav' + cur + '"><span class="hme-dot"></span>' + esc(it.name) + '</a>';
+    return '<a href="' + it.href + '" class="hme-nav' + cur +
+      (it.mobileOnly ? ' hme-nav-mobile' : '') + '"' +
+      (it.action ? ' data-action="' + it.action + '"' : '') +
+      '><span class="hme-dot"></span>' + esc(it.name) + '</a>';
   }
 
   var overlay = document.createElement('div');
@@ -197,6 +210,14 @@
     if (e.target === overlay || e.target.id === 'hme-menu-close') { close(); return; }
     var link = e.target.closest('a.hme-nav');
     if (!link) return;
+    // rows that run a function instead of navigating (phone-only shortcuts)
+    var act = link.getAttribute('data-action');
+    if (act && typeof window[act] === 'function') {
+      e.preventDefault();
+      close();
+      setTimeout(function () { window[act](); }, 260);   // let the overlay fade out
+      return;
+    }
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e.button && e.button !== 0)) { close(); return; }
     var href = link.getAttribute('href');
     if (!href || reduceMotion) { close(); return; }

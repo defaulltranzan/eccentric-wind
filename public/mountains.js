@@ -87,6 +87,8 @@ MOUNTAINS['everest'] = {
   coordinates: { lat: 27.9881, lon: 86.9250 },
   inNepal: true,
   heroImage: '/images/everest_real.jpg',
+  // Hover clip for the collection face card (see collection.js bindVideos).
+  heroVideo: '/videos/hero.mp4',
   gallery: ['/images/everest_real.jpg', '/images/ebc.png', '/images/hero-mountain.jpg'],
   tagline: 'The highest point on Earth',
   summary: 'The highest mountain on Earth at 8,848.86 m, on the Nepal–Tibet border in the Mahalangur Himalaya. First climbed in 1953. The two normal routes — the South Col from Nepal and the Northeast Ridge from Tibet — are non-technical by 8,000 m standards but sustained, crowded in season, and unforgiving of any mistake in the death zone.',
@@ -181,6 +183,10 @@ MOUNTAINS['k2'] = {
   coordinates: { lat: 35.8825, lon: 76.5133 },
   inNepal: false,
   heroImage: '/images/hero-mountain.jpg',
+  // Optional per-peak hover clip for the collection face card. Muted + looped,
+  // downloaded only on first hover, never on touch or reduced-motion. Add the
+  // same field to any other peak to give it the same treatment.
+  heroVideo: '/videos/k2.mp4',
   gallery: ['/images/hero-mountain.jpg', '/images/manaslu_real.jpg', '/images/everest_real.jpg'],
   tagline: 'The Savage Mountain',
   summary: 'The second-highest mountain on Earth at 8,611 m, at the head of the Baltoro Glacier in the Karakoram. Steeper, colder, more technical and more remote than Everest, with a short and violent summer weather window. Long regarded as the hardest of the 8,000 m peaks to climb and among the most dangerous.',
@@ -272,6 +278,8 @@ MOUNTAINS['kangchenjunga'] = {
   coordinates: { lat: 27.7025, lon: 88.1475 },
   inNepal: true,
   heroImage: '/images/hero-mountain.jpg',
+  // Hover clip for the collection face card (see collection.js bindVideos).
+  heroVideo: '/videos/kangchenjunga.mp4',
   gallery: ['/images/hero-mountain.jpg', '/images/manaslu_real.jpg', '/images/langtang_real.jpg'],
   tagline: 'The third pole, on the eastern edge of Nepal',
   summary: 'The third-highest mountain on Earth at 8,586 m, on the Nepal–Sikkim border in far-eastern Nepal. A vast, complex massif of five main summits, remote, weather-exposed and technically demanding, climbed by relatively few. By tradition, climbers stop a few metres short of the true summit out of respect for the mountain’s sanctity in Sikkim.',
@@ -893,6 +901,8 @@ MOUNTAINS['annapurna'] = {
   coordinates: { lat: 28.5958, lon: 83.8203 },
   inNepal: true,
   heroImage: '/images/annapurna_real.jpg',
+  // Hover clip for the collection face card (see collection.js bindVideos).
+  heroVideo: '/videos/annapurna.mp4',
   gallery: ['/images/annapurna_real.jpg', '/images/annapurna.png', '/images/hero-mountain.jpg'],
   tagline: 'The first eight-thousander ever climbed',
   summary: 'The tenth-highest mountain on Earth at 8,091 m, in north-central Nepal — and the first of the 8,000 m peaks to be climbed, by a French team in 1950. Every route on Annapurna I is threatened by avalanche and serac fall, and it has historically been regarded as the most dangerous of the fourteen.',

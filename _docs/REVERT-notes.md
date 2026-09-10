@@ -931,3 +931,250 @@ target pages only, not on detail pages; no console errors; no body h-scroll;
 public/tailwind.css`; `rm public/social.js public/images/logo-badge.png`;
 `npm run build:css`. (The `*.html` checkout also strips the `social.js` tags and
 restores the `logo-icon.png` img src.)
+
+---
+
+## § 5ae — Peak photography: 7,000 m + 6,000 m face cards (2026-09-10)
+
+**New folder `public/images/peaks/`** — all peak imagery now lives here (not under
+`images/treks/`, which stays trek-only). 16 files, ~3.6 MB.
+
+### 7,000 m band (9 peaks) — client-supplied
+Sources were dropped in `public/images/treks/7000meters/` (21.9 MB of `.jfif`).
+Re-encoded to `/images/peaks/<slug>.jpg`, long edge capped 1600, q82 progressive,
+EXIF (incl. GPS) stripped → 7.9 MB → 1.8 MB. `heroImage` set on all 9 in
+`peaks.js`. Slugs: nuptse, muztagh-ata, annapurna-iv, putha-hiunchuli, nun-peak,
+api-himal, baruntse, himlung-himal, spantik. **The originals folder is still in
+`public/` and ships — delete or move it out.**
+
+### 6,000 m band (8 peaks) — Wikimedia Commons, licensed
+7 of 8 sourced + verified individually (each explicitly identified by the
+photographer; where the description quotes an elevation it matches `peaks.js`).
+Cropped to a uniform **16:9**, capped 1600 px, q82, EXIF stripped.
+
+| slug | author | licence | Commons file |
+|---|---|---|---|
+| ama-dablam | Vyacheslav Argenberg | CC BY 4.0 | Ama Dablam, Nepal.jpg |
+| mera-peak | Mark Horrell | CC BY-SA 4.0 | Mera Peak Zatr La.JPG |
+| island-peak | Rohit Sharma | CC BY-SA 4.0 | Island Peak (Imja Tse) from Dingboche Village.jpg |
+| lobuche-peak | Theprotrekker | CC BY-SA 4.0 | Lobuche East from the southeast.jpg |
+| chulu-west | Roman Yahodka | CC BY-SA 4.0 | Chulu West peak.jpg |
+| chulu-east | Jerome Bon | CC BY 2.0 | Chulu of Nepal.jpg |
+| pisang-peak | Mark Horrell | CC BY-SA 2.0 | Naar fields and Pisang Peak.jpg |
+
+- **mera-peak** is cropped to (200,470)-(870,847) of the source to clear the
+  rhododendron branches that frame it → 670×377, the one sub-1600 px file.
+- **island-peak** is zoomed 1.55× because the peak sits small behind Dingboche.
+- **chulu-east**: the file is titled only "Chulu"; identification rests on its
+  description quoting 6,584 m, which is Chulu East's exact elevation (not West's).
+- **saribung-peak** — deliberately left `heroImage: null`. No verifiable photo of
+  it exists on Commons; the existing cartographic `tilePattern()` renders instead.
+  Do NOT substitute another mountain.
+
+### Attribution (required by CC BY / CC BY-SA)
+New `heroCredit: { author, license, licenseUrl, sourceUrl, changes }` field on
+each licensed peak in `peaks.js` (and on 3 treks in `treks.js`, § 5ad follow-up).
+Rendered by a `heroCredit()` helper in **`expedition-render.js`** and
+**`trek-render.js`** as a small mono line under the hero CTAs. It is in normal
+flow, NOT pinned to a corner — the bottom-right holds the floating theme/language
+cluster and the bottom-left the compass, and an absolute corner credit collided
+with one of them. Colour is arbitrary `text-[#8b9199]`, not a `text-white/*` step,
+so the tw-input.css light-mode remap leaves it alone on the dark `[data-media]`
+hero. Records without `heroCredit` render nothing.
+
+### Card component — reused, not rebuilt
+`mtCard()` in `collection.js` already provided the hover zoom, scrim, hierarchy,
+CTA, focus-visible and reduced-motion behaviour, and is shared by all three bands.
+Two changes only:
+1. `badge()` — non-8000 bands now show the band tag (`6000m+` / `7000m+`) as the
+   category chip instead of an `ord/N` counter. 8000 m keeps `#rank`.
+2. `collection.html` — new `@media (max-width:639px)` block forces **one card per
+   row** (`grid-template-columns:1fr`, every tile `grid-column:1/-1;
+   grid-row:span 3`). At 390 px the mosaic's half-width tiles were 165 px, which
+   wrapped "Spring & autumn window" onto four lines into the CTA. Tablet and
+   desktop keep the mosaic untouched.
+
+Deliberately NOT done, because they conflict with the existing brand: rounded
+card corners (site is angular, 3–4 px) and a single uniform tile ratio (the
+mosaic's varied spans are the design).
+
+**Verified**: 8/8 six-thousander cards render (7 photo + Saribung pattern), 0
+broken images, alt text = real peak name + range; 9/9 seven-thousanders intact;
+8000 m ranks + the K2 hover video unaffected; credits render + link out on peak
+and trek heroes with no collision; 390/768/1024/1440 all clean, no h-overflow;
+no console errors.
+
+**Revert (all of § 5ae):**
+```
+git checkout public/peaks.js public/collection.js public/collection.html \
+             public/expedition-render.js public/trek-render.js public/treks.js
+rm -rf public/images/peaks
+npm run build:css
+```
+To revert only the 6,000 m photos and keep the 7,000 m set: delete the 7 files
+`ama-dablam|mera-peak|island-peak|lobuche-peak|chulu-west|chulu-east|pisang-peak.jpg`
+from `public/images/peaks/` and set those peaks' `heroImage` back to `null` (and
+drop their `heroCredit`) in `peaks.js`.
+
+---
+
+## § 5af — Mobile declutter + trek-finder redesign (2026-09-10)
+
+Six client requests, all but the last scoped to phones. Desktop is unchanged
+except where noted.
+
+### 1 · "Explore Nepal" hidden on phones
+`#explore` in `index.html` gained `hidden lg:block`. The interactive map is a
+desktop experience and was a long dead scroll on a phone.
+**Revert:** delete `hidden lg:block` from that section tag.
+
+### 2 · "What kind of trekker are you?" off the phone homepage, into the menu
+`#trek-finder` also gained `hidden lg:block`. To keep it reachable, `menu.js`
+NAV gained a **phone-only** row (`mobileOnly: true`, `action: 'openTrekFinder'`)
+that opens the section as a full-screen sheet instead of navigating. Supporting
+bits: `overlayItem()` emits `hme-nav-mobile` + `data-action`; the overlay click
+handler runs `window[action]()` and closes the menu; CSS hides `.hme-nav-mobile`
+at `min-width:1024px`. `openTrekFinder()` / `closeTrekFinder()` in `edit.js` set
+`role="dialog"`, lock body scroll and bind Escape. menu.js `?v=8` → `?v=9`
+across all 14 HTML files.
+**Revert:** delete the NAV entry, the two branches in `overlayItem()`/click
+handler, the `.hme-nav-mobile` CSS, the open/close functions, and the
+`hidden lg:block` on `#trek-finder`.
+
+### 3 · Homepage stories = swipe carousel on phones
+`#dispatches-container` went from `grid grid-cols-1 …` to a snap carousel that
+returns to the grid at `md` — same pattern as `#flagship-grid` in `#expeditions`.
+The card and the "read the full field journal" tile in `edit.js` got
+`w-[78vw] max-w-[300px] shrink-0 snap-start` with `md:` resets.
+**Revert:** restore `grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3` on the
+container and drop the width/snap classes from both templates in `edit.js`.
+
+### 4 · Altitude barometer → `public/altitude.js`, on phones + 3 more pages
+Was inline markup in `index.html` (`hidden lg:flex`) plus a scroll listener in
+`edit.js`. Now a **self-injecting module** (menu.js / social.js pattern), loaded
+on index, treks, expeditions, stories, and visible at every width. rAF-throttled,
+reduced-motion aware, hides itself under 560px tall so it never fights content.
+**Direction fixed:** the old version labelled the top 8,848 m and the bottom
+1,300 m but counted UP as you scrolled down, so the moving number contradicted
+the fixed labels. It now descends 8,848 → 1,300, matching them.
+**Revert:** `rm public/altitude.js`, delete the 4 `<script src="/altitude.js?v=1">`
+tags, and restore the old inline block + listener from git
+(`git checkout public/index.html public/edit.js` reverts both, but that also
+undoes items 1–3 and 6 — cherry-pick if you only want this one).
+
+### 5 · Floating social rail stays out of the hero
+`social.js` now waits on an IntersectionObserver over the first
+`section[data-media]` and only reveals once that hero is ~25 % scrolled away
+(with an immediate reveal for pages with no hero, or when loaded already
+scrolled past). Same stagger as before, just deferred.
+**Revert:** in `mount()`, call `reveal()` unconditionally and delete the
+observer block.
+
+### 6 · Trek finder redesigned (desktop + the phone sheet)
+Section markup in `index.html` replaced; **the scoring is untouched** —
+`finderState`, `finderCriteria()`, `finderTrailModel()` and `filterTrekFinder()`
+are the same functions, and the counts shown are the real calculated ones.
+- **Alignment fix:** the container was `max-w-5xl` while `#explore`,
+  `#compare-home` and `#dispatches` all use `max-w-7xl`, which is why the
+  heading looked indented. Now `max-w-7xl`.
+- Heading breaks to two lines with `TREKKER` carrying the orange.
+- Trail count became an editorial badge; its sub-label is dynamic
+  ("In the catalogue" → "Of 38 trails") via `setFinderCountSub()`.
+- Filters grouped into `01 EXPERIENCE` / `02 WHERE` / `03 HOW YOU TRAVEL`.
+- One inline SVG `<symbol>` sprite (14 stroke icons), no new dependency.
+- Selected state is not colour-alone: a corner wedge on segments, a `✓` on chips,
+  plus `aria-pressed` on every toggle.
+- **Trekking personality** strip (`#fdr-persona`, `finderPersona()`) — a label
+  derived from the answers already given; it feeds nothing back into scoring.
+- Hint copy: "Start exploring — select a few preferences" → "Your matches are
+  ready — N trails match your style".
+- Miniature ridge SVG with a walker that advances once a filter is set
+  (`.is-touched`), plus a faint CSS topographic wash behind the panel.
+- Phone: 44 px+ touch targets, full-screen sheet, no horizontal overflow.
+**Revert:** `git checkout public/index.html public/edit.js` (this also reverts
+items 1, 3 and part of 4 — see above).
+
+**Verified**: 390 / 768 / 1024 / 1440. Phone — explore + finder hidden, stories
+swipe, altitude rail present and counting down, social rail absent in the hero
+and revealed after it (checked at scrollY 4928: `is-ready`, 1,934 m). Desktop —
+explore + finder visible, menu row hidden, stories back to grid. Finder scoring
+still returns real matches (alpinist + remote → 4 matches, "The High-Altitude
+Explorer"; first-timer + culture → "The Cultural Wanderer"). Altitude rail live
+on /treks, /stories, /expeditions. No console errors, no horizontal overflow at
+any width.
+
+**Revert everything in § 5af:**
+```
+git checkout public/index.html public/edit.js public/menu.js public/social.js
+rm public/altitude.js
+npm run build:css
+```
+
+---
+
+## § 5ag — Backdrop polish, softened altitude rail, peak hover clips (2026-09-10)
+
+### 1 · Altitude rail recedes on phones (`altitude.js`)
+Was competing with content. Now, below 1024px: opacity `.38`, the 8,848/1,300
+end captions dropped, the pinging halo removed, the track given `blur(.4px)`,
+the rail narrowed to `1.05rem` and pulled to `left:.15rem`, and the readout set
+`writing-mode:vertical-rl` so it runs *along* the rail.
+**Why vertical:** the horizontal readout was ~28 px wide and crossed the page's
+24 px `px-6` gutter, i.e. it sat over body copy (the rail is `z-index:40`, above
+content). Vertical keeps the whole ornament inside the gutter — measured right
+edge 19 px vs the 24 px gutter, so it can no longer overlap anything.
+**Revert:** delete the `@media(max-width:1023px)` block in `altitude.js`.
+
+### 2 · `public/backdrop.js` — cartographic backdrop (new, self-injecting)
+Adds atmosphere only; no layout, no existing design touched. Loaded on 13 pages.
+- **Contour wash** on every decorated section (three `repeating-radial-gradient`
+  layers, white + accent, alpha .018–.038).
+- **Rotating flourish**, one per section, every third left plain: a **ridge
+  silhouette** (inline SVG), a **survey bracket + real coordinates**
+  (`content:attr(data-hme-mark)`, e.g. `27°59'N 86°55'E · 8848 M` — the actual
+  figures for Everest, Annapurna I, Manaslu, Kanchenjunga, Makalu, Dhaulagiri,
+  Lhotse, Cho Oyu), and a **prayer-flag line** (inline SVG).
+- **Stacking**, the important part: two cases decided per section at runtime.
+  A plain section gets `z-index:-1` — above the section background, below all
+  content, so it can never cover text. A section that already owns an absolute
+  `z-0` art layer gets `.hme-bd-over` → `z-index:1`, which paints above that art
+  but still under the section's `relative z-10` content wrapper. Both conditions
+  are verified before opting in; without this, 5 of 7 homepage sections hid the
+  backdrop entirely behind their own gradient.
+- Heroes (`[data-media]`) are skipped — they have their own photography.
+- **Phones**: contours only, at a larger scale and lower alpha; ridge, marks and
+  flags are all `display:none`. Also hidden in print.
+- Light mode swaps the white ink for graphite.
+**Revert:** `rm public/backdrop.js` + delete the 13 `<script src="/backdrop.js?v=1">` tags.
+
+### 3 · Hover clips on three more eight-thousanders
+Client uploaded 4 named clips to `public/images/Video/`. All 1280×720, 10 s, and
+the same 3D route-flythrough family as the existing K2 clip.
+| peak | file used |
+|---|---|
+| Mount Everest | `/videos/hero.mp4` |
+| K2 | `/videos/k2.mp4` (unchanged) |
+| Kangchenjunga | `/videos/kangchenjunga.mp4` |
+| Annapurna I | `/videos/annapurna.mp4` |
+`Everest.mp4` is **byte-identical** (md5 `7c33368a…`) to the existing
+`public/videos/hero.mp4`, so Everest points at that rather than shipping the
+same 2.9 MB twice. `images/Video/K2.mp4` is a *different* render from the
+already-approved `videos/k2.mp4`; the approved one was kept.
+Only `heroVideo` fields were added to `mountains.js` — `mtCard()` and
+`bindVideos()` in `collection.js` already supported it, so there is no new code.
+Still deferred: 0 mp4 requests on page load, fetched on first hover only.
+**Revert:** delete the 3 `heroVideo` lines from `mountains.js` (everest,
+kangchenjunga, annapurna) and `rm public/videos/kangchenjunga.mp4
+public/videos/annapurna.mp4`.
+
+**Verified**: backdrop paints behind content on every section (z checked per
+section), phone wash is contours-only with no flourishes, no horizontal overflow
+at 390/1280/1440; altitude rail clears the content gutter on phones; all four
+hover clips resolve, stay deferred until hover, play on enter (Kangchenjunga
+2.44 → 3.93 s) and pause + reset on leave. No console errors.
+
+**Revert everything in § 5ag:**
+```
+git checkout public/altitude.js public/mountains.js public/*.html
+rm public/backdrop.js public/videos/kangchenjunga.mp4 public/videos/annapurna.mp4
+```

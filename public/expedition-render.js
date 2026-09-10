@@ -97,8 +97,31 @@
     '<div class="mt-8 flex flex-wrap items-center gap-3">' +
     '<a href="/contact" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Plan This Expedition</a>' +
     '<a href="#route" class="inline-flex items-center gap-2 border border-white/40 text-white font-mono text-[11px] uppercase tracking-widest px-6 py-3 hover:border-accent hover:text-accent transition-all">The normal route</a>' +
-    '</div></div></section>');
+    '</div>' +
+    heroCredit(m.heroCredit) +
+    '</div></section>');
   function hs(l, v) { if (!has(v)) return ''; return '<div class="bg-[#101215]/90 p-3"><span class="lbl block">' + esc(l) + '</span><span class="block font-mono text-[11px] text-white mt-1 leading-snug">' + esc(v) + '</span></div>'; }
+
+  /* Photo credit for licensed third-party imagery. CC BY / BY-SA require the
+     author, the licence and a note that the file was changed. Peaks shot by the
+     client carry no heroCredit and render nothing.
+     Sits in the hero's normal flow under the CTAs rather than pinned to a
+     corner — the bottom-right is taken by the floating theme/language cluster
+     and the bottom-left by the compass, so an absolute corner credit collided
+     with one of them at some breakpoint. Arbitrary colour (not a text-white/*
+     step) so tw-input.css's light-mode remap leaves it alone on this
+     always-dark [data-media] hero. Mirrors trek-render.js. */
+  function heroCredit(c) {
+    if (!c || !c.author) return '';
+    var lic = c.licenseUrl
+      ? '<a href="' + esc(c.licenseUrl) + '" target="_blank" rel="noopener noreferrer license" class="underline decoration-white/20 underline-offset-2 hover:text-accent transition-colors">' + esc(c.license) + '</a>'
+      : esc(c.license);
+    var who = c.sourceUrl
+      ? '<a href="' + esc(c.sourceUrl) + '" target="_blank" rel="noopener noreferrer" class="underline decoration-white/20 underline-offset-2 hover:text-accent transition-colors">' + esc(c.author) + '</a>'
+      : esc(c.author);
+    return '<p class="mt-6 font-mono text-[9px] uppercase tracking-[0.16em] text-[#8b9199]">' +
+      'Photo ' + who + ' · ' + lic + (c.changes ? ' · ' + esc(c.changes) : '') + '</p>';
+  }
 
   /* ---------- SUBNAV ---------- */
   var nav = [['overview', 'The mountain'], ['difficulty', 'Difficulty'], ['route', 'Route'], ['camps', 'Camps'], ['itinerary', 'Itinerary'], ['season', 'Season'], ['hazards', 'Hazards'], ['permits', 'Permits'], ['history', 'History'], ['faq', 'FAQ']];
