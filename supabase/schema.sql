@@ -44,22 +44,40 @@ create table if not exists public.bookings (
   name            text not null,
   email           text not null,
   phone           text,
-  trip_type       text not null default 'custom' check (trip_type in ('trek', 'expedition', 'custom', 'newsletter')),
+  trip_type       text not null default 'custom',
   trip_slug       text,
   trip_name       text not null,
   preferred_date  date,
-  people          integer not null default 1 check (people between 1 and 50),
+  people          integer not null default 1,
   message         text,
-  status          text not null default 'NEW' check (status in ('NEW', 'CONTACTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED')),
+  status          text not null default 'NEW',
   notes           text,
-  source          text not null default 'contact-form' check (source in ('contact-form', 'trip-page', 'newsletter')),
+  source          text not null default 'contact-form',
   user_agent      text,
   created_at      timestamptz not null default now(),
   updated_at      timestamptz not null default now()
 );
 
-create index if not exists bookings_created_idx on public.bookings (created_at desc);
-create index if not exists bookings_status_idx  on public.bookings (status);
+-- Columns added in v1.1 (safe on an existing table)
+alter table public.bookings add column if not exists idempotency_key text;
+alter table public.bookings add column if not exists details  jsonb not null default '{}'::jsonb;
+alter table public.bookings add column if not exists history  jsonb not null default '[]'::jsonb;
+alter table public.bookings add column if not exists page_url text;
+
+create unique index if not exists bookings_idempotency_key_idx on public.bookings (idempotency_key) where idempotency_key is not null;
+
+alter table public.bookings drop constraint if exists bookings_trip_type_check;
+alter table public.bookings add constraint bookings_trip_type_check check (trip_type in ('trek', 'expedition', 'custom', 'newsletter'));
+alter table public.bookings drop constraint if exists bookings_people_check;
+alter table public.bookings add constraint bookings_people_check check (people between 1 and 50);
+alter table public.bookings drop constraint if exists bookings_status_check;
+alter table public.bookings add constraint bookings_status_check check (status in ('NEW', 'CONTACTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED'));
+alter table public.bookings drop constraint if exists bookings_source_check;
+alter table public.bookings add constraint bookings_source_check check (source in ('contact-form', 'trip-page', 'popup', 'newsletter'));
+
+create index if not exists bookings_created_idx      on public.bookings (created_at desc);
+create index if not exists bookings_status_idx       on public.bookings (status);
+create index if not exists bookings_email_created_idx on public.bookings (email, created_at desc);
 
 -- ---------------------------------------------------------------- updated_at
 create or replace function public.touch_updated_at() returns trigger

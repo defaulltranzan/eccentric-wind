@@ -9,7 +9,12 @@ const env = require('../config/env');
 const COOKIE = 'hma_admin';
 
 const b64url = (buf) => Buffer.from(buf).toString('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
-const sign = (payload) => b64url(crypto.createHmac('sha256', env.admin.sessionSecret).update(payload).digest());
+// The signing key includes a fingerprint of the current credentials, so changing
+// ADMIN_EMAIL or the password instantly signs out every existing session.
+const signingKey = crypto.createHash('sha256')
+  .update(env.admin.sessionSecret + '|' + env.admin.email + '|' + (env.admin.passwordHash || env.admin.password))
+  .digest();
+const sign = (payload) => b64url(crypto.createHmac('sha256', signingKey).update(payload).digest());
 
 function safeEqual(a, b) {
   const ab = Buffer.from(String(a));

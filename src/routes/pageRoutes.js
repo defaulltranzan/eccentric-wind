@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
+const { contentPage } = require('../controllers/publicController');
 
 const PUBLIC_DIR = path.join(__dirname, '../../public');
 
@@ -14,12 +15,13 @@ router.get('/expeditions', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'exp
 // These MUST be declared before the catch-all /expeditions/:slug below.
 router.get('/expeditions/:band(8000m|7000m|6000m|trekking-peaks)', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'collection.html')));
 router.get('/expeditions/peaks', (req, res) => res.redirect(301, '/expeditions'));
-router.get('/expeditions/peaks/:slug', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'expedition.html')));
-router.get('/expeditions/:slug', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'expedition.html')));
+router.get('/expeditions/peaks/:slug', contentPage('expeditions', 'expedition.html', '/expeditions/peaks/'));
+// published → 200 · renamed → 301 · unknown/draft → 404 (template shows its not-found state)
+router.get('/expeditions/:slug', contentPage('expeditions', 'expedition.html', '/expeditions/'));
 
 // Trekking Trails — directory + reusable individual-trail template
 router.get('/treks', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'treks.html')));
-router.get('/treks/:slug', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'trek.html')));
+router.get('/treks/:slug', contentPage('treks', 'trek.html', '/treks/'));
 router.get('/compare', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'compare.html')));
 router.get('/altitude-safety', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'altitude-safety.html')));
 
@@ -32,7 +34,7 @@ router.get('/about-sherpa', (req, res) => res.redirect(301, '/about#sherpa'));
 // Stories / Field Journal — index + reusable article template.
 // The old /dispatches path 301s here so existing links and the sitemap stay valid.
 router.get('/stories', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'stories.html')));
-router.get('/stories/:slug', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'story.html')));
+router.get('/stories/:slug', contentPage('stories', 'story.html', '/stories/'));
 router.get('/dispatches', (req, res) => res.redirect(301, '/stories'));
 router.get('/dispatches/:slug', (req, res) => res.redirect(301, `/stories/${req.params.slug}`));
 

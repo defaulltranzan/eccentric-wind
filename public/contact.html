@@ -335,6 +335,7 @@
 </footer>
 
     <!-- SCRIPT -->
+    <script src="/booking-client.js?v=1"></script>
     <script>
         let lastScrollTop = 0;
         const announcement = document.getElementById('announcement-bar');
@@ -362,18 +363,26 @@
             }
         }
 
-        /* Trip list comes from the live content database; the static options stay as a fallback. */
+        /* Trip list + submission go through the shared booking client (/booking-client.js).
+           The static <option>s stay as a fallback if the trip list cannot load. */
         (function loadTrips() {
             var sel = document.getElementById('inq-trek');
             var wanted = new URLSearchParams(location.search).get('trip');
-            fetch('/api/trips').then(function (r) { return r.ok ? r.json() : null; }).then(function (res) {
-                if (!res || !res.items || !res.items.length) return;
+            var d = document.getElementById('inq-date');
+            if (d) d.min = new Date().toISOString().slice(0, 10);
+            if (!window.HMABooking) return;
+            HMABooking.trips().then(function (items) {
+                if (!items.length) return;
                 var groups = { trek: 'Trekking trails', expedition: 'Mountaineering expeditions' };
                 sel.innerHTML = '';
+                var custom = document.createElement('option');
+                custom.value = 'custom:';
+                custom.textContent = 'Custom / not sure yet';
+                sel.appendChild(custom);
                 Object.keys(groups).forEach(function (type) {
                     var og = document.createElement('optgroup');
                     og.label = groups[type];
-                    res.items.filter(function (t) { return t.type === type; }).forEach(function (t) {
+                    items.filter(function (t) { return t.type === type; }).forEach(function (t) {
                         var o = document.createElement('option');
                         o.value = t.type + ':' + t.slug;
                         o.textContent = t.name + (t.days ? ' (' + t.days + '+ days)' : t.elevation ? ' · ' + t.elevation : '');
@@ -381,19 +390,44 @@
                     });
                     if (og.children.length) sel.appendChild(og);
                 });
-                var custom = document.createElement('option');
-                custom.value = 'custom:';
-                custom.textContent = 'Custom / not sure yet';
-                sel.insertBefore(custom, sel.firstChild);
                 sel.value = 'custom:';
                 if (wanted) {
                     var match = Array.prototype.find.call(sel.options, function (o) { return o.value.split(':')[1] === wanted; });
                     if (match) sel.value = match.value;
                 }
             }).catch(function () {});
-            var d = document.getElementById('inq-date');
-            if (d) d.min = new Date().toISOString().slice(0, 10);
         })();
+
+        var INQ_FIELD_IDS = { name: 'inq-name', email: 'inq-email', phone: 'inq-phone', people: 'inq-crew', preferred_date: 'inq-date', message: 'inq-msg' };
+        var inqKey = null; // one key per form fill — a retry after a network error can never create a duplicate
+
+        function clearFieldErrors() {
+            Object.keys(INQ_FIELD_IDS).forEach(function (k) {
+                var el = document.getElementById(INQ_FIELD_IDS[k]);
+                if (!el) return;
+                el.removeAttribute('aria-invalid');
+                el.style.borderColor = '';
+                var msg = document.getElementById(INQ_FIELD_IDS[k] + '-err');
+                if (msg) msg.remove();
+            });
+        }
+        function showFieldErrors(fields) {
+            var first = null;
+            Object.keys(fields || {}).forEach(function (k) {
+                var el = document.getElementById(INQ_FIELD_IDS[k]);
+                if (!el) return;
+                el.setAttribute('aria-invalid', 'true');
+                el.style.borderColor = '#ef4444';
+                var msg = document.createElement('span');
+                msg.id = INQ_FIELD_IDS[k] + '-err';
+                msg.className = 'block pt-1 text-[10px] normal-case tracking-normal text-red-300';
+                msg.textContent = fields[k];
+                el.setAttribute('aria-describedby', msg.id);
+                el.insertAdjacentElement('afterend', msg);
+                if (!first) first = el;
+            });
+            if (first) first.focus();
+        }
 
         async function handleInquirySubmit(event) {
             event.preventDefault();
@@ -406,12 +440,15 @@
                 status.className = 'border p-4 text-[11px] leading-relaxed normal-case tracking-normal ' +
                     (ok ? 'border-[#f06225]/50 bg-[#f06225]/10 text-foreground' : 'border-red-500/50 bg-red-500/10 text-red-200');
             };
+            if (btn.disabled) return;
+            if (!window.HMABooking) { show(false, 'The booking service did not load. Please refresh the page, or message us on WhatsApp.'); return; }
+            clearFieldErrors();
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Transmitting...';
 
             const trip = document.getElementById('inq-trek');
             const parts = (trip.value || '').split(':');
-            const known = parts.length === 2;
+            const known = parts.length === 2 && parts[1];
             const payload = {
                 source: new URLSearchParams(location.search).get('trip') ? 'trip-page' : 'contact-form',
                 name: document.getElementById('inq-name').value,
@@ -426,27 +463,21 @@
                 website: document.getElementById('inq-website').value
             };
 
-            try {
-                const response = await fetch('/api/bookings', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json().catch(() => ({}));
-                if (response.ok && result.status === 'success') {
-                    show(true, result.message);
-                    form.reset();
-                    trip.value = trip.options[0] ? trip.options[0].value : '';
-                } else {
-                    show(false, result.message || 'Something went wrong. Please try again, or message us on WhatsApp.');
-                }
-            } catch (err) {
-                show(false, 'Network error connecting to the Kathmandu desk. Please try again or WhatsApp us directly.');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = label;
-                status.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            inqKey = inqKey || HMABooking.newKey();
+            const result = await HMABooking.submit(payload, { key: inqKey });
+            if (result.ok) {
+                show(true, result.message);
+                form.reset();
+                trip.value = trip.options[0] ? trip.options[0].value : '';
+                inqKey = null;
+            } else {
+                showFieldErrors(result.fields);
+                show(false, result.message);
+                if (!result.retryable) inqKey = null;
             }
+            btn.disabled = false;
+            btn.innerHTML = label;
+            status.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
     </script>
 <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">

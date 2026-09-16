@@ -15,11 +15,24 @@ if (sessionSecret.length < 32) {
 }
 
 const supabaseUrl = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
+const siteUrl = (process.env.SITE_URL || 'https://himalayanmagic.com').replace(/\/+$/, '');
+const path = require('path');
+const ROOT = path.join(__dirname, '../..');
+
+// Browsers on these origins may call the public booking API cross-site.
+// Same-origin requests never need CORS; the admin API is same-origin only.
+const allowedOrigins = [siteUrl]
+  .concat((process.env.ALLOWED_ORIGINS || '').split(','))
+  .map((o) => o.trim().replace(/\/+$/, ''))
+  .filter(Boolean);
 
 module.exports = {
   isProd,
   onVercel,
-  siteUrl: (process.env.SITE_URL || 'https://himalayanmagic.com').replace(/\/+$/, ''),
+  siteUrl,
+  allowedOrigins,
+  dataDir: process.env.HMA_DATA_DIR ? path.resolve(process.env.HMA_DATA_DIR) : path.join(ROOT, 'data'),
+  uploadDir: process.env.HMA_UPLOAD_DIR ? path.resolve(process.env.HMA_UPLOAD_DIR) : path.join(ROOT, 'public', 'uploads'),
   supabase: {
     url: supabaseUrl,
     serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',

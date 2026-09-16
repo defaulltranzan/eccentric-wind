@@ -93,9 +93,36 @@
       state.me = res.j.session;
       state.system = res.j.system || {};
       route();
+      startPulse();
     }).catch(function () {
       app.innerHTML = '<div class="boot">Could not reach the server.</div>';
     });
+  }
+
+  /* New-booking badge stays current while the admin is open (every 45 s, only when the tab is visible). */
+  var pulseTimer = null;
+  function setBadge(n) {
+    state.newBookings = n;
+    var link = document.querySelector('.nav a[href="#/bookings"]');
+    if (!link) return;
+    var badge = link.querySelector('.count');
+    if (!n) { if (badge) badge.remove(); return; }
+    if (!badge) { badge = document.createElement('span'); badge.className = 'count hot'; badge.title = 'New bookings'; link.appendChild(badge); }
+    badge.textContent = n;
+  }
+  function pulse() {
+    if (!state.me || document.hidden) return;
+    fetch('/api/admin/pulse', { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (res) {
+      if (!res) return;
+      if (res.newBookings > state.newBookings && res.latest) toast('New booking from ' + res.latest.name + ' (' + res.latest.ref + ')');
+      setBadge(res.newBookings);
+    }).catch(function () {});
+  }
+  function startPulse() {
+    if (pulseTimer) return;
+    pulse();
+    pulseTimer = setInterval(pulse, 45000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) pulse(); });
   }
 
   window.addEventListener('hashchange', function () {
@@ -123,7 +150,12 @@
     state.me = null;
     document.title = 'Sign in — Himalayan Magic Adventure';
     app.innerHTML =
-      '<main class="login"><div class="login-card">' +
+      '<main class="login">' +
+        '<section class="login-visual" aria-hidden="true">' +
+          '<div class="login-visual-copy"><span class="mono">27°59\'N · 86°55\'E — Kathmandu desk</span>' +
+          '<p class="login-quote">The High Corridors of Nepal,<br><em>managed from one place.</em></p></div>' +
+        '</section>' +
+        '<div class="login-card">' +
         '<img src="/images/logo-badge-dark.png" alt="">' +
         '<span class="mono" style="color:var(--accent)">Himalayan Magic Adventure</span>' +
         '<h1>Admin sign in</h1>' +
@@ -133,6 +165,7 @@
           '<p class="login-msg" id="lg-msg" role="alert">' + esc(message || '') + '</p>' +
           '<button class="btn primary" type="submit">Sign in</button>' +
         '</form>' +
+        '<p class="login-foot mono">Est. 1993 · Kathmandu</p>' +
       '</div></main>';
     $('#lg-email').focus();
     $('#login-form').addEventListener('submit', function (e) {
@@ -220,8 +253,12 @@
         }).join('') + '</tbody></table></div>' : '<div class="empty-state">No bookings yet. They appear here the moment someone submits the booking form.</div>';
 
       mount('dashboard',
-        '<div class="page-head"><div><span class="kicker mono">Overview</span><h1>Dashboard</h1></div>' +
-          '<div class="actions"><a class="btn" href="#/treks/new">+ Trek</a><a class="btn" href="#/expeditions/new">+ Expedition</a><a class="btn" href="#/stories/new">+ Story</a></div></div>' +
+        '<section class="dash-hero">' +
+          '<div><span class="kicker mono">' + greeting() + '</span><h1>Base camp</h1>' +
+          '<p class="muted">' + (b.NEW ? '<b class="hot-text">' + b.NEW + ' new booking' + (b.NEW === 1 ? '' : 's') + '</b> waiting for a reply.' : 'No new bookings waiting. Everything is answered.') + '</p></div>' +
+          '<div class="actions"><a class="btn" href="#/treks/new">+ Trek</a><a class="btn" href="#/expeditions/new">+ Expedition</a><a class="btn" href="#/stories/new">+ Story</a>' +
+          (b.NEW ? '<a class="btn primary" href="#/bookings">Open bookings</a>' : '') + '</div>' +
+        '</section>' +
         '<div class="cards">' +
           card('#/bookings', 'New bookings', b.NEW || 0, (b.total || 0) + ' total', (b.NEW || 0) > 0) +
           card('#/treks', 'Treks', c.treks.published, (c.treks.total - c.treks.published) + ' drafts') +
@@ -237,6 +274,12 @@
           '</dl></div></section>' +
         '</div>');
     }).catch(showError('dashboard'));
+  }
+
+  function greeting() {
+    var h = new Date().getHours();
+    return (h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening') + ' · ' +
+      new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
   }
 
   function showError(active) {
@@ -354,6 +397,7 @@
         isNew: isNew,
         kind: kind,
         published: res.item ? !!res.item.published : false,
+        updatedAt: res.item ? res.item.updated_at : null,
         model: res.item ? clone(res.item.data) : cfg.schema.template(kind),
         invalid: {},
         slugTouched: !isNew,
@@ -457,22 +501,28 @@
     }
   }
 
-  function saveEditor() {
+  function saveEditor(force) {
     var ed = state.editor;
     if (!ed) return;
+    var btn = $('#ed-save');
+    if (!btn || btn.disabled) return;
     var problems = Object.keys(ed.invalid).map(function (k) { return ed.invalid[k]; });
     if (problems.length) { toast('Fix before saving: ' + problems[0], true); return; }
-    var btn = $('#ed-save');
+    var titleValue = String(ed.model[ed.schema.titleKey] || '').trim();
+    if (!titleValue) { toast('Give it a ' + (ed.schema.titleKey === 'title' ? 'headline' : 'name') + ' before saving.', true); return; }
     btn.disabled = true;
     btn.textContent = 'Saving…';
     var url = '/api/admin/' + ed.collection + (ed.isNew ? '' : '/' + encodeURIComponent(ed.slug));
-    api(ed.isNew ? 'POST' : 'PUT', url, { data: ed.model, published: ed.published, kind: ed.kind }).then(function (res) {
+    var body = { data: ed.model, published: ed.published, kind: ed.kind };
+    if (!ed.isNew && !force) body.expectedUpdatedAt = ed.updatedAt;
+    api(ed.isNew ? 'POST' : 'PUT', url, body).then(function (res) {
       var wasNew = ed.isNew;
       state.dirty = false;
       ed.isNew = false;
       ed.slug = res.item.slug;
       ed.kind = res.item.kind;
       ed.model = res.item.data;
+      ed.updatedAt = res.item.updated_at;
       ed.published = !!res.item.published;
       toast(ed.published ? 'Saved — live on the website.' : 'Saved as draft (not visible on the website).');
       var target = '#/' + ed.collection + '/edit/' + encodeURIComponent(ed.slug);
@@ -480,9 +530,15 @@
       if (wasNew) ed.tab = 'form';
       renderEditor(ed);
     }).catch(function (err) {
-      toast(err.message, true);
       btn.disabled = false;
       btn.textContent = 'Save';
+      if (err.message === 'Signed out') return;
+      if (err.body && err.body.code === 'STALE') {
+        if (confirm('Someone saved this entry after you opened it.\n\nOK = overwrite their version with yours.\nCancel = keep editing (reload the page to see their changes).')) saveEditor(true);
+        return;
+      }
+      var fields = err.body && err.body.issues;
+      toast(fields && fields.length ? fields.join(' ') : err.message, true);
     });
   }
 
@@ -728,88 +784,149 @@
   }
 
   /* ------------------------------------------------------------ bookings */
+  var SOURCE_LABELS = { 'contact-form': 'Contact form', 'trip-page': 'Trip page', popup: 'Booking popup', newsletter: 'Newsletter' };
+
   function viewBookings() {
     document.title = 'Bookings — Admin';
     loading('bookings');
     var filters = { q: '', status: '', source: '' };
-    var items = [], statuses = [];
+    var page = 1, pages = 1, total = 0;
+    var items = [], statuses = ['NEW', 'CONTACTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED'];
     var open = {};
 
-    function load() {
-      var qs = Object.keys(filters).filter(function (k) { return filters[k]; }).map(function (k) { return k + '=' + encodeURIComponent(filters[k]); }).join('&');
-      return api('GET', '/api/admin/bookings' + (qs ? '?' + qs : '')).then(function (res) {
-        items = res.items;
-        statuses = res.statuses;
-        draw();
-      }).catch(function (err) { if (err.message !== 'Signed out') toast(err.message, true); });
+    function query(extra) {
+      var params = Object.assign({}, filters, extra || {});
+      return Object.keys(params).filter(function (k) { return params[k]; }).map(function (k) { return k + '=' + encodeURIComponent(params[k]); }).join('&');
     }
 
-    function csvHref() {
-      var qs = Object.keys(filters).filter(function (k) { return filters[k]; }).map(function (k) { return k + '=' + encodeURIComponent(filters[k]); }).join('&');
-      return '/api/admin/bookings.csv' + (qs ? '?' + qs : '');
+    function load() {
+      $('#bk-body').classList.add('is-loading');
+      return api('GET', '/api/admin/bookings?' + query({ page: page, pageSize: 25 })).then(function (res) {
+        items = res.items;
+        statuses = res.statuses;
+        pages = res.pages;
+        total = res.total;
+        if (page > pages) { page = pages; return load(); }
+        draw();
+      }).catch(function (err) { if (err.message !== 'Signed out') toast(err.message, true); })
+        .then(function () { var b = $('#bk-body'); if (b) b.classList.remove('is-loading'); });
     }
 
     mount('bookings',
       '<div class="page-head"><div><span class="kicker mono">Customers</span><h1>Bookings</h1></div>' +
         '<div class="actions"><button class="btn" id="bk-refresh" type="button">Refresh</button><a class="btn" id="bk-csv" href="/api/admin/bookings.csv">Export CSV</a></div></div>' +
+      '<div class="status-strip" id="bk-strip" role="group" aria-label="Filter by status">' +
+        ['', 'NEW', 'CONTACTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED'].map(function (s) {
+          return '<button type="button" class="strip-btn' + (s === '' ? ' on' : '') + '" data-status="' + s + '">' + (s || 'All') + '</button>';
+        }).join('') +
+      '</div>' +
       '<section class="panel">' +
         '<div class="toolbar">' +
-          '<input class="input" type="search" id="bk-q" placeholder="Search name, email, reference, trip…" aria-label="Search bookings">' +
-          '<select class="input" id="bk-status" aria-label="Status"><option value="">All statuses</option>' + ['NEW', 'CONTACTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED'].map(function (s) { return '<option>' + s + '</option>'; }).join('') + '</select>' +
-          '<select class="input" id="bk-source" aria-label="Source"><option value="">All sources</option><option value="contact-form">Contact form</option><option value="trip-page">From a trip page</option><option value="newsletter">Newsletter sign-ups</option></select>' +
+          '<input class="input" type="search" id="bk-q" placeholder="Search name, email, phone, reference, trip…" aria-label="Search bookings">' +
+          '<select class="input" id="bk-source" aria-label="Source"><option value="">All sources</option>' +
+            Object.keys(SOURCE_LABELS).map(function (k) { return '<option value="' + k + '">' + SOURCE_LABELS[k] + '</option>'; }).join('') + '</select>' +
           '<span class="muted" id="bk-count" style="margin-left:auto"></span>' +
         '</div>' +
-        '<div class="table-wrap"><table><thead><tr><th>Received</th><th>Name</th><th>Trip</th><th class="hide-sm">People</th><th class="hide-sm">Preferred date</th><th>Status</th><th></th></tr></thead><tbody id="bk-body"><tr><td colspan="7"><div class="empty-state">Loading…</div></td></tr></tbody></table></div>' +
+        '<div class="table-wrap"><table class="bk-table"><thead><tr><th>Received</th><th>Name</th><th>Trip</th><th class="hide-sm">People</th><th class="hide-sm">Preferred date</th><th>Status</th><th></th></tr></thead><tbody id="bk-body"><tr><td colspan="7"><div class="empty-state">Loading…</div></td></tr></tbody></table></div>' +
+        '<div class="pager" id="bk-pager"></div>' +
       '</section>');
 
+    function historyHtml(b) {
+      var h = Array.isArray(b.history) ? b.history.slice().reverse() : [];
+      if (!h.length) return '<span class="muted">No changes yet.</span>';
+      return '<ol class="timeline">' + h.map(function (x) {
+        var what = x.note ? 'Notes updated' : (x.from ? esc(x.from) + ' → ' : '') + '<b>' + esc(x.status) + '</b>';
+        return '<li><span class="muted">' + fmtDate(x.at, true) + '</span> ' + what + (x.by ? ' <span class="muted">· ' + esc(x.by) + '</span>' : '') + '</li>';
+      }).join('') + '</ol>';
+    }
+
+    function detailsHtml(b) {
+      var d = b.details && typeof b.details === 'object' ? b.details : {};
+      var keys = Object.keys(d);
+      if (!keys.length) return '';
+      return '<dl class="kv extras">' + keys.map(function (k) {
+        var label = k.replace(/_/g, ' ').replace(/^./, function (m) { return m.toUpperCase(); });
+        var v = d[k] === true ? 'Yes' : d[k] === false ? 'No' : d[k];
+        return '<dt>' + esc(label) + '</dt><dd>' + esc(v) + '</dd>';
+      }).join('') + '</dl>';
+    }
+
     function draw() {
-      $('#bk-count').textContent = items.length + ' shown';
-      $('#bk-csv').href = csvHref();
+      $('#bk-count').textContent = total ? ((page - 1) * 25 + 1) + '–' + Math.min(page * 25, total) + ' of ' + total : '0 bookings';
+      $('#bk-csv').href = '/api/admin/bookings.csv' + (query() ? '?' + query() : '');
+      $all('#bk-strip .strip-btn').forEach(function (btn) { btn.classList.toggle('on', btn.dataset.status === filters.status); });
       $('#bk-body').innerHTML = items.length ? items.map(function (b) {
         var phoneDigits = String(b.phone || '').replace(/[^\d]/g, '');
-        var row = '<tr class="bk-row" data-id="' + esc(b.id) + '">' +
+        var row = '<tr class="bk-row st-row-' + esc(b.status) + '" data-id="' + esc(b.id) + '">' +
           '<td class="muted" style="white-space:nowrap">' + fmtDate(b.created_at, true) + '<br><span class="slug">' + esc(b.ref) + '</span></td>' +
           '<td><b>' + esc(b.name) + '</b><br><span class="muted" style="font-size:12px">' + esc(b.email) + '</span></td>' +
           '<td>' + esc(b.trip_name) + (b.trip_slug ? '<br><a class="slug" target="_blank" rel="noopener" href="/' + (b.trip_type === 'expedition' ? 'expeditions' : 'treks') + '/' + encodeURIComponent(b.trip_slug) + '">view trip ↗</a>' : '') + '</td>' +
-          '<td class="hide-sm">' + esc(b.people) + '</td>' +
-          '<td class="hide-sm">' + (b.preferred_date ? fmtDate(b.preferred_date) : '<span class="muted">—</span>') + '</td>' +
-          '<td><select class="bk-status" data-act="status" aria-label="Status">' + statuses.map(function (s) { return '<option' + (s === b.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select></td>' +
+          '<td class="hide-sm" data-label="People">' + esc(b.people) + '</td>' +
+          '<td class="hide-sm" data-label="Preferred date">' + (b.preferred_date ? fmtDate(b.preferred_date) : '<span class="muted">—</span>') + '</td>' +
+          '<td><select class="bk-status st-' + esc(b.status) + '" data-act="status" aria-label="Status for ' + esc(b.name) + '">' + statuses.map(function (s) { return '<option' + (s === b.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select></td>' +
           '<td><div class="row-actions"><button class="btn small" data-act="toggle" aria-expanded="' + (!!open[b.id]) + '">' + (open[b.id] ? 'Hide' : 'Details') + '</button></div></td>' +
         '</tr>';
         if (open[b.id]) {
           row += '<tr class="bk-detail" data-id="' + esc(b.id) + '"><td colspan="7"><div class="detail">' +
-            '<div><span class="label">Contact</span><div>' + esc(b.email) + (b.phone ? ' · ' + esc(b.phone) : '') + '</div>' +
+            '<div><span class="label">Contact</span><div class="contact-line">' + esc(b.email) + (b.phone ? ' · ' + esc(b.phone) : '') + '</div>' +
               '<div class="contact-links">' +
                 '<a class="btn small" href="mailto:' + encodeURIComponent(b.email) + '?subject=' + encodeURIComponent('Your Himalayan Magic Adventure request ' + b.ref) + '">Email</a>' +
-                (phoneDigits ? '<a class="btn small" target="_blank" rel="noopener" href="https://wa.me/' + phoneDigits + '">WhatsApp</a><a class="btn small" href="tel:' + esc(b.phone) + '">Call</a>' : '') +
+                (phoneDigits.length >= 6 ? '<a class="btn small" target="_blank" rel="noopener" href="https://wa.me/' + phoneDigits + '">WhatsApp</a><a class="btn small" href="tel:+' + phoneDigits + '">Call</a>' : '') +
               '</div>' +
-              '<dl class="kv" style="margin-top:1rem"><dt>Source</dt><dd>' + esc(b.source) + '</dd><dt>Updated</dt><dd>' + fmtDate(b.updated_at, true) + '</dd></dl></div>' +
-            '<div><span class="label">Message</span><div class="message">' + (b.message ? esc(b.message) : '<span class="muted">No message.</span>') + '</div></div>' +
+              '<dl class="kv" style="margin-top:1rem"><dt>Source</dt><dd>' + esc(SOURCE_LABELS[b.source] || b.source) + '</dd>' +
+                (b.page_url && safeUrl(b.page_url.replace(/^https?:\/\/[^/]+/, '')) ? '<dt>Sent from</dt><dd><a class="slug" target="_blank" rel="noopener" href="' + esc(b.page_url.replace(/^https?:\/\/[^/]+/, '')) + '">' + esc(b.page_url.replace(/^https?:\/\/[^/]+/, '')) + '</a></dd>' : '') +
+                '<dt>Updated</dt><dd>' + fmtDate(b.updated_at, true) + '</dd></dl>' +
+              detailsHtml(b) + '</div>' +
+            '<div><span class="label">Message</span><div class="message">' + (b.message ? esc(b.message) : '<span class="muted">No message.</span>') + '</div>' +
+              '<span class="label" style="display:block;margin-top:1rem">History</span>' + historyHtml(b) + '</div>' +
             '<div class="field"><label for="notes-' + esc(b.id) + '">Internal notes (only visible here)</label><textarea id="notes-' + esc(b.id) + '" rows="3" data-notes>' + esc(b.notes || '') + '</textarea>' +
               '<div class="actions"><button class="btn small" data-act="notes">Save notes</button><button class="btn small danger" data-act="delete">Delete booking</button></div></div>' +
           '</div></td></tr>';
         }
         return row;
-      }).join('') : '<tr><td colspan="7"><div class="empty-state">No bookings match.</div></td></tr>';
+      }).join('') : '<tr><td colspan="7"><div class="empty-state">' + (filters.q || filters.status || filters.source ? 'No bookings match these filters.' : 'No bookings yet. They appear here the moment someone submits a booking form.') + '</div></td></tr>';
+
+      $('#bk-pager').innerHTML = pages > 1
+        ? '<button class="btn small" data-page="prev"' + (page <= 1 ? ' disabled' : '') + '>← Newer</button><span class="muted mono">Page ' + page + ' / ' + pages + '</span><button class="btn small" data-page="next"' + (page >= pages ? ' disabled' : '') + '>Older →</button>'
+        : '';
     }
 
     var timer = null;
     $('#bk-q').addEventListener('input', function (e) {
       clearTimeout(timer);
-      timer = setTimeout(function () { filters.q = e.target.value.trim(); load(); }, 250);
+      timer = setTimeout(function () { filters.q = e.target.value.trim(); page = 1; load(); }, 300);
     });
-    $('#bk-status').addEventListener('change', function (e) { filters.status = e.target.value; load(); });
-    $('#bk-source').addEventListener('change', function (e) { filters.source = e.target.value; load(); });
+    $('#bk-strip').addEventListener('click', function (e) {
+      var btn = e.target.closest('.strip-btn');
+      if (!btn) return;
+      filters.status = btn.dataset.status;
+      page = 1;
+      load();
+    });
+    $('#bk-source').addEventListener('change', function (e) { filters.source = e.target.value; page = 1; load(); });
     $('#bk-refresh').addEventListener('click', load);
+    $('#bk-pager').addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-page]');
+      if (!btn) return;
+      page += btn.dataset.page === 'next' ? 1 : -1;
+      load().then(function () { window.scrollTo(0, 0); });
+    });
 
     $('#bk-body').addEventListener('change', function (e) {
       if (e.target.dataset.act !== 'status') return;
-      var id = e.target.closest('tr').dataset.id, status = e.target.value;
+      var sel = e.target, id = sel.closest('tr').dataset.id, status = sel.value;
+      var previous = (items.filter(function (b) { return b.id === id; })[0] || {}).status;
+      sel.disabled = true;
       api('PATCH', '/api/admin/bookings/' + encodeURIComponent(id), { status: status }).then(function (res) {
         items = items.map(function (b) { return b.id === id ? res.item : b; });
-        state.newBookings = items.filter(function (b) { return b.status === 'NEW'; }).length;
         toast('Status set to ' + status + '.');
-      }).catch(function (err) { toast(err.message, true); load(); });
+        pulse();
+        draw();
+      }).catch(function (err) {
+        sel.value = previous;
+        sel.disabled = false;
+        if (err.message !== 'Signed out') toast(err.message, true);
+      });
     });
     $('#bk-body').addEventListener('click', function (e) {
       var btn = e.target.closest('button[data-act]');
@@ -824,16 +941,17 @@
         api('PATCH', '/api/admin/bookings/' + encodeURIComponent(id), { notes: notes }).then(function (res) {
           items = items.map(function (b) { return b.id === id ? res.item : b; });
           toast('Notes saved.');
-          btn.disabled = false;
-        }).catch(function (err) { btn.disabled = false; toast(err.message, true); });
+          draw();
+        }).catch(function (err) { btn.disabled = false; if (err.message !== 'Signed out') toast(err.message, true); });
       } else if (btn.dataset.act === 'delete') {
         if (!confirm('Delete this booking permanently? Consider setting it to CANCELLED instead.')) return;
+        btn.disabled = true;
         api('DELETE', '/api/admin/bookings/' + encodeURIComponent(id)).then(function () {
-          items = items.filter(function (b) { return b.id !== id; });
           delete open[id];
-          draw();
           toast('Booking deleted.');
-        }).catch(function (err) { toast(err.message, true); });
+          pulse();
+          load();
+        }).catch(function (err) { btn.disabled = false; if (err.message !== 'Signed out') toast(err.message, true); });
       }
     });
 

@@ -87,6 +87,46 @@ Never put the service_role key in browser code or commit it — it stays in `.en
 * Newsletter sign-ups from the Stories page appear under source "Newsletter sign-ups".
 * Optional email alert per booking: set `SMTP_*`, `MAIL_FROM`, `BOOKING_NOTIFY_TO`.
 
+## Booking API (for the popup form)
+
+Load the shared client once on any page that shows a booking form:
+
+```html
+<script src="/booking-client.js?v=1" defer></script>
+```
+
+```js
+// fill a <select> with every published trek and expedition
+const trips = await HMABooking.trips();            // [{ type: 'trek'|'expedition', slug, name, days?, elevation? }]
+
+// submit — keep ONE key per form fill so a retry never creates a duplicate
+const key = HMABooking.newKey();
+const result = await HMABooking.submit({
+  name, email, phone,                                // name + email required
+  people: 2, preferred_date: '2026-10-12',           // optional
+  trip_slug: 'annapurna-circuit', trip_type: 'trek', // or trip_name: 'Custom idea'
+  message,
+  source: 'popup',
+  details: { country: 'Australia', experience: 'first trek' }, // any extra answers (max 12, shown in admin)
+  website: honeypotInput.value                       // hidden spam trap — leave empty
+}, { key });
+
+if (result.ok)  showThanks(result.ref, result.message);
+else            showErrors(result.fields, result.message); // fields = { email: 'Please enter…', … }
+```
+
+Raw HTTP contract — `POST /api/bookings` (JSON or form-encoded, max 64 KB):
+
+| Response | Meaning |
+|---|---|
+| `201 { status:'success', ref, message, booking }` | stored, status NEW |
+| `200 { … booking.replayed: true }` | same `Idempotency-Key` (header) or an identical submit within 10 min — the original booking is returned, nothing duplicated |
+| `400 { status:'error', message, fields:{…} }` | validation — show `fields` next to the inputs |
+| `413` / `429` / `503` | too large · too many submissions (8 per 10 min per IP) · storage down |
+
+Validation: name ≥ 2 chars · valid email · phone 6+ digits · people 1–50 · preferred date not in the past and within 3 years.
+Other sites may only post if listed in `ALLOWED_ORIGINS`. `GET /api/health` reports storage status for uptime monitors.
+
 ## Security summary
 
 * Admin: one account from environment variables; scrypt password hash; 10 sign-in
@@ -96,7 +136,22 @@ Never put the service_role key in browser code or commit it — it stays in `.en
 * Uploads: file type checked by content (not name), size-limited, random file names.
 * Bookings: validated server-side, rate-limited (8 per 10 min per connection), honeypot
   spam trap, CSV export guarded against spreadsheet formula injection.
-* Content strings are stripped of `<script>`, `<iframe>`, `on…=` handlers and `javascript:` links.
+* Content strings are stripped of script-capable tags (`script`, `iframe`, `svg`, `form`, `style`…), `on…=` handlers,
+  `style=`/`srcdoc=` and `javascript:`/`data:` URLs, including entity-encoded tricks.
+* Changing the admin email or password signs out every existing session.
+* Two people editing the same entry: the second save is refused (409) instead of silently overwriting.
+* Renamed slugs keep working (301 redirect); unknown or unpublished pages return a real 404.
+* CORS: only `SITE_URL` + `ALLOWED_ORIGINS` may call the public booking API cross-site, never with cookies.
+
+## Tests
+
+`npm test` runs 24 end-to-end checks (bookings, idempotency, validation, CORS, auth, content lifecycle,
+sanitising, uploads, redirects, CSV) against a temporary copy of the data — your real content is never touched.
+
+## Upgrading an existing Supabase database
+
+Re-run `supabase/schema.sql` in the SQL Editor after pulling this version — it adds the booking columns
+`idempotency_key`, `details`, `history`, `page_url` and the `popup` source without touching existing rows.
 
 ## Limitations (v1)
 

@@ -211,3 +211,116 @@ tbody tr:hover { background: rgba(255,255,255,.015); }
   .hide-sm { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+
+/* =====================================================================
+   Brand polish (v1.1) — Himalayan Magic Adventure identity:
+   charcoal + ember accent, Oswald display, Plex Mono telemetry labels,
+   faint cartographic contour lines, the Ama Dablam plate on sign-in.
+   ===================================================================== */
+body {
+  background:
+    radial-gradient(1100px 520px at 110% -10%, rgba(240,98,37,.06), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+::selection { background: var(--accent); color: #111; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0d0f12; }
+::-webkit-scrollbar-thumb { background: #2c3139; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ---- sign in: photo plate + card ---- */
+.login { grid-template-columns: minmax(0, 1.25fr) minmax(360px, 1fr); place-items: stretch; padding: 0; background: #0d0f12; }
+.login-visual { position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 2.5rem;
+  background:
+    linear-gradient(180deg, rgba(13,15,17,.35) 0%, rgba(13,15,17,.1) 40%, rgba(13,15,17,.92) 100%),
+    url("/images/hero-corridor.webp") 58% 30% / cover no-repeat; }
+.login-visual::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: repeating-radial-gradient(ellipse 70% 45% at 30% 110%, transparent 0 26px, rgba(255,255,255,.035) 26px 27px); }
+.login-visual-copy { position: relative; z-index: 1; }
+.login-visual-copy .mono { color: rgba(255,255,255,.7); }
+.login-quote { margin: .75rem 0 0; font-family: 'Oswald', sans-serif; font-weight: 300; text-transform: uppercase; font-size: clamp(28px, 3.4vw, 46px); line-height: 1; color: #fff; }
+.login-quote em { font-style: normal; color: var(--accent); font-weight: 500; }
+.login-card { align-self: center; justify-self: center; margin: 2rem; border-color: #262a31; background: linear-gradient(180deg, #181b20, #14171b); box-shadow: 0 30px 80px -30px rgba(0,0,0,.8); position: relative; }
+.login-card::before, .login-card::after { content: ""; position: absolute; width: 12px; height: 12px; border-color: var(--accent); pointer-events: none; }
+.login-card::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
+.login-card::after { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; }
+.login-foot { margin: 1.5rem 0 0; color: var(--faint); font-size: 10px; }
+@media (max-width: 860px) {
+  .login { grid-template-columns: 1fr; }
+  .login-visual { min-height: 34vh; padding: 1.5rem; }
+  .login-card { margin: -2.5rem 1rem 2rem; max-width: none; width: auto; }
+}
+
+/* ---- sidebar: contour texture + ember rule ---- */
+.side { background:
+  repeating-radial-gradient(ellipse 120% 60% at 0% 100%, transparent 0 22px, rgba(255,255,255,.018) 22px 23px),
+  linear-gradient(180deg, #0f1114, #0b0c0f); }
+.side::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent), transparent 35%); opacity: .8; }
+.brand img { filter: drop-shadow(0 4px 10px rgba(0,0,0,.5)); }
+.nav a { position: relative; transition: color .15s, background .15s; }
+
+/* ---- page heads ---- */
+.page-head { padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+.page-head h1 { font-weight: 300; letter-spacing: -.005em; }
+.panel { box-shadow: 0 1px 0 rgba(255,255,255,.02) inset, 0 18px 40px -30px rgba(0,0,0,.7); }
+
+/* ---- dashboard hero ---- */
+.dash-hero { position: relative; overflow: hidden; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.25rem;
+  margin-bottom: 1rem; padding: 1.75rem 1.5rem; border: 1px solid var(--line); border-radius: var(--radius);
+  background:
+    linear-gradient(90deg, rgba(13,15,17,.96) 0%, rgba(13,15,17,.82) 45%, rgba(13,15,17,.35) 100%),
+    url("/images/hero-corridor.webp") 60% 35% / cover no-repeat; }
+.dash-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .55;
+  background-image: repeating-radial-gradient(ellipse 60% 40% at 85% 120%, transparent 0 18px, rgba(240,98,37,.05) 18px 19px); }
+.dash-hero > * { position: relative; z-index: 1; }
+.dash-hero .kicker { color: var(--accent); display: block; margin-bottom: .4rem; }
+.dash-hero h1 { font-size: 44px; font-weight: 300; }
+.dash-hero p { margin: .5rem 0 0; }
+.hot-text { color: var(--accent-2); font-weight: 600; }
+.card { position: relative; overflow: hidden; }
+.card::after { content: ""; position: absolute; right: -30px; bottom: -30px; width: 110px; height: 110px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.04); box-shadow: 0 0 0 14px rgba(255,255,255,.015), 0 0 0 28px rgba(255,255,255,.01); }
+.card:hover { border-color: rgba(240,98,37,.45); }
+
+/* ---- bookings ---- */
+.status-strip { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 .75rem; }
+.strip-btn { border: 1px solid var(--line); background: var(--panel); color: var(--muted); border-radius: 999px; padding: .35rem .8rem; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; transition: border-color .15s, color .15s, background .15s; }
+.strip-btn:hover { color: #fff; border-color: var(--line-2); }
+.strip-btn.on { background: var(--accent); border-color: var(--accent); color: #141619; font-weight: 600; }
+#bk-body.is-loading { opacity: .5; transition: opacity .15s; }
+.bk-row.st-row-NEW td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.bk-status { cursor: pointer; }
+.bk-status.st-NEW { border-color: rgba(240,98,37,.6); color: var(--accent-2); }
+.bk-status.st-CONTACTED { border-color: rgba(91,155,213,.5); color: #b8d4ee; }
+.bk-status.st-CONFIRMED { border-color: rgba(63,182,139,.5); color: #7fe0b8; }
+.bk-status.st-CANCELLED { color: #ff9ea1; }
+.bk-status:disabled { opacity: .5; }
+.contact-line { word-break: break-word; }
+.timeline { list-style: none; margin: .35rem 0 0; padding: 0 0 0 .9rem; border-left: 1px solid var(--line-2); display: grid; gap: .35rem; font-size: 12px; }
+.timeline li { position: relative; }
+.timeline li::before { content: ""; position: absolute; left: calc(-.9rem - 3px); top: .45em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.extras { margin-top: .75rem; padding-top: .75rem; border-top: 1px dashed var(--line); }
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 1rem; border-top: 1px solid var(--line); }
+.pager:empty { display: none; }
+
+/* phones: bookings become stacked cards instead of a sideways-scrolling table */
+@media (max-width: 700px) {
+  .bk-table thead { display: none; }
+  .bk-table, .bk-table tbody, .bk-table tr, .bk-table td { display: block; width: 100%; }
+  .bk-table tr.bk-row { position: relative; padding: .75rem 1rem; border-bottom: 1px solid var(--line); }
+  .bk-table tr.bk-row td { padding: .15rem 0; border: 0; }
+  .bk-table tr.bk-row td:first-child { box-shadow: none; }
+  .bk-table tr.bk-row.st-row-NEW { box-shadow: inset 3px 0 0 var(--accent); }
+  .bk-table tr.bk-row td:nth-child(6) { margin-top: .4rem; }
+  .bk-table tr.bk-row td:last-child { position: absolute; right: 1rem; top: .75rem; width: auto; }
+  .bk-table .bk-detail td { padding: .75rem 1rem 1rem; }
+  .dash-hero h1 { font-size: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { #bk-body.is-loading { transition: none; } }
+@media (max-width: 860px) { .side { position: relative; } .side::before { width: 100%; height: 2px; bottom: auto; background: linear-gradient(90deg, var(--accent), transparent 50%); } }
+@media (max-width: 700px) {
+  .bk-table tr.bk-row td[data-label] { display: flex; gap: .5rem; font-size: 13px; }
+  .bk-table tr.bk-row td[data-label]::before { content: attr(data-label); min-width: 7.5rem; color: var(--faint); font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; padding-top: .15rem; }
+}

@@ -8,7 +8,8 @@
     "dev": "npm run build:css && node --env-file-if-exists=.env server.js",
     "build:css": "tailwindcss -c tailwind.config.js -i ./build/tw-input.css -o ./public/tailwind.css --minify",
     "admin:password": "node scripts/admin-password.js",
-    "db:push": "node --env-file-if-exists=.env scripts/db-push.js"
+    "db:push": "node --env-file-if-exists=.env scripts/db-push.js",
+    "test": "node --test --test-concurrency=1 test/api.test.js"
   },
   "dependencies": {
     "compression": "^1.8.1",

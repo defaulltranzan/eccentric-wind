@@ -1240,3 +1240,18 @@ the hero redesign is committed underneath it).
   `scripts/db-push.js`. npm scripts `admin:password`, `db:push`; dev loads `.env`.
 - Contact form: live trip list (`/api/trips`), `?trip=<slug>` preselect, preferred-date field, honeypot,
   inline status instead of alert(). Trek/expedition "Plan this…" buttons link `/contact?trip=<slug>`.
+
+## § 7b — Backend hardening v1.1 (2026-09-17)
+
+Revert: `git reset --hard backend-v1` (tag on the first backend commit).
+- Bookings: per-field errors (`fields`), Idempotency-Key + 10-min duplicate collapse, `details` extras, status `history`,
+  `page_url`, `popup` source, pagination, Kathmandu-dated refs, email alert capped at 4 s. New `public/booking-client.js`
+  (window.HMABooking) used by contact.html — the popup form should use it too.
+- Content: stale-save 409 (`expectedUpdatedAt`), `data.formerSlugs` + 301 redirects, real 404 for unknown/draft slugs,
+  single-pass reorder, stronger sanitizer.
+- Server: CORS limited to SITE_URL/ALLOWED_ORIGINS (no credentials), JSON limits (64 KB public / 1.5 MB admin),
+  static caching (images 7 d, html/js/css revalidate, admin no-store), `/api/health`, `/api/admin/pulse`,
+  sessions bound to credentials, configurable data dir + rate limits, data-script outage → empty 503 script.
+- Admin UI: branded sign-in + "Base camp" dashboard, live new-booking badge, bookings status chips, history timeline,
+  extras, pager, phone card layout, stale-save prompt.
+- `npm test` suite in `test/api.test.js`; `supabase/schema.sql` adds the new booking columns (re-runnable).

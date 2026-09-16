@@ -34,12 +34,19 @@ function slugify(s) {
 
 /* Defence in depth: admins are trusted, but strip the obvious script vectors
  * from every string before it can reach an innerHTML renderer. */
+const BLOCKED_TAGS = 'script|iframe|frame|frameset|object|embed|applet|style|link|meta|base|form|input|button|textarea|select|svg|math|template|noscript';
+const BLOCK_PAIR_RE = new RegExp('<\\s*(' + BLOCKED_TAGS + ')\\b[\\s\\S]*?<\\s*\\/\\s*\\1\\s*>', 'gi');
+const BLOCK_TAG_RE = new RegExp('<\\s*\\/?\\s*(' + BLOCKED_TAGS + ')\\b[^>]*>', 'gi');
+
 function cleanString(s) {
+  if (s.indexOf('<') < 0 && !/script:|data:/i.test(s)) return s;
   return s
-    .replace(/<\s*(script|iframe|object|embed|style)\b[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
-    .replace(/<\s*(script|iframe|object|embed|style)\b[^>]*>/gi, '')
-    .replace(/\son[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
-    .replace(/(href|src)\s*=\s*(["']?)\s*javascript:/gi, '$1=$2#');
+    .replace(BLOCK_PAIR_RE, '')
+    .replace(BLOCK_TAG_RE, '')
+    .replace(/\s(on[a-z]+|srcdoc|formaction|style)\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/((?:href|src|action|xlink:href|poster|background)\s*=\s*["']?)\s*(?:javascript|vbscript|data\s*:\s*text\/html)[^"'\s>]*/gi, '$1#')
+    // entity-encoded schemes (&#106;avascript:, java&Tab;script:) are decoded by browsers — refuse any encoded URL
+    .replace(/((?:href|src|action|xlink:href|poster|background)\s*=\s*["']?)[^"'\s>]*&(?:#|colon|tab|newline)[^"'\s>]*/gi, '$1#');
 }
 
 function sanitize(value, depth) {
@@ -178,6 +185,7 @@ async function create(collection, { data, published = false, kind } = {}) {
     kind = collection === 'stories' ? (data && data.category) || null : null;
   }
   const clean = prepareData(collection, data, slug, kind);
+  delete clean.formerSlugs;
   const existing = await driver.getContent(collection, slug);
   if (existing) throw httpError(409, 'The slug "' + slug + '" is already used — choose a different one.');
   const rows = await driver.listContent(collection);
@@ -193,7 +201,7 @@ async function create(collection, { data, published = false, kind } = {}) {
   return row;
 }
 
-async function update(collection, slug, { data, published } = {}) {
+async function update(collection, slug, { data, published, expectedUpdatedAt } = {}) {
   assertCollection(collection);
   const current = await get(collection, slug);
   const nextSlug = data && data.slug ? slugify(data.slug) : slug;
@@ -203,15 +211,22 @@ async function update(collection, slug, { data, published } = {}) {
   }
   const kind = collection === 'stories' ? (data && data.category) || current.kind : current.kind;
   const clean = prepareData(collection, data, nextSlug, current.kind);
+  // Remember old addresses so renamed pages keep working (301 redirect).
+  const former = new Set([].concat((current.data && current.data.formerSlugs) || [], clean.formerSlugs || []));
+  if (nextSlug !== slug) former.add(slug);
+  former.delete(nextSlug);
+  if (former.size) clean.formerSlugs = Array.from(former).filter((s) => SLUG_RE.test(s)).slice(-20);
+  else delete clean.formerSlugs;
   const patch = Object.assign({ slug: nextSlug, data: clean, kind }, rowMeta(collection, clean));
   if (typeof published === 'boolean') patch.published = published;
-  const row = await driver.updateContent(collection, slug, patch);
+  const row = await driver.updateContent(collection, slug, patch, { expectedUpdatedAt: expectedUpdatedAt || null });
   invalidate(collection);
   return row;
 }
 
 async function setPublished(collection, slug, published) {
   assertCollection(collection);
+  if (!await driver.getContent(collection, slug)) throw httpError(404, COLLECTIONS[collection].label + ' not found.');
   const row = await driver.updateContent(collection, slug, { published: !!published });
   invalidate(collection);
   return row;
@@ -223,13 +238,25 @@ async function move(collection, slug, direction) {
   const i = rows.findIndex((r) => r.slug === slug);
   if (i < 0) throw httpError(404, 'Entry not found.');
   const j = direction === 'up' ? i - 1 : i + 1;
-  if (j < 0 || j >= rows.length) return rows[i];
-  const a = rows[i], b = rows[j];
-  const ao = a.sort_order || i + 1, bo = b.sort_order || j + 1;
-  await driver.updateContent(collection, a.slug, { sort_order: bo === ao ? (direction === 'up' ? ao - 1 : ao + 1) : bo });
-  await driver.updateContent(collection, b.slug, { sort_order: ao });
+  if (j < 0 || j >= rows.length) return true;
+  const order = rows.map((r) => r.slug);
+  order[i] = order[j];
+  order[j] = slug;
+  // Renumber 1..n in one pass — also repairs duplicate or missing sort orders.
+  await driver.reorderContent(collection, order);
   invalidate(collection);
   return true;
+}
+
+/* Where does /<collection>/<slug> point?  found | moved (to a renamed slug) | draft | missing */
+async function resolve(collection, slug, { includeDrafts = false } = {}) {
+  assertCollection(collection);
+  const rows = await list(collection, { includeDrafts: true });
+  const hit = rows.find((r) => r.slug === slug);
+  if (hit) return { status: hit.published || includeDrafts ? 'found' : 'draft', slug };
+  const moved = rows.find((r) => (r.published || includeDrafts) && r.data && Array.isArray(r.data.formerSlugs) && r.data.formerSlugs.indexOf(slug) > -1);
+  if (moved) return { status: 'moved', slug: moved.slug };
+  return { status: 'missing', slug };
 }
 
 async function remove(collection, slug) {
@@ -306,6 +333,7 @@ module.exports = {
   update,
   setPublished,
   move,
+  resolve,
   remove,
   buildScript,
   trips,

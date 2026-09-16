@@ -31,7 +31,7 @@ const helmetConfig = helmet({
  */
 const globalLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 120,
+  max: parseInt(process.env.API_RATE_LIMIT, 10) || 120,
   standardHeaders: true,
   legacyHeaders: false,
   message: { status: 'error', message: 'Too many requests, please slow down.' }

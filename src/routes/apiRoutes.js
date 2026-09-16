@@ -10,7 +10,7 @@ const adminRoutes = require('./adminRoutes');
 
 const bookingLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
-  max: 8,
+  max: parseInt(process.env.BOOKING_RATE_LIMIT, 10) || 8,
   standardHeaders: true,
   legacyHeaders: false,
   message: { status: 'error', message: 'Too many requests from this connection. Please try again shortly, or message us on WhatsApp.' }
@@ -21,6 +21,7 @@ router.get('/content', contentController.getContent);
 router.post('/save', apiLimiter, requireAdmin, validateSavePayload, contentController.saveContent);
 
 // Public: trip list for booking forms, booking submissions
+router.get('/health', publicController.health);
 router.get('/trips', publicController.trips);
 router.post('/bookings', bookingLimiter, publicController.createBooking);
 router.post('/inquiry', bookingLimiter, publicController.createBooking); // older forms

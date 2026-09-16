@@ -7,7 +7,7 @@ const router = express.Router();
 
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: parseInt(process.env.LOGIN_RATE_LIMIT, 10) || 10,
   standardHeaders: true,
   legacyHeaders: false,
   message: { status: 'error', message: 'Too many sign-in attempts. Try again in 15 minutes.' }
@@ -22,6 +22,7 @@ router.get('/me', admin.me);
 router.use(requireAdmin);
 
 router.get('/dashboard', admin.dashboard);
+router.get('/pulse', admin.pulse);
 
 router.get('/bookings', admin.bookings);
 router.get('/bookings.csv', admin.bookingsCsv);
