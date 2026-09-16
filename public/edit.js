@@ -627,7 +627,7 @@ function applyLanguageUI() {
      a country/region foot and an Explore link to the full guide.
    ========================================================================== */
 const FLAGSHIP_STATE = { cat: 'treks' };
-const FLAGSHIP_CARD_LIMIT = 6;
+const FLAGSHIP_CARD_LIMIT = 10;
 
 const FLAGSHIP_SUB = {
   treks: 'The trails we walk most — tea-house treks from a week to a month. Each tile opens a full route guide: day-by-day itinerary, altitude profile, season, cost and permits.',
@@ -681,9 +681,15 @@ function flagshipTrekItems() {
 /* the flagship eight-thousanders */
 function flagshipPeakItems() {
   const M = window.MOUNTAINS || {};
-  return Object.keys(M).map(k => M[k]).filter(m => m.bestseller)
-    .sort((a, b) => a.bestseller - b.bestseller)
-    .slice(0, FLAGSHIP_CARD_LIMIT).map(m => {
+  let list = Object.keys(M).map(k => M[k]).filter(m => m.bestseller)
+    .sort((a, b) => a.bestseller - b.bestseller);
+  if (list.length < FLAGSHIP_CARD_LIMIT) {
+    const seen = new Set(list.map(m => m.slug));
+    const more = Object.keys(M).map(k => M[k]).filter(m => !seen.has(m.slug))
+      .sort((a, b) => a.rank - b.rank);
+    list = list.concat(more);
+  }
+  return list.slice(0, FLAGSHIP_CARD_LIMIT).map(m => {
       const elev = m.elevationLabel || ((m.elevationM || 0).toLocaleString() + ' m');
       const d = m.difficulty || {};
       const dvals = ['technical', 'altitude', 'exposure', 'weather', 'objectiveHazard']
@@ -2798,103 +2804,150 @@ function setHeroSlide(index) {
   });
 }
 
-// Hero Mountain Mouse Parallax & Dynamic Topography
-// Hero Mountain Mouse Parallax
-window.addEventListener('mousemove', (e) => {
-  const heroParallax = document.getElementById('hero-bg-parallax');
-  if (heroParallax) {
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 12;
-    heroParallax.style.transform = `scale(1.08) translate(${x}px, ${y}px)`;
-  }
-});
+// Hero Mountain Mouse Parallax — desktop pointer only, extremely restrained,
+// and only while the hero is actually on screen. Respects reduced-motion.
+(function () {
+  var heroParallax = null;
+  var CAN_PARALLAX = window.matchMedia &&
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!CAN_PARALLAX) return;
+  window.addEventListener('mousemove', (e) => {
+    if (!heroParallax) heroParallax = document.getElementById('hero-bg-parallax');
+    if (!heroParallax || heroParallax.getBoundingClientRect().bottom <= 0) return;
+    const x = (e.clientX / window.innerWidth - 0.5) * 10;
+    const y = (e.clientY / window.innerHeight - 0.5) * 6;
+    heroParallax.style.transform = `translate(${x}px, ${y}px)`;
+  }, { passive: true });
+})();
 
 // Scroll barometer now lives in /altitude.js (self-injecting, all pages that
 // load it). Revert: REVERT-notes § 5af.
 
-// 3D Mountain Perspective Video Slider
-const heroVideoSlides = [
-  {
-    id: "everest",
-    title: "01 // SAGARMATHA RIDGE · 5,364M",
-    coords: "27°59'N · 86°55'E",
-    src: "/videos/hero.mp4",
-    altSrc: "/videos/hero.mp4.mp4",
-    poster: "/images/ebc.png"
-  },
-  {
-    id: "annapurna",
-    title: "02 // THORONG LA CIRQUE · 5,416M",
-    coords: "28°47'N · 83°56'E",
-    src: "/videos/annapurna.mp4",
-    altSrc: "/images/annapurna.png",
-    poster: "/images/annapurna.png"
-  },
-  {
-    id: "manaslu",
-    title: "03 // SPIRIT MOUNTAIN PASS · 5,106M",
-    coords: "28°33'N · 84°37'E",
-    src: "/videos/manaslu.mp4",
-    altSrc: "/images/manaslu.png",
-    poster: "/images/manaslu.png"
-  }
+// ============================================================================
+// HERO SLIDER — the static hero (slide 1, in the markup already) plus 4
+// mountain video slides appended after it in the same swipeable track.
+// ----------------------------------------------------------------------------
+// A standalone "Expedition Films" section below the hero was tried first and
+// the client asked for it folded into the hero itself instead — swipe past
+// the static hero to see the clips, rather than a separate block further
+// down the page. Native horizontal scroll-snap for swipe; each video slide's
+// name/elevation/rank/link is pulled live from window.MOUNTAINS so it can
+// never drift out of sync with the real peak data.
+//
+// To add/replace a clip, edit HERO_VIDEO_SLIDES only — `slug` must match a
+// key in window.MOUNTAINS (mountains.js) so the real name/stats/CTA resolve.
+// Revert to a plain static hero: see the REVERT-note above #manifesto.
+// ============================================================================
+const HERO_VIDEO_SLIDES = [
+  { slug: 'everest', video: '/images/Video/Everest.mp4' },
+  { slug: 'k2', video: '/images/Video/K2.mp4' },
+  { slug: 'kangchenjunga', video: '/images/Video/Kanchanjunga.mp4' },
+  { slug: 'annapurna', video: '/images/Video/Annapurna%20mountain.mp4' }
 ];
 
-let currentHeroVideoIndex = 0;
+function heroVideoSlideHTML(clip, m) {
+  return '' +
+    '<div class="hme-hero-slide relative flex min-h-[54vh] w-full shrink-0 flex-col overflow-hidden px-6 pt-8 pb-12 md:min-h-[62vh] md:px-12 md:pt-10 md:pb-14 lg:px-20" data-slug="' + escapeHtml(m.slug) + '">' +
+      '<div class="absolute inset-0 z-0">' +
+        '<img class="hme-hero-media h-full w-full object-cover object-center opacity-80 [filter:grayscale(.2)_saturate(1.3)_contrast(1.1)_brightness(.85)]" src="' + escapeHtml(m.heroImage || '/images/hero-mountain.jpg') + '" alt="" aria-hidden="true">' +
+        '<video class="hme-hero-video absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-700 [filter:grayscale(.15)_saturate(1.4)_contrast(1.08)_brightness(1.02)_blur(1.5px)]" muted loop playsinline preload="none" data-src="' + escapeHtml(clip.video) + '" aria-hidden="true" tabindex="-1"></video>' +
+      '</div>' +
+      '<div class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#14161a]/85 via-[#14161a]/45 to-[#14161a]"></div>' +
+      '<div class="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_rgba(20,22,26,0.55)_0%,_rgba(20,22,26,0.15)_45%,_transparent_75%)]"></div>' +
+      '<div class="hme-hero-grain"></div>' +
+      '<div class="pointer-events-none absolute left-4 top-4 z-[3] h-5 w-5 border-l border-t border-accent/45 md:left-8 md:top-8"></div>' +
+      '<div class="pointer-events-none absolute right-4 top-4 z-[3] h-5 w-5 border-r border-t border-accent/45 md:right-8 md:top-8"></div>' +
+      '<div class="pointer-events-none absolute bottom-4 left-4 z-[3] h-5 w-5 border-b border-l border-accent/45 md:bottom-8 md:left-8"></div>' +
+      '<div class="pointer-events-none absolute bottom-4 right-4 z-[3] h-5 w-5 border-b border-r border-accent/45 md:bottom-8 md:right-8"></div>' +
 
-function switchHeroVideo(direction) {
-  if (direction === 'next') {
-    currentHeroVideoIndex = (currentHeroVideoIndex + 1) % heroVideoSlides.length;
-  } else if (direction === 'prev') {
-    currentHeroVideoIndex = (currentHeroVideoIndex - 1 + heroVideoSlides.length) % heroVideoSlides.length;
-  } else if (typeof direction === 'number') {
-    currentHeroVideoIndex = direction;
-  }
-  updateHeroVideoUI();
+      '<div class="relative z-10 w-full max-w-6xl mx-auto hidden md:flex items-center justify-between gap-4 border-b border-white/10 pb-3.5 font-mono text-[10px] uppercase tracking-[0.32em]">' +
+        '<div class="flex items-center gap-2.5 text-accent">' +
+          '<span class="relative flex h-1.5 w-1.5"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span><span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span></span>' +
+          '<span>' + (m.rank ? 'RANK #' + m.rank + ' / 14' : 'EXPEDITION FILM') + '</span>' +
+        '</div>' +
+        '<div class="hidden items-center gap-2 text-white/45 sm:flex">' + (m.coordinates ? m.coordinates.lat.toFixed(2) + '°N · ' + m.coordinates.lon.toFixed(2) + '°E' : escapeHtml(m.range || '')) + '</div>' +
+      '</div>' +
+
+      '<div class="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center py-8 md:py-10 text-center">' +
+        '<span class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-accent font-medium">' + escapeHtml(m.range || '') + (m.countryLabel ? ' · ' + escapeHtml(m.countryLabel) : '') + '</span>' +
+        '<h2 class="mt-4 font-heading uppercase leading-[0.9] tracking-tightest text-white text-[clamp(2.1rem,9vw,3rem)] sm:text-5xl md:text-6xl lg:text-7xl">' + escapeHtml(m.name) + '</h2>' +
+        (m.tagline ? '<p class="mx-auto mt-4 max-w-xl font-sans text-[13px] md:text-base leading-relaxed text-white/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">' + escapeHtml(m.tagline) + '</p>' : '') +
+        (m.elevationLabel ? '<span class="mt-3 font-heading text-2xl md:text-3xl font-light text-accent">' + escapeHtml(m.elevationLabel) + '</span>' : '') +
+        '<a href="/expeditions/' + escapeHtml(m.slug) + '" class="group mt-6 md:mt-7 inline-flex items-center justify-center gap-3 border border-accent bg-accent px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] font-semibold text-background transition-colors hover:bg-accent-hover">' +
+          '<span>Plan This Climb</span><i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1" aria-hidden="true"></i>' +
+        '</a>' +
+      '</div>' +
+    '</div>';
 }
 
-function updateHeroVideoUI() {
-  const slide = heroVideoSlides[currentHeroVideoIndex];
-  const video = document.getElementById('hero-video');
-  const label = document.getElementById('hero-video-title');
-  const coord = document.getElementById('hero-telemetry-coords');
+function initHeroSlider() {
+  const track = document.getElementById('hero-track');
+  const dotsWrap = document.getElementById('hero-dots');
+  const prevBtn = document.getElementById('hero-prev');
+  const nextBtn = document.getElementById('hero-next');
+  if (!track) return;
 
-  if (label) label.innerText = slide.title;
-  if (coord) coord.innerText = slide.coords;
+  const M = window.MOUNTAINS || {};
+  const videoSlides = HERO_VIDEO_SLIDES.map((clip) => ({ clip, m: M[clip.slug] })).filter((x) => x.m);
+  track.insertAdjacentHTML('beforeend', videoSlides.map((x) => heroVideoSlideHTML(x.clip, x.m)).join(''));
 
-  if (video) {
-    video.style.opacity = '0.4';
-    setTimeout(() => {
-      video.poster = slide.poster;
-      video.src = slide.src;
-      video.playbackRate = 0.625;
-      video.play().catch(() => {});
-      video.style.opacity = '0.9';
-    }, 200);
+  const slideEls = Array.prototype.slice.call(track.children);   // [static hero, ...video slides]
+  if (dotsWrap) {
+    dotsWrap.innerHTML = slideEls.map((_, i) =>
+      '<button type="button" class="hme-hero-dot pointer-events-auto h-2 w-2 rounded-full bg-white/30' + (i === 0 ? ' is-active' : '') + '" data-i="' + i + '" aria-label="Go to slide ' + (i + 1) + '"></button>'
+    ).join('');
   }
+  const dotEls = dotsWrap ? Array.prototype.slice.call(dotsWrap.children) : [];
+  if (slideEls.length < 2) {   // no video data resolved — plain static hero, no slider chrome
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+    if (dotsWrap) dotsWrap.style.display = 'none';
+    return;
+  }
+  let current = 0;
 
-  // Update Indicator Pills
-  heroVideoSlides.forEach((_, idx) => {
-    const pill = document.getElementById(`hero-slide-pill-${idx}`);
-    if (pill) {
-      if (idx === currentHeroVideoIndex) {
-        pill.className = "h-1.5 w-8 rounded-full bg-accent cursor-pointer transition-all";
+  function playOnly(idx) {
+    slideEls.forEach((s, i) => {
+      const v = s.querySelector('.hme-hero-video');
+      if (!v) return;
+      if (i === idx) {
+        if (!v.src && v.dataset.src) v.src = v.dataset.src;
+        const p = v.play();
+        if (p && p.catch) p.catch(() => {});
+        v.classList.remove('opacity-0');
       } else {
-        pill.className = "h-1.5 w-2 rounded-full bg-white/30 hover:bg-white/60 cursor-pointer transition-all";
+        v.pause();
+        v.classList.add('opacity-0');
       }
-    }
-  });
-}
-
-// Slow down hero video playback to stretch from 10s to 16s (0.625x speed)
-function initHeroVideoSpeed() {
-  const heroVideo = document.getElementById('hero-video');
-  if (heroVideo) {
-    heroVideo.playbackRate = 0.625;
-    heroVideo.addEventListener('loadedmetadata', () => {
-      heroVideo.playbackRate = 0.625;
     });
   }
+
+  function setActive(idx) {
+    current = idx;
+    dotEls.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+    if (prevBtn) prevBtn.toggleAttribute('disabled', idx === 0);
+    if (nextBtn) nextBtn.toggleAttribute('disabled', idx === slideEls.length - 1);
+    playOnly(idx);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    let best = null, bestRatio = 0;
+    entries.forEach((en) => { if (en.intersectionRatio > bestRatio) { bestRatio = en.intersectionRatio; best = en.target; } });
+    if (best && bestRatio > 0.55) setActive(slideEls.indexOf(best));
+  }, { root: track, threshold: [0, 0.55, 0.9] });
+  slideEls.forEach((s) => io.observe(s));
+
+  function goTo(idx) {
+    idx = Math.max(0, Math.min(slideEls.length - 1, idx));
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    slideEls[idx].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
+  }
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
+  dotEls.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  setActive(0);
 }
 
 // ==========================================
@@ -2906,7 +2959,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initFlagshipTabs();
   renderFlagship();
   loadContent();
-  initHeroVideoSpeed();
+  initHeroSlider();
   initExplore();
 });
 

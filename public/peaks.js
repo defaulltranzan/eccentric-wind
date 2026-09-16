@@ -1543,6 +1543,7 @@
       description: m.summary || null,
       shortDescription: m.tagline || null,
       image: m.heroImage || null,
+      heroVideo: m.heroVideo || null,
       gallery: m.gallery || [],
       coordinates: m.coordinates || null,
       firstAscent: m.firstAscent || null,
@@ -1592,6 +1593,7 @@
       description: p.description || p.summary || null,
       shortDescription: p.shortDescription || p.tagline || p.note || null,
       image: p.image || p.heroImage || null,   // placeholder — sourcing handled separately
+      heroVideo: p.heroVideo || null,
       gallery: p.gallery || [],
       coordinates: p.coordinates || null,
       firstAscent: p.firstAscent || null,

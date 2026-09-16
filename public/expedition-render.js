@@ -124,7 +124,7 @@
   }
 
   /* ---------- SUBNAV ---------- */
-  var nav = [['overview', 'The mountain'], ['difficulty', 'Difficulty'], ['route', 'Route'], ['camps', 'Camps'], ['itinerary', 'Itinerary'], ['season', 'Season'], ['hazards', 'Hazards'], ['permits', 'Permits'], ['history', 'History'], ['faq', 'FAQ']];
+  var nav = [['overview', 'The mountain'], ['difficulty', 'Difficulty'], ['route', 'Route'], ['camps', 'Camps'], ['itinerary', 'Itinerary'], ['acclim-profile', 'Altitude Profile'], ['season', 'Season'], ['hazards', 'Hazards'], ['permits', 'Permits'], ['history', 'History'], ['faq', 'FAQ']];
   out.push('<nav id="subnav" class="sticky top-0 z-30 border-b border-border bg-[#101215]/95 backdrop-blur-md">' +
     '<div class="max-w-6xl mx-auto px-4 md:px-10 flex items-center gap-1 overflow-x-auto">' +
     nav.map(function (n) { return '<a href="#' + n[0] + '" data-nav="' + n[0] + '" class="hx-nav-link shrink-0 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground hover:text-accent px-3 py-3.5 transition-colors">' + esc(n[1]) + '</a>'; }).join('') +
@@ -244,6 +244,27 @@
       '<div class="mb-6">' + itRows + '</div>' +
       (m.typicalDurationDays ? '<div class="border border-border bg-card p-4 max-w-lg"><span class="lbl block mb-1">Typical total duration</span><span class="font-heading text-xl text-white">' + esc(m.typicalDurationDays) + '</span></div>' : '');
     out.push(section('itinerary', '', 'The expedition timeline', itBody));
+  }
+
+  /* ---------- ALTITUDE PROFILE CHART (safety-tools.js, single-peak mode) ----------
+     Reuses the same rotation-profile chart as /altitude-safety, pinned to this
+     mountain via data-peak-slug — no selector, no other peaks listed. */
+  var hasAltProfile = (has(m.camps) && m.camps.length >= 2) ||
+    (has(itin) && itin[0] && itin[0].altM != null);
+  if (hasAltProfile) {
+    out.push('<section id="acclim-profile" data-peak-slug="' + esc(m.slug) + '" class="hx-sec fade-up scroll-mt-24 border-b border-border bg-[#101215]">' +
+      '<div class="max-w-6xl mx-auto px-6 md:px-10 py-14 md:py-20">' +
+      '<span class="kicker">Plan your ascent</span>' +
+      '<h2 class="sec-h text-3xl md:text-5xl text-foreground mt-3 mb-4">Altitude &amp; Acclimatisation Profile</h2>' +
+      '<p class="font-sans text-[13px] text-muted-foreground leading-relaxed max-w-2xl mb-8">The rotation profile for ' + esc(m.name) + ' &mdash; the climb-high, drop-back-to-Base-Camp saw-tooth that carries a team to the summit, with camp altitudes marked.</p>' +
+      '<div class="p-6 md:p-8 border border-border bg-card">' +
+      '<div class="ap-grids">' +
+      '<div><div id="ap-chart" class="ap-chart"></div><div id="ap-stats" class="ap-stats"></div></div>' +
+      '<div><div id="ap-detail" class="ap-detail"></div><div id="ap-verdict" class="ap-verdict"></div></div>' +
+      '</div>' +
+      '<div class="ap-legend" id="ap-legend"></div>' +
+      '</div>' +
+      '</div></section>');
   }
 
   /* ---------- SEASON + WEATHER ---------- */

@@ -252,15 +252,17 @@
      Hover clips (peaks carrying `heroVideo`).
      Plays for exactly as long as the pointer is inside the card. The file is
      only ever requested on the first hover, so a visitor who never hovers K2
-     pays nothing for it. Skipped entirely on touch (no true hover) and under
-     prefers-reduced-motion.
+     pays nothing for it. Skipped under prefers-reduced-motion.
+     On touch (no true hover): the first tap on a card previews its clip
+     instead of navigating; the card is a live link, so a second tap (or a tap
+     while the clip is already playing) goes through to the route as normal.
      --------------------------------------------------------------------- */
   var CAN_HOVER = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var NO_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var FADE_MS = 550;   // keep in step with .mt-video's opacity transition
 
   function bindVideos(sel) {
-    if (!CAN_HOVER || NO_MOTION) return;
+    if (NO_MOTION) return;
     document.querySelectorAll((sel || '') + ' .mt-video').forEach(function (v) {
       if (v.dataset.bound) return;
       v.dataset.bound = '1';
@@ -270,7 +272,7 @@
 
       function start() {
         if (offTimer) { clearTimeout(offTimer); offTimer = null; }
-        if (!v.src && v.dataset.src) v.src = v.dataset.src;   // first hover only
+        if (!v.src && v.dataset.src) v.src = v.dataset.src;   // first hover/tap only
         v.classList.add('is-playing');
         var p = v.play();
         // play() rejects if the pointer leaves before it resolves — not an error
@@ -289,10 +291,31 @@
         }, FADE_MS);
       }
 
-      card.addEventListener('mouseenter', start);
-      card.addEventListener('mouseleave', stop);
-      card.addEventListener('focus', start);    // keyboard parity
+      card.addEventListener('focus', start);    // keyboard parity, all pointer types
       card.addEventListener('blur', stop);
+
+      if (CAN_HOVER) {
+        card.addEventListener('mouseenter', start);
+        card.addEventListener('mouseleave', stop);
+        return;
+      }
+
+      // Touch (no true hover): a genuine tap fires a 'click' — a scroll/swipe
+      // never does — so this only ever fires on deliberate taps. First tap
+      // previews the clip and is swallowed; the second follows the link.
+      card.addEventListener('click', function (e) {
+        if (card.dataset.hmePreviewSeen) return;
+        e.preventDefault();
+        HME_STOP_OTHER_PREVIEWS(card);
+        start();
+        card.dataset.hmePreviewSeen = '1';
+      });
+      card.__hmeStopPreview = function () { stop(); delete card.dataset.hmePreviewSeen; };
+    });
+  }
+  function HME_STOP_OTHER_PREVIEWS(exceptCard) {
+    document.querySelectorAll('.mt').forEach(function (c) {
+      if (c !== exceptCard && c.__hmeStopPreview) c.__hmeStopPreview();
     });
   }
 
