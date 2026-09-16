@@ -95,7 +95,7 @@
     hs('Range', m.range) + hs('Season', (m.season && m.season.primary + ' · ' + m.season.window)) + hs('First ascent', (m.firstAscent && m.firstAscent.year)) +
     '</div>' +
     '<div class="mt-8 flex flex-wrap items-center gap-3">' +
-    '<a href="/contact" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Plan This Expedition</a>' +
+    '<a href="/contact?trip=' + encodeURIComponent(m.slug) + '" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Plan This Expedition</a>' +
     '<a href="#route" class="inline-flex items-center gap-2 border border-white/40 text-white font-mono text-[11px] uppercase tracking-widest px-6 py-3 hover:border-accent hover:text-accent transition-all">The normal route</a>' +
     '</div>' +
     heroCredit(m.heroCredit) +
@@ -406,8 +406,8 @@
       '<h2 class="sec-h text-3xl md:text-5xl text-foreground mt-3 mb-4">Climb ' + esc(m.name) + '</h2>' +
       '<p class="font-sans text-[14px] text-muted-foreground max-w-xl mx-auto mb-8">Talk to us about dates, your progression and whether ' + esc(m.name) + ' is the right objective for where you are. We will be honest about it.</p>' +
       '<div class="flex flex-wrap justify-center gap-3">' +
-      '<a href="/contact" class="bg-accent text-background hover:bg-accent-hover font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Plan this expedition</a>' +
-      '<a href="/contact" class="border border-border text-foreground hover:border-accent hover:text-accent font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Talk to an expert</a>' +
+      '<a href="/contact?trip=' + encodeURIComponent(m.slug) + '" class="bg-accent text-background hover:bg-accent-hover font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Plan this expedition</a>' +
+      '<a href="/contact?trip=' + encodeURIComponent(m.slug) + '" class="border border-border text-foreground hover:border-accent hover:text-accent font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Talk to an expert</a>' +
       '<a href="/expeditions" class="border border-border text-foreground hover:border-accent hover:text-accent font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Back to the atlas</a>' +
       '</div></div></section>');
   })();

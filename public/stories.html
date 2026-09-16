@@ -299,7 +299,8 @@
     </button>
 </div>
 
-<script src="/stories.js?v=2"></script>
+<script src="/data/stories.js"></script>
+<script src="/stories.js?v=3"></script>
 <script>
 (function () {
     'use strict';
@@ -466,7 +467,7 @@
         try {
             fetch('/api/inquiry', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: 'Journal subscriber', email: email, message: 'Field Journal newsletter signup' })
+                body: JSON.stringify({ source: 'newsletter', email: email, message: 'Field Journal newsletter signup' })
             }).then(done).catch(done);
         } catch (x) { done(); }
     });

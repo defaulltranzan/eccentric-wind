@@ -1220,3 +1220,23 @@ The old hero markup is also saved verbatim in `_docs/hero-corridor-old-markup.ht
 - Spacing/title size tightened so the bottom rail still fits the first screen; "Plan a custom ascent"
   hidden on phones (as in the pre-redesign hero). Revert to the left-aligned 6d state: restore
   scratch copy or `git diff` the `.hc-body/.hc-eyebrow/.hc-lede/.hc-actions/.hc-link/.hc-alt` rules.
+
+## § 7 — Backend + admin dashboard (2026-09-16)
+
+Guide: `_docs/BACKEND.md`. Revert everything: `git reset --hard pre-backend-build` (tag set right before this work;
+the hero redesign is committed underneath it).
+
+- Content records moved out of the browser data files into `data/content/{treks,expeditions,stories}.json`
+  (script: `scripts/migrate-static-data.js`; original files kept in `_docs/data-split-backup/`).
+  `public/treks.js`, `mountains.js`, `peaks.js`, `stories.js` now hold only defaults/helpers.
+- Pages load server-generated `/data/treks.js`, `/data/expeditions.js` (after mountains.js, before peaks.js),
+  `/data/stories.js` (before stories.js). Round-trip verified identical to the old globals.
+- New server code: `src/config/env.js`, `src/data/` (file + Supabase drivers), `src/services/`
+  (content, booking, media, notify), `src/middleware/adminSession.js`, `src/controllers/{admin,public}Controller.js`,
+  `src/routes/adminRoutes.js`. `inquiryController.js` removed (`/api/inquiry` now aliases `/api/bookings`).
+- `server.js`: rate limit now `/api` only (static files no longer 429), data scripts + dynamic `/sitemap.xml`
+  + `/admin` mounted before static; `app.listen` only when run directly.
+- `/admin` = `public/admin/` (vanilla JS). `supabase/schema.sql`, `.env.example`, `scripts/admin-password.js`,
+  `scripts/db-push.js`. npm scripts `admin:password`, `db:push`; dev loads `.env`.
+- Contact form: live trip list (`/api/trips`), `?trip=<slug>` preselect, preferred-date field, honeypot,
+  inline status instead of alert(). Trek/expedition "Plan this…" buttons link `/contact?trip=<slug>`.

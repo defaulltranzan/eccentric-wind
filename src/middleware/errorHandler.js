@@ -1,16 +1,20 @@
 /**
- * Production-safe Global Error Handler
+ * Production-safe global error handler.
  */
+const env = require('../config/env');
+
 function errorHandler(err, req, res, next) {
-  console.error('[!] Server Error:', err.message || err);
+  if (res.headersSent) return next(err);
+  let statusCode = err.status || err.statusCode || 500;
+  if (err.type === 'entity.too.large') statusCode = 413;
+  if (statusCode >= 500) console.error('[!] Server Error:', err.stack || err.message || err);
 
-  const statusCode = err.status || 500;
-  const isProduction = process.env.NODE_ENV === 'production';
-
+  const hide = env.isProd && statusCode === 500;
   res.status(statusCode).json({
     status: 'error',
-    message: isProduction && statusCode === 500 ? 'Internal Server Error' : err.message || 'An unexpected error occurred.',
-    ...(isProduction ? {} : { stack: err.stack })
+    message: hide ? 'Internal Server Error' : err.message || 'An unexpected error occurred.',
+    ...(err.issues ? { issues: err.issues } : {}),
+    ...(env.isProd ? {} : { stack: err.stack })
   });
 }
 

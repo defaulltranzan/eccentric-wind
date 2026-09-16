@@ -5,19 +5,25 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "npm run build:css && node server.js",
-    "build:css": "tailwindcss -c tailwind.config.js -i ./build/tw-input.css -o ./public/tailwind.css --minify"
+    "dev": "npm run build:css && node --env-file-if-exists=.env server.js",
+    "build:css": "tailwindcss -c tailwind.config.js -i ./build/tw-input.css -o ./public/tailwind.css --minify",
+    "admin:password": "node scripts/admin-password.js",
+    "db:push": "node --env-file-if-exists=.env scripts/db-push.js"
   },
   "dependencies": {
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "express-rate-limit": "^8.6.2",
-    "helmet": "^8.3.0"
+    "helmet": "^8.3.0",
+    "nodemailer": "^6.10.1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "tailwindcss": "^3.4.19"
+  },
+  "engines": {
+    "node": ">=20.12"
   }
 }

@@ -37,10 +37,7 @@ router.get('/dispatches', (req, res) => res.redirect(301, '/stories'));
 router.get('/dispatches/:slug', (req, res) => res.redirect(301, `/stories/${req.params.slug}`));
 
 // SEO Crawlers
-router.get('/sitemap.xml', (req, res) => {
-  res.type('application/xml');
-  res.sendFile(path.join(PUBLIC_DIR, 'sitemap.xml'));
-});
+// /sitemap.xml is generated from the content database — see server.js
 
 router.get('/robots.txt', (req, res) => {
   res.type('text/plain');
