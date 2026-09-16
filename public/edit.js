@@ -36,20 +36,20 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "EST. 1993 · THREE DECADES IN THE HIMALAYA",
+    heroBadge: "The High Corridors of Nepal",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "Leave the ordinary behind and ascend into legend.",
-    heroDesc: "Nepal's trekking trails and 8,000-metre expeditions — led since 1993 by the certified local guides who live beneath these mountains.",
+    heroTagline: "Treks, high passes and Himalayan expeditions — led by local guides since 1993.",
+    heroDesc: "Trekking routes, high passes and Himalayan expeditions — shaped by the local guides who have led these corridors since 1993.",
     btnViewExpeditions: "Begin Climbing",
     scrollElevation: "SCROLL FOR ELEVATION",
     
     // Stats Matrix
     stats: [
-      { value: "30+", label: "Years of Safety Legacy" },
-      { value: "100%", label: "Certified Sherpa Guides" },
-      { value: "Guaranteed", label: "Group Departures" },
-      { value: "Eco-Safe", label: "Sustainable Expeditions" }
+      { value: "1993", label: "Founded in Kathmandu" },
+      { value: "38", label: "Trekking trails mapped" },
+      { value: "31", label: "Peaks we climb" },
+      { value: "100%", label: "Licensed local guides" }
     ],
     
     // 02 Expedition Matrix
@@ -148,20 +148,20 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "सन् १९९३ देखि · हिमालयमा तीन दशक",
+    heroBadge: "नेपालका उच्च हिमाली करिडोर",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "साधारणलाई पछाडि छोड्नुहोस्, किंवदन्तीमा चढ्नुहोस्।",
+    heroTagline: "पदयात्रा, उच्च पास र हिमाली अभियान — सन् १९९३ देखि स्थानीय गाइडहरूको नेतृत्वमा।",
     heroDesc: "नेपालका पदयात्रा मार्ग र ८,००० मिटरका अभियानहरू — सन् १९९३ देखि, यी हिमालको फेदमा बस्ने प्रमाणित स्थानीय गाइडहरूको नेतृत्वमा।",
     btnViewExpeditions: "अभियानहरू हेर्नुहोस्",
     scrollElevation: "उचाइको लागि स्क्रोल गर्नुहोस्",
     
     // Stats Matrix
     stats: [
-      { value: "३०+", label: "सुरक्षा इतिहास (वर्ष)" },
-      { value: "१००%", label: "प्रमाणित स्थानीय शेर्पा गाइड" },
-      { value: "ग्यारेन्टी", label: "नियमित समूह प्रस्थान" },
-      { value: "इको-सुरक्षित", label: "दिगो हिमाली पदयात्रा" }
+      { value: "१९९३", label: "काठमाडौंमा स्थापना" },
+      { value: "३८", label: "पदयात्रा मार्ग" },
+      { value: "३१", label: "आरोहण गरिने चुचुरा" },
+      { value: "१००%", label: "इजाजतप्राप्त स्थानीय गाइड" }
     ],
     
     // 02 Expedition Matrix
@@ -260,20 +260,20 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "自 1993 年 · 深耕喜马拉雅三十余年",
+    heroBadge: "尼泊尔的高山走廊",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "把平凡留在身后，攀上传奇之巅。",
+    heroTagline: "徒步路线、高山垭口与喜马拉雅探险 —— 自 1993 年起由当地向导带领。",
     heroDesc: "尼泊尔的徒步路线与 8,000 米级探险 —— 自 1993 年起，由生活在这些雪山脚下的持证当地向导带领。",
     btnViewExpeditions: "浏览探险路线",
     scrollElevation: "向下滚动探索海拔",
     
     // Stats Matrix
     stats: [
-      { value: "30+", label: "年卓越安全传承" },
-      { value: "100%", label: "本地认证夏尔巴向导" },
-      { value: "保证出发", label: "固定团队定期排期" },
-      { value: "生态安全", label: "可持续环保高山徒步" }
+      { value: "1993", label: "创立于加德满都" },
+      { value: "38", label: "条徒步路线" },
+      { value: "31", label: "座攀登山峰" },
+      { value: "100%", label: "持证当地向导" }
     ],
     
     // 02 Expedition Matrix
@@ -524,6 +524,14 @@ function selectLanguage(lang) {
   applyLanguageUI();
 }
 
+// "MAGIC ADVENTURE" → two stacked lines, the last word in the accent colour.
+function setHeroTitleLines(el, text) {
+  const words = String(text || '').trim().split(/\s+/);
+  const last = words.length > 1 ? words.pop() : '';
+  el.innerHTML = '<span>' + escapeHtml(words.join(' ')) + '</span>' +
+    (last ? ' <span class="hc-accent">' + escapeHtml(last) + '</span>' : '');
+}
+
 // ==========================================
 // 6. MULTILINGUAL UI APPLICATION
 // ==========================================
@@ -541,7 +549,7 @@ function applyLanguageUI() {
   if (btnEditMode) btnEditMode.innerHTML = `<i class="fa-solid fa-pen-to-square mr-1"></i> ${t.btnEnableEdit}`;
 
   // 3. Manifesto & Hero
-  const coordEl = document.querySelector('#manifesto span.font-mono');
+  const coordEl = document.getElementById('hero-telemetry-coords');
   if (coordEl) coordEl.innerText = t.coordSystem;
   
   // Check if user has custom edited hero; if default, use translated version
@@ -551,7 +559,7 @@ function applyLanguageUI() {
     const hPrimary = document.getElementById('hero-title-primary');
     if (hPrimary) hPrimary.innerText = t.heroTitlePrimary;
     const hItalic = document.getElementById('hero-title-italic');
-    if (hItalic) hItalic.innerText = t.heroTitleItalic;
+    if (hItalic) setHeroTitleLines(hItalic, t.heroTitleItalic);
     const hDesc = document.getElementById('hero-description');
     if (hDesc) hDesc.innerText = t.heroDesc;
     const hTag = document.getElementById('hero-tagline');
@@ -940,9 +948,9 @@ function renderStats() {
   statsList.forEach((stat, idx) => {
     const div = document.createElement('div');
     // 2-col on mobile / 4-col on md+. Row dividers on mobile, column dividers on md.
-    div.className = "border-border border-b md:border-b-0 border-r even:border-r-0 md:border-r md:last:border-r-0 px-4 py-10 sm:p-8 lg:py-14 text-center";
+    div.className = "border-white/[0.08] border-b md:border-b-0 border-r even:border-r-0 md:border-r md:last:border-r-0 px-5 py-7 sm:px-8 lg:px-10 lg:py-9 text-left";
     div.innerHTML = `
-      <div class="font-heading text-[2.6rem] leading-[0.88] sm:text-5xl lg:text-[3.25rem] font-light tracking-tightest text-accent antialiased [font-feature-settings:'tnum'] mb-2 cursor-text"
+      <div class="font-heading text-[2.4rem] leading-[0.88] sm:text-5xl lg:text-[3.1rem] font-light tracking-tightest text-white antialiased [font-feature-settings:'tnum'] mb-2 cursor-text"
            data-stat-idx="${idx}" data-field="value">${escapeHtml(stat.value)}</div>
       <div class="font-mono text-[11px] sm:text-xs uppercase tracking-[0.15em] leading-snug text-muted-foreground cursor-text"
            data-stat-idx="${idx}" data-field="label">${escapeHtml(stat.label)}</div>
@@ -1308,6 +1316,7 @@ function filterTrekFinder() {
   applyFinderPersona(active);
 
   if (active === 0) {
+    renderFinderReadout(model, [], 0);
     resultsEl.innerHTML = '';
     if (countEl) countEl.innerText = '38 trails';
     setFinderCountSub('In the catalogue');
@@ -1348,6 +1357,8 @@ function filterTrekFinder() {
   setFinderCountSub('Of 38 trails');
   if (hintEl) hintEl.innerText = 'Your matches are ready — ' + matches.length +
     (matches.length === 1 ? ' trail matches' : ' trails match') + ' your style';
+
+  renderFinderReadout(model, matches, active);
 
   const top = matches[0];
   const rest = matches.slice(1);
@@ -1409,6 +1420,58 @@ function filterTrekFinder() {
       '<a href="/compare?t=' + encodeURIComponent(matches.slice(0, 3).map((s) => s.m.slug).join(',')) + '" class="flex-1 text-center border border-border px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:border-accent hover:text-accent transition-all">Compare these →</a>' +
       '<a href="/contact" class="flex-1 text-center bg-accent text-background px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-accent-hover transition-colors">Get a personalised plan →</a>' +
     '</div>';
+}
+
+/* ----------------------------------------------------------------------------
+   Route console readout  (2026-09-16, REVERT-notes § 6b)
+   Draws every trail as a bar on a 1,000–6,500 m axis (height = days), lights
+   the matches, and logs the active answers. Reads the same scored matches —
+   no scoring logic lives here.
+   -------------------------------------------------------------------------- */
+const FINDER_GROUP_NAMES = { experience: 'Level', region: 'Region', season: 'Season', duration: 'Days', budget: 'Budget' };
+const FINDER_SHORT = {
+  experience: { first: 'First-timer', experienced: 'Experienced', alpinist: 'Alpinist' },
+  region: { everest: 'Everest', annapurna: 'Annapurna', langtang: 'Langtang', manaslu: 'Manaslu', mustang: 'Mustang', dolpo: 'Dolpo', farwest: 'Far West' },
+  duration: { short: '5–10', mid: '10–15', long: '15–20', epic: '20+' },
+  budget: { b1: '< $1,000', b2: '$1–2k', b3: '$2–3.5k', b4: '$3.5k+' },
+  style: { iconic: 'Iconic', remote: 'Remote', culture: 'Culture', challenge: 'Challenge', photo: 'Photography', slow: 'Slow travel' }
+};
+
+function renderFinderReadout(model, matches, active) {
+  const scope = document.getElementById('fdr-scope');
+  const log = document.getElementById('fdr-log');
+  const state = document.getElementById('fdr-readout-state');
+  const topAlt = document.getElementById('fdr-top-alt');
+  const lo = 1000, hi = 6500;
+  const hit = {};
+  matches.forEach((s) => { hit[s.m.slug] = true; });
+  const topSlug = matches[0] ? matches[0].m.slug : null;
+
+  if (scope) {
+    scope.innerHTML = model.filter((m) => m.maxAltM).map((m) => {
+      const x = (Math.max(lo, Math.min(hi, m.maxAltM)) - lo) / (hi - lo) * 100;
+      const h = 22 + Math.min(1, (m.days || 8) / 24) * 78;
+      const cls = !active ? '' : m.slug === topSlug ? ' is-top' : hit[m.slug] ? ' is-hit' : ' is-dim';
+      return '<span class="fdr-bar' + cls + '" style="left:' + x.toFixed(2) + '%;height:' + h.toFixed(0) + '%" title="' + escapeHtml(m.name + ' · ' + m.maxAlt) + '"></span>';
+    }).join('');
+  }
+  if (state) state.innerText = active ? 'Live · ' + active + ' signal' + (active === 1 ? '' : 's') : 'Standby';
+  if (topAlt) {
+    topAlt.innerHTML = matches[0]
+      ? 'Top match<br><span class="text-accent">' + escapeHtml(matches[0].m.name) + '</span><br>' + escapeHtml(String(matches[0].m.maxAlt).split('(')[0].replace(/^[≈~\s]+/, '').trim())
+      : '';
+  }
+  if (log) {
+    const items = [];
+    Object.keys(FINDER_GROUP_NAMES).forEach((g) => {
+      const v = finderState[g];
+      if (!v) return;
+      const label = g === 'season' ? v : ((FINDER_SHORT[g] || {})[v] || v);
+      items.push('<li><b>' + FINDER_GROUP_NAMES[g] + '</b>' + escapeHtml(label) + '</li>');
+    });
+    (finderState.style || []).forEach((s) => items.push('<li><b>Style</b>' + escapeHtml(FINDER_SHORT.style[s] || s) + '</li>'));
+    log.innerHTML = items.join('');
+  }
 }
 
 /* ----------------------------------------------------------------------------
@@ -2804,151 +2867,10 @@ function setHeroSlide(index) {
   });
 }
 
-// Hero Mountain Mouse Parallax — desktop pointer only, extremely restrained,
-// and only while the hero is actually on screen. Respects reduced-motion.
-(function () {
-  var heroParallax = null;
-  var CAN_PARALLAX = window.matchMedia &&
-    window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!CAN_PARALLAX) return;
-  window.addEventListener('mousemove', (e) => {
-    if (!heroParallax) heroParallax = document.getElementById('hero-bg-parallax');
-    if (!heroParallax || heroParallax.getBoundingClientRect().bottom <= 0) return;
-    const x = (e.clientX / window.innerWidth - 0.5) * 10;
-    const y = (e.clientY / window.innerHeight - 0.5) * 6;
-    heroParallax.style.transform = `translate(${x}px, ${y}px)`;
-  }, { passive: true });
-})();
+// Hero parallax, films and instrumentation live in /hero-corridor.js (REVERT-notes § 6a).
 
 // Scroll barometer now lives in /altitude.js (self-injecting, all pages that
 // load it). Revert: REVERT-notes § 5af.
-
-// ============================================================================
-// HERO SLIDER — the static hero (slide 1, in the markup already) plus 4
-// mountain video slides appended after it in the same swipeable track.
-// ----------------------------------------------------------------------------
-// A standalone "Expedition Films" section below the hero was tried first and
-// the client asked for it folded into the hero itself instead — swipe past
-// the static hero to see the clips, rather than a separate block further
-// down the page. Native horizontal scroll-snap for swipe; each video slide's
-// name/elevation/rank/link is pulled live from window.MOUNTAINS so it can
-// never drift out of sync with the real peak data.
-//
-// To add/replace a clip, edit HERO_VIDEO_SLIDES only — `slug` must match a
-// key in window.MOUNTAINS (mountains.js) so the real name/stats/CTA resolve.
-// Revert to a plain static hero: see the REVERT-note above #manifesto.
-// ============================================================================
-const HERO_VIDEO_SLIDES = [
-  { slug: 'everest', video: '/images/Video/Everest.mp4' },
-  { slug: 'k2', video: '/images/Video/K2.mp4' },
-  { slug: 'kangchenjunga', video: '/images/Video/Kanchanjunga.mp4' },
-  { slug: 'annapurna', video: '/images/Video/Annapurna%20mountain.mp4' }
-];
-
-function heroVideoSlideHTML(clip, m) {
-  return '' +
-    '<div class="hme-hero-slide relative flex min-h-[54vh] w-full shrink-0 flex-col overflow-hidden px-6 pt-8 pb-12 md:min-h-[62vh] md:px-12 md:pt-10 md:pb-14 lg:px-20" data-slug="' + escapeHtml(m.slug) + '">' +
-      '<div class="absolute inset-0 z-0">' +
-        '<img class="hme-hero-media h-full w-full object-cover object-center opacity-80 [filter:grayscale(.2)_saturate(1.3)_contrast(1.1)_brightness(.85)]" src="' + escapeHtml(m.heroImage || '/images/hero-mountain.jpg') + '" alt="" aria-hidden="true">' +
-        '<video class="hme-hero-video absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-700 [filter:grayscale(.15)_saturate(1.4)_contrast(1.08)_brightness(1.02)_blur(1.5px)]" muted loop playsinline preload="none" data-src="' + escapeHtml(clip.video) + '" aria-hidden="true" tabindex="-1"></video>' +
-      '</div>' +
-      '<div class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#14161a]/85 via-[#14161a]/45 to-[#14161a]"></div>' +
-      '<div class="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_rgba(20,22,26,0.55)_0%,_rgba(20,22,26,0.15)_45%,_transparent_75%)]"></div>' +
-      '<div class="hme-hero-grain"></div>' +
-      '<div class="pointer-events-none absolute left-4 top-4 z-[3] h-5 w-5 border-l border-t border-accent/45 md:left-8 md:top-8"></div>' +
-      '<div class="pointer-events-none absolute right-4 top-4 z-[3] h-5 w-5 border-r border-t border-accent/45 md:right-8 md:top-8"></div>' +
-      '<div class="pointer-events-none absolute bottom-4 left-4 z-[3] h-5 w-5 border-b border-l border-accent/45 md:bottom-8 md:left-8"></div>' +
-      '<div class="pointer-events-none absolute bottom-4 right-4 z-[3] h-5 w-5 border-b border-r border-accent/45 md:bottom-8 md:right-8"></div>' +
-
-      '<div class="relative z-10 w-full max-w-6xl mx-auto hidden md:flex items-center justify-between gap-4 border-b border-white/10 pb-3.5 font-mono text-[10px] uppercase tracking-[0.32em]">' +
-        '<div class="flex items-center gap-2.5 text-accent">' +
-          '<span class="relative flex h-1.5 w-1.5"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span><span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span></span>' +
-          '<span>' + (m.rank ? 'RANK #' + m.rank + ' / 14' : 'EXPEDITION FILM') + '</span>' +
-        '</div>' +
-        '<div class="hidden items-center gap-2 text-white/45 sm:flex">' + (m.coordinates ? m.coordinates.lat.toFixed(2) + '°N · ' + m.coordinates.lon.toFixed(2) + '°E' : escapeHtml(m.range || '')) + '</div>' +
-      '</div>' +
-
-      '<div class="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center py-8 md:py-10 text-center">' +
-        '<span class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-accent font-medium">' + escapeHtml(m.range || '') + (m.countryLabel ? ' · ' + escapeHtml(m.countryLabel) : '') + '</span>' +
-        '<h2 class="mt-4 font-heading uppercase leading-[0.9] tracking-tightest text-white text-[clamp(2.1rem,9vw,3rem)] sm:text-5xl md:text-6xl lg:text-7xl">' + escapeHtml(m.name) + '</h2>' +
-        (m.tagline ? '<p class="mx-auto mt-4 max-w-xl font-sans text-[13px] md:text-base leading-relaxed text-white/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">' + escapeHtml(m.tagline) + '</p>' : '') +
-        (m.elevationLabel ? '<span class="mt-3 font-heading text-2xl md:text-3xl font-light text-accent">' + escapeHtml(m.elevationLabel) + '</span>' : '') +
-        '<a href="/expeditions/' + escapeHtml(m.slug) + '" class="group mt-6 md:mt-7 inline-flex items-center justify-center gap-3 border border-accent bg-accent px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] font-semibold text-background transition-colors hover:bg-accent-hover">' +
-          '<span>Plan This Climb</span><i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1" aria-hidden="true"></i>' +
-        '</a>' +
-      '</div>' +
-    '</div>';
-}
-
-function initHeroSlider() {
-  const track = document.getElementById('hero-track');
-  const dotsWrap = document.getElementById('hero-dots');
-  const prevBtn = document.getElementById('hero-prev');
-  const nextBtn = document.getElementById('hero-next');
-  if (!track) return;
-
-  const M = window.MOUNTAINS || {};
-  const videoSlides = HERO_VIDEO_SLIDES.map((clip) => ({ clip, m: M[clip.slug] })).filter((x) => x.m);
-  track.insertAdjacentHTML('beforeend', videoSlides.map((x) => heroVideoSlideHTML(x.clip, x.m)).join(''));
-
-  const slideEls = Array.prototype.slice.call(track.children);   // [static hero, ...video slides]
-  if (dotsWrap) {
-    dotsWrap.innerHTML = slideEls.map((_, i) =>
-      '<button type="button" class="hme-hero-dot pointer-events-auto h-2 w-2 rounded-full bg-white/30' + (i === 0 ? ' is-active' : '') + '" data-i="' + i + '" aria-label="Go to slide ' + (i + 1) + '"></button>'
-    ).join('');
-  }
-  const dotEls = dotsWrap ? Array.prototype.slice.call(dotsWrap.children) : [];
-  if (slideEls.length < 2) {   // no video data resolved — plain static hero, no slider chrome
-    if (prevBtn) prevBtn.style.display = 'none';
-    if (nextBtn) nextBtn.style.display = 'none';
-    if (dotsWrap) dotsWrap.style.display = 'none';
-    return;
-  }
-  let current = 0;
-
-  function playOnly(idx) {
-    slideEls.forEach((s, i) => {
-      const v = s.querySelector('.hme-hero-video');
-      if (!v) return;
-      if (i === idx) {
-        if (!v.src && v.dataset.src) v.src = v.dataset.src;
-        const p = v.play();
-        if (p && p.catch) p.catch(() => {});
-        v.classList.remove('opacity-0');
-      } else {
-        v.pause();
-        v.classList.add('opacity-0');
-      }
-    });
-  }
-
-  function setActive(idx) {
-    current = idx;
-    dotEls.forEach((d, i) => d.classList.toggle('is-active', i === idx));
-    if (prevBtn) prevBtn.toggleAttribute('disabled', idx === 0);
-    if (nextBtn) nextBtn.toggleAttribute('disabled', idx === slideEls.length - 1);
-    playOnly(idx);
-  }
-
-  const io = new IntersectionObserver((entries) => {
-    let best = null, bestRatio = 0;
-    entries.forEach((en) => { if (en.intersectionRatio > bestRatio) { bestRatio = en.intersectionRatio; best = en.target; } });
-    if (best && bestRatio > 0.55) setActive(slideEls.indexOf(best));
-  }, { root: track, threshold: [0, 0.55, 0.9] });
-  slideEls.forEach((s) => io.observe(s));
-
-  function goTo(idx) {
-    idx = Math.max(0, Math.min(slideEls.length - 1, idx));
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    slideEls[idx].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
-  }
-  if (prevBtn) prevBtn.addEventListener('click', () => goTo(current - 1));
-  if (nextBtn) nextBtn.addEventListener('click', () => goTo(current + 1));
-  dotEls.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
-
-  setActive(0);
-}
 
 // ==========================================
 // 9. LIFECYCLE INITIALIZATION
@@ -2959,7 +2881,6 @@ window.addEventListener('DOMContentLoaded', () => {
   initFlagshipTabs();
   renderFlagship();
   loadContent();
-  initHeroSlider();
   initExplore();
 });
 

@@ -1,0 +1,123 @@
+    <!-- 01 — THE HERO MANIFESTO, now a slider: the static hero is slide 1,
+         swiping (or the arrows/dots) reveals 4 mountain video slides behind
+         it. One component, not a separate section — see REVERT-notes §
+         "Hero slider". Video slides are rendered from window.MOUNTAINS by
+         edit.js → initHeroSlider(), so name/elevation/rank/CTA link always
+         match the live peak data — never hand-typed here. -->
+    <!-- REVERT to a plain static hero: delete #hero-prev/#hero-next/#hero-dots,
+         unwrap slide 0's content back out to be #manifesto's direct children,
+         drop the #hero-track wrapper, and remove initHeroSlider() in edit.js. -->
+    <section id="manifesto" data-media class="relative overflow-hidden border-b border-border bg-background">
+        <div id="hero-track" class="hme-hero-track flex overflow-x-auto">
+
+            <!-- SLIDE 1 — the static hero. Content unchanged from the original design. -->
+            <div class="hme-hero-slide relative flex min-h-[54vh] w-full shrink-0 flex-col overflow-hidden antialiased px-6 pt-8 pb-12 md:min-h-[62vh] md:px-12 md:pt-10 md:pb-14 lg:px-20">
+
+                <!-- Background: a static graded Himalayan panorama — a muted grade
+                     that still lets the sunset's own warm light read as a natural
+                     echo of the brand accent. -->
+                <div id="hero-bg-parallax" class="absolute inset-0 z-0 scale-[1.04] transition-transform duration-300 ease-out">
+                    <img id="hero-image" src="/images/hero-mountain.jpg"
+                         onerror="this.onerror=null;this.src='/images/hero-art.jpg'"
+                         alt="A high Himalayan peak lit by sunset above a sea of cloud"
+                         class="hme-hero-media h-full w-full object-cover object-center opacity-90 [filter:grayscale(.2)_saturate(1.3)_contrast(1.1)_brightness(.95)]">
+                </div>
+                <!-- Scrims: symmetric edges + bottom anchor + a soft centre wash for legibility -->
+                <div class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#14161a]/85 via-[#14161a]/45 to-[#14161a]"></div>
+                <div class="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_rgba(20,22,26,0.55)_0%,_rgba(20,22,26,0.15)_45%,_transparent_75%)]"></div>
+                <div class="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[55vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.07] blur-[130px]"></div>
+                <div class="hme-hero-grain"></div>
+
+                <!-- Cartographic frame: faint contour lines + corner registration marks -->
+                <svg class="pointer-events-none absolute inset-0 z-[2] h-full w-full opacity-[0.08] mix-blend-screen" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1200 800">
+                    <g fill="none" stroke="#f06225" stroke-width="1">
+                        <path d="M-40 640 C 220 560 380 604 560 540 C 760 470 940 512 1240 430"/>
+                        <path d="M-40 704 C 240 636 420 672 620 604 C 840 528 1010 566 1240 500"/>
+                        <path d="M-40 566 C 200 500 360 536 540 470 C 740 398 930 440 1240 360"/>
+                        <path d="M-40 490 C 260 440 380 462 600 400 C 820 338 980 372 1240 300"/>
+                    </g>
+                </svg>
+                <div class="pointer-events-none absolute left-4 top-4 z-[3] h-5 w-5 border-l border-t border-accent/45 md:left-8 md:top-8"></div>
+                <div class="pointer-events-none absolute right-4 top-4 z-[3] h-5 w-5 border-r border-t border-accent/45 md:right-8 md:top-8"></div>
+                <div class="pointer-events-none absolute bottom-4 left-4 z-[3] h-5 w-5 border-b border-l border-accent/45 md:bottom-8 md:left-8"></div>
+                <div class="pointer-events-none absolute bottom-4 right-4 z-[3] h-5 w-5 border-b border-r border-accent/45 md:bottom-8 md:right-8"></div>
+
+                <!-- Top telemetry rail — desktop only -->
+                <div class="relative z-10 w-full max-w-6xl mx-auto hidden md:flex items-center justify-between gap-4 border-b border-white/10 pb-3.5 font-mono text-[10px] uppercase tracking-[0.32em]">
+                    <div class="flex items-center gap-2.5 text-accent">
+                        <span class="relative flex h-1.5 w-1.5">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+                            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
+                        </span>
+                        <span id="hero-telemetry-coords" class="font-mono">27°59'N · 86°55'E</span>
+                        <span class="hidden text-white/40 sm:inline">— Khumbu Himal</span>
+                    </div>
+                    <div class="hidden items-center gap-2 text-white/45 sm:flex">
+                        <span class="text-white/70">1,350 m</span>
+                        <i class="fa-solid fa-arrow-right-long text-[9px] text-accent"></i>
+                        <span class="text-white/70">8,848 m</span>
+                    </div>
+                </div>
+
+                <!-- Centred hero content -->
+                <div class="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center py-8 md:py-10 text-center">
+                    <div class="hidden md:flex items-center gap-3">
+                        <span class="hidden h-px w-6 bg-accent/70 sm:block"></span>
+                        <span id="hero-badge" data-key="hero.badge" class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-accent font-medium">EST. 1993 · THREE DECADES IN THE HIMALAYA</span>
+                        <span class="hidden h-px w-6 bg-accent/70 sm:block"></span>
+                    </div>
+
+                    <h1 class="flex flex-col items-center font-heading uppercase leading-[0.85] tracking-tightest text-foreground text-[clamp(2.1rem,10vw,3rem)] sm:text-5xl md:mt-5 md:text-7xl lg:text-[5.75rem] xl:text-[6.5rem]">
+                        <span id="hero-title-primary" data-key="hero.title_primary" class="block font-light text-white">HIMALAYAN</span>
+                        <span class="my-2 block h-px w-14 bg-accent/70 md:my-3 md:w-24"></span>
+                        <span id="hero-title-italic" data-key="hero.title_italic" class="block font-semibold text-accent">MAGIC ADVENTURE</span>
+                    </h1>
+
+                    <!-- mobile: one minimal line -->
+                    <p id="hero-tagline" class="mx-auto mt-4 md:hidden max-w-xs font-sans text-[13px] leading-relaxed text-white/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">
+                        Leave the ordinary behind and ascend into legend.
+                    </p>
+                    <!-- desktop: full caption -->
+                    <p id="hero-description" data-key="hero.description" class="mx-auto mt-5 hidden md:block max-w-xl font-sans text-base leading-relaxed text-white/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">
+                        Nepal&rsquo;s trekking trails and 8,000-metre expeditions &mdash; led since 1993 by the certified local guides who live beneath these mountains.
+                    </p>
+
+                    <!-- Two clear paths -->
+                    <div class="mt-6 md:mt-7 flex w-full max-w-md flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
+                        <a href="/treks" class="group inline-flex items-center justify-center gap-3 border border-accent bg-accent px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] font-semibold text-background transition-colors hover:bg-accent-hover">
+                            <span>Trekking Trails</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                        <a href="/expeditions" class="group inline-flex items-center justify-center gap-3 border border-white/30 bg-[#14161a]/55 px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white backdrop-blur-md transition-colors hover:border-accent hover:text-accent">
+                            <span>Expeditions</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+
+                    <a href="/contact" class="group mt-4 hidden md:inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55 hover:text-accent transition-colors">
+                        <span>Plan a custom ascent</span>
+                        <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- SLIDES 2–5: the 4 mountain video clips — injected here by edit.js → initHeroSlider() -->
+        </div>
+
+        <!-- Slider affordance: swipe on touch, arrows/dots for mouse. Desktop only for the arrows — touch swipe needs none. -->
+        <button id="hero-prev" type="button" aria-label="Previous slide"
+            class="hme-hero-nav absolute left-2 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/40 text-white backdrop-blur-md md:left-6 md:flex">
+            <i class="fa-solid fa-chevron-left text-xs" aria-hidden="true"></i>
+        </button>
+        <button id="hero-next" type="button" aria-label="Next slide"
+            class="hme-hero-nav absolute right-2 top-1/2 z-30 hidden h-11 w-11 -translate-y-1/2 items-center justify-center border border-white/25 bg-black/40 text-white backdrop-blur-md md:right-6 md:flex">
+            <i class="fa-solid fa-chevron-right text-xs" aria-hidden="true"></i>
+        </button>
+        <div id="hero-dots" class="pointer-events-none absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 gap-2 md:bottom-4"></div>
+    </section>
+
+    <!-- STATS MATRIX ROW -->
+    <section id="stats-grid" class="grid grid-cols-2 md:grid-cols-4 border-b border-border bg-[#1b1e22]">
+        <!-- Dynamically loaded stats -->
+    </section>
+

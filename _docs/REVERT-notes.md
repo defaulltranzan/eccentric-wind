@@ -1178,3 +1178,45 @@ hover clips resolve, stay deferred until hover, play on enter (Kangchenjunga
 git checkout public/altitude.js public/mountains.js public/*.html
 rm public/backdrop.js public/videos/kangchenjunga.mp4 public/videos/annapurna.mp4
 ```
+
+## § 6 — "The High Corridor" hero + route console (2026-09-16)
+
+**Full revert (everything in this section):** `git checkout pre-hero -- public/index.html public/edit.js public/tailwind.css`
+then delete `public/hero-corridor.js`, `public/images/hero-corridor.webp`, `hero-corridor.jpg`, `hero-corridor-portrait.webp`.
+The old hero markup is also saved verbatim in `_docs/hero-corridor-old-markup.html`.
+
+### 6a. Hero (#manifesto) — cinematic layered hero
+- Markup: `index.html` #manifesto rebuilt (class `hc`): photo plate (WebP/portrait crop of hero-mountain.jpg) →
+  haze → outlined altitude numerals → mid + near SVG ridges (+ tiny climber) → mist → shade → grain → UI.
+  CSS: the `01 — THE HIGH CORRIDOR` block in index.html `<style>` (replaced Ken Burns + slider CSS).
+- New `public/hero-corridor.js` (defer): pointer/scroll parallax via --hx/--hy/--hp, altitude count-up,
+  Kathmandu clock, expedition films (the 4 clips that were hero slides 2–5 — now a channel selector
+  top-right that swaps the plate to video and retunes the instrument from window.MOUNTAINS).
+- `edit.js`: removed initHeroSlider/HERO_VIDEO_SLIDES/heroVideoSlideHTML + old mousemove parallax;
+  coord writer now targets #hero-telemetry-coords; new setHeroTitleLines() splits "MAGIC ADVENTURE"
+  into two lines; en/ne/zh heroBadge/heroTagline/heroDesc rewritten; stats → 1993 / 38 / 31 / 100%.
+- CTAs: primary Explore the Himalaya (/treks) · quiet View Expeditions · text Plan a custom ascent.
+- New `#corridor` interlude between hero and 02 (statement + rope line, `data-media`); `#stats-grid` moved into it.
+
+### 6b. Trek Finder → Route Console (#trek-finder)
+- Same controls/IDs/handlers. Wrapped in `.fdr-console` (Input deck + Readout aside). #finder-count,
+  #fdr-persona, #finder-hint, #finder-reset-btn moved into the readout; new #fdr-scope (38-trail
+  altitude band), #fdr-log, #fdr-top-alt, #fdr-readout-state fed by `renderFinderReadout()` in edit.js
+  (called from filterTrekFinder; no scoring changes). Kicker "05 — Find Your Trek" → "05 — Route Console".
+
+### 6c. Polish
+- "Connect with us" band paragraph rewritten (generic tourism copy → what actually happens when you enquire).
+
+### 6d. Altitude readout made legible (2026-09-16, same day)
+- `.hc-alt` changed from a huge faint blended watermark (bottom-right, half-covered by the ridge) to a clear
+  solid readout: label "Summit · Sagarmatha / Everest" + 8,848.86 M, vertically centred on the right
+  (phones: centred above the title). `#hc-alt-label` added; hero-corridor.js (v=2) retunes it for films.
+  Revert: restore the old `.hc-alt` rules from `git show pre-hero`-era § 6a (difference-blend watermark).
+
+### 6e. Centred hero column (2026-09-16, same day)
+- Eyebrow, title, description, CTAs and custom-ascent link are centred (`.hc-body` text-align:center,
+  centred flex rows, eyebrow gets a mirrored rule). Shade is now a dark radial pool behind the column.
+- `.hc-alt` readout moved out of the stage into `.hc-body`, under the CTAs (in flow, centred).
+- Spacing/title size tightened so the bottom rail still fits the first screen; "Plan a custom ascent"
+  hidden on phones (as in the pre-redesign hero). Revert to the left-aligned 6d state: restore
+  scratch copy or `git diff` the `.hc-body/.hc-eyebrow/.hc-lede/.hc-actions/.hc-link/.hc-alt` rules.
