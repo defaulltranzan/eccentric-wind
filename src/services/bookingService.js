@@ -108,12 +108,22 @@ async function create(input, meta = {}) {
   }
 
   const fields = {};
-  const name = text(body.name, 120);
+  const popup = source === 'popup';
+  const firstName = text(body.first_name, 60);
+  const lastName = text(body.last_name, 60);
+  if (popup) {
+    if (!firstName) fields.first_name = 'Please enter your first name.';
+    if (!lastName) fields.last_name = 'Please enter your last name.';
+  }
+  const name = firstName || lastName ? (firstName + ' ' + lastName).trim().slice(0, 120) : text(body.name, 120);
   const email = text(body.email, 200).toLowerCase();
   const phone = text(body.phone, 40);
-  if (source !== 'newsletter' && name.length < 2) fields.name = 'Please enter your full name.';
+  if (source !== 'newsletter' && !popup && name.length < 2) fields.name = 'Please enter your full name.';
+  if (!email) fields.email = 'Please enter your email address.';
+  else
   if (!EMAIL_RE.test(email)) fields.email = 'Please enter a valid email address.';
-  if (phone && (phone.replace(/\D/g, '').length < 6 || /[^\d\s+().\-/]/.test(phone))) fields.phone = 'Please enter a valid phone or WhatsApp number.';
+  if (popup && !phone) fields.phone = 'Please enter a phone or WhatsApp number so we can reach you.';
+  else if (phone && (phone.replace(/\D/g, '').length < 6 || phone.replace(/\D/g, '').length > 15 || /[^\d\s+().\-/]/.test(phone))) fields.phone = 'Please enter a valid phone or WhatsApp number.';
 
   const peopleRaw = body.people != null && body.people !== '' ? body.people : body.crew;
   let people = 1;
@@ -124,7 +134,18 @@ async function create(input, meta = {}) {
   }
 
   let preferredDate = text(body.preferred_date || body.preferredDate, 10) || null;
-  if (preferredDate) {
+  const preferredMonth = text(body.preferred_month, 7) || null;
+  let datePrecision = preferredDate ? 'day' : null;
+  if (!preferredDate && preferredMonth) {
+    const thisMonth = new Date().toISOString().slice(0, 7);
+    const lastMonth = new Date(Date.now() - 864e5).toISOString().slice(0, 7);
+    if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(preferredMonth)) fields.preferred_date = 'Please choose a valid month.';
+    else if (preferredMonth < lastMonth && preferredMonth < thisMonth) fields.preferred_date = 'That month has already passed.';
+    else if (preferredMonth > String(new Date().getUTCFullYear() + 3) + '-12') fields.preferred_date = 'Please choose a month within the next three years.';
+    else { preferredDate = preferredMonth + '-01'; datePrecision = 'month'; }
+  }
+  if (popup && !preferredDate && !fields.preferred_date) fields.preferred_date = 'Please choose when you would like to travel.';
+  if (preferredDate && datePrecision === 'day') {
     const valid = /^\d{4}-\d{2}-\d{2}$/.test(preferredDate) && !isNaN(Date.parse(preferredDate + 'T00:00:00Z')) &&
       new Date(preferredDate + 'T00:00:00Z').toISOString().slice(0, 10) === preferredDate;
     if (!valid) fields.preferred_date = 'Please choose a valid date.';
@@ -136,12 +157,14 @@ async function create(input, meta = {}) {
 
   const tripSlug = text(body.trip_slug || body.tripSlug, 80);
   const trip = await resolveTrip(tripSlug, text(body.trip_type, 20)).catch(() => null);
+  if (popup && !trip && !text(body.trip_name, 200)) throw validationError({ trip: 'Please choose a trek or expedition.' });
   const tripName = trip ? trip.name : text(body.trip_name || body.trek, 200) || (source === 'newsletter' ? 'Field Journal newsletter' : 'Custom / undecided');
 
   // Without a key: same person, same trip, same message within 10 minutes = a double-submit.
   const since = new Date(Date.now() - DUPLICATE_WINDOW_MS).toISOString();
   const recent = await driver.recentBookingsByEmail(email, since).catch(() => []);
-  const dup = recent.find((r) => r.trip_name === tripName && (r.message || '') === (message || '') && r.source === source);
+  const dup = recent.find((r) => r.trip_name === tripName && (r.message || '') === (message || '') && r.source === source &&
+    Number(r.people) === people && (r.preferred_date || null) === (preferredDate || null) && (r.phone || null) === (phone || null));
   if (dup) return Object.assign({}, dup, { replayed: true });
 
   const row = {
@@ -156,7 +179,11 @@ async function create(input, meta = {}) {
     preferred_date: preferredDate,
     people,
     message: message || null,
-    details: cleanDetails(body.details),
+    details: Object.assign(cleanDetails(body.details),
+      firstName ? { first_name: firstName } : {},
+      lastName ? { last_name: lastName } : {},
+      text(body.country, 80) ? { country: text(body.country, 80) } : {},
+      datePrecision === 'month' ? { date_precision: 'month' } : {}),
     status: 'NEW',
     notes: null,
     history: [{ at: new Date().toISOString(), status: 'NEW', by: 'website' }],

@@ -87,7 +87,33 @@ Never put the service_role key in browser code or commit it — it stays in `.en
 * Newsletter sign-ups from the Stories page appear under source "Newsletter sign-ups".
 * Optional email alert per booking: set `SMTP_*`, `MAIL_FROM`, `BOOKING_NOTIFY_TO`.
 
-## Booking API (for the popup form)
+## Booking popup ("Plan your adventure")
+
+`public/booking-modal.js` + `booking-modal.css`, loaded on every public page. It opens from:
+
+| Trigger | Result |
+|---|---|
+| **Book** pill on trek / expedition / homepage cards | that trip preselected |
+| "Plan this trek / climb" buttons on trip pages (any link to `/contact?trip=<slug>`) | that trip preselected |
+| `data-book=""` on any element (hero "Plan a custom ascent", flagship desk link) | "What would you like to explore?" chooser |
+| `data-book="<slug>" data-book-type="trek|expedition"` | that trip |
+| URL `…#book` or `…#book=everest` | opens on page load |
+| `HMABookingModal.open({ slug, type })` | from code |
+
+Without JavaScript every trigger is still a normal link to the contact page.
+
+* Step 1 — trip (preselected or chosen), travel **month** (keyboard calendar), travellers, flexible dates → exact start date.
+* Step 2 — first / last name, email, WhatsApp / phone with country code, country, notes.
+* Step 3 — review: trip image + facts, **real price tiers** from the trip (Budget / Comfort / Premium; expeditions show
+  "Price available on request" until you add tiers), **What's included / not included** from the trip data, WhatsApp.
+* Success screen with the booking reference. The booking lands in **Bookings** with source *Booking popup*;
+  month-only dates show as "October 2026 (month)", chosen package tier and flexibility appear under the extras.
+* To fill the inclusion lists: Admin → Treks / Expeditions → **Cost & inclusions** (treks) or **Pricing & inclusions**
+  (expeditions) → *What's included* / *What's not included*, one per line. If "included" is empty the popup uses the
+  selected price tier's list; if "not included" is empty it says the quote will confirm it — it never invents terms.
+* The trip data comes from `GET /api/trips/:slug`. WhatsApp number: `9779841454599` (top of booking-modal.js).
+
+## Booking API (for custom forms)
 
 Load the shared client once on any page that shows a booking form:
 
@@ -145,7 +171,7 @@ Other sites may only post if listed in `ALLOWED_ORIGINS`. `GET /api/health` repo
 
 ## Tests
 
-`npm test` runs 24 end-to-end checks (bookings, idempotency, validation, CORS, auth, content lifecycle,
+`npm test` runs 29 end-to-end checks (bookings, idempotency, validation, CORS, auth, content lifecycle,
 sanitising, uploads, redirects, CSV) against a temporary copy of the data — your real content is never touched.
 
 ## Upgrading an existing Supabase database

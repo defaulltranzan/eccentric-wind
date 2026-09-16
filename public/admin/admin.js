@@ -840,9 +840,19 @@
       }).join('') + '</ol>';
     }
 
+    function prefDate(b) {
+      if (!b.preferred_date) return '<span class="muted">—</span>';
+      if (b.details && b.details.date_precision === 'month') {
+        var dt = new Date(b.preferred_date + 'T00:00:00');
+        return isNaN(dt) ? esc(b.preferred_date) : esc(dt.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })) + ' <span class="muted">(month)</span>';
+      }
+      return fmtDate(b.preferred_date);
+    }
+
     function detailsHtml(b) {
       var d = b.details && typeof b.details === 'object' ? b.details : {};
-      var keys = Object.keys(d);
+      var HIDDEN = { first_name: 1, last_name: 1, date_precision: 1 };
+      var keys = Object.keys(d).filter(function (k) { return !HIDDEN[k]; });
       if (!keys.length) return '';
       return '<dl class="kv extras">' + keys.map(function (k) {
         var label = k.replace(/_/g, ' ').replace(/^./, function (m) { return m.toUpperCase(); });
@@ -862,7 +872,7 @@
           '<td><b>' + esc(b.name) + '</b><br><span class="muted" style="font-size:12px">' + esc(b.email) + '</span></td>' +
           '<td>' + esc(b.trip_name) + (b.trip_slug ? '<br><a class="slug" target="_blank" rel="noopener" href="/' + (b.trip_type === 'expedition' ? 'expeditions' : 'treks') + '/' + encodeURIComponent(b.trip_slug) + '">view trip ↗</a>' : '') + '</td>' +
           '<td class="hide-sm" data-label="People">' + esc(b.people) + '</td>' +
-          '<td class="hide-sm" data-label="Preferred date">' + (b.preferred_date ? fmtDate(b.preferred_date) : '<span class="muted">—</span>') + '</td>' +
+          '<td class="hide-sm" data-label="Preferred date">' + prefDate(b) + '</td>' +
           '<td><select class="bk-status st-' + esc(b.status) + '" data-act="status" aria-label="Status for ' + esc(b.name) + '">' + statuses.map(function (s) { return '<option' + (s === b.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select></td>' +
           '<td><div class="row-actions"><button class="btn small" data-act="toggle" aria-expanded="' + (!!open[b.id]) + '">' + (open[b.id] ? 'Hide' : 'Details') + '</button></div></td>' +
         '</tr>';

@@ -390,6 +390,7 @@
             .hci-rope::after { transform: none; }
         }
     </style>
+    <link rel="stylesheet" href="/booking-modal.css?v=3">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden relative">
 
@@ -526,7 +527,7 @@
                     </a>
                     <a href="/expeditions" class="hc-btn hc-btn--quiet">View Expeditions</a>
                 </div>
-                <a href="/contact" class="hc-link hc-mono">Plan a custom ascent <span aria-hidden="true">&rarr;</span></a>
+                <a href="/contact" class="hc-link hc-mono" data-book="">Plan a custom ascent <span aria-hidden="true">&rarr;</span></a>
 
                 <div class="hc-alt"><span id="hc-alt-label" class="hc-alt-label">Summit · Sagarmatha / Everest</span><span class="hc-alt-row"><span id="hc-alt-num">8,848.86</span><span class="hc-alt-unit">M</span></span></div>
             </div>
@@ -606,7 +607,7 @@
             <p id="flagship-hint" class="mt-2 font-mono text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 md:hidden">Swipe for more &rarr;</p>
 
             <div class="mt-8">
-                <a href="/contact" class="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/contact" data-book="" class="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
                     <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/40 font-heading text-lg text-accent group-hover:bg-accent/10 transition-all">+</span>
                     <span class="font-mono text-[10px] uppercase tracking-[0.2em] leading-relaxed">Planning a peak-climbing objective, or a custom expedition?<br class="hidden sm:block">Talk to our expedition desk.</span>
                 </a>
@@ -1376,7 +1377,7 @@
     <script src="/peaks.js?v=4"></script>
     <script src="/data/stories.js"></script>
     <script src="/stories.js?v=3"></script>
-    <script src="/edit.js?v=25.6"></script>
+    <script src="/edit.js?v=25.7"></script>
     <script>
     /* Homepage Compare-Treks preview table (04) */
     (function () {
@@ -1427,5 +1428,7 @@
 <script src="/social.js?v=2" defer></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
+<script src="/booking-client.js?v=1" defer></script>
+<script src="/booking-modal.js?v=1" defer></script>
 </body>
 </html>

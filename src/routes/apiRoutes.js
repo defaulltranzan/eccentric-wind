@@ -23,6 +23,7 @@ router.post('/save', apiLimiter, requireAdmin, validateSavePayload, contentContr
 // Public: trip list for booking forms, booking submissions
 router.get('/health', publicController.health);
 router.get('/trips', publicController.trips);
+router.get('/trips/:slug', publicController.tripDetail);
 router.post('/bookings', bookingLimiter, publicController.createBooking);
 router.post('/inquiry', bookingLimiter, publicController.createBooking); // older forms
 

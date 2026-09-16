@@ -44,6 +44,7 @@
             .mt, .mt-img, .mt-arrow, .ex-band, .ex-band-img { transition:none !important; }
         }
     </style>
+    <link rel="stylesheet" href="/booking-modal.css?v=3">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -330,7 +331,8 @@ hmeApplyTheme();
         var img = p.image
           ? '<img src="' + e(p.image) + '" alt="" aria-hidden="true" loading="lazy" class="mt-img absolute inset-0 h-full w-full object-cover opacity-0">'
           : '<div class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(240,98,37,0.12),transparent_55%),repeating-linear-gradient(115deg,rgba(255,255,255,0.04)_0_1px,transparent_1px_22px)]"></div>';
-        return '<a href="' + e(p.href) + '" class="mt group relative flex flex-col justify-end overflow-hidden border border-border bg-[#181a1e] min-h-[240px]">' +
+        return '<div class="relative">' +
+          '<a href="' + e(p.href) + '" class="mt group relative flex h-full flex-col justify-end overflow-hidden border border-border bg-[#181a1e] min-h-[240px]">' +
           img +
           '<div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/72 to-[#181a1e]/15"></div>' +
           '<span class="absolute top-3 left-3 z-10 bg-black/45 border border-white/15 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.18em] text-white">' + e(p.categoryLabel || '') + '</span>' +
@@ -339,7 +341,9 @@ hmeApplyTheme();
             '<span class="font-heading text-xl md:text-2xl font-light uppercase tracking-tight text-white leading-tight group-hover:text-accent transition-colors block mt-0.5">' + e(p.name.replace(/^Mount /, '')) + '</span>' +
             '<span class="font-mono text-[10px] text-accent mt-1 block">' + e(p.elevationDisplay || '') + '</span>' +
             '<span class="mt-2 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-white/70">Explore <span class="mt-arrow">&rarr;</span></span>' +
-          '</div></a>';
+          '</div></a>' +
+          '<a href="/contact?trip=' + e(p.slug) + '" class="hmb-card-book" data-book="' + e(p.slug) + '" data-book-type="expedition" aria-label="Book ' + e(p.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Book</a>' +
+          '</div>';
       }).join('');
       grid.querySelectorAll('.mt-img').forEach(function (im) {
         if (im.complete) im.classList.add('loaded');
@@ -372,5 +376,7 @@ hmeApplyTheme();
 <script src="/social.js?v=2" defer></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
+<script src="/booking-client.js?v=1" defer></script>
+<script src="/booking-modal.js?v=1" defer></script>
 </body>
 </html>

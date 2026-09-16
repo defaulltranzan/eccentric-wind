@@ -1255,3 +1255,15 @@ Revert: `git reset --hard backend-v1` (tag on the first backend commit).
 - Admin UI: branded sign-in + "Base camp" dashboard, live new-booking badge, bookings status chips, history timeline,
   extras, pager, phone card layout, stale-save prompt.
 - `npm test` suite in `test/api.test.js`; `supabase/schema.sql` adds the new booking columns (re-runnable).
+
+## § 8 — Booking popup "Plan your adventure" (2026-09-17)
+
+Revert: `git reset --hard backend-v1.1`.
+- New `public/booking-modal.js` + `public/booking-modal.css` (+ `<link>`/`<script>` in 13 public pages, not 404).
+- Card "Book" pills: `treks.html` card(), `collection.js` mtCard(), `edit.js` flagshipCardHTML() (card now wrapped in a
+  positioned div; tagTR moved down to top-[3.4rem]), `expeditions.html` best sellers. Hero "Plan a custom ascent" +
+  flagship desk link got `data-book=""`; trek finder CTA → "Plan <top match> →" opening the popup.
+- Backend: `GET /api/trips/:slug` (contentService.bookingView), popup rules in bookingService (first/last name, phone
+  and trip required, `preferred_month`, country → details, date_precision), dedupe now also compares people/date/phone.
+- Admin: trek "Cost & inclusions" + expedition "Pricing & inclusions" sections (`included`, `excluded`, expedition price
+  tiers); bookings show month-precision dates.

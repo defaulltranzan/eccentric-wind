@@ -32,6 +32,16 @@ exports.trips = wrap(async (req, res) => {
   res.json({ status: 'success', items: await content.trips() });
 });
 
+/* One trip's booking view (image, facts, price tiers, inclusions) for the booking popup. */
+exports.tripDetail = wrap(async (req, res) => {
+  const slug = String(req.params.slug || '').toLowerCase();
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return res.status(404).json({ status: 'error', message: 'Trip not found.' });
+  const type = req.query.type === 'trek' || req.query.type === 'expedition' ? req.query.type : null;
+  const trip = await content.bookingView(slug, type);
+  res.set('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=600');
+  res.json({ status: 'success', trip });
+});
+
 /* POST /api/bookings — the booking contract (see _docs/BACKEND.md → "Booking API"). */
 exports.createBooking = wrap(async (req, res) => {
   const b = await bookings.create(req.body, {

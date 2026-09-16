@@ -305,12 +305,77 @@ async function buildScript(collection, { includeDrafts = false } = {}) {
   return js;
 }
 
+/* ------------------------------------------------ booking popup view model
+ * Everything the booking popup shows about one trip, derived only from real
+ * record data — nothing is invented. Missing data comes back as null. */
+const strOrNull = (v) => (typeof v === 'string' && v.trim() ? v.trim() : null);
+const listOf = (v) => (Array.isArray(v) ? v.map((x) => (typeof x === 'string' ? x.trim() : '')).filter(Boolean) : []);
+
+function shortDuration(s) {
+  const m = String(s || '').match(/(\d+(?:\s*[–-]\s*\d+)?)\s*days?/i);
+  return m ? m[1].replace(/\s*[–-]\s*/, '–') + ' Days' : strOrNull(s);
+}
+function shortAltitude(s) {
+  const v = String(s || '').replace(/^[≈~\s]+/, '').split('(')[0].trim();
+  return v || null;
+}
+function expeditionGrade(d) {
+  if (!d || typeof d !== 'object') return null;
+  const vals = ['technical', 'altitude', 'exposure', 'weather', 'remoteness', 'objectiveHazard'].map((k) => d[k]).filter((v) => typeof v === 'number');
+  if (!vals.length) return null;
+  const n = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+  return n <= 1 ? 'Beginner' : n === 2 ? 'Moderate' : n === 3 ? 'Advanced' : 'Expert';
+}
+function priceTiers(cost) {
+  const tiers = cost && Array.isArray(cost.tiers) ? cost.tiers : [];
+  return tiers.map((t) => ({
+    name: strOrNull(t && t.name) || 'Package',
+    range: strOrNull(t && t.rangeUSD) ? t.rangeUSD.trim().replace(/^\$\s*/, 'USD ').replace(/\s*[–-]\s*\$\s*/, '–') : null,
+    includes: listOf(t && t.includes)
+  })).filter((t) => t.range);
+}
+
+async function bookingView(slug, type) {
+  const collections = type === 'expedition' ? ['expeditions'] : type === 'trek' ? ['treks'] : ['treks', 'expeditions'];
+  for (const c of collections) {
+    const rows = await list(c);
+    const row = rows.find((r) => r.slug === slug) ||
+      rows.find((r) => r.data && Array.isArray(r.data.formerSlugs) && r.data.formerSlugs.indexOf(slug) > -1);
+    if (!row) continue;
+    const d = row.data || {};
+    const isTrek = c === 'treks';
+    const stats = d.stats || {};
+    return {
+      type: isTrek ? 'trek' : 'expedition',
+      slug: row.slug,
+      name: row.title,
+      tagline: strOrNull(d.tagline),
+      region: strOrNull(isTrek ? d.region : (d.range || d.region)),
+      image: strOrNull(d.heroImage),
+      imageAlt: strOrNull(d.heroAlt) || row.title,
+      url: isTrek ? '/treks/' + row.slug : (row.kind === 'eight-thousander' ? '/expeditions/' : '/expeditions/peaks/') + row.slug,
+      facts: {
+        duration: shortDuration(isTrek ? stats.duration : d.typicalDurationDays),
+        difficulty: strOrNull(isTrek ? stats.difficulty : (d.peakGrade || expeditionGrade(d.difficulty))),
+        altitude: shortAltitude(isTrek ? stats.maxAltitude : d.elevationLabel)
+      },
+      pricing: {
+        tiers: priceTiers(d.cost),
+        note: strOrNull(d.cost && d.cost.note)
+      },
+      included: listOf(d.included),
+      excluded: listOf(d.excluded)
+    };
+  }
+  throw httpError(404, 'Trip not found.');
+}
+
 /* Slim list for the booking form's trip selector. */
 async function trips() {
   const [treks, exps] = await Promise.all([list('treks'), list('expeditions')]);
   const days = (s) => { const m = String(s || '').match(/\d+/); return m ? +m[0] : null; };
-  return treks.map((r) => ({ type: 'trek', slug: r.slug, name: r.title, days: days(r.data.stats && r.data.stats.duration) }))
-    .concat(exps.map((r) => ({ type: 'expedition', slug: r.slug, name: r.title, elevation: r.data.elevationLabel || null })));
+  return treks.map((r) => ({ type: 'trek', slug: r.slug, name: r.title, days: days(r.data.stats && r.data.stats.duration), region: r.data.region || null }))
+    .concat(exps.map((r) => ({ type: 'expedition', slug: r.slug, name: r.title, elevation: r.data.elevationLabel || null, region: r.data.range || r.data.region || null })));
 }
 
 async function stats() {
@@ -337,6 +402,7 @@ module.exports = {
   remove,
   buildScript,
   trips,
+  bookingView,
   stats,
   invalidate,
   httpError

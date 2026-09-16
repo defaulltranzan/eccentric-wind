@@ -63,7 +63,9 @@
             { path: 'tips', label: 'Guide tip', type: 'textarea', rows: 2 }
           ] }
       ] },
-      { title: 'Cost', fields: [
+      { title: 'Cost & inclusions', note: 'Shown in the booking popup. Only list what the package really includes — never guess.', fields: [
+        { path: 'included', label: "What's included (one per line)", type: 'lines', rows: 5, half: true, help: 'Leave empty to use the first price tier\'s list.' },
+        { path: 'excluded', label: "What's not included (one per line)", type: 'lines', rows: 5, half: true },
         { path: 'cost.note', label: 'Cost note', type: 'textarea', rows: 2 },
         { path: 'cost.tiers', label: 'Price tiers', type: 'repeater', itemLabel: function (it) { return (it.name || 'Tier') + (it.rangeUSD ? ' · ' + it.rangeUSD : ''); },
           newItem: function () { return { name: '', rangeUSD: '', includes: [] }; },
@@ -160,6 +162,18 @@
         { path: 'baseCampM', label: 'Base camp (m)', type: 'number', third: true },
         { path: 'typicalDurationDays', label: 'Typical duration', type: 'text', placeholder: '26–32 days (Kathmandu to Kathmandu)', half: true },
         { path: 'baseCampNote', label: 'Base camp note', type: 'text', half: true }
+      ] },
+      { title: 'Pricing & inclusions', note: 'Shown in the booking popup. Leave price tiers empty to show “Price available on request”. Never guess prices or inclusions.', fields: [
+        { path: 'cost.note', label: 'Pricing note', type: 'textarea', rows: 2 },
+        { path: 'cost.tiers', label: 'Price tiers', type: 'repeater', itemLabel: function (it) { return (it.name || 'Tier') + (it.rangeUSD ? ' · ' + it.rangeUSD : ''); },
+          newItem: function () { return { name: '', rangeUSD: '', includes: [] }; },
+          fields: [
+            { path: 'name', label: 'Tier name', type: 'text', half: true },
+            { path: 'rangeUSD', label: 'Price (USD)', type: 'text', placeholder: '$18,000–$24,000', half: true },
+            { path: 'includes', label: 'Includes (one per line)', type: 'lines', rows: 4 }
+          ] },
+        { path: 'included', label: "What's included (one per line)", type: 'lines', rows: 5, half: true },
+        { path: 'excluded', label: "What's not included (one per line)", type: 'lines', rows: 5, half: true }
       ] },
       { title: 'Character & history', fields: [
         { path: 'character', label: 'Character of the mountain', type: 'paragraphs', rows: 6, help: 'Separate paragraphs with a blank line.' },

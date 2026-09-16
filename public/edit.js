@@ -786,13 +786,16 @@ function flagshipCardHTML(c) {
   const bg = c.image
     ? `<div class="absolute inset-0 z-0 bg-cover bg-center opacity-45 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700 ease-out" style="background-image:url('${escapeHtml(c.image)}')"></div>`
     : `<div class="absolute inset-0 z-0 opacity-[0.5] bg-[radial-gradient(circle_at_28%_18%,rgba(240,98,37,0.16),transparent_55%),repeating-linear-gradient(118deg,rgba(255,255,255,0.045)_0_1px,transparent_1px_23px)]"></div>`;
+  const bookSlug = String(c.href || '').split('/').filter(Boolean).pop() || '';
+  const bookType = String(c.href || '').indexOf('/treks/') === 0 ? 'trek' : 'expedition';
   return `
+    <div class="relative h-[440px] w-[290px] sm:w-[320px] shrink-0 snap-start transition-transform duration-500 hover:-translate-y-1">
     <a href="${c.href}" aria-label="${escapeHtml(c.name + ' — ' + c.big + ' ' + c.unit + (c.foot ? ', ' + c.foot : ''))}"
-       class="hme-flag group relative block h-[440px] w-[290px] sm:w-[320px] shrink-0 snap-start overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:border-accent">
+       class="hme-flag group relative block h-full w-full overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl focus:outline-none focus-visible:border-accent">
       ${bg}
       <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/78 to-[#181a1e]/20"></div>
       <span class="absolute top-4 left-4 z-10 bg-black/45 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">${c.tagTL}</span>
-      ${c.tagTR ? `<span class="absolute top-4 right-4 z-10 bg-accent/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-background">${escapeHtml(c.tagTR)}</span>` : ''}
+      ${c.tagTR ? `<span class="absolute top-[3.4rem] right-4 z-10 bg-accent/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-background">${escapeHtml(c.tagTR)}</span>` : ''}
       <div class="relative z-10 flex h-full flex-col justify-end p-6">
         <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground truncate">${escapeHtml(c.kicker)}</span>
         <div class="mt-1 flex items-end gap-1.5">
@@ -809,7 +812,9 @@ function flagshipCardHTML(c) {
           <span class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent shrink-0">Explore <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i></span>
         </div>
       </div>
-    </a>`;
+    </a>
+    ${bookSlug ? `<a href="/contact?trip=${escapeHtml(bookSlug)}" class="hmb-card-book" style="top:16px;right:16px" data-book="${escapeHtml(bookSlug)}" data-book-type="${bookType}" aria-label="Book ${escapeHtml(c.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Book</a>` : ''}
+    </div>`;
 }
 
 function renderFlagship() {
@@ -1418,7 +1423,7 @@ function filterTrekFinder() {
       }).join('') + '</div>' : '') +
     '<div class="mt-8 flex flex-col sm:flex-row gap-3">' +
       '<a href="/compare?t=' + encodeURIComponent(matches.slice(0, 3).map((s) => s.m.slug).join(',')) + '" class="flex-1 text-center border border-border px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:border-accent hover:text-accent transition-all">Compare these →</a>' +
-      '<a href="/contact" class="flex-1 text-center bg-accent text-background px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-accent-hover transition-colors">Get a personalised plan →</a>' +
+      '<a href="/contact?trip=' + encodeURIComponent(top.m.slug) + '" data-book="' + escapeHtml(top.m.slug) + '" data-book-type="trek" class="flex-1 text-center bg-accent text-background px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-accent-hover transition-colors">Plan ' + escapeHtml(top.m.name) + ' →</a>' +
     '</div>';
 }
 

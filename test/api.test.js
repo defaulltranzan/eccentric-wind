@@ -52,7 +52,7 @@ const future = (days) => new Date(Date.now() + days * 864e5).toISOString().slice
 const booking = (extra) => Object.assign({
   name: 'Test Trekker', email: 'trekker-' + crypto.randomBytes(3).toString('hex') + '@example.com',
   phone: '+977 980-000-0000', people: 2, preferred_date: future(60), trip_slug: 'annapurna-circuit', trip_type: 'trek',
-  message: 'Hello', source: 'popup'
+  message: 'Hello', source: 'contact-form'
 }, extra || {});
 
 before(async () => {
@@ -197,6 +197,76 @@ test('CORS: only allowed origins, never credentials', async () => {
   assert.equal(evil.headers.get('access-control-allow-origin'), null);
   const adminPreflight = await req('OPTIONS', '/api/admin/treks', { headers: { Origin: 'https://partner.test', 'Access-Control-Request-Method': 'POST' } });
   assert.equal(adminPreflight.headers.get('access-control-allow-origin'), null);
+});
+
+/* ------------------------------------------------------------------ booking popup */
+test('popup: trip view model uses only real data', async () => {
+  const trek = await req('GET', '/api/trips/annapurna-circuit');
+  assert.equal(trek.status, 200);
+  const t = trek.json.trip;
+  assert.equal(t.type, 'trek');
+  assert.equal(t.facts.altitude, '5,416 m');
+  assert.match(t.facts.duration, /^\d+(–\d+)? Days$/);
+  assert.ok(t.pricing.tiers.length >= 1);
+  assert.match(t.pricing.tiers[0].range, /^USD [\d,]+(–[\d,]+|\+)$/);
+  assert.ok(Array.isArray(t.pricing.tiers[0].includes));
+  const exp = await req('GET', '/api/trips/everest?type=expedition');
+  assert.equal(exp.json.trip.type, 'expedition');
+  assert.deepEqual(exp.json.trip.pricing.tiers, [], 'no invented expedition prices');
+  assert.equal((await req('GET', '/api/trips/does-not-exist')).status, 404);
+  assert.equal((await req('GET', '/api/trips/..%2F..%2Fetc')).status, 404);
+  assert.equal((await req('GET', '/api/trips/annapurna-circuit?type=expedition')).status, 404);
+});
+
+const popup = (extra) => Object.assign({
+  source: 'popup', first_name: 'Alex', last_name: 'Morgan', email: 'popup-' + crypto.randomBytes(3).toString('hex') + '@example.com',
+  phone: '+44 7700 900123', country: 'United Kingdom', people: 3, preferred_month: future(90).slice(0, 7),
+  trip_slug: 'everest', trip_type: 'expedition', message: 'Private group', details: { flexible_dates: true, package_tier: 'Budget' }
+}, extra || {});
+
+test('popup: month-precision booking stores name, country and details', async () => {
+  const r = await req('POST', '/api/bookings', { body: popup() });
+  assert.equal(r.status, 201, r.text);
+  const b = (await req('GET', '/api/admin/bookings?q=' + r.json.ref, { admin: true })).json.items[0];
+  assert.equal(b.name, 'Alex Morgan');
+  assert.equal(b.source, 'popup');
+  assert.equal(b.trip_type, 'expedition');
+  assert.equal(b.trip_name, 'Mount Everest');
+  assert.match(b.preferred_date, /^\d{4}-\d{2}-01$/);
+  assert.deepEqual(b.details, { flexible_dates: true, package_tier: 'Budget', first_name: 'Alex', last_name: 'Morgan', country: 'United Kingdom', date_precision: 'month' });
+});
+
+test('popup: exact date wins over month', async () => {
+  const date = future(40);
+  const r = await req('POST', '/api/bookings', { body: popup({ preferred_date: date }) });
+  const b = (await req('GET', '/api/admin/bookings?q=' + r.json.ref, { admin: true })).json.items[0];
+  assert.equal(b.preferred_date, date);
+  assert.equal(b.details.date_precision, undefined);
+});
+
+test('popup: required fields are enforced server-side', async () => {
+  const r = await req('POST', '/api/bookings', { body: { source: 'popup', email: 'x@example.com' } });
+  assert.equal(r.status, 400);
+  assert.deepEqual(Object.keys(r.json.fields).sort(), ['first_name', 'last_name', 'phone', 'preferred_date']);
+  const past = await req('POST', '/api/bookings', { body: popup({ preferred_month: '2020-01' }) });
+  assert.equal(past.json.fields.preferred_date, 'That month has already passed.');
+  const badMonth = await req('POST', '/api/bookings', { body: popup({ preferred_month: '2027-13' }) });
+  assert.equal(badMonth.json.fields.preferred_date, 'Please choose a valid month.');
+  const noTrip = await req('POST', '/api/bookings', { body: popup({ trip_slug: '', trip_type: '' }) });
+  assert.equal(noTrip.status, 400);
+  assert.ok(noTrip.json.fields.trip);
+  const custom = await req('POST', '/api/bookings', { body: popup({ trip_slug: '', trip_type: '', trip_name: 'Custom adventure — help me choose' }) });
+  assert.equal(custom.status, 201, custom.text);
+  const tooLong = await req('POST', '/api/bookings', { body: popup({ phone: '+1 234 567 890 123 456' }) });
+  assert.ok(tooLong.json.fields.phone);
+});
+
+test('popup client and modal assets are served on trip pages', async () => {
+  const page = await req('GET', '/treks/annapurna-circuit');
+  assert.match(page.text, /booking-modal\.js/);
+  assert.match(page.text, /booking-modal\.css/);
+  assert.match(page.text, /booking-client\.js/);
+  assert.equal((await req('GET', '/booking-modal.js')).status, 200);
 });
 
 /* ------------------------------------------------------------------ admin auth */

@@ -36,7 +36,7 @@ const publicCors = cors({
   credentials: false,
   maxAge: 600
 });
-app.use(['/api/bookings', '/api/inquiry', '/api/trips', '/api/health'], publicCors);
+app.use(['/api/bookings', '/api/inquiry', '/api/trips', '/api/health'], publicCors); // '/api/trips' also covers /api/trips/:slug
 app.use('/api/admin', express.json({ limit: '1.5mb' }));
 app.use('/api/save', express.json({ limit: '600kb' }));
 app.use('/api', express.json({ limit: '64kb' }));

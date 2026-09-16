@@ -163,7 +163,8 @@
       ? '<video class="mt-video absolute inset-0 h-full w-full object-cover" muted loop playsinline preload="none" ' +
         'aria-hidden="true" tabindex="-1" data-src="' + esc(m.heroVideo) + '"></video>'
       : '';
-    return '<a href="' + esc(m.href) + '" class="mt group relative block overflow-hidden border border-border bg-card ' + cls + '" ' +
+    return '<div class="relative ' + cls + '">' +
+      '<a href="' + esc(m.href) + '" class="mt group relative block h-full overflow-hidden border border-border bg-card" ' +
       'aria-label="' + esc(m.name + ', ' + m.elevationLabel + ', ' + m.countryLabel + ', ' + m.range) + '">' +
       '<div class="mt-shimmer absolute inset-0"></div>' + img + vid +
       '<div class="mt-scrim absolute inset-0"></div>' +
@@ -189,7 +190,9 @@
           '<span class="font-mono text-[10px] uppercase tracking-widest text-white/80">' + esc(m.seasonPrimary ? m.seasonPrimary + ' window' : m.rangeKey) + '</span>' +
           '<span class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white shrink-0">Explore ' + ARROW + '</span>' +
         '</div>' +
-      '</div></a>';
+      '</div></a>' +
+    '<a href="/contact?trip=' + esc(m.slug) + '" class="hmb-card-book" data-book="' + esc(m.slug) + '" data-book-type="expedition" aria-label="Book ' + esc(m.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Book</a>' +
+    '</div>';
   }
 
   function applyAtlas() {
