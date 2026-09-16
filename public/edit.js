@@ -942,6 +942,16 @@ function renderWebsite() {
 }
 
 // Render Stats Grid
+// Lucide icons (lucide.dev, ISC) for the stats row — one per stat, in order.
+// A stat may name its own with `icon: 'mountain-snow'`.
+const STAT_ICONS = {
+  landmark: '<path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2l8 5H4z"/>',
+  route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+  'mountain-snow': '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/>',
+  'badge-check': '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>'
+};
+const STAT_ICON_ORDER = ['landmark', 'route', 'mountain-snow', 'badge-check'];
+
 function renderStats() {
   const statsGrid = document.getElementById('stats-grid');
   if (!statsGrid) return;
@@ -952,12 +962,13 @@ function renderStats() {
 
   statsList.forEach((stat, idx) => {
     const div = document.createElement('div');
-    // 2-col on mobile / 4-col on md+. Row dividers on mobile, column dividers on md.
-    div.className = "border-white/[0.08] border-b md:border-b-0 border-r even:border-r-0 md:border-r md:last:border-r-0 px-5 py-7 sm:px-8 lg:px-10 lg:py-9 text-left";
+    div.className = 'hms-cell';
+    const icon = STAT_ICONS[stat.icon] || STAT_ICONS[STAT_ICON_ORDER[idx % STAT_ICON_ORDER.length]];
     div.innerHTML = `
-      <div class="font-heading text-[2.4rem] leading-[0.88] sm:text-5xl lg:text-[3.1rem] font-light tracking-tightest text-white antialiased [font-feature-settings:'tnum'] mb-2 cursor-text"
+      <span class="hms-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">${icon}</svg></span>
+      <div class="hms-val font-heading font-light tracking-tightest text-accent antialiased [font-feature-settings:'tnum'] cursor-text"
            data-stat-idx="${idx}" data-field="value">${escapeHtml(stat.value)}</div>
-      <div class="font-mono text-[11px] sm:text-xs uppercase tracking-[0.15em] leading-snug text-muted-foreground cursor-text"
+      <div class="hms-lbl font-mono uppercase text-muted-foreground cursor-text"
            data-stat-idx="${idx}" data-field="label">${escapeHtml(stat.label)}</div>
     `;
     statsGrid.appendChild(div);
@@ -1546,7 +1557,8 @@ function closeTrekFinder() {
   const sec = document.getElementById('trek-finder');
   if (!sec) return;
   sec.classList.remove('fdr-open');
-  document.body.classList.remove('fdr-locked');
+  if (!document.querySelector('#explore.hme-x-open')) document.body.classList.remove('fdr-locked');
+  clearSheetHash('#trek-finder');
   sec.removeAttribute('role');
   sec.removeAttribute('aria-modal');
   document.removeEventListener('keydown', finderEscHandler);
@@ -2039,7 +2051,7 @@ let exploreLockedGeo = null;
 let geoLayerBuilt = false;
 let geoZoomRaf = null;
 let geoZoomFallback = null;
-const GEO_FULL_VIEW = [20, 40, 960, 300];
+const GEO_FULL_VIEW = [20, 40, 960, 312];
 const GEO_NEPAL_PATH = 'M40,150 L130,108 L212,132 L300,92 L382,118 L452,78 L520,104 L586,68 L652,98 L712,60 L772,82 L858,52 L900,60 L965,96 L965,150 L892,214 L812,262 L745,298 L658,320 L566,334 L470,342 L388,332 L314,315 L240,298 L165,268 L92,222 L45,174 Z';
 
 function svgEl(tag, attrs) {
@@ -2066,6 +2078,12 @@ function buildGeoLayer() {
   grad.appendChild(svgEl('stop', { offset: '1', 'stop-color': '#181b1f' }));
   defs.appendChild(grad);
   layer.appendChild(defs);
+
+  // the country itself (the province layer is hidden in this lens) — drawn
+  // beneath the ridgeline so the Tibet border stays on top
+  const ridge = layer.ownerSVGElement && layer.ownerSVGElement.querySelector('.hme-ridge');
+  const land = svgEl('path', { class: 'hme-geo-land', d: GEO_NEPAL_PATH, 'vector-effect': 'non-scaling-stroke' });
+  if (ridge) ridge.parentNode.insertBefore(land, ridge); else layer.appendChild(land);
 
   // faint survey graticule behind the country
   const gratG = svgEl('g', { class: 'hme-graticule', 'clip-path': 'url(#hme-nepal-clip)' });
@@ -2332,6 +2350,56 @@ function initExplore() {
   buildGeoLayer();
   initExploreLens();
   setExploreLens('regions');
+}
+
+/* Explore Nepal on phones — like the trek finder, the section is
+   `hidden lg:block`, so the menu opens it as a full-screen sheet. */
+function openExploreNepal() {
+  const sec = document.getElementById('explore');
+  if (!sec) { window.location.href = '/#explore'; return; }
+  if (!window.matchMedia('(max-width: 1023px)').matches) {
+    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  if (typeof closeMenu === 'function') closeMenu();
+  sec.classList.add('hme-x-open');
+  document.body.classList.add('fdr-locked');
+  sec.setAttribute('role', 'dialog');
+  sec.setAttribute('aria-modal', 'true');
+  sec.setAttribute('aria-label', 'Explore Nepal');
+  sec.scrollTop = 0;
+  const close = document.getElementById('hme-x-close');
+  if (close) close.focus();
+  document.addEventListener('keydown', exploreEscHandler);
+}
+
+function closeExploreNepal() {
+  const sec = document.getElementById('explore');
+  if (!sec) return;
+  sec.classList.remove('hme-x-open');
+  if (!document.querySelector('#trek-finder.fdr-open')) document.body.classList.remove('fdr-locked');
+  clearSheetHash('#explore');
+  sec.removeAttribute('role');
+  sec.removeAttribute('aria-modal');
+  document.removeEventListener('keydown', exploreEscHandler);
+}
+
+function exploreEscHandler(e) { if (e.key === 'Escape') closeExploreNepal(); }
+
+// /#explore and /#trek-finder (e.g. from the menu on another page): on phones
+// the sections are hidden, so open them as sheets; desktop scrolls natively.
+function openHashSheet() {
+  if (!window.matchMedia('(max-width: 1023px)').matches) return;
+  if (location.hash === '#explore') openExploreNepal();
+  else if (location.hash === '#trek-finder') openTrekFinder();
+}
+window.addEventListener('hashchange', openHashSheet);
+
+// drop the hash once a sheet closes, so the same link opens it again
+function clearSheetHash(hash) {
+  if (location.hash === hash && window.history && history.replaceState) {
+    history.replaceState(history.state, '', location.pathname + location.search);
+  }
 }
 
 function scrollTrekGrid(direction) {
@@ -2887,6 +2955,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderFlagship();
   loadContent();
   initExplore();
+  openHashSheet();
 });
 
 

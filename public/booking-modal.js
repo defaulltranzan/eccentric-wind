@@ -222,7 +222,7 @@
         '<button type="button" class="hmb-close" data-hmb-close aria-label="Close booking form">' + I.close + '</button>' +
         '<aside class="hmb-visual" aria-hidden="true">' +
           '<img class="hmb-visual-img" alt="" decoding="async">' +
-          '<div class="hmb-brand"><img src="/images/logo-badge-dark.png" alt="" width="40" height="40"><span>Himalayan Magic<small>Adventure · Est. 1993</small></span></div>' +
+          '<div class="hmb-brand"><img src="/images/logo-badge-dark-90.png" alt="" width="44" height="40"><span>Himalayan Magic<small>Adventure · Est. 1993</small></span></div>' +
           '<div class="hmb-trip"></div>' +
         '</aside>' +
         '<section class="hmb-panel">' +

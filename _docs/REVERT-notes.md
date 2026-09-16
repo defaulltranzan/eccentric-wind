@@ -1267,3 +1267,26 @@ Revert: `git reset --hard backend-v1.1`.
   and trip required, `preferred_month`, country → details, date_precision), dedupe now also compares people/date/phone.
 - Admin: trek "Cost & inclusions" + expedition "Pricing & inclusions" sections (`included`, `excluded`, expedition price
   tiers); bookings show month-precision dates.
+
+## § 9 — Homepage polish round (2026-09-17)
+
+Restore point: tag `pre-polish-v1` (= commit 1bcad7d). `git checkout pre-polish-v1 -- <file>` reverts one file.
+
+- **Stats row** (`edit.js` renderStats + `STAT_ICONS`, CSS `.hms-*` in index.html "the breath" block): orange
+  figures in boxed cells, each with a big Lucide icon (landmark / route / mountain-snow / badge-check).
+  A stat can pick its own icon with `icon: '<name>'` if the name exists in `STAT_ICONS`. Values/labels still
+  live in the `stats` arrays of i18n en/ne/zh.
+- **Explore Nepal on phones**: menu.js row `Explore Nepal` (mobileOnly, action `openExploreNepal`). On phones
+  `#explore` opens as a full-screen sheet (`.hme-x-open`, close button `#hme-x-close`). `/#explore` and
+  `/#trek-finder` deep links open the sheets on phones (`openHashSheet` in edit.js); the hash is cleared on close.
+- **Explore map fixes**: the Regions view now draws the Nepal silhouette (`.hme-geo-land`, inserted under the
+  ridgeline by buildGeoLayer — it used to be invisible because the province layer is hidden in that lens);
+  `#hme-geo-back[hidden]` and the provinces hint now really hide; viewBox 960×312 so the south edge isn't clipped.
+- **Trek finder**: all icons are Lucide symbols (`<defs>` in #trek-finder); segmented options show an icon above
+  the label; group headers have an icon badge.
+- **Hero title** ~12% larger (`.hc-title` clamps). Phones get extra bottom padding so the 8,848.86 readout
+  clears the floating theme/language widgets; small phones shorten the eyebrow/readout rules.
+- **Logo**: `logo-badge(-dark)-90/180/270.png` pre-sharpened variants + `srcset/sizes` on every header/footer
+  (generated from the 340px originals). Delete the `srcset`/`sizes` attributes to go back to the single PNG.
+- **Spacing**: homepage sections `py-16 md:py-24` → `py-14 md:py-20`; interlude/stats bottom padding reduced.
+- Cache bumps: edit.js v=25.9, menu.js v=10, booking-modal.js v=2.
