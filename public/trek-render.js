@@ -748,10 +748,40 @@
   var mcta = document.getElementById('mobile-cta');
   var mctaName = document.getElementById('mcta-name');
   if (mctaName) mctaName.textContent = t.name;
+  if (mcta) {
+    var mctaBook = document.getElementById('mcta-book');
+    if (mctaBook) {
+      mctaBook.href = '/contact?trip=' + encodeURIComponent(slug);
+      mctaBook.setAttribute('data-book', slug);
+      mctaBook.setAttribute('data-book-type', 'trek');
+      mctaBook.setAttribute('aria-label', 'Plan ' + t.name + ' — open the booking form');
+    }
+    var mctaKicker = document.getElementById('mcta-kicker');
+    if (mctaKicker && t.region) mctaKicker.textContent = 'Trek · ' + t.region;
+    var mctaMeta = document.getElementById('mcta-meta');
+    if (mctaMeta) {
+      var dur = String((t.stats && t.stats.duration) || '').match(/(\d+(?:\s*[–-]\s*\d+)?)\s*days?/i);
+      var alt = String((t.stats && t.stats.maxAltitude) || '').replace(/^[≈~\s]+/, '').split('(')[0].trim();
+      mctaMeta.textContent = [dur ? dur[1].replace(/\s*[–-]\s*/, '–') + ' days' : '', (t.stats && t.stats.difficulty) || '', alt].filter(Boolean).join(' · ');
+    }
+    var mctaImg = document.getElementById('mcta-img');
+    if (mctaImg && t.heroImage) { mctaImg.onerror = function () { mctaImg.remove(); }; mctaImg.src = t.heroImage; } else if (mctaImg) mctaImg.remove();
+  }
+  /* booking dock: shown after the hero, hidden again once the footer is on screen */
+  function syncDock(scrollTop) {
+    if (!mcta) return;
+    var foot = document.querySelector('footer');
+    var footerInView = foot && foot.getBoundingClientRect().top < window.innerHeight - 40;
+    var show = scrollTop > window.innerHeight * 0.8 && !footerInView;
+    if (show === mcta.classList.contains('is-visible')) return;
+    mcta.classList.toggle('is-visible', show);
+    if (show) mcta.removeAttribute('inert'); else mcta.setAttribute('inert', '');
+    document.body.classList.toggle('hmb-dock-open', show);
+  }
   function onScroll() {
     var st = window.scrollY, dh = document.documentElement.scrollHeight - window.innerHeight;
     var pb = document.getElementById('read-progress'); if (pb) pb.style.width = (dh > 0 ? (st / dh * 100) : 0) + '%';
-    if (mcta) mcta.classList.toggle('translate-y-full', st < window.innerHeight * 0.8);
+    syncDock(st);
     var cur = null;
     secEls.forEach(function (s) { if (s.getBoundingClientRect().top < 120) cur = s.id; });
     document.querySelectorAll('.hme-nav-link').forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-nav') === cur); });

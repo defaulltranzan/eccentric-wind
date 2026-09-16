@@ -88,7 +88,7 @@
         .ap-legend i { display:inline-block; width:10px; height:10px; margin-right:.4rem; vertical-align:middle; font-style:normal; }
         @media (prefers-reduced-motion: reduce){ .ap-line, .ap-node, .ap-cursor { transition:none !important; } }
     </style>
-    <link rel="stylesheet" href="/booking-modal.css?v=3">
+    <link rel="stylesheet" href="/booking-modal.css?v=5">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -130,12 +130,15 @@
 
 <main id="mtn-root" class="flex-1"></main>
 
-<div id="mobile-cta" class="fixed bottom-0 left-0 right-0 z-50 lg:hidden border-t border-border bg-[#101215]/95 backdrop-blur-md px-4 py-3 flex items-center gap-3 translate-y-full transition-transform">
-    <div class="flex-1 min-w-0">
-        <span class="lbl block">Expedition</span>
-        <span id="mcta-name" class="block font-heading text-sm uppercase text-white truncate">—</span>
+<!-- booking dock: full-width bar on phones, floating dock on laptops. Opens the booking popup (booking-modal.js). -->
+<div id="mobile-cta" class="hmb-dock" role="region" aria-label="Book this expedition" inert>
+    <img id="mcta-img" class="hmb-dock-img" alt="" aria-hidden="true" decoding="async">
+    <div class="hmb-dock-info">
+        <span id="mcta-kicker" class="hmb-dock-kicker">Expedition</span>
+        <span id="mcta-name" class="hmb-dock-name">—</span>
+        <span id="mcta-meta" class="hmb-dock-meta"></span>
     </div>
-    <a href="/contact" class="shrink-0 bg-accent text-background font-mono text-[10px] uppercase tracking-widest font-semibold px-4 py-2.5">Plan this Climb</a>
+    <a id="mcta-book" href="/contact" class="hmb-dock-btn">Plan this climb<svg viewBox="0 0 18 10" fill="none" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></a>
 </div>
 
 <footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
@@ -201,7 +204,7 @@
 <script src="/peaks.js?v=4"></script>
 <script src="/treks.js?v=7"></script>
 <script src="/data/treks.js"></script>
-<script src="/expedition-render.js?v=4"></script>
+<script src="/expedition-render.js?v=5"></script>
 <script src="/safety-tools.js?v=4"></script>
 <script src="/backdrop.js?v=2" defer></script>
 <script src="/menu.js?v=9"></script>
