@@ -1,0 +1,42 @@
+{
+  "note": "Map points for the Explore Nepal map. Peaks come from the expeditions database (they carry their own coordinates); these are the towns, trailheads, passes, cultural sites and lakes. Positions are to the nearest few hundred metres — good for a country-scale map, not for navigation.",
+  "places": [
+    { "id": "kathmandu", "name": "Kathmandu", "kind": "culture", "lat": 27.7172, "lon": 85.324, "elevation": "1,400 m", "note": "Where every trip starts: permits, briefings and the flight or drive to the trailhead.", "major": true },
+    { "id": "pokhara", "name": "Pokhara", "kind": "culture", "lat": 28.2096, "lon": 83.9856, "elevation": "822 m", "note": "Lakeside gateway to the Annapurna trails.", "major": true },
+    { "id": "lumbini", "name": "Lumbini", "kind": "culture", "lat": 27.4833, "lon": 83.2761, "elevation": "150 m", "note": "Birthplace of the Buddha, on the Terai plain.", "major": true },
+    { "id": "bhaktapur", "name": "Bhaktapur", "kind": "culture", "lat": 27.671, "lon": 85.4298, "elevation": "1,401 m", "note": "Newar city of brick and wood, east of Kathmandu." },
+    { "id": "patan", "name": "Patan", "kind": "culture", "lat": 27.6766, "lon": 85.325, "elevation": "1,350 m", "note": "Durbar Square, metalworkers and courtyards south of the river." },
+    { "id": "janakpur", "name": "Janakpur", "kind": "culture", "lat": 26.7288, "lon": 85.9266, "elevation": "74 m", "note": "Mithila city of temples and painted houses." },
+    { "id": "gorkha", "name": "Gorkha", "kind": "culture", "lat": 28.0, "lon": 84.6333, "elevation": "1,135 m", "note": "Hill fort where the unification of Nepal began." },
+    { "id": "muktinath", "name": "Muktinath", "kind": "culture", "lat": 28.8167, "lon": 83.8717, "elevation": "3,760 m", "note": "Pilgrimage temple below the Thorong La, sacred to Hindus and Buddhists." },
+    { "id": "tengboche", "name": "Tengboche", "kind": "culture", "lat": 27.8361, "lon": 86.7644, "elevation": "3,867 m", "note": "The Khumbu's principal monastery, facing Ama Dablam." },
+    { "id": "lo-manthang", "name": "Lo Manthang", "kind": "culture", "lat": 29.1833, "lon": 83.9667, "elevation": "3,840 m", "note": "Walled capital of Upper Mustang, behind the Himalaya." },
+
+    { "id": "lukla", "name": "Lukla", "kind": "trailhead", "lat": 27.6869, "lon": 86.7314, "elevation": "2,840 m", "note": "The Khumbu airstrip: step off the plane and start walking.", "treks": ["everest-base-camp", "three-passes", "gokyo-lakes", "everest-view-trek"] },
+    { "id": "namche", "name": "Namche Bazaar", "kind": "trailhead", "lat": 27.8069, "lon": 86.714, "elevation": "3,440 m", "note": "Sherpa town and the acclimatisation stop of the Everest trails." },
+    { "id": "besisahar", "name": "Besisahar", "kind": "trailhead", "lat": 28.23, "lon": 84.38, "elevation": "760 m", "note": "Road head for the Annapurna Circuit.", "treks": ["annapurna-circuit"] },
+    { "id": "nayapul", "name": "Nayapul & Birethanti", "kind": "trailhead", "lat": 28.3, "lon": 83.75, "elevation": "1,070 m", "note": "Trailhead for Annapurna Base Camp and the Ghorepani hills.", "treks": ["annapurna-base-camp", "mardi-himal"] },
+    { "id": "jomsom", "name": "Jomsom", "kind": "trailhead", "lat": 28.78, "lon": 83.72, "elevation": "2,720 m", "note": "Windy Kali Gandaki town, airstrip and the road to Mustang.", "treks": ["upper-mustang"] },
+    { "id": "syabrubesi", "name": "Syabrubesi", "kind": "trailhead", "lat": 28.16, "lon": 85.34, "elevation": "1,460 m", "note": "Bus from Kathmandu, then straight up the Langtang valley.", "treks": ["langtang-valley"] },
+    { "id": "soti-khola", "name": "Soti Khola", "kind": "trailhead", "lat": 28.2333, "lon": 84.8833, "elevation": "700 m", "note": "Start of the Budhi Gandaki gorge into Manaslu and Tsum.", "treks": ["manaslu-circuit", "tsum-valley", "manaslu-tsum-valley-trek"] },
+    { "id": "dunai", "name": "Dunai", "kind": "trailhead", "lat": 28.9333, "lon": 82.9167, "elevation": "2,140 m", "note": "Dolpo's district town, below Phoksundo." },
+    { "id": "simikot", "name": "Simikot", "kind": "trailhead", "lat": 29.9714, "lon": 81.8186, "elevation": "2,910 m", "note": "Humla's airstrip, the way to Limi and the Tibet border." },
+    { "id": "taplejung", "name": "Taplejung", "kind": "trailhead", "lat": 27.355, "lon": 87.67, "elevation": "1,820 m", "note": "Far-eastern road head for Kanchenjunga.", "treks": ["kanchenjunga-base-camp"] },
+    { "id": "phaplu", "name": "Phaplu & Salleri", "kind": "trailhead", "lat": 27.5167, "lon": 86.5833, "elevation": "2,470 m", "note": "Solu road head — the slow, quiet way into the Khumbu." },
+
+    { "id": "thorong-la", "name": "Thorong La", "kind": "pass", "lat": 28.7947, "lon": 83.9403, "elevation": "5,416 m", "note": "The Annapurna Circuit's high point, crossed before dawn." },
+    { "id": "cho-la", "name": "Cho La", "kind": "pass", "lat": 27.9333, "lon": 86.7667, "elevation": "5,420 m", "note": "Glacier pass linking Everest Base Camp and Gokyo." },
+    { "id": "renjo-la", "name": "Renjo La", "kind": "pass", "lat": 27.9667, "lon": 86.6333, "elevation": "5,360 m", "note": "West of Gokyo, with the finest view back to Everest." },
+    { "id": "kongma-la", "name": "Kongma La", "kind": "pass", "lat": 27.9167, "lon": 86.8333, "elevation": "5,535 m", "note": "The highest and quietest of the Three Passes." },
+    { "id": "larke-la", "name": "Larke La", "kind": "pass", "lat": 28.65, "lon": 84.6167, "elevation": "5,106 m", "note": "The crossing that closes the Manaslu Circuit." },
+    { "id": "ganja-la", "name": "Ganja La", "kind": "pass", "lat": 28.1667, "lon": 85.4667, "elevation": "5,130 m", "note": "Technical pass out of Langtang towards Helambu." },
+
+    { "id": "rara", "name": "Rara Lake", "kind": "nature", "lat": 29.5167, "lon": 82.0833, "elevation": "2,990 m", "note": "Nepal's largest lake, alone in the far-western hills." },
+    { "id": "phoksundo", "name": "Phoksundo Lake", "kind": "nature", "lat": 29.19, "lon": 82.945, "elevation": "3,611 m", "note": "The turquoise lake of Lower Dolpo." },
+    { "id": "gokyo", "name": "Gokyo Lakes", "kind": "nature", "lat": 27.95, "lon": 86.6833, "elevation": "4,790 m", "note": "Six glacial lakes under Gokyo Ri, beside the Ngozumpa glacier.", "treks": ["gokyo-lakes"] },
+    { "id": "tilicho", "name": "Tilicho Lake", "kind": "nature", "lat": 28.69, "lon": 83.85, "elevation": "4,919 m", "note": "One of the highest large lakes in the world.", "treks": ["tilicho-lake-trek"] },
+    { "id": "langtang-valley", "name": "Langtang Valley", "kind": "nature", "lat": 28.2167, "lon": 85.5167, "elevation": "3,430 m", "note": "Yak pastures and glaciers a day's drive from Kathmandu.", "treks": ["langtang-valley"] },
+    { "id": "chitwan", "name": "Chitwan National Park", "kind": "nature", "lat": 27.5291, "lon": 84.3542, "elevation": "150 m", "note": "Sal forest and grassland: rhino, gaur and tiger." },
+    { "id": "bardia", "name": "Bardia National Park", "kind": "nature", "lat": 28.3833, "lon": 81.3333, "elevation": "160 m", "note": "Nepal's wildest lowland park, on the Karnali river." }
+  ]
+}

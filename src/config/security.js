@@ -18,6 +18,9 @@ const helmetConfig = helmet({
       imgSrc: ["'self'", "data:", "blob:", "https://images.unsplash.com", "https://*.unsplash.com", ...supabaseOrigin],
       mediaSrc: ["'self'", ...supabaseOrigin],
       connectSrc: ["'self'"],
+      // MapLibre GL runs its parser in a worker created from a blob URL
+      workerSrc: ["'self'", "blob:"],
+      childSrc: ["'self'", "blob:"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
     },

@@ -746,6 +746,107 @@
                 #explore.hme-x-open #explore-panel{min-height:0;scroll-margin-top:4.5rem;}
                 #explore.hme-x-open .hme-rg-label{display:none;}
             }
+            /* ---- real map (MapLibre) ------------------------------------- */
+            .hgl-map{display:none;width:100%;aspect-ratio:960/548;background:#111316;}
+            .hme-mapframe.is-gl-ready .hgl-map{display:block;}
+            /* once the real map is up, the drawn fallback and its chrome step aside */
+            .hme-mapframe.is-gl-ready > .relative.w-full,
+            .hme-mapframe.is-gl-ready #hme-geo-back,
+            .hme-mapframe.is-gl-ready #hme-peak-index,
+            .hme-mapframe.is-gl-ready > .pointer-events-none.absolute,
+            .hme-mapframe.is-gl-ready ~ * [data-explore-hint]{display:none!important;}
+            #explore:has(.hme-mapframe.is-gl-ready) #explore-lens,
+            #explore:has(.hme-mapframe.is-gl-ready) #explore-lens-label,
+            #explore:has(.hme-mapframe.is-gl-ready) [data-explore-hint]{display:none;}
+            #explore:has(.hme-mapframe.is-gl-ready) .hgl-chips{display:flex;}
+            .hgl-chips{display:none;flex-wrap:wrap;gap:.4rem;}
+            .hgl-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .75rem;border:1px solid var(--border);background:rgba(16,18,21,.6);
+                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);cursor:pointer;
+                transition:border-color .2s,color .2s,background .2s;min-height:38px;}
+            .hgl-chip .hgl-ico{width:15px;height:15px;}
+            .hgl-chip b{font-weight:500;color:var(--foreground);opacity:.55;font-size:9px;}
+            .hgl-chip:hover{border-color:rgba(240,98,37,.6);color:var(--foreground);}
+            .hgl-chip.is-on{background:var(--accent);border-color:var(--accent);color:#fff;}
+            .hgl-chip.is-on b{color:#fff;opacity:.8;}
+            .hgl-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+            .hgl-reset{position:absolute;z-index:5;left:1.1rem;top:1.1rem;display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--border);
+                background:rgba(16,18,21,.92);color:var(--muted-foreground);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+                text-transform:uppercase;padding:.5rem .75rem;cursor:pointer;backdrop-filter:blur(4px);transition:color .2s,border-color .2s;}
+            .hgl-reset:hover{color:var(--accent);border-color:var(--accent);}
+            .hgl-reset .hgl-ico{width:14px;height:14px;}
+
+            /* markers */
+            .hgl-marker{display:flex;flex-direction:column;align-items:center;gap:.2rem;background:none;border:0;padding:0;cursor:pointer;color:#fff;
+                transition:opacity .25s ease,transform .25s cubic-bezier(.2,.7,.2,1);transform-origin:bottom center;}
+            /* MapLibre sets an inline opacity on marker elements, so hide with
+               visibility (which inline styles do not fight) */
+            .hgl-marker.is-off{visibility:hidden;pointer-events:none;transform:scale(.7);}
+            .hgl-marker.is-crowded{visibility:hidden;pointer-events:none;transform:scale(.55);}
+            .hgl-marker.is-off .hgl-label,.hgl-marker.is-crowded .hgl-label{visibility:hidden;}
+            .hgl-marker.is-nolabel .hgl-label{opacity:0;}
+            .hgl-marker.is-nolabel:hover .hgl-label,.hgl-marker.is-nolabel:focus-visible .hgl-label,.hgl-marker.is-open .hgl-label{opacity:1;}
+            .hgl-neighbour{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.26);pointer-events:none;white-space:nowrap;}
+            body.light-mode .hgl-neighbour{color:rgba(28,30,33,.3);}
+            .hgl-pin{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+                background:rgba(17,19,22,.92);color:#cfd4db;box-shadow:0 6px 16px -6px rgba(0,0,0,.9);transition:border-color .2s,background .2s,color .2s,transform .25s;}
+            .hgl-pin-ico{width:14px;height:14px;}
+            .hgl-marker.is-major .hgl-pin{width:32px;height:32px;border-color:rgba(240,98,37,.7);color:var(--accent);}
+            .hgl-marker.is-major .hgl-pin-ico{width:17px;height:17px;}
+            .hgl-marker.is-peak .hgl-pin{border-color:rgba(240,98,37,.45);color:var(--accent);}
+            .hgl-marker.is-nature .hgl-pin{border-color:rgba(96,165,250,.45);color:#8fb8f0;}
+            .hgl-marker.is-pass .hgl-pin{border-color:rgba(255,255,255,.35);}
+            .hgl-label{display:flex;flex-direction:column;align-items:center;line-height:1.1;text-shadow:0 2px 8px rgba(0,0,0,.95);pointer-events:none;
+                opacity:0;transition:opacity .25s ease;white-space:nowrap;}
+            .hgl-label b{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;color:#fff;}
+            .hgl-label i{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-style:normal;letter-spacing:.06em;color:rgba(255,255,255,.55);}
+            .hgl-marker.is-major .hgl-label,.hgl-marker:hover .hgl-label,.hgl-marker.is-open .hgl-label,.hgl-marker:focus-visible .hgl-label{opacity:1;}
+            .hgl-marker:hover .hgl-pin,.hgl-marker:focus-visible .hgl-pin{background:var(--accent);border-color:var(--accent);color:#14161a;transform:translateY(-2px);}
+            .hgl-marker.is-open .hgl-pin{background:var(--accent);border-color:#fff;color:#14161a;box-shadow:0 0 0 4px rgba(240,98,37,.22);}
+            .hgl-marker:focus-visible{outline:none;}
+
+            /* map panel */
+            .hgl-panel{animation:hmeXfade .35s cubic-bezier(.2,.7,.3,1);}
+            .hgl-panel-kind{display:inline-flex;align-items:center;gap:.4rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+            .hgl-panel-kind .hgl-ico,.hgl-key .hgl-ico{width:14px;height:14px;}
+            .hgl-panel-name{margin-top:.6rem;font-family:Oswald,sans-serif;font-weight:300;font-size:1.9rem;line-height:1;text-transform:uppercase;letter-spacing:-.01em;color:var(--foreground);}
+            .hgl-panel-el{margin-top:.35rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);}
+            .hgl-panel-note{margin-top:.75rem;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;line-height:1.6;color:var(--muted-foreground);}
+            .hgl-panel-lbl{display:block;margin-top:1.25rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-foreground);}
+            .hgl-rows{margin-top:.5rem;display:grid;gap:.35rem;}
+            .hgl-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.6rem .7rem;border:1px solid var(--border);
+                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--foreground);text-decoration:none;
+                transition:border-color .2s,background .2s,transform .2s;}
+            .hgl-row svg{width:15px;height:9px;color:var(--accent);}
+            .hgl-row:hover{border-color:var(--accent);background:rgba(240,98,37,.07);transform:translateX(3px);}
+            .hgl-panel-cta{margin-top:1.1rem;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:44px;padding:.7rem 1rem;
+                border:1px solid var(--accent);background:var(--accent);color:#14161a;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+                letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:background .25s,box-shadow .25s;}
+            .hgl-panel-cta svg{width:16px;height:9px;}
+            .hgl-panel-cta:hover{background:#ff7a3d;box-shadow:0 0 0 4px rgba(240,98,37,.16);}
+            .hgl-legend-list{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.45rem;}
+            .hgl-legend-list li{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}
+            .hgl-legend-list b{margin-left:auto;font-weight:500;color:var(--foreground);}
+            .hgl-key{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(17,19,22,.9);color:#cfd4db;}
+            .hgl-key.is-peak{border-color:rgba(240,98,37,.45);color:var(--accent);}
+            .hgl-key.is-nature{border-color:rgba(96,165,250,.45);color:#8fb8f0;}
+            .hgl-panel-fine{margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:8.5px;line-height:1.6;letter-spacing:.06em;color:rgba(255,255,255,.34);}
+
+            /* MapLibre chrome, restyled to the brand */
+            .hgl-map .maplibregl-ctrl-group{background:rgba(16,18,21,.92);border:1px solid var(--border);border-radius:0;box-shadow:none;}
+            .hgl-map .maplibregl-ctrl-group button+button{border-top:1px solid var(--border);}
+            .hgl-map .maplibregl-ctrl-group button .maplibregl-ctrl-icon{filter:invert(78%);}
+            .hgl-map .maplibregl-ctrl-group button:hover{background:rgba(240,98,37,.16);}
+            .hgl-map .maplibregl-ctrl-scale{background:rgba(16,18,21,.7);border-color:rgba(255,255,255,.25);color:var(--muted-foreground);
+                font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;border-radius:0;}
+            .hgl-map .maplibregl-canvas:focus{outline:none;}
+            body.light-mode .hgl-map{background:#efeae1;}
+            body.light-mode .hgl-pin{background:#fff;color:#4b5158;border-color:rgba(28,30,33,.2);}
+            body.light-mode .hgl-label b{color:#16181b;text-shadow:0 1px 6px rgba(255,255,255,.9);}
+            body.light-mode .hgl-label i{color:#6b7078;}
+            @media (max-width:1023px){.hgl-map{aspect-ratio:3/4;}.hgl-reset{left:.75rem;top:.75rem;}}
+            @media (prefers-reduced-motion: reduce){.hgl-marker,.hgl-pin,.hgl-panel{transition:none;animation:none;}}
+
             .hme-xpanel{scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
             .hme-xpanel::-webkit-scrollbar{width:4px;}
             .hme-xpanel::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);border-radius:2px;}
@@ -773,10 +874,19 @@
             </div>
 
             <div class="mt-8 flex flex-wrap items-center gap-3">
-                <span class="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">View by</span>
+                <span id="explore-lens-label" class="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">View by</span>
                 <div id="explore-lens" role="tablist" aria-label="Explore Nepal by" class="flex gap-2 font-mono text-[10px] uppercase tracking-[0.2em]">
                     <button type="button" role="tab" data-lens="regions" aria-selected="true" class="hme-lens-tab">Regions</button>
                     <button type="button" role="tab" data-lens="provinces" aria-selected="false" class="hme-lens-tab">Provinces</button>
+                </div>
+                <!-- Real-map filters — revealed by /explore-map.js once MapLibre is up -->
+                <div id="map-filters" class="hgl-chips" role="group" aria-label="Filter what the map shows">
+                    <button type="button" class="hgl-chip is-on" data-map-filter="all" aria-pressed="true" hidden><svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>All<b data-map-count>&nbsp;</b></button>
+                    <button type="button" class="hgl-chip" data-map-filter="trailhead" aria-pressed="false" hidden><svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></svg>Treks<b data-map-count>&nbsp;</b></button>
+                    <button type="button" class="hgl-chip" data-map-filter="peak" aria-pressed="false" hidden><svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/></svg>Peaks<b data-map-count>&nbsp;</b></button>
+                    <button type="button" class="hgl-chip" data-map-filter="pass" aria-pressed="false" hidden><svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20l6-9 4 5 3-4 7 8z"/><path d="M12 4v4"/><path d="M10 6h4"/></svg>Passes<b data-map-count>&nbsp;</b></button>
+                    <button type="button" class="hgl-chip" data-map-filter="culture" aria-pressed="false" hidden><svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2l8 5H4z"/></svg>Culture<b data-map-count>&nbsp;</b></button>
+                    <button type="button" class="hgl-chip" data-map-filter="nature" aria-pressed="false" hidden><svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 17c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 21c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>Nature<b data-map-count>&nbsp;</b></button>
                 </div>
             </div>
 
@@ -784,6 +894,13 @@
 
                 <!-- Interactive Map -->
                 <div class="hme-mapframe relative border border-border bg-[#16181b] p-3 md:p-4">
+                    <!-- Real map of Nepal (MapLibre GL, /explore-map.js). If it cannot load,
+                         the drawn SVG map below stays on screen instead. -->
+                    <div id="nepal-map" class="hgl-map" role="application" aria-label="Map of Nepal: trailheads, peaks, passes and places we guide"></div>
+                    <button type="button" id="map-reset" class="hgl-reset" hidden>
+                        <svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+                        All of Nepal
+                    </button>
                     <!-- Compass -->
                     <div class="pointer-events-none absolute top-5 right-5 z-20 opacity-40 hidden md:block">
                         <div class="h-12 w-12 rounded-full border border-white/20 flex items-center justify-center relative font-mono text-[8px] tracking-widest text-muted-foreground">
@@ -880,6 +997,66 @@
 
     <!-- 04 — COMPARE TREKS -->
     <section id="compare-home" data-media class="relative px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#191b1f] overflow-hidden">
+
+        <style>
+            /* ---- 04 Compare: three route dossiers, read as one chart ------- */
+            #compare-home .cmp-grid{display:grid;gap:1.1rem;margin-top:2.5rem;}
+            @media (min-width:768px){#compare-home .cmp-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;}}
+            @media (max-width:767px){
+                #compare-home .cmp-grid{grid-auto-flow:column;grid-auto-columns:82%;overflow-x:auto;scroll-snap-type:x mandatory;
+                    margin-left:-1.5rem;margin-right:-1.5rem;padding:0 1.5rem .25rem;scroll-padding-left:1.5rem;scrollbar-width:none;}
+                #compare-home .cmp-grid::-webkit-scrollbar{display:none;}
+                #compare-home .cmp-card{scroll-snap-align:start;}
+            }
+            #compare-home .cmp-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);background:linear-gradient(180deg,rgba(27,30,34,.94),rgba(20,22,25,.94));
+                transition:border-color .35s ease,transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;overflow:hidden;}
+            #compare-home .cmp-card:hover{border-color:rgba(240,98,37,.45);transform:translateY(-4px);box-shadow:0 26px 50px -30px rgba(0,0,0,.9);}
+            #compare-home .cmp-shot{position:relative;height:9rem;overflow:hidden;}
+            #compare-home .cmp-shot img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+            #compare-home .cmp-card:hover .cmp-shot img{transform:scale(1.06);}
+            #compare-home .cmp-shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,25,.15),rgba(20,22,25,.92));}
+            #compare-home .cmp-flag{position:absolute;z-index:2;top:.7rem;left:.7rem;display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .5rem;
+                background:var(--accent);color:#14161a;font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;}
+            #compare-home .cmp-flag svg{width:12px;height:12px;}
+            #compare-home .cmp-head{position:absolute;z-index:2;left:1rem;right:1rem;bottom:.85rem;}
+            #compare-home .cmp-region{display:block;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+            #compare-home .cmp-name{margin-top:.25rem;font-family:Oswald,sans-serif;font-weight:400;font-size:1.35rem;line-height:1.05;text-transform:uppercase;color:#fff;}
+
+            /* the altitude bar is the same scale on all three cards, so the
+               three cards together read as one chart */
+            #compare-home .cmp-alt{position:relative;display:flex;align-items:flex-end;gap:.75rem;padding:1rem 1rem .85rem;border-bottom:1px solid rgba(255,255,255,.07);}
+            #compare-home .cmp-track{position:relative;flex:1;height:52px;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent);border-bottom:1px solid rgba(255,255,255,.12);}
+            #compare-home .cmp-fill{position:absolute;left:0;right:0;top:0;bottom:0;background:linear-gradient(180deg,var(--accent),rgba(240,98,37,.35));opacity:.85;
+                transform-origin:bottom;transform:scaleY(var(--h,0));transition:transform 1.1s cubic-bezier(.2,.7,.2,1);}
+            #compare-home .cmp-fill::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:#fff;opacity:.85;}
+            #compare-home .cmp-alt-n{font-family:Oswald,sans-serif;font-weight:300;font-size:1.6rem;line-height:1;color:#fff;font-feature-settings:'tnum';white-space:nowrap;}
+            #compare-home .cmp-alt-n b{display:block;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-foreground);margin-top:.3rem;}
+
+            #compare-home .cmp-rows{display:grid;gap:0;padding:.35rem 0;}
+            #compare-home .cmp-row{display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--muted-foreground);}
+            #compare-home .cmp-row svg{width:17px;height:17px;flex:none;color:var(--accent);opacity:.9;}
+            #compare-home .cmp-row b{margin-left:auto;font-weight:500;text-align:right;color:var(--foreground);text-transform:uppercase;letter-spacing:.08em;}
+            #compare-home .cmp-row.is-best b{color:var(--accent);}
+            #compare-home .cmp-dots{display:inline-flex;gap:3px;margin-left:auto;}
+            #compare-home .cmp-dots i{width:7px;height:7px;border:1px solid var(--accent);display:block;}
+            #compare-home .cmp-dots i.on{background:var(--accent);}
+            #compare-home .cmp-foot{margin-top:auto;display:flex;border-top:1px solid rgba(255,255,255,.08);}
+            #compare-home .cmp-open{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:46px;padding:.7rem .5rem;
+                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--foreground);text-decoration:none;transition:background .25s,color .25s;}
+            #compare-home .cmp-open svg{width:15px;height:9px;transition:transform .3s cubic-bezier(.2,.7,.2,1);}
+            #compare-home .cmp-open:hover{background:rgba(255,255,255,.04);color:var(--accent);}
+            #compare-home .cmp-open:hover svg{transform:translateX(4px);}
+            #compare-home .cmp-book{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:46px;padding:.7rem 1rem;border-left:1px solid rgba(255,255,255,.08);
+                background:var(--accent);color:#14161a;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:background .25s;}
+            #compare-home .cmp-book:hover{background:#ff7a3d;}
+            #compare-home .cmp-book svg{width:14px;height:14px;}
+            #compare-home .cmp-scale{display:flex;align-items:center;gap:.6rem;margin-top:1rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-foreground);}
+            #compare-home .cmp-scale i{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.06),rgba(240,98,37,.5));display:block;}
+            body.light-mode #compare-home .cmp-card{background:#fff;border-color:#e3ded5;}
+            body.light-mode #compare-home .cmp-name{color:#16181b;}
+            body.light-mode #compare-home .cmp-alt-n{color:#16181b;}
+            @media (prefers-reduced-motion: reduce){#compare-home .cmp-card,#compare-home .cmp-fill,#compare-home .cmp-shot img{transition:none;}}
+        </style>
         <div class="pointer-events-none absolute inset-0 z-0">
             <img src="/images/langtang_real.jpg" class="h-full w-full object-cover object-[50%_40%] opacity-[0.07]" alt="" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-b from-[#191b1f] via-[#191b1f]/95 to-[#191b1f]"></div>
@@ -899,7 +1076,8 @@
                     Build a comparison <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
                 </a>
             </div>
-            <div id="compare-home-table" class="mt-12 overflow-x-auto"></div>
+            <div id="compare-home-cards" class="cmp-grid"></div>
+            <div class="cmp-scale" aria-hidden="true"><span>Altitude, same scale on all three</span><i></i><span id="cmp-scale-max"></span></div>
         </div>
     </section>
 
@@ -1226,31 +1404,13 @@
 
             /* ---- card rail ---- */
             #reviews .hmr-rail{position:relative;min-width:0;}
+            #reviews .hmr-card{flex:0 0 19.5rem;scroll-snap-align:start;}
+            @media (min-width:640px){#reviews .hmr-card{flex-basis:23rem;}}
             #reviews-track{display:flex;gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:.25rem;margin:0 -1.5rem;padding-left:1.5rem;padding-right:1.5rem;scroll-padding-left:1.5rem;}
             #reviews-track::-webkit-scrollbar{display:none;}
             @media (min-width:1024px){#reviews-track{margin:0;padding-left:0;padding-right:0;scroll-padding-left:0;}}
-            #reviews .hmr-card{position:relative;flex:0 0 19.5rem;scroll-snap-align:start;display:flex;flex-direction:column;border:1px solid var(--border);
                 background:linear-gradient(180deg,rgba(27,30,34,.92),rgba(20,22,25,.92));padding:1.4rem 1.3rem 1.2rem;transition:border-color .3s ease,transform .4s cubic-bezier(.2,.7,.2,1);}
             @media (min-width:640px){#reviews .hmr-card{flex-basis:23rem;}}
-            #reviews .hmr-card::after{content:"\201C";position:absolute;top:.35rem;right:.75rem;font-family:Oswald,sans-serif;font-size:4.5rem;line-height:1;color:rgba(240,98,37,.12);pointer-events:none;}
-            #reviews .hmr-card:hover{border-color:rgba(240,98,37,.45);transform:translateY(-3px);}
-            #reviews .hmr-card-top{display:flex;align-items:center;justify-content:space-between;gap:.75rem;}
-            #reviews .hmr-when{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}
-            #reviews .hmr-title{margin-top:.85rem;font-family:Oswald,sans-serif;font-weight:400;font-size:1.05rem;line-height:1.2;text-transform:uppercase;letter-spacing:.01em;color:#fff;}
-            #reviews .hmr-quote{margin-top:.7rem;font-family:'IBM Plex Sans',sans-serif;font-size:.875rem;line-height:1.65;color:rgba(255,255,255,.72);quotes:none;}
-            #reviews .hmr-quote::before{content:"\201C";}
-            #reviews .hmr-quote::after{content:"\201D";}
-            #reviews .hmr-guide{margin-top:.9rem;display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
-            #reviews .hmr-guide span{padding:.2rem .4rem;border:1px solid rgba(240,98,37,.35);color:rgba(255,255,255,.55);font-size:8.5px;letter-spacing:.18em;}
-            #reviews .hmr-card-foot{margin-top:auto;padding-top:1rem;}
-            #reviews .hmr-who{margin-top:.35rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#fff;}
-            #reviews .hmr-links{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .9rem;margin-top:.7rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.08);}
-            #reviews .hmr-trip{display:inline-flex;align-items:center;gap:.45rem;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;transition:gap .25s;}
-            #reviews .hmr-trip svg{width:14px;height:8px;}
-            #reviews .hmr-trip:hover{gap:.7rem;text-decoration:underline;text-underline-offset:3px;}
-            #reviews .hmr-trip.is-plain{color:var(--muted-foreground);}
-            #reviews .hmr-verify{display:inline-flex;align-items:center;gap:.35rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground);text-decoration:none;transition:color .25s;}
-            #reviews .hmr-verify:hover{color:#00aa6c;}
             #reviews a:focus-visible,#reviews button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
             /* ---- rail arrows ---- */
@@ -1573,53 +1733,149 @@
     <script src="/peaks.js?v=4"></script>
     <script src="/data/stories.js"></script>
     <script src="/stories.js?v=3"></script>
+    <script src="/explore-map.js?v=13" defer></script>
     <script src="/data/reviews.js"></script>
-    <script src="/reviews.js?v=1" defer></script>
+    <script src="/reviews.js?v=5" defer></script>
     <script src="/edit.js?v=25.9"></script>
     <script>
-    /* Homepage Compare-Treks preview table (04) */
+    /* Homepage Compare-Treks (04) — three route dossiers drawn from the
+       trek database. The altitude bars share one scale, so the cards read as
+       a chart. Change the three routes in `slugs` below. */
     (function () {
-      var box = document.getElementById('compare-home-table');
+      var box = document.getElementById('compare-home-cards');
       var T = window.TREKS || {};
       if (!box || !Object.keys(T).length) return;
-      var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-      var firstInt = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
-      var slugs = ['everest-base-camp', 'annapurna-circuit', 'langtang-valley'].filter(function (s) { return T[s]; });
+      var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); };
+      var ico = function (d) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; };
+      var I = {
+        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/>',
+        mtn: '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/>',
+        gauge: '<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
+        sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+        wallet: '<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+        bed: '<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M2 16h20"/><path d="M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/>',
+        tent: '<path d="M3.5 21 14 3"/><path d="M20.5 21 10 3"/><path d="M15.5 21 12 15l-3.5 6"/><path d="M2 21h20"/>',
+        crown: '<path d="m3 6 4.5 4L12 4l4.5 6L21 6v12H3z"/>',
+        route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+        leaf: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
+        arrow: '<path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/>',
+        spark: '<path d="M12 3l1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9z"/>'
+      };
+      var arrow = '<svg viewBox="0 0 18 10" fill="none" aria-hidden="true">' + I.arrow + '</svg>';
+      var num = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
+      var DIFF = [[/^easy|gentle/i, 1], [/moderate to challenging|moderate–challenging/i, 3], [/moderate/i, 2], [/strenuous|challenging/i, 4], [/technical|expedition/i, 5]];
+      var diffRank = function (s) {
+        for (var i = 0; i < DIFF.length; i++) if (DIFF[i][0].test(s || '')) return DIFF[i][1];
+        return 3;
+      };
+
+      var slugs = ['everest-base-camp', 'annapurna-base-camp', 'langtang-valley'].filter(function (s) { return T[s]; });
       var vm = slugs.map(function (s) {
         var t = T[s], st = t.stats || {};
         var pr = (t.cost && t.cost.tiers && t.cost.tiers[0] && t.cost.tiers[0].rangeUSD) || '';
-        var pm = pr.match(/\$[\d,]+/); var pv = pm ? +pm[0].replace(/[$,]/g, '') : null;
+        var pm = pr.match(/\$[\d,]+/);
+        var pv = pm ? +pm[0].replace(/[$,]/g, '') : null;
         var dm = String(st.duration || '').match(/(\d+)(?:\s*[–—-]\s*(\d+))?\s*days?/i);
-        var accNote = (t.accommodationNote || '').toLowerCase();
+        var acc = String(t.hotelsNote || (t.suitability && t.suitability.accommodation) || '').toLowerCase();
         return {
-          slug: s, name: t.name.replace(/ Trek$/, ''), region: t.region || '',
-          dur: dm ? (dm[2] ? dm[1] + '–' + dm[2] + 'd' : dm[1] + 'd') : (st.duration || '').split('(')[0].trim(),
-          alt: (st.maxAltitude || '—').replace(/^[≈~\s]+/, '').split('(')[0].trim(),
-          diff: st.difficulty || '—', season: st.bestSeason || '—',
-          cost: pv == null ? '—' : pv < 1200 ? '$' : pv < 2200 ? '$$' : '$$$',
-          teahouse: !/camping/.test(accNote) || /tea ?house/.test(accNote)
+          slug: s,
+          name: t.name.replace(/ Trek$/, ''),
+          region: t.region || '',
+          image: t.heroImage || '',
+          days: dm ? +dm[1] : null,
+          daysLabel: dm ? (dm[2] ? dm[1] + '–' + dm[2] + ' days' : dm[1] + ' days') : (st.duration || '—').split('(')[0].trim(),
+          alt: num(st.maxAltitude),
+          altLabel: (st.maxAltitude || '—').replace(/^[≈~\s]+/, '').split('(')[0].trim(),
+          high: st.maxAltitudePoint || '',
+          diff: (st.difficulty || '—').split('(')[0].trim(),
+          diffRank: diffRank(st.difficulty),
+          season: (st.bestSeason || '—').split('(')[0].trim(),
+          price: pv,
+          priceLabel: pv == null ? 'On request' : 'from $' + pv.toLocaleString('en-GB'),
+          camping: /camp/.test(acc) && !/tea ?house|lodge/.test(acc)
         };
       });
-      var rows = [
-        ['Duration', function (m) { return esc(m.dur); }],
-        ['Max altitude', function (m) { return '<span class="text-accent">' + esc(m.alt) + '</span>'; }],
-        ['Difficulty', function (m) { return esc(m.diff); }],
-        ['Best season', function (m) { return esc(m.season); }],
-        ['Cost', function (m) { return '<span class="text-white">' + esc(m.cost) + '</span>'; }],
-        ['Tea houses', function (m) { return m.teahouse ? '<span class="text-accent">✓</span>' : '✗'; }]
-      ];
-      box.innerHTML = '<table class="w-full border-collapse font-mono text-xs bg-[#16181b] border border-border min-w-[520px]">' +
-        '<thead><tr><th class="text-left p-4 border-b border-border"></th>' +
-        vm.map(function (m) { return '<th class="text-left p-4 border-b border-l border-border"><a href="/treks/' + esc(m.slug) + '" class="font-heading text-lg md:text-xl uppercase text-white hover:text-accent transition-colors leading-tight block">' + esc(m.name) + '</a><span class="block text-[9px] uppercase tracking-widest text-muted-foreground mt-1">' + esc(m.region) + '</span></th>'; }).join('') + '</tr></thead><tbody>' +
-        rows.map(function (r, i) {
-          return '<tr class="' + (i % 2 ? 'bg-[#1b1e22]' : '') + '"><td class="p-4 text-[9px] uppercase tracking-[0.2em] text-muted-foreground border-b border-border/50">' + esc(r[0]) + '</td>' +
-            vm.map(function (m) { return '<td class="p-4 text-foreground/90 border-b border-l border-border/50">' + r[1](m) + '</td>'; }).join('') + '</tr>';
-        }).join('') + '</tbody></table>';
+      if (!vm.length) return;
+
+      var maxAlt = Math.max.apply(null, vm.map(function (m) { return m.alt || 0; })) || 1;
+      var scaleTop = Math.ceil(maxAlt / 500) * 500;
+      var best = {
+        alt: Math.max.apply(null, vm.map(function (m) { return m.alt || 0; })),
+        days: Math.max.apply(null, vm.map(function (m) { return m.days || 0; })),
+        easy: Math.min.apply(null, vm.map(function (m) { return m.diffRank; })),
+        price: Math.min.apply(null, vm.map(function (m) { return m.price == null ? Infinity : m.price; }))
+      };
+      /* one badge per card, one card per badge */
+      var flags = {};
+      [['Highest', I.crown, function (m) { return m.alt === best.alt; }],
+       ['Longest', I.route, function (m) { return m.days === best.days; }],
+       ['Gentlest', I.leaf, function (m) { return m.diffRank === best.easy; }],
+       ['Best value', I.spark, function (m) { return m.price === best.price; }]
+      ].forEach(function (f) {
+        for (var i = 0; i < vm.length; i++) {
+          if (!flags[vm[i].slug] && f[2](vm[i])) { flags[vm[i].slug] = [f[0], f[1]]; return; }
+        }
+      });
+      var flagFor = function (m) { return flags[m.slug] || null; };
+      var row = function (iconPath, label, value, isBest) {
+        return '<div class="cmp-row' + (isBest ? ' is-best' : '') + '">' + ico(iconPath) + '<span>' + esc(label) + '</span><b>' + value + '</b></div>';
+      };
+      var dots = function (n) {
+        var out = '';
+        for (var i = 1; i <= 5; i++) out += '<i class="' + (i <= n ? 'on' : '') + '"></i>';
+        return '<span class="cmp-dots" role="img" aria-label="Difficulty ' + n + ' of 5">' + out + '</span>';
+      };
+
+      box.innerHTML = vm.map(function (m) {
+        var flag = flagFor(m);
+        return '<article class="cmp-card">' +
+          '<div class="cmp-shot">' +
+            (m.image ? '<img src="' + esc(m.image) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : '') +
+            (flag ? '<span class="cmp-flag">' + ico(flag[1]) + esc(flag[0]) + '</span>' : '') +
+            '<div class="cmp-head"><span class="cmp-region">' + esc(m.region) + '</span><h3 class="cmp-name">' + esc(m.name) + '</h3></div>' +
+          '</div>' +
+          '<div class="cmp-alt">' +
+            '<span class="cmp-alt-n">' + esc(m.altLabel) + '<b>' + esc(m.high || 'Highest point') + '</b></span>' +
+            '<span class="cmp-track"><i class="cmp-fill" style="--h:' + ((m.alt || 0) / scaleTop).toFixed(3) + '"></i></span>' +
+          '</div>' +
+          '<div class="cmp-rows">' +
+            row(I.clock, 'Duration', esc(m.daysLabel), m.days === best.days) +
+            row(I.gauge, 'Difficulty', dots(m.diffRank) + '<span class="sr-only">' + esc(m.diff) + '</span>', false) +
+            row(I.sun, 'Best season', esc(m.season), false) +
+            row(I.wallet, 'Land cost', esc(m.priceLabel), m.price === best.price) +
+            row(m.camping ? I.tent : I.bed, 'Nights', m.camping ? 'Camping' : 'Tea houses', false) +
+          '</div>' +
+          '<div class="cmp-foot">' +
+            '<a class="cmp-open" href="/treks/' + esc(m.slug) + '">Full route' + arrow + '</a>' +
+            '<a class="cmp-book" href="/contact?trip=' + esc(m.slug) + '" data-book="' + esc(m.slug) + '" data-book-type="trek" aria-label="Plan ' + esc(m.name) + '">' + ico(I.mtn) + 'Plan</a>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+
+      var scaleMax = document.getElementById('cmp-scale-max');
+      if (scaleMax) scaleMax.textContent = scaleTop.toLocaleString('en-GB') + ' m';
+
+      /* let the bars grow once the section is on screen */
+      var fills = box.querySelectorAll('.cmp-fill');
+      var grow = function () {
+        [].forEach.call(fills, function (f, i) {
+          var h = f.style.getPropertyValue('--h');
+          f.style.setProperty('--h', '0');
+          setTimeout(function () { f.style.setProperty('--h', h); }, 120 + i * 110);
+        });
+      };
+      if (window.IntersectionObserver && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.isIntersecting) { grow(); io.disconnect(); } });
+        }, { threshold: 0.25 });
+        io.observe(box);
+      }
     })();
     </script>
     <script src="/announce.js?v=2"></script>
 <script src="/backdrop.js?v=2" defer></script>
 <script src="/menu.js?v=10"></script>
+<script src="/card-fx.js?v=4" defer></script>
 <script src="/back.js?v=1"></script>
 <script src="/altitude.js?v=1" defer></script>
 <script src="/hero-corridor.js?v=2" defer></script>

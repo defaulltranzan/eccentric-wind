@@ -1323,3 +1323,43 @@ ratings collected from another site, and it risks a manual action — the visibl
 To revert: `git checkout pre-reviews -- public/index.html public/edit.js public/booking-modal.js public/booking-modal.css src public/admin server.js supabase scripts`,
 delete `public/reviews.js` and `data/content/reviews.json`, and drop the `<script src="/data/reviews.js">` +
 `<script src="/reviews.js">` tags and the `data-hmr-pill` paragraph from the page footers.
+
+## § 11 — Real map, card motion, compare cards, trip reviews (2026-09-18)
+
+Restore point: tag `pre-map` (= commit 8ddf010). Each piece reverts on its own:
+
+**1. Explore Nepal is a real map (MapLibre GL).**
+- `public/vendor/maplibre-gl.{js,css}` — MapLibre GL JS 4.7.1, self-hosted (BSD-3, licence alongside).
+  Self-hosted on purpose: no API key, no third-party request, and our CSP blocks CDNs.
+- `public/data/nepal.geo.json` — country outline, 7 provinces and a world mask, built from
+  mesaugat/geoJSON-Nepal (OCHA / Survey Department) and simplified to ~110 kB.
+- `public/data/places.json` — the towns, trailheads, passes, lakes and parks (real coordinates,
+  nearest few hundred metres). Peaks come from the expeditions database, which already holds coordinates.
+- `public/explore-map.js` — draws the map, the markers and the panel. No tile server: everything is our
+  own vector data, so it costs nothing and works offline once the page is loaded.
+  Decluttering: markers are ranked, then any pin or label that would collide with a more important one
+  is hidden; more appear as you zoom. Hiding uses `visibility`, because MapLibre sets inline `opacity`.
+  It starts on `styledata` rather than `load`, so it still works in a tab that is not painting.
+- CSP: `worker-src`/`child-src` now allow `blob:` (MapLibre's parser worker) — `src/config/security.js`.
+- **Revert:** delete the `<script src="/explore-map.js">` tag from index.html. The old drawn SVG map is
+  still in the page and comes straight back (it is also the automatic fallback if the module fails).
+
+**2. Card motion on every rail — `public/card-fx.js` (all 14 pages).**
+Depth (cards scale/dim away from the middle), photo parallax, drag-to-scroll with momentum, a hairline
+progress bar, and ←/→/Home/End keys. Off automatically for `prefers-reduced-motion`.
+- **Revert (any one):** `<script>window.HMA_CARD_FX = false;</script>` before the tag · delete the
+  `<script src="/card-fx.js">` tags · `HMACardFX.off()` in the console for one page view.
+
+**3. Homepage compare (04) — three route dossiers instead of the table.**
+Photo, superlative badge (Highest / Longest / Gentlest / Best value, one per card), a shared-scale
+altitude bar, Lucide icon rows and a Plan button. Markup + script are inline in index.html; the routes
+shown are the `slugs` array in that script.
+- **Revert:** `git checkout pre-map -- public/index.html` (also reverts the map wiring).
+
+**4. Two reviews on each trek / expedition page.**
+`#trip-reviews` in trek.html and expedition.html, filled by reviews.js: reviews written about that trip
+if there are any, otherwise the strongest recent ones. The review-card CSS moved from index.html's
+`<style>` into reviews.js so both pages share it.
+- **Revert:** delete the `data-hmr-wrap` section from trek.html / expedition.html.
+
+Cache bumps: explore-map.js v=13, card-fx.js v=4, reviews.js v=5.

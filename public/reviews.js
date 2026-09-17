@@ -117,6 +117,27 @@
     '</article>';
   }
 
+  /* Two reviews on a trek / expedition page: the ones written about this trip
+     if we have them, otherwise the strongest recent ones. */
+  function renderTripReviews() {
+    var box = document.getElementById('trip-reviews');
+    if (!box) return;
+    var rows = list();
+    var s = src();
+    if (!rows.length) { box.closest('[data-hmr-wrap]') && (box.closest('[data-hmr-wrap]').hidden = true); return; }
+    var m = location.pathname.match(/\/(?:treks|expeditions(?:\/peaks)?)\/([^/?#]+)/);
+    var slug = m ? decodeURIComponent(m[1]) : '';
+    var mine = rows.filter(function (r) { return r.tripSlug && r.tripSlug === slug; });
+    var pick = (mine.length ? mine : rows).slice(0, 2);
+    var head = document.getElementById('trip-reviews-head');
+    if (head) {
+      head.innerHTML = '<div><span class="hmr-panel-kind">' + CHECK + (mine.length ? 'Reviews of this trip' : 'What travellers say') + '</span></div>' +
+        (s && s.url ? '<a class="hmr-trip-all" href="' + esc(s.url) + '" target="_blank" rel="noopener">' +
+          'All ' + esc(s.reviewCount) + ' reviews on ' + esc(s.sourceName || 'Tripadvisor') + EXT + '</a>' : '');
+    }
+    box.innerHTML = pick.map(cardHTML).join('');
+  }
+
   function renderSection() {
     var track = document.getElementById('reviews-track');
     if (!track) return;
@@ -169,6 +190,42 @@
     '.hmr-pill-txt b{font-weight:500;color:#fff;}' +
     '.light-mode .hmr-pill{border-color:rgba(28,30,33,.16);color:#4b5158;}' +
     '.light-mode .hmr-pill-score,.light-mode .hmr-pill-txt b{color:#16181b;}' +
+    /* review cards — shared by the homepage rail and the trip pages */
+    '.hmr-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);' +
+    'background:linear-gradient(180deg,rgba(27,30,34,.92),rgba(20,22,25,.92));padding:1.4rem 1.3rem 1.2rem;' +
+    'transition:border-color .3s ease,transform .4s cubic-bezier(.2,.7,.2,1);}' +
+    '.hmr-card::after{content:"\\201C";position:absolute;top:.35rem;right:.75rem;font-family:Oswald,sans-serif;font-size:4.5rem;line-height:1;color:rgba(240,98,37,.12);pointer-events:none;}' +
+    '.hmr-card:hover{border-color:rgba(240,98,37,.45);transform:translateY(-3px);}' +
+    '.hmr-card-top{display:flex;align-items:center;justify-content:space-between;gap:.75rem;}' +
+    '.hmr-when{font-family:\'IBM Plex Mono\',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}' +
+    '.hmr-title{margin-top:.85rem;font-family:Oswald,sans-serif;font-weight:400;font-size:1.05rem;line-height:1.2;text-transform:uppercase;letter-spacing:.01em;color:#fff;}' +
+    '.hmr-quote{margin-top:.7rem;font-family:\'IBM Plex Sans\',sans-serif;font-size:.875rem;line-height:1.65;color:rgba(255,255,255,.72);quotes:none;}' +
+    '.hmr-quote::before{content:"\\201C";}' +
+    '.hmr-quote::after{content:"\\201D";}' +
+    '.hmr-guide{margin-top:.9rem;display:inline-flex;align-items:center;gap:.5rem;font-family:\'IBM Plex Mono\',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}' +
+    '.hmr-guide span{padding:.2rem .4rem;border:1px solid rgba(240,98,37,.35);color:rgba(255,255,255,.55);font-size:8.5px;letter-spacing:.18em;}' +
+    '.hmr-card-foot{margin-top:auto;padding-top:1rem;}' +
+    '.hmr-who{margin-top:.35rem;font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#fff;}' +
+    '.hmr-links{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .9rem;margin-top:.7rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.08);}' +
+    '.hmr-trip{display:inline-flex;align-items:center;gap:.45rem;font-family:\'IBM Plex Mono\',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;transition:gap .25s;}' +
+    '.hmr-trip svg{width:14px;height:8px;}' +
+    '.hmr-trip:hover{gap:.7rem;text-decoration:underline;text-underline-offset:3px;}' +
+    '.hmr-trip.is-plain{color:var(--muted-foreground);}' +
+    '.hmr-verify{display:inline-flex;align-items:center;gap:.35rem;font-family:\'IBM Plex Mono\',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground);text-decoration:none;transition:color .25s;}' +
+    '.hmr-verify:hover{color:#00aa6c;}' +
+    '.light-mode .hmr-card{background:#fff;border-color:#e3ded5;}' +
+    '.light-mode .hmr-title,.light-mode .hmr-who{color:#16181b;}' +
+    '.light-mode .hmr-quote{color:#3b4046;}' +
+    '.light-mode .hmr-when,.light-mode .hmr-verify{color:#6b7078;}' +
+    '.light-mode .hmr-links{border-top-color:rgba(28,30,33,.1);}' +
+    '.light-mode .hmr-guide span{color:#6b7078;}' +
+    /* the block on a trek / expedition page */
+    '.hmr-trip-block{display:grid;gap:1rem;}' +
+    '@media (min-width:768px){.hmr-trip-block{grid-template-columns:repeat(2,minmax(0,1fr));}}' +
+    '.hmr-trip-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.1rem;}' +
+    '.hmr-trip-head .hmr-panel-kind{display:inline-flex;align-items:center;gap:.45rem;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#f06225);}' +
+    '.hmr-trip-all{display:inline-flex;align-items:center;gap:.5rem;font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#f06225);text-decoration:none;}' +
+    '.hmr-trip-all:hover{text-decoration:underline;text-underline-offset:3px;}' +
     '';
 
   function injectCSS() {
@@ -183,6 +240,7 @@
     injectCSS();
     renderPills();
     renderSection();
+    renderTripReviews();
   }
   window.HMAReviews = { render: boot, pill: function (o) { return pillHTML(src(), o); }, bubbles: bubbles };
 
