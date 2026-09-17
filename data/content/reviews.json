@@ -1,0 +1,302 @@
+[
+  {
+    "slug": "tripadvisor",
+    "title": "Tripadvisor rating summary",
+    "published": true,
+    "featured": false,
+    "sort_order": 0,
+    "kind": "source",
+    "data": {
+      "slug": "tripadvisor",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "listingName": "Himalayan Magic Adventures",
+      "rating": 4.9,
+      "reviewCount": 52,
+      "url": "https://www.tripadvisor.com/Attraction_Review-g293890-d5617547-Reviews-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Region.html",
+      "checkedAt": "2026-09-18",
+      "distribution": [
+        {
+          "label": "Excellent",
+          "count": 48
+        },
+        {
+          "label": "Very good",
+          "count": 3
+        },
+        {
+          "label": "Average",
+          "count": 1
+        },
+        {
+          "label": "Poor",
+          "count": 0
+        },
+        {
+          "label": "Terrible",
+          "count": 0
+        }
+      ]
+    }
+  },
+  {
+    "slug": "christian-ebc-2024",
+    "title": "EBC: first trek in the Khumbu and an amazing experience!",
+    "published": true,
+    "featured": true,
+    "sort_order": 1,
+    "kind": "review",
+    "data": {
+      "slug": "christian-ebc-2024",
+      "author": "Christian",
+      "location": "Los Angeles, California",
+      "rating": 5,
+      "title": "EBC: first trek in the Khumbu and an amazing experience!",
+      "quote": "Nirmal is very professional and tries to accommodate the needs and wishes of his customers… HMA should be on the top of your trekking agencies list, and if you are planning a trek in the Khumbu, don’t forget to ask for Pemba and Tanji.",
+      "travelDate": "Jan 2024",
+      "party": "Friends",
+      "writtenAt": "2024-03-18",
+      "trip": "Everest Base Camp",
+      "tripSlug": "everest-base-camp",
+      "tripType": "trek",
+      "guide": "Pemba Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r942752307-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "poon-hill-2023",
+    "title": "Poon Hill trek",
+    "published": true,
+    "featured": true,
+    "sort_order": 2,
+    "kind": "review",
+    "data": {
+      "slug": "poon-hill-2023",
+      "author": "Tripadvisor traveller",
+      "location": "",
+      "rating": 5,
+      "title": "Poon Hill trek",
+      "quote": "Our guide, Animesh, was perfect. He managed everything based on our needs in a perfect way and he also suggested beautiful sightseeing on the way, which made the trip more spectacular.",
+      "travelDate": "Dec 2023",
+      "party": "Couple",
+      "writtenAt": "2024-01-03",
+      "trip": "Poon Hill · Annapurna",
+      "tripSlug": "",
+      "tripType": "trek",
+      "guide": "Animesh",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r932088960-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "sannerholt-manaslu-tsum-2023",
+    "title": "Manaslu Circuit & Tsum Valley",
+    "published": true,
+    "featured": true,
+    "sort_order": 3,
+    "kind": "review",
+    "data": {
+      "slug": "sannerholt-manaslu-tsum-2023",
+      "author": "Sannerholt",
+      "location": "Skien, Norway",
+      "rating": 5,
+      "title": "Manaslu Circuit & Tsum Valley",
+      "quote": "Nirmal and HMA helped us with a very individual and good open itinerary, making us do Tsum Valley and Manaslu Circuit in just 14 days. We had an excellent guide in Lakpa Sherpa… Nirmal goes a long way to tailor-make your trek.",
+      "travelDate": "Apr 2023",
+      "party": "Friends",
+      "writtenAt": "2023-11-01",
+      "trip": "Manaslu & Tsum Valley",
+      "tripSlug": "manaslu-tsum-valley-trek",
+      "tripType": "trek",
+      "guide": "Lakpa Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r923995975-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "ben-o-khumbu-2023",
+    "title": "Would highly recommend",
+    "published": true,
+    "featured": true,
+    "sort_order": 4,
+    "kind": "review",
+    "data": {
+      "slug": "ben-o-khumbu-2023",
+      "author": "Ben O",
+      "location": "London, United Kingdom",
+      "rating": 5,
+      "title": "Would highly recommend",
+      "quote": "He is a trustworthy person and very helpful with organising my trip before I arrived in Nepal… Pemba spoke excellent English and is very knowledgeable about the Khumbu Valley region, and is a great human being overall.",
+      "travelDate": "Sep 2023",
+      "party": "Solo",
+      "writtenAt": "2023-10-19",
+      "trip": "Everest Base Camp",
+      "tripSlug": "everest-base-camp",
+      "tripType": "trek",
+      "guide": "Pemba Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r921958780-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "tr-ebc-2023",
+    "title": "Successful 12 day EBC trek",
+    "published": true,
+    "featured": true,
+    "sort_order": 5,
+    "kind": "review",
+    "data": {
+      "slug": "tr-ebc-2023",
+      "author": "T.R.",
+      "location": "Belgium",
+      "rating": 5,
+      "title": "Successful 12 day EBC trek",
+      "quote": "Communication with HMA before the trip was very clear and they helped us wherever they could… I strongly recommend both HMA as a trekking agency and Pasang Sherpa as a guide for your Khumbu trips.",
+      "travelDate": "Mar 2023",
+      "party": "Friends",
+      "writtenAt": "2023-04-12",
+      "trip": "Everest Base Camp",
+      "tripSlug": "everest-base-camp",
+      "tripType": "trek",
+      "guide": "Pasang Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r885891546-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "shreesha-k-2022",
+    "title": "Trusted and reliable",
+    "published": true,
+    "featured": true,
+    "sort_order": 6,
+    "kind": "review",
+    "data": {
+      "slug": "shreesha-k-2022",
+      "author": "Shreesha K",
+      "location": "Bengaluru, India",
+      "rating": 5,
+      "title": "Trusted and reliable",
+      "quote": "This is my third trek in Nepal organised by Mr Nirmal… While trekking at high altitude many things can go out of plan, and that is when the value of a trek organiser is realised. Nirmal managed both the situations extremely well.",
+      "travelDate": "Oct 2022",
+      "party": "Friends",
+      "writtenAt": "2022-10-14",
+      "trip": "High-altitude treks",
+      "tripSlug": "",
+      "tripType": "trek",
+      "guide": "",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r864432339-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "susan-n-ebc-gokyo-2022",
+    "title": "EBC + Gokyo Lakes",
+    "published": true,
+    "featured": false,
+    "sort_order": 7,
+    "kind": "review",
+    "data": {
+      "slug": "susan-n-ebc-gokyo-2022",
+      "author": "Susan N",
+      "location": "",
+      "rating": 5,
+      "title": "EBC + Gokyo Lakes",
+      "quote": "My guide, Pasang, was great and very helpful throughout the entire trek. HMA has gone above and beyond to make my trip in Nepal enjoyable and memorable.",
+      "travelDate": "Apr 2022",
+      "party": "Solo",
+      "writtenAt": "2022-05-14",
+      "trip": "Gokyo Lakes & EBC",
+      "tripSlug": "gokyo-lakes",
+      "tripType": "trek",
+      "guide": "Pasang Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r838404600-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "subrsrini-cho-la-2022",
+    "title": "EBC · Kala Patthar · Cho La · Gokyo Ri",
+    "published": true,
+    "featured": false,
+    "sort_order": 8,
+    "kind": "review",
+    "data": {
+      "slug": "subrsrini-cho-la-2022",
+      "author": "subrsrini",
+      "location": "India",
+      "rating": 5,
+      "title": "EBC · Kala Patthar · Cho La · Gokyo Ri",
+      "quote": "This is one of our best treks in our lives, and it was only possible because of Pasang and our great porters Karma and Temba… When we come back I would without hesitation use Himalayan Magic to organise our treks.",
+      "travelDate": "Mar 2022",
+      "party": "Friends",
+      "writtenAt": "2022-05-01",
+      "trip": "Everest Base Camp",
+      "tripSlug": "everest-base-camp",
+      "tripType": "trek",
+      "guide": "Pasang Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r836809760-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "dorothea-ebc-2020",
+    "title": "Amazing EBC trek in March 2020",
+    "published": true,
+    "featured": false,
+    "sort_order": 9,
+    "kind": "review",
+    "data": {
+      "slug": "dorothea-ebc-2020",
+      "author": "Dorothea",
+      "location": "",
+      "rating": 5,
+      "title": "Amazing EBC trek in March 2020",
+      "quote": "Nirmal was incredibly kind and helpful in setting everything up at very short notice… When I got stuck in the sudden Nepalese lockdown in Lukla, Pasang checked on me regularly and Nirmal went out of his way to help.",
+      "travelDate": "Mar 2020",
+      "party": "Solo",
+      "writtenAt": "2020-06-08",
+      "trip": "Everest Base Camp",
+      "tripSlug": "everest-base-camp",
+      "tripType": "trek",
+      "guide": "Pasang Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r757033957-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  },
+  {
+    "slug": "thomasv-three-passes-2019",
+    "title": "Three Passes in the heart of winter",
+    "published": true,
+    "featured": false,
+    "sort_order": 10,
+    "kind": "review",
+    "data": {
+      "slug": "thomasv-three-passes-2019",
+      "author": "Thomasv",
+      "location": "",
+      "rating": 5,
+      "title": "Three Passes in the heart of winter",
+      "quote": "Lakpa Sherpa, the guide they provided for me, was able to navigate the Everest Three Passes through heaps of snow in the heart of winter like it was nothing.",
+      "travelDate": "Dec 2019",
+      "party": "Solo",
+      "writtenAt": "2020-01-09",
+      "trip": "Everest Three Passes",
+      "tripSlug": "three-passes",
+      "tripType": "trek",
+      "guide": "Lakpa Sherpa",
+      "source": "tripadvisor",
+      "sourceName": "Tripadvisor",
+      "url": "https://www.tripadvisor.com/ShowUserReviews-g293890-d5617547-r737972434-Himalayan_Magic_Adventures-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Regio.html"
+    }
+  }
+]

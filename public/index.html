@@ -420,7 +420,7 @@
             .hci-rope::after { transform: none; }
         }
     </style>
-    <link rel="stylesheet" href="/booking-modal.css?v=5">
+    <link rel="stylesheet" href="/booking-modal.css?v=6">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden relative">
 
@@ -1189,11 +1189,135 @@
     </section>
 
 
-    <!-- 06 — THE FIELD JOURNAL -->
+
+    <!-- 06 — THE SUMMIT REGISTER  ·  traveller reviews quoted from Tripadvisor.
+         Cards + the rating panel are rendered by /reviews.js from /data/reviews.js
+         (admin: /admin → Reviews). Nothing here is hard-coded. -->
+    <section id="reviews" class="relative px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#141619] overflow-hidden scroll-mt-16" aria-labelledby="reviews-heading">
+        <style>
+            #reviews .hmr-grid{display:grid;gap:1.75rem;margin-top:2.25rem;}
+            @media (min-width:1024px){#reviews .hmr-grid{grid-template-columns:19.5rem minmax(0,1fr);gap:2.25rem;align-items:start;}}
+
+            /* ---- rating panel ---- */
+            #reviews-panel{position:relative;border:1px solid var(--border);background:linear-gradient(180deg,rgba(27,30,34,.95),rgba(20,22,25,.95));padding:1.5rem 1.35rem 1.4rem;}
+            #reviews-panel::before{content:"";position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:1px solid var(--accent);border-left:1px solid var(--accent);}
+            @media (min-width:1024px){#reviews-panel{position:sticky;top:6rem;}}
+            #reviews .hmr-panel-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;}
+            #reviews .hmr-src{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#00aa6c;}
+            #reviews .hmr-verified{display:inline-flex;align-items:center;gap:.35rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}
+            #reviews .hmr-score{display:flex;align-items:baseline;gap:.5rem;margin-top:.9rem;}
+            #reviews .hmr-score-n{font-family:Oswald,sans-serif;font-weight:300;font-size:4.25rem;line-height:.85;letter-spacing:-.03em;color:var(--accent);font-feature-settings:'tnum';}
+            #reviews .hmr-score-of{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-foreground);}
+            #reviews .hmr-score-bub{margin-top:.6rem;}
+            #reviews .hmr-count{margin-top:.55rem;font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;line-height:1.5;color:rgba(255,255,255,.62);}
+            #reviews .hmr-count b{font-weight:500;color:#fff;}
+            #reviews .hmr-bars{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.4rem;}
+            #reviews .hmr-bar{display:grid;grid-template-columns:5.2rem 1fr 1.6rem;align-items:center;gap:.55rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground);}
+            #reviews .hmr-bar-track{height:4px;background:rgba(255,255,255,.07);position:relative;overflow:hidden;}
+            #reviews .hmr-bar-track i{position:absolute;inset:0 auto 0 0;background:#00aa6c;display:block;}
+            #reviews .hmr-bar:first-child .hmr-bar-n{color:#fff;}
+            #reviews .hmr-bar-n{text-align:right;font-feature-settings:'tnum';}
+            #reviews .hmr-cta{margin-top:1.25rem;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:44px;padding:.7rem 1rem;border:1px solid var(--accent);background:var(--accent);color:#14161a;
+                font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:background .25s,box-shadow .25s;}
+            #reviews .hmr-cta svg{width:16px;height:9px;transition:transform .3s cubic-bezier(.2,.7,.2,1);}
+            #reviews .hmr-cta:hover{background:#ff7a3d;box-shadow:0 0 0 4px rgba(240,98,37,.16);}
+            #reviews .hmr-cta:hover svg{transform:translateX(4px);}
+            #reviews .hmr-fine{margin-top:.85rem;font-family:'IBM Plex Mono',monospace;font-size:8.5px;line-height:1.6;letter-spacing:.06em;color:rgba(255,255,255,.34);}
+
+            /* ---- card rail ---- */
+            #reviews .hmr-rail{position:relative;min-width:0;}
+            #reviews-track{display:flex;gap:1.25rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:.25rem;margin:0 -1.5rem;padding-left:1.5rem;padding-right:1.5rem;scroll-padding-left:1.5rem;}
+            #reviews-track::-webkit-scrollbar{display:none;}
+            @media (min-width:1024px){#reviews-track{margin:0;padding-left:0;padding-right:0;scroll-padding-left:0;}}
+            #reviews .hmr-card{position:relative;flex:0 0 19.5rem;scroll-snap-align:start;display:flex;flex-direction:column;border:1px solid var(--border);
+                background:linear-gradient(180deg,rgba(27,30,34,.92),rgba(20,22,25,.92));padding:1.4rem 1.3rem 1.2rem;transition:border-color .3s ease,transform .4s cubic-bezier(.2,.7,.2,1);}
+            @media (min-width:640px){#reviews .hmr-card{flex-basis:23rem;}}
+            #reviews .hmr-card::after{content:"\201C";position:absolute;top:.35rem;right:.75rem;font-family:Oswald,sans-serif;font-size:4.5rem;line-height:1;color:rgba(240,98,37,.12);pointer-events:none;}
+            #reviews .hmr-card:hover{border-color:rgba(240,98,37,.45);transform:translateY(-3px);}
+            #reviews .hmr-card-top{display:flex;align-items:center;justify-content:space-between;gap:.75rem;}
+            #reviews .hmr-when{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}
+            #reviews .hmr-title{margin-top:.85rem;font-family:Oswald,sans-serif;font-weight:400;font-size:1.05rem;line-height:1.2;text-transform:uppercase;letter-spacing:.01em;color:#fff;}
+            #reviews .hmr-quote{margin-top:.7rem;font-family:'IBM Plex Sans',sans-serif;font-size:.875rem;line-height:1.65;color:rgba(255,255,255,.72);quotes:none;}
+            #reviews .hmr-quote::before{content:"\201C";}
+            #reviews .hmr-quote::after{content:"\201D";}
+            #reviews .hmr-guide{margin-top:.9rem;display:inline-flex;align-items:center;gap:.5rem;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
+            #reviews .hmr-guide span{padding:.2rem .4rem;border:1px solid rgba(240,98,37,.35);color:rgba(255,255,255,.55);font-size:8.5px;letter-spacing:.18em;}
+            #reviews .hmr-card-foot{margin-top:auto;padding-top:1rem;}
+            #reviews .hmr-who{margin-top:.35rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#fff;}
+            #reviews .hmr-links{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .9rem;margin-top:.7rem;padding-top:.7rem;border-top:1px solid rgba(255,255,255,.08);}
+            #reviews .hmr-trip{display:inline-flex;align-items:center;gap:.45rem;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;transition:gap .25s;}
+            #reviews .hmr-trip svg{width:14px;height:8px;}
+            #reviews .hmr-trip:hover{gap:.7rem;text-decoration:underline;text-underline-offset:3px;}
+            #reviews .hmr-trip.is-plain{color:var(--muted-foreground);}
+            #reviews .hmr-verify{display:inline-flex;align-items:center;gap:.35rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground);text-decoration:none;transition:color .25s;}
+            #reviews .hmr-verify:hover{color:#00aa6c;}
+            #reviews a:focus-visible,#reviews button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+            /* ---- rail arrows ---- */
+            #reviews .hmr-arrows{display:none;gap:.5rem;}
+            @media (min-width:1024px){#reviews .hmr-arrows{display:flex;}}
+            #reviews .hmr-arrow{display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid var(--border);background:transparent;color:var(--muted-foreground);cursor:pointer;transition:border-color .2s,color .2s,opacity .2s;}
+            #reviews .hmr-arrow:hover:not(:disabled){border-color:var(--accent);color:var(--accent);}
+            #reviews .hmr-arrow:disabled{opacity:.3;cursor:default;}
+            #reviews .hmr-arrow svg{width:16px;height:9px;}
+            #reviews .hmr-arrow.is-prev svg{transform:rotate(180deg);}
+            #reviews .hmr-hint{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-foreground);}
+
+            /* ---- light mode ---- */
+            body.light-mode #reviews{background:#f4f1ea;}
+            body.light-mode #reviews-panel,body.light-mode #reviews .hmr-card{background:#fff;border-color:#e3ded5;}
+            body.light-mode #reviews .hmr-title,body.light-mode #reviews .hmr-who,body.light-mode #reviews .hmr-count b{color:#16181b;}
+            body.light-mode #reviews .hmr-quote{color:#3b4046;}
+            body.light-mode #reviews .hmr-count{color:#4b5158;}
+            body.light-mode #reviews .hmr-bar-track{background:rgba(28,30,33,.09);}
+            body.light-mode #reviews .hmr-links{border-top-color:rgba(28,30,33,.1);}
+            body.light-mode #reviews .hmr-fine{color:rgba(28,30,33,.45);}
+            body.light-mode #reviews .hmr-guide span{color:#6b7078;border-color:rgba(214,77,22,.35);}
+            body.light-mode #reviews .hmr-when,body.light-mode #reviews .hmr-verify,body.light-mode #reviews .hmr-hint{color:#6b7078;}
+            /* phones: keep the panel short so the cards are in reach */
+            @media (max-width:639px){#reviews .hmr-bars{display:none;}#reviews .hmr-score-n{font-size:3.4rem;}#reviews-panel{padding:1.25rem 1.1rem 1.15rem;}}
+            @media (prefers-reduced-motion: reduce){#reviews .hmr-card{transition:none;}#reviews .hmr-card:hover{transform:none;}}
+        </style>
+
+        <div class="pointer-events-none absolute inset-0 z-0 opacity-[0.07] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/40 via-transparent to-transparent"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+                <div>
+                    <span id="reviews-label" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">06 &mdash; The Summit Register</span>
+                    <h2 id="reviews-heading" class="mt-3 font-heading text-4xl md:text-6xl font-light uppercase leading-[0.92] tracking-tightest text-foreground">
+                        What Trekkers<br><span class="font-semibold text-accent">Write Afterwards</span>
+                    </h2>
+                </div>
+                <p id="reviews-lede" class="max-w-md font-sans text-[13px] md:text-sm leading-relaxed text-muted-foreground">
+                    Every word below was written by a traveller on Tripadvisor &mdash; not by us. Tap any card to read the original review, or the route it was written about.
+                </p>
+            </div>
+
+            <div class="hmr-grid">
+                <aside id="reviews-panel" aria-label="Tripadvisor rating summary"></aside>
+
+                <div class="hmr-rail">
+                    <div class="hmr-track-wrap">
+                        <div id="reviews-track" role="list" tabindex="0" aria-label="Traveller reviews"></div>
+                    </div>
+                    <div class="mt-5 flex items-center justify-between gap-4">
+                        <span class="hmr-hint">Swipe or drag for more &middot; every review links to its source</span>
+                        <div class="hmr-arrows">
+                            <button type="button" class="hmr-arrow is-prev" data-hmr-scroll="prev" aria-label="Previous reviews"><svg viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                            <button type="button" class="hmr-arrow" data-hmr-scroll="next" aria-label="More reviews"><svg viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07 — THE FIELD JOURNAL -->
     <section id="dispatches" class="px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22]">
         <div class="max-w-7xl mx-auto">
             <div class="mb-12">
-                <span id="dispatches-label" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">06 — The Field Journal</span>
+                <span id="dispatches-label" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">07 — The Field Journal</span>
                 <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white md:text-5xl mt-2">
                     STORIES FROM THE <span class="font-semibold text-accent">HIGH PLACES</span>
                 </h2>
@@ -1281,6 +1405,8 @@
                 <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">
                     A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew, with a turnaround discipline we do not bend.
                 </p>
+                <!-- Tripadvisor rating pill — filled by /reviews.js from /data/reviews.js -->
+                <p data-hmr-pill class="mt-5"></p>
             </div>
 
             <!-- Link columns -->
@@ -1447,6 +1573,8 @@
     <script src="/peaks.js?v=4"></script>
     <script src="/data/stories.js"></script>
     <script src="/stories.js?v=3"></script>
+    <script src="/data/reviews.js"></script>
+    <script src="/reviews.js?v=1" defer></script>
     <script src="/edit.js?v=25.9"></script>
     <script>
     /* Homepage Compare-Treks preview table (04) */
@@ -1499,6 +1627,6 @@
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
 <script src="/booking-client.js?v=1" defer></script>
-<script src="/booking-modal.js?v=2" defer></script>
+<script src="/booking-modal.js?v=3" defer></script>
 </body>
 </html>

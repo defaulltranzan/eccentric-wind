@@ -7,7 +7,8 @@ const env = require('../../config/env');
 
 const { url, serviceKey, bucket } = env.supabase;
 const TIMEOUT_MS = 10000;
-const TABLES = new Set(['treks', 'expeditions', 'stories', 'bookings']);
+const TABLES = new Set([
+  'reviews','treks', 'expeditions', 'stories', 'bookings']);
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function table(name) {

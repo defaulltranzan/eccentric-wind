@@ -29,6 +29,8 @@ create table if not exists public.treks (
 
 create table if not exists public.expeditions (like public.treks including all);
 create table if not exists public.stories (like public.treks including all);
+-- traveller reviews quoted from Tripadvisor (one row of kind 'source' holds the rating summary)
+create table if not exists public.reviews (like public.treks including all);
 
 alter table public.expeditions drop constraint if exists expeditions_kind_check;
 alter table public.expeditions add constraint expeditions_kind_check check (kind in ('peak', 'eight-thousander'));
@@ -36,6 +38,7 @@ alter table public.expeditions add constraint expeditions_kind_check check (kind
 create index if not exists treks_published_order_idx       on public.treks (published, sort_order);
 create index if not exists expeditions_published_order_idx on public.expeditions (published, sort_order);
 create index if not exists stories_published_order_idx     on public.stories (published, sort_order);
+create index if not exists reviews_published_order_idx     on public.reviews (published, sort_order);
 
 -- ---------------------------------------------------------------- bookings
 create table if not exists public.bookings (
@@ -91,7 +94,7 @@ $$;
 do $$
 declare t text;
 begin
-  foreach t in array array['treks', 'expeditions', 'stories', 'bookings'] loop
+  foreach t in array array['treks', 'expeditions', 'stories', 'reviews', 'bookings'] loop
     execute format('drop trigger if exists %I_touch on public.%I', t, t);
     execute format('create trigger %I_touch before update on public.%I for each row execute function public.touch_updated_at()', t, t);
     execute format('alter table public.%I enable row level security', t);

@@ -1290,3 +1290,36 @@ Restore point: tag `pre-polish-v1` (= commit 1bcad7d). `git checkout pre-polish-
   (generated from the 340px originals). Delete the `srcset`/`sizes` attributes to go back to the single PNG.
 - **Spacing**: homepage sections `py-16 md:py-24` → `py-14 md:py-20`; interlude/stats bottom padding reduced.
 - Cache bumps: edit.js v=25.9, menu.js v=10, booking-modal.js v=2.
+
+## § 10 — Tripadvisor reviews: "The Summit Register" (2026-09-18)
+
+Restore point: tag `pre-reviews` (= commit ea72011).
+
+Hybrid approach: the real Tripadvisor rating badge for trust + hand-picked review cards in our own design.
+Everything is real: 10 five-bubble reviews quoted (short excerpts) from the live listing
+(Himalayan Magic Adventures, Kathmandu — 4.9/5 from 52 reviews, checked 18 Sept 2026), each card linking
+to the review it came from.
+
+New content collection `reviews` (4th collection, same row shape as treks/expeditions/stories):
+- `data/content/reviews.json` — 1 row of kind `source` (the rating summary panel) + 10 rows of kind `review`.
+- `contentService.COLLECTIONS.reviews` + a `buildScript` branch emitting `window.REVIEWS` and `window.REVIEW_SOURCE`.
+- `server.js` serves `/data/reviews.js`; `adminRoutes.js` COLLECTION regex now includes `reviews`.
+- Supabase: `public.reviews` table in `supabase/schema.sql` (re-run it), `supabaseDriver` TABLES, `scripts/db-push.js`.
+- Admin: /admin → Reviews (nav, dashboard card, `REVIEW` schema in schemas.js). Sections carry a `kinds`
+  list and `admin.js` only renders the sections matching the record's kind, so the summary record shows
+  only the rating fields. Admin bundle bumped to v=3.
+
+Front end:
+- `public/reviews.js` (v=1) renders three things from the data: the homepage section, the footer pill
+  (`[data-hmr-pill]`, on all 13 footers) and the pill inside the booking popup (`fillTrust()` in booking-modal.js).
+  It injects its own small stylesheet, so no page CSS was touched.
+- Homepage section `#reviews` ("06 — The Summit Register") sits between the Route Console and the Field Journal,
+  which is renumbered to 07 (`sec06Label` in the three i18n blocks of edit.js). Section CSS lives in index.html.
+- Cache bumps: booking-modal.css v=6, booking-modal.js v=3.
+
+Deliberately NOT added: schema.org `aggregateRating` JSON-LD. Google does not allow self-serving aggregate
+ratings collected from another site, and it risks a manual action — the visible badge + links are the safe way.
+
+To revert: `git checkout pre-reviews -- public/index.html public/edit.js public/booking-modal.js public/booking-modal.css src public/admin server.js supabase scripts`,
+delete `public/reviews.js` and `data/content/reviews.json`, and drop the `<script src="/data/reviews.js">` +
+`<script src="/reviews.js">` tags and the `data-hmr-pill` paragraph from the page footers.

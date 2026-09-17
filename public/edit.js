@@ -105,7 +105,7 @@ const i18n = {
     btnDeclareIntent: "Declare Intent",
     
     // 06 Dispatches
-    sec06Label: "06 — The Field Journal",
+    sec06Label: "07 — The Field Journal",
     sec06Heading: "Stories From The <span class='font-semibold text-accent'>High Places</span>",
     btnWriteDispatch: "+ Write Dispatch",
     readJournal: "READ STORY",
@@ -217,7 +217,7 @@ const i18n = {
     btnDeclareIntent: "इरादा पेश गर्नुहोस्",
     
     // 06 Dispatches
-    sec06Label: "०६ — फिल्ड जर्नल",
+    sec06Label: "०७ — फिल्ड जर्नल",
     sec06Heading: "उच्च हिमालका <span class='font-semibold text-accent'>कथाहरू</span>",
     btnWriteDispatch: "+ नयाँ रिपोर्ट लेख्नुहोस्",
     readJournal: "कथा पढ्नुहोस्",
@@ -329,7 +329,7 @@ const i18n = {
     btnDeclareIntent: "提交攀登意愿",
     
     // 06 Dispatches
-    sec06Label: "06 — 山野随笔",
+    sec06Label: "07 — 山野随笔",
     sec06Heading: "来自<span class='font-semibold text-accent'>群山之巅</span>的纪实故事",
     btnWriteDispatch: "+ 撰写探险简报",
     readJournal: "阅读全文",

@@ -16,7 +16,7 @@ if (!env.supabase.enabled) {
 const supabase = require('../src/data/drivers/supabaseDriver');
 
 const wanted = process.argv.slice(2);
-const collections = ['treks', 'expeditions', 'stories'].filter((c) => !wanted.length || wanted.includes(c));
+const collections = ['treks', 'expeditions', 'stories', 'reviews'].filter((c) => !wanted.length || wanted.includes(c));
 
 (async () => {
   for (const c of collections) {

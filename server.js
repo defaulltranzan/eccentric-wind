@@ -46,6 +46,7 @@ app.use('/api', express.urlencoded({ extended: false, limit: '64kb' }));
 app.get('/data/treks.js', publicController.dataScript('treks'));
 app.get('/data/expeditions.js', publicController.dataScript('expeditions'));
 app.get('/data/stories.js', publicController.dataScript('stories'));
+app.get('/data/reviews.js', publicController.dataScript('reviews'));
 app.get('/sitemap.xml', publicController.sitemap);
 app.get(['/admin', '/admin/'], (req, res) => {
   res.set('Cache-Control', 'no-store');

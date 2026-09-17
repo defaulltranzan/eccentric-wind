@@ -186,6 +186,7 @@
       ['#/treks', 'Treks', 'treks'],
       ['#/expeditions', 'Expeditions', 'expeditions'],
       ['#/stories', 'Stories', 'stories'],
+      ['#/reviews', 'Reviews', 'reviews'],
       ['#/bookings', 'Bookings', 'bookings']
     ];
     var sys = state.system || {};
@@ -256,7 +257,7 @@
         '<section class="dash-hero">' +
           '<div><span class="kicker mono">' + greeting() + '</span><h1>Base camp</h1>' +
           '<p class="muted">' + (b.NEW ? '<b class="hot-text">' + b.NEW + ' new booking' + (b.NEW === 1 ? '' : 's') + '</b> waiting for a reply.' : 'No new bookings waiting. Everything is answered.') + '</p></div>' +
-          '<div class="actions"><a class="btn" href="#/treks/new">+ Trek</a><a class="btn" href="#/expeditions/new">+ Expedition</a><a class="btn" href="#/stories/new">+ Story</a>' +
+          '<div class="actions"><a class="btn" href="#/treks/new">+ Trek</a><a class="btn" href="#/expeditions/new">+ Expedition</a><a class="btn" href="#/stories/new">+ Story</a><a class="btn" href="#/reviews/new">+ Review</a>' +
           (b.NEW ? '<a class="btn primary" href="#/bookings">Open bookings</a>' : '') + '</div>' +
         '</section>' +
         '<div class="cards">' +
@@ -264,6 +265,7 @@
           card('#/treks', 'Treks', c.treks.published, (c.treks.total - c.treks.published) + ' drafts') +
           card('#/expeditions', 'Expeditions', c.expeditions.published, (c.expeditions.total - c.expeditions.published) + ' drafts') +
           card('#/stories', 'Published stories', c.stories.published, (c.stories.total - c.stories.published) + ' drafts') +
+          (c.reviews ? card('#/reviews', 'Traveller reviews', c.reviews.published, (c.reviews.total - c.reviews.published) + ' drafts') : '') +
         '</div>' +
         '<div class="grid-2">' +
           '<section class="panel"><div class="panel-head"><h2>Latest bookings</h2><a class="btn small" href="#/bookings">All bookings</a></div>' + recent + '</section>' +
@@ -388,7 +390,7 @@
       ? Promise.resolve({ item: null })
       : api('GET', '/api/admin/' + collection + '/' + encodeURIComponent(slug));
     load.then(function (res) {
-      var kind = res.item ? res.item.kind : (collection === 'expeditions' ? 'peak' : null);
+      var kind = res.item ? res.item.kind : (collection === 'expeditions' ? 'peak' : collection === 'reviews' ? 'review' : null);
       var ed = {
         collection: collection,
         cfg: cfg,
@@ -550,8 +552,12 @@
     return f.half ? ' w-half' : f.third ? ' w-third' : f.twoThirds ? ' w-two-thirds' : f.quarter ? ' w-quarter' : '';
   }
 
+  function sectionsFor(ed) {
+    return ed.schema.sections.filter(function (sec) { return !sec.kinds || sec.kinds.indexOf(ed.kind) > -1; });
+  }
+
   function renderSections(ed) {
-    return ed.schema.sections.map(function (sec, si) {
+    return sectionsFor(ed).map(function (sec, si) {
       var fields = sec.fields.filter(function (f) { return !f.only || f.only === ed.kind; });
       if (!fields.length) return '';
       return '<details class="section panel"' + (sec.collapsed ? '' : ' open') + '>' +
@@ -651,7 +657,7 @@
         if (p === bare) found = f;
         if (f.fields) walk(f.fields, p);
       });
-    })([].concat.apply([], ed.schema.sections.map(function (s) { return s.fields; })), '');
+    })([].concat.apply([], sectionsFor(ed).map(function (s) { return s.fields; })), '');
     return found;
   }
 
