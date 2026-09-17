@@ -95,7 +95,7 @@
     hs('Range', m.range) + hs('Season', (m.season && m.season.primary + ' · ' + m.season.window)) + hs('First ascent', (m.firstAscent && m.firstAscent.year)) +
     '</div>' +
     '<div class="mt-8 flex flex-wrap items-center gap-3">' +
-    '<a href="/contact" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Plan This Expedition</a>' +
+    '<a href="/contact?trip=' + encodeURIComponent(m.slug) + '" class="inline-flex items-center gap-2 bg-accent text-background font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 hover:bg-accent-hover transition-colors">Plan This Expedition</a>' +
     '<a href="#route" class="inline-flex items-center gap-2 border border-white/40 text-white font-mono text-[11px] uppercase tracking-widest px-6 py-3 hover:border-accent hover:text-accent transition-all">The normal route</a>' +
     '</div>' +
     heroCredit(m.heroCredit) +
@@ -124,7 +124,7 @@
   }
 
   /* ---------- SUBNAV ---------- */
-  var nav = [['overview', 'The mountain'], ['difficulty', 'Difficulty'], ['route', 'Route'], ['camps', 'Camps'], ['itinerary', 'Itinerary'], ['season', 'Season'], ['hazards', 'Hazards'], ['permits', 'Permits'], ['history', 'History'], ['faq', 'FAQ']];
+  var nav = [['overview', 'The mountain'], ['difficulty', 'Difficulty'], ['route', 'Route'], ['camps', 'Camps'], ['itinerary', 'Itinerary'], ['acclim-profile', 'Altitude Profile'], ['season', 'Season'], ['hazards', 'Hazards'], ['permits', 'Permits'], ['history', 'History'], ['faq', 'FAQ']];
   out.push('<nav id="subnav" class="sticky top-0 z-30 border-b border-border bg-[#101215]/95 backdrop-blur-md">' +
     '<div class="max-w-6xl mx-auto px-4 md:px-10 flex items-center gap-1 overflow-x-auto">' +
     nav.map(function (n) { return '<a href="#' + n[0] + '" data-nav="' + n[0] + '" class="hx-nav-link shrink-0 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground hover:text-accent px-3 py-3.5 transition-colors">' + esc(n[1]) + '</a>'; }).join('') +
@@ -244,6 +244,27 @@
       '<div class="mb-6">' + itRows + '</div>' +
       (m.typicalDurationDays ? '<div class="border border-border bg-card p-4 max-w-lg"><span class="lbl block mb-1">Typical total duration</span><span class="font-heading text-xl text-white">' + esc(m.typicalDurationDays) + '</span></div>' : '');
     out.push(section('itinerary', '', 'The expedition timeline', itBody));
+  }
+
+  /* ---------- ALTITUDE PROFILE CHART (safety-tools.js, single-peak mode) ----------
+     Reuses the same rotation-profile chart as /altitude-safety, pinned to this
+     mountain via data-peak-slug — no selector, no other peaks listed. */
+  var hasAltProfile = (has(m.camps) && m.camps.length >= 2) ||
+    (has(itin) && itin[0] && itin[0].altM != null);
+  if (hasAltProfile) {
+    out.push('<section id="acclim-profile" data-peak-slug="' + esc(m.slug) + '" class="hx-sec fade-up scroll-mt-24 border-b border-border bg-[#101215]">' +
+      '<div class="max-w-6xl mx-auto px-6 md:px-10 py-14 md:py-20">' +
+      '<span class="kicker">Plan your ascent</span>' +
+      '<h2 class="sec-h text-3xl md:text-5xl text-foreground mt-3 mb-4">Altitude &amp; Acclimatisation Profile</h2>' +
+      '<p class="font-sans text-[13px] text-muted-foreground leading-relaxed max-w-2xl mb-8">The rotation profile for ' + esc(m.name) + ' &mdash; the climb-high, drop-back-to-Base-Camp saw-tooth that carries a team to the summit, with camp altitudes marked.</p>' +
+      '<div class="p-6 md:p-8 border border-border bg-card">' +
+      '<div class="ap-grids">' +
+      '<div><div id="ap-chart" class="ap-chart"></div><div id="ap-stats" class="ap-stats"></div></div>' +
+      '<div><div id="ap-detail" class="ap-detail"></div><div id="ap-verdict" class="ap-verdict"></div></div>' +
+      '</div>' +
+      '<div class="ap-legend" id="ap-legend"></div>' +
+      '</div>' +
+      '</div></section>');
   }
 
   /* ---------- SEASON + WEATHER ---------- */
@@ -385,8 +406,8 @@
       '<h2 class="sec-h text-3xl md:text-5xl text-foreground mt-3 mb-4">Climb ' + esc(m.name) + '</h2>' +
       '<p class="font-sans text-[14px] text-muted-foreground max-w-xl mx-auto mb-8">Talk to us about dates, your progression and whether ' + esc(m.name) + ' is the right objective for where you are. We will be honest about it.</p>' +
       '<div class="flex flex-wrap justify-center gap-3">' +
-      '<a href="/contact" class="bg-accent text-background hover:bg-accent-hover font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Plan this expedition</a>' +
-      '<a href="/contact" class="border border-border text-foreground hover:border-accent hover:text-accent font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Talk to an expert</a>' +
+      '<a href="/contact?trip=' + encodeURIComponent(m.slug) + '" class="bg-accent text-background hover:bg-accent-hover font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Plan this expedition</a>' +
+      '<a href="/contact?trip=' + encodeURIComponent(m.slug) + '" class="border border-border text-foreground hover:border-accent hover:text-accent font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Talk to an expert</a>' +
       '<a href="/expeditions" class="border border-border text-foreground hover:border-accent hover:text-accent font-mono text-[11px] uppercase tracking-widest font-semibold px-6 py-3 transition-all">Back to the atlas</a>' +
       '</div></div></section>');
   })();
@@ -400,11 +421,41 @@
   var mcta = document.getElementById('mobile-cta');
   var mctaName = document.getElementById('mcta-name');
   if (mctaName) mctaName.textContent = m.name;
+  if (mcta) {
+    var mctaBook = document.getElementById('mcta-book');
+    if (mctaBook) {
+      mctaBook.href = '/contact?trip=' + encodeURIComponent(m.slug);
+      mctaBook.setAttribute('data-book', m.slug);
+      mctaBook.setAttribute('data-book-type', 'expedition');
+      mctaBook.setAttribute('aria-label', 'Plan ' + m.name + ' — open the booking form');
+    }
+    var mctaKicker = document.getElementById('mcta-kicker');
+    if (mctaKicker && (m.range || m.region)) mctaKicker.textContent = 'Expedition · ' + (m.range || m.region);
+    var mctaMeta = document.getElementById('mcta-meta');
+    if (mctaMeta) {
+      var dur = String(m.typicalDurationDays || '').match(/(\d+(?:\s*[–-]\s*\d+)?)\s*days?/i);
+      mctaMeta.textContent = [dur ? dur[1].replace(/\s*[–-]\s*/, '–') + ' days' : '', m.peakGrade || '', m.elevationLabel || ''].filter(Boolean).join(' · ');
+    }
+    var mctaImg = document.getElementById('mcta-img');
+    if (mctaImg && m.heroImage) { mctaImg.onerror = function () { mctaImg.remove(); }; mctaImg.src = m.heroImage; } else if (mctaImg) mctaImg.remove();
+  }
+  /* booking dock: shown after the hero, hidden again once the footer is on screen */
+  function syncDock(scrollTop) {
+    if (!mcta) return;
+    var foot = document.querySelector('footer');
+    var footerInView = foot && foot.getBoundingClientRect().top < window.innerHeight - 40;
+    var show = scrollTop > window.innerHeight * 0.8 && !footerInView;
+    if (show === mcta.classList.contains('is-visible')) return;
+    mcta.classList.toggle('is-visible', show);
+    if (show) mcta.removeAttribute('inert'); else mcta.setAttribute('inert', '');
+    document.body.classList.toggle('hmb-dock-open', show);
+  }
+
   var secEls = nav.map(function (n) { return document.getElementById(n[0]); }).filter(Boolean);
   window.addEventListener('scroll', function () {
     var s = window.scrollY, dh = document.documentElement.scrollHeight - window.innerHeight;
     var pb = document.getElementById('read-progress'); if (pb) pb.style.width = (dh > 0 ? s / dh * 100 : 0) + '%';
-    if (mcta) mcta.classList.toggle('translate-y-full', s < window.innerHeight * 0.8);
+    syncDock(s);
     var cur = null;
     secEls.forEach(function (el) { if (el.getBoundingClientRect().top < 120) cur = el.id; });
     document.querySelectorAll('.hx-nav-link').forEach(function (a) { a.classList.toggle('active', a.getAttribute('data-nav') === cur); });

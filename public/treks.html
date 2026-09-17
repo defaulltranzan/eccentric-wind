@@ -8,8 +8,8 @@
     <link rel="canonical" href="https://himalayanmagic.com/treks">
 
     <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
-    <link rel="icon" type="image/png" href="/images/logo-icon.png">
-    <link rel="apple-touch-icon" href="/images/logo-icon.png">
+    <link rel="icon" type="image/png" href="/images/logo-badge.png">
+    <link rel="apple-touch-icon" href="/images/logo-badge.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -65,6 +65,7 @@
             .tk-shimmer { animation:none; }
         }
     </style>
+    <link rel="stylesheet" href="/booking-modal.css?v=5">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -72,7 +73,7 @@
 <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
         <a href="/" class="group flex shrink-0 items-center gap-3">
-            <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
             <span class="hidden flex-col leading-none sm:flex">
                 <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
                 <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Trekking Trails of Nepal · Est. 1993</span>
@@ -204,7 +205,7 @@
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -252,7 +253,8 @@
     </div>
 </footer>
 
-<script src="/treks.js?v=6"></script>
+<script src="/treks.js?v=7"></script>
+<script src="/data/treks.js"></script>
 <script>
 (function () {
   'use strict';
@@ -391,7 +393,9 @@
     var meta = [t.durShort, t.difficulty, '<span class="text-accent">' + esc(t.altShort) + '</span>'];
     if (big && t.seasonShort) meta.push('Best: ' + esc(t.seasonShort));
     var badge = (t.featured ? 'Signature route' : (t.restricted ? 'Restricted area' : (t.popular ? 'Popular' : '')));
-    return '<a href="/treks/' + esc(t.slug) + '" class="tk group relative block overflow-hidden border border-border bg-card ' + cls + '" ' +
+    // Book link sits beside the card link (never nested inside it) — opens the booking popup.
+    return '<div class="relative ' + cls + '">' +
+      '<a href="/treks/' + esc(t.slug) + '" class="tk group relative block h-full overflow-hidden border border-border bg-card" ' +
       'aria-label="' + esc(t.name + ' — ' + t.region + '. ' + t.durShort + ', ' + t.difficulty + ', maximum altitude ' + t.altShort) + '">' +
       '<div class="tk-shimmer absolute inset-0"></div>' +
       '<img class="tk-img absolute inset-0 h-full w-full object-cover opacity-0" loading="lazy" decoding="async" data-ph="' + esc(t.name) + '" src="' + esc(t.img) + '" alt="' + esc(t.name + ', ' + t.region + ', Nepal') + '">' +
@@ -409,7 +413,9 @@
           '<span class="tk-cta inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white shrink-0">Explore ' + ARROW + '</span>' +
         '</div>' +
       '</div>' +
-    '</a>';
+    '</a>' +
+    '<a href="/contact?trip=' + esc(t.slug) + '" class="hmb-card-book" data-book="' + esc(t.slug) + '" data-book-type="trek" aria-label="Book ' + esc(t.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Book</a>' +
+    '</div>';
   }
 
   /* ---------- filtering ---------- */
@@ -579,12 +585,14 @@
     </button>
 </div>
 <script src="/announce.js?v=2"></script>
-<script src="/backdrop.js?v=1" defer></script>
-<script src="/menu.js?v=9"></script>
+<script src="/backdrop.js?v=2" defer></script>
+<script src="/menu.js?v=10"></script>
 <script src="/back.js?v=1"></script>
 <script src="/altitude.js?v=1" defer></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
+<script src="/booking-client.js?v=1" defer></script>
+<script src="/booking-modal.js?v=2" defer></script>
 </body>
 </html>

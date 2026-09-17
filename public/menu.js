@@ -32,6 +32,9 @@
     // branches below, and drop `hidden lg:block` from #trek-finder.
     { name: 'What kind of trekker are you?', href: '/#trek-finder',
       overlayOnly: true, mobileOnly: true, action: 'openTrekFinder' },
+    // Phone-only, same pattern: the homepage map (#explore) opens as a sheet.
+    { name: 'Explore Nepal', href: '/#explore',
+      overlayOnly: true, mobileOnly: true, action: 'openExploreNepal' },
     { name: 'Compare Treks', short: 'Compare', href: '/compare', overlayOnly: true },
     { name: 'Expedition Atlas', short: 'Expeditions', href: '/expeditions', children: [
       { name: 'The Full Atlas', href: '/expeditions', all: true },
@@ -139,9 +142,9 @@
     '#hme-menu .hme-sub-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}' +
     '#hme-menu .hme-sub{display:flex;flex-direction:column;gap:.1rem;padding:.4rem 0 .6rem 1.4rem;margin-bottom:.2rem}' +
     '#hme-menu .hme-sub[hidden]{display:none}' +
-    /* phone-only rows: the desktop keeps these as real page sections */
+    /* phone-only rows: the desktop keeps these as real page sections.
+       Styled identically to every other top-level entry — brand consistency. */
     '@media(min-width:1024px){#hme-menu a.hme-nav-mobile{display:none}}' +
-    '#hme-menu a.hme-nav-mobile{font-size:clamp(1.15rem,4vw,1.5rem);color:var(--muted-foreground,#9399a2)}' +
     '#hme-menu a.hme-nav.hme-nav-sub{font-size:clamp(1rem,3.4vw,1.35rem);color:var(--muted-foreground,#9399a2);font-weight:400}' +
     '#hme-menu a.hme-nav.hme-nav-sub:hover,#hme-menu a.hme-nav.hme-nav-sub:focus-visible{color:var(--accent,#f06225)}' +
     '#hme-menu a.hme-nav .hme-dot{width:6px;height:6px;border-radius:9999px;background:currentColor;opacity:.45;flex:none;align-self:center}' +

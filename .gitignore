@@ -1,3 +1,12 @@
 node_modules/
 content.json.tmp
 *.log
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# customer bookings (local file storage)
+data/private/
+data/**/*.tmp

@@ -95,7 +95,11 @@
     'body.light-mode .hme-bd-mark::after{color:rgba(214,77,22,.30);',
       'border-top-color:rgba(214,77,22,.22);border-right-color:rgba(214,77,22,.22);}',
 
-    /* ---------- phones: a smooth wash and nothing else --------------------- */
+    /* ---------- phones: same flourishes as desktop, scaled to fit -----------
+       Previously stripped to a plain wash; brand review asked for the same
+       polished backdrop on mobile as desktop, so the contours, ridge,
+       coordinate marks and prayer flags now all render here too — just
+       resized so nothing crowds a narrow viewport. */
     '@media(max-width:1023px){',
       '.hme-bd::before{background-image:',
         'repeating-radial-gradient(ellipse 90% 60% at 24% 30%,transparent 0 34px,rgba(255,255,255,.015) 34px 35px),',
@@ -103,7 +107,9 @@
       'body.light-mode .hme-bd::before{background-image:',
         'repeating-radial-gradient(ellipse 90% 60% at 24% 30%,transparent 0 34px,rgba(28,30,33,.022) 34px 35px),',
         'repeating-radial-gradient(ellipse 80% 64% at 80% 76%,transparent 0 40px,rgba(214,77,22,.026) 40px 41px);}',
-      '.hme-bd-ridge::after,.hme-bd-mark::after,.hme-bd-flags::after{display:none}',
+      '.hme-bd-ridge::after{height:78px;background-size:100% 78px}',
+      '.hme-bd-mark::after{top:1rem;right:1rem;padding:.35rem .5rem;font-size:7px}',
+      '.hme-bd-flags::after{width:170px;height:42px;background-size:170px 42px}',
     '}',
 
     /* ---------- respect the print + reduced-data cases --------------------- */

@@ -55,8 +55,8 @@
 
     <!-- Tailwind CSS -->
     <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
-    <link rel="icon" type="image/png" href="/images/logo-icon.png">
-    <link rel="apple-touch-icon" href="/images/logo-icon.png">
+    <link rel="icon" type="image/png" href="/images/logo-badge.png">
+    <link rel="apple-touch-icon" href="/images/logo-badge.png">
     <link rel="stylesheet" href="/tailwind.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -171,7 +171,256 @@
         }
         .hme-flag-more:hover { border-color: var(--accent); background: rgba(240,98,37,.06); transform: translateY(-4px); }
         /* .hme-navlink / .hme-cta header-nav hover styles now live in build/tw-input.css (shared by all pages) */
+
+        /* ======================================================================
+           01 — THE HIGH CORRIDOR (hero, 2026-09-16 · REVERT-notes § 6a)
+           Layered environment: photo plate → haze → altitude instrument →
+           mid ridge → foreground ridge (+ climber) → low mist → UI.
+           hero-corridor.js writes --hx/--hy (pointer, -1..1) and --hp (scroll
+           progress 0..1) on #manifesto; every layer derives its transform
+           from those, so motion is transform/opacity only.
+           ====================================================================== */
+        #manifesto.hc { --hx: 0; --hy: 0; --hp: 0; --ink: #0d0f11;
+            position: relative; isolation: isolate; overflow: hidden; background: var(--ink); color: #fff;
+            min-height: clamp(600px, calc(100svh - 8.2rem), 980px); display: flex; }
+        .hc-stage { position: absolute; inset: 0; z-index: 0; }
+        .hc-layer { position: absolute; will-change: transform; pointer-events: none; }
+
+        .hc-plate { inset: -4% -3% -6%;
+            transform: translate3d(calc(var(--hx) * -7px), calc(var(--hy) * -5px + var(--hp) * 90px), 0) scale(1.04); }
+        .hc-photo, .hc-film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% 30%; }
+        .hc-photo { filter: saturate(.78) contrast(1.06) brightness(.92); animation: hcBreathe 38s ease-in-out infinite alternate; }
+        .hc-film { opacity: 0; transition: opacity 1.1s ease; filter: saturate(.8) contrast(1.05) brightness(.85); }
+        #manifesto.is-film .hc-film.is-ready { opacity: 1; }
+        @keyframes hcBreathe { from { transform: scale(1); } to { transform: scale(1.035); } }
+
+        /* atmosphere: a horizon haze band + a low drifting mist over the ridge */
+        .hc-haze { inset: 30% -10% 20%; opacity: .55;
+            background: radial-gradient(60% 45% at 30% 60%, rgba(196,204,214,.16), transparent 70%),
+                        radial-gradient(45% 40% at 78% 48%, rgba(196,204,214,.10), transparent 70%);
+            transform: translate3d(calc(var(--hx) * -12px), calc(var(--hp) * 60px), 0);
+            animation: hcDrift 46s ease-in-out infinite alternate; }
+        .hc-mist { left: -15%; right: -15%; bottom: 6%; height: 34%;
+            background: radial-gradient(50% 55% at 35% 70%, rgba(214,220,228,.13), transparent 72%),
+                        radial-gradient(40% 50% at 80% 60%, rgba(214,220,228,.09), transparent 70%);
+            transform: translate3d(calc(var(--hx) * -26px), calc(var(--hp) * -30px), 0);
+            animation: hcDrift 30s ease-in-out infinite alternate-reverse; }
+        @keyframes hcDrift { from { translate: -2.5% 0; } to { translate: 2.5% 0; } }
+
+        /* legibility shade: weighted to the text column, never a flat veil */
+        .hc-shade { position: absolute; inset: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 46% 50% at 50% 55%, rgba(13,15,17,.72) 0%, rgba(13,15,17,.48) 45%, rgba(13,15,17,.12) 80%, transparent 100%),
+                linear-gradient(180deg, rgba(13,15,17,.62) 0%, rgba(13,15,17,.1) 24%, rgba(13,15,17,.1) 64%, rgba(13,15,17,.6) 100%); }
+
+        /* altitude readout — in the centred column, under the actions */
+        .hc-alt { margin-top: 1.1rem; display: flex; flex-direction: column; align-items: center; gap: .45rem; animation: hcFade 1.2s .7s both; }
+        .hc-alt-label { display: inline-flex; align-items: center; gap: .7rem; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500;
+            letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.9); text-shadow: 0 1px 8px rgba(0,0,0,.85); }
+        .hc-alt-label::before, .hc-alt-label::after { content: ""; width: 1.75rem; height: 1px; background: var(--accent); }
+        .hc-alt-row { display: flex; align-items: flex-start; gap: .3rem; font-family: 'Oswald', sans-serif; font-weight: 300; line-height: .9;
+            letter-spacing: -.01em; font-size: clamp(2.5rem, min(4.2vw, 5.6vh), 4rem); font-variant-numeric: tabular-nums; color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,.5), 0 4px 28px rgba(0,0,0,.6); }
+        .hc-alt-unit { font-size: .3em; line-height: 1; margin-top: .3em; font-weight: 500; color: var(--accent); }
+        .hc-ridge { left: -2%; right: -2%; bottom: -1px; width: 104%; }
+        .hc-ridge--mid { height: 34%; opacity: .5; transform: translate3d(calc(var(--hx) * -18px), calc(var(--hp) * 40px), 0); }
+        .hc-ridge--near { height: 25%; transform: translate3d(calc(var(--hx) * -30px), 0, 0); }
+        .hc-climber-lamp { animation: hcLamp 5s ease-in-out infinite; }
+        @keyframes hcLamp { 0%,100% { opacity: .9; } 50% { opacity: .45; } }
+
+        .hc-grain { position: absolute; inset: 0; pointer-events: none; opacity: .06; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+        /* ---- interface layer ---- */
+        .hc-ui { position: relative; z-index: 2; width: 100%; max-width: 88rem; margin: 0 auto;
+            display: grid; grid-template-rows: auto 1fr auto; padding: 1.5rem 1.25rem 1.25rem;
+            transform: translate3d(0, calc(var(--hp) * -40px), 0); opacity: calc(1 - var(--hp) * 1.1); }
+        @media (min-width: 768px) { .hc-ui { padding: 2rem 3rem 1.75rem; } }
+        @media (min-width: 1280px) { .hc-ui { padding: 2.25rem 5rem 2rem; } }
+
+        .hc-mono { font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: .26em; font-size: 10px; }
+        .hc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+        .hc-coords { display: grid; gap: .3rem; color: rgba(255,255,255,.55); }
+        .hc-coords #hero-telemetry-coords { color: #fff; letter-spacing: .22em; }
+        .hc-status { display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; color: rgba(255,255,255,.55); text-align: right; }
+        .hc-live { display: inline-flex; align-items: center; gap: .55rem; color: rgba(255,255,255,.85); }
+        .hc-dot { position: relative; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+        .hc-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--accent); opacity: 0; animation: hcPing 2.8s ease-out infinite; }
+        @keyframes hcPing { 0% { transform: scale(.4); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
+
+        .hc-body { align-self: end; justify-self: center; width: 100%; max-width: 52rem; margin-inline: auto; text-align: center; padding: 4.5rem 0 1.5rem; }
+        @media (min-width: 1024px) { .hc-body { align-self: center; padding: .5rem 0; } }
+        .hc-eyebrow { display: flex; justify-content: center; align-items: center; gap: .9rem; color: #ff7a3d; font-weight: 600; text-shadow: 0 1px 10px rgba(0,0,0,.8); }
+        .hc-eyebrow::after { content: ""; width: 2.25rem; height: 1px; background: currentColor; transform-origin: right; animation: hcRule 1.2s .2s cubic-bezier(.2,.7,.2,1) both; }
+        .hc-eyebrow::before { content: ""; width: 2.25rem; height: 1px; background: currentColor; transform-origin: left; animation: hcRule 1.2s .2s cubic-bezier(.2,.7,.2,1) both; }
+        @keyframes hcRule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        .hc-title { margin-top: .85rem; font-family: 'Oswald', sans-serif; text-transform: uppercase; line-height: .84; letter-spacing: -.035em;
+            font-size: clamp(3.6rem, 17vw, 5.6rem); text-shadow: 0 1px 2px rgba(0,0,0,.45), 0 4px 28px rgba(0,0,0,.55); }
+        @media (min-width: 640px) { .hc-title { font-size: clamp(4.4rem, min(9.8vw, 11.2vh), 9.75rem); } }
+        .hc-title > span { display: block; }
+        .hc-t1 { font-weight: 300; color: #fff; }
+        .hc-t2 > span { display: block; font-weight: 600; }
+        .hc-t2 > span:first-child { color: #fff; }
+        .hc-t2 .hc-accent { color: var(--accent); }
+        .hc-title > span, .hc-t2 > span { animation: hcRise 1.1s cubic-bezier(.2,.7,.2,1) both; }
+        .hc-t2 > span:first-child { animation-delay: .08s; }
+        .hc-t2 > span:last-child { animation-delay: .16s; }
+        @keyframes hcRise { from { opacity: 0; transform: translateY(.18em); } to { opacity: 1; transform: none; } }
+
+        .hc-lede { margin: 1.1rem auto 0; max-width: 36rem; text-shadow: 0 1px 3px rgba(0,0,0,.6), 0 2px 18px rgba(0,0,0,.7); font-family: 'IBM Plex Sans', sans-serif; font-size: 1.0625rem; line-height: 1.6; color: rgba(255,255,255,.82); animation: hcFade 1.2s .35s both; }
+        @keyframes hcFade { from { opacity: 0; } to { opacity: 1; } }
+
+        .hc-actions { margin-top: 1.4rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .75rem 1.75rem; animation: hcFade 1.2s .5s both; }
+        .hc-btn { position: relative; display: inline-flex; align-items: center; gap: .9rem; min-height: 3.25rem;
+            font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+            transition: background-color .35s ease, color .35s ease, border-color .35s ease, box-shadow .35s ease; }
+        .hc-btn svg { width: 18px; height: 10px; flex: none; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+        .hc-btn:hover svg { transform: translateX(5px); }
+        .hc-btn--primary { padding: 0 1.6rem 0 1.75rem; background: var(--accent); color: #14161a; border: 1px solid var(--accent); }
+        .hc-btn--primary:hover { background: #f37a45; box-shadow: 0 0 0 4px rgba(240,98,37,.14), 0 12px 30px -12px rgba(240,98,37,.55); }
+        .hc-btn--quiet { padding: 0 .1rem; color: #fff; border-bottom: 1px solid rgba(255,255,255,.28); min-height: 2.75rem; }
+        .hc-btn--quiet:hover { border-color: var(--accent); color: var(--accent); }
+        .hc-btn:focus-visible, .hc-link:focus-visible, .hc-film-btn:focus-visible, .hc-scroll:focus-visible, .hc-caption a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+        .hc-link { display: flex; width: fit-content; margin: .8rem auto 0; gap: .5rem; color: rgba(255,255,255,.72); text-shadow: 0 1px 8px rgba(0,0,0,.8); transition: color .3s; animation: hcFade 1.2s .6s both; }
+        .hc-link:hover { color: #fff; }
+
+        /* bottom rail: corridor profile · scroll cue · films · caption */
+        .hc-rail { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.1); }
+        .hc-scroll { display: inline-flex; align-items: center; gap: .7rem; color: rgba(255,255,255,.6); transition: color .3s; }
+        .hc-scroll:hover { color: #fff; }
+        .hc-scroll i { position: relative; display: block; width: 1px; height: 2.25rem; background: rgba(255,255,255,.18); overflow: hidden; }
+        .hc-scroll i::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--accent); animation: hcRope 2.4s cubic-bezier(.6,0,.4,1) infinite; }
+        @keyframes hcRope { to { top: 100%; } }
+
+        .hc-profile { position: relative; flex: 1; max-width: 36rem; height: 3.1rem; margin: 0 1rem; list-style: none; padding: 0; }
+        .hc-profile::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.35) 55%, var(--accent)); }
+        .hc-profile li { position: absolute; top: 50%; transform: translateX(-50%); }
+        .hc-profile li::before { content: ""; position: absolute; left: 50%; top: -3px; width: 1px; height: 7px; background: rgba(255,255,255,.55); }
+        .hc-profile li:last-child::before { top: -3.5px; left: calc(50% - 3.5px); width: 7px; height: 7px; background: var(--accent); transform: rotate(45deg); }
+        .hc-profile span { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 9px; letter-spacing: .18em; color: rgba(255,255,255,.5); }
+        .hc-profile b { font-weight: 500; color: rgba(255,255,255,.85); margin-left: .35rem; }
+        .hc-profile li:nth-child(odd) span { bottom: .55rem; }
+        .hc-profile li:nth-child(even) span { top: .55rem; }
+        .hc-profile li:last-child span { top: .55rem; bottom: auto; }
+        .hc-profile li:last-child b { color: var(--accent); }
+
+        .hc-side { display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; }
+        .hc-films { display: flex; align-items: center; gap: .15rem; margin-top: .6rem; margin-right: -.55rem; }
+        @media (min-width: 768px) { .hc-rail { padding-right: 13.5rem; } }
+        .hc-films-label { color: rgba(255,255,255,.4); margin-right: .5rem; }
+        .hc-film-btn { font: inherit; text-transform: uppercase; letter-spacing: inherit; padding: .45rem .55rem; color: rgba(255,255,255,.55); border-bottom: 1px solid transparent; transition: color .25s, border-color .25s; min-height: 2.25rem; }
+        .hc-film-btn:hover { color: #fff; }
+        .hc-film-btn[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+        .hc-caption { color: rgba(255,255,255,.42); text-align: right; letter-spacing: .2em; }
+        .hc-caption a { color: rgba(255,255,255,.75); border-bottom: 1px solid rgba(255,255,255,.2); transition: color .25s, border-color .25s; }
+        .hc-caption a:hover { color: var(--accent); border-color: var(--accent); }
+
+        /* ---- small phones: keep the eyebrow on one line, readout clear of the floating widgets ---- */
+        @media (max-width: 400px) {
+            .hc-eyebrow { gap: .55rem; letter-spacing: .2em; }
+            .hc-eyebrow::before, .hc-eyebrow::after { width: 1rem; }
+            .hc-alt-label { gap: .45rem; letter-spacing: .16em; white-space: nowrap; }
+            .hc-alt-label::before, .hc-alt-label::after { width: .8rem; }
+        }
+        @media (max-width: 767px) and (max-height: 760px) {
+            .hc-body .hc-lede { margin-top: .8rem; }
+            .hc-body .hc-actions { margin-top: 1.1rem; }
+            .hc-body .hc-alt { margin-top: .6rem; }
+            .hc-body .hc-alt-row { font-size: 2.1rem; }
+            .hc-coords { display: none; }
+        }
+        /* ---- phones: peak in the upper half, words anchored low, no crowding ---- */
+        @media (max-width: 767px) {
+            #manifesto.hc { min-height: min(84svh, 690px); }
+            .hc-photo, .hc-film { object-position: 50% 22%; }
+            .hc-shade { background: linear-gradient(180deg, rgba(13,15,17,.55) 0%, transparent 18%, rgba(13,15,17,.25) 36%, rgba(13,15,17,.84) 62%, rgba(13,15,17,.95) 100%); }
+            .hc-alt { margin-top: 1rem; }
+            .hc-alt-row { font-size: 2.4rem; }
+            .hc-ridge--near { height: 15%; } .hc-ridge--mid { height: 22%; }
+            .hc-status .hc-clock, #hc-region, .hc-caption { display: none; }
+            .hc-body { padding: .5rem 0 .5rem; }
+            .hc-link { display: none; }
+            .hc-rail { display: none; }
+            .hc-lede { font-size: .95rem; margin-top: 1.1rem; }
+            .hc-actions { margin-top: 1.5rem; gap: .9rem 1.25rem; }
+            .hc-btn--primary { flex: 1 1 100%; justify-content: center; }
+            .hc-rail { border-top: 0; padding-top: .25rem; }
+            .hc-caption { font-size: 9px; text-align: left; }
+            .hc-scroll { display: none; }
+            .hc-rail { flex-direction: column; align-items: stretch; gap: .4rem; }
+            .hc-side { align-items: flex-start; gap: .2rem; }
+            .hc-top { flex-direction: column; gap: .7rem; }
+            .hc-status { align-items: flex-start; text-align: left; width: 100%; }
+            .hc-films { width: calc(100% + .55rem); margin: 0 0 0 -.55rem; overflow-x: auto; scrollbar-width: none; }
+            .hc-films::-webkit-scrollbar { display: none; }
+            .hc-film-btn { white-space: nowrap; letter-spacing: .16em; }
+            /* leave room under the readout for the floating theme / language widgets */
+            .hc-ui { padding-bottom: 4.6rem; }
+        }
+        @media (min-width: 1024px) and (max-width: 1279px) {
+            .hc-ui { padding-left: 5rem; }
+            .hc-ui { padding-right: 5rem; }
+        }
+        @media (min-width: 768px) and (max-height: 820px) {
+            .hc-title { font-size: clamp(3.9rem, min(9.8vw, 9.6vh), 9.75rem); }
+            .hc-alt { margin-top: 1rem; }
+            .hc-body { padding: .5rem 0; }
+            .hc-lede { margin-top: 1rem; }
+            .hc-actions { margin-top: 1.25rem; }
+            .hc-link { margin-top: .75rem; }
+            .hc-films { margin-top: .3rem; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .hc-shade { background: radial-gradient(ellipse 72% 45% at 50% 62%, rgba(13,15,17,.75), rgba(13,15,17,.3) 70%, transparent), linear-gradient(180deg, rgba(13,15,17,.5), transparent 25%, transparent 60%, rgba(13,15,17,.7)); }
+
+        }
+
+        /* ---- the breath between hero and routes ---- */
+        .hc-interlude { position: relative; background: linear-gradient(180deg, #0d0f11 0%, #121417 55%, #16181b 100%); color: #fff; overflow: hidden; --ip: 1; }
+        .hci-inner { position: relative; max-width: 88rem; margin: 0 auto; padding: 4.5rem 1.25rem 3rem 2.75rem; }
+        @media (min-width: 768px) { .hci-inner { padding: 5.5rem 3rem 4rem 6rem; } }
+        @media (min-width: 1280px) { .hci-inner { padding: 6.5rem 5rem 4.5rem 8rem; } }
+        .hci-rope { position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.08); }
+        @media (min-width: 768px) { .hci-rope { left: 3rem; } }
+        @media (min-width: 1280px) { .hci-rope { left: 5rem; } }
+        .hci-rope::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--accent), rgba(240,98,37,.15)); transform-origin: top; transform: scaleY(var(--ip)); }
+        .hci-kicker { color: rgba(255,255,255,.45); }
+        .hci-statement { margin-top: 1.4rem; font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 300; line-height: .95; letter-spacing: -.02em; font-size: clamp(2.2rem, 6.2vw, 5.75rem); }
+        .hci-statement span { display: block; }
+        .hci-statement span:first-child { color: rgba(255,255,255,.42); opacity: calc(.35 + var(--ip) * .65); transform: translate3d(0, calc((1 - var(--ip)) * 18px), 0); }
+        .hci-statement span:last-child { color: #fff; font-weight: 500; opacity: calc(var(--ip) * 1.4 - .3); transform: translate3d(0, calc((1 - var(--ip)) * 34px), 0); }
+        .hci-statement em { font-style: normal; color: var(--accent); }
+        .hci-note { margin-top: 1.75rem; max-width: 32rem; font-family: 'IBM Plex Sans', sans-serif; font-size: .95rem; line-height: 1.65; color: rgba(255,255,255,.6); }
+        /* stats row — orange figures in boxed cells, each with a big Lucide icon */
+        .hc-interlude #stats-grid { position: relative; max-width: 88rem; margin: 0 auto; padding: 0 1rem 2.75rem; }
+        @media (min-width: 768px) { .hc-interlude #stats-grid { padding: 0 3rem 3.25rem; } }
+        @media (min-width: 1280px) { .hc-interlude #stats-grid { padding: 0 5rem 3.75rem; } }
+        .hms-cell { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: .55rem; padding: 1.9rem .75rem 1.7rem; border: 1px solid #2e3239; margin: 0 -1px -1px 0; background: linear-gradient(180deg, rgba(27,30,34,.92), rgba(22,24,27,.92)); overflow: hidden; transition: background .35s ease, border-color .35s ease; }
+        .hms-cell::before { content: ""; position: absolute; top: -1px; left: -1px; width: 12px; height: 12px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); opacity: .75; }
+        .hms-cell::after { content: ""; position: absolute; left: 50%; top: 2.9rem; width: 9rem; height: 9rem; transform: translate(-50%, -50%); background: radial-gradient(circle, rgba(240,98,37,.16), transparent 65%); opacity: .7; transition: opacity .35s ease; pointer-events: none; }
+        .hms-ico { position: relative; z-index: 1; display: grid; place-items: center; width: 3.9rem; height: 3.9rem; margin-bottom: .35rem; border: 1px solid rgba(240,98,37,.35); border-radius: 50%; color: var(--accent); background: rgba(240,98,37,.07); transition: transform .45s cubic-bezier(.2,.7,.2,1), background .35s ease; }
+        .hms-ico svg { width: 2.05rem; height: 2.05rem; }
+        .hms-val { position: relative; z-index: 1; font-size: 2.6rem; line-height: .88; }
+        .hms-lbl { position: relative; z-index: 1; font-size: 10.5px; letter-spacing: .15em; line-height: 1.45; max-width: 19ch; }
+        .hms-cell:hover { background: linear-gradient(180deg, #20242a, #191c20); border-color: rgba(240,98,37,.4); z-index: 1; }
+        .hms-cell:hover::after { opacity: 1; }
+        .hms-cell:hover .hms-ico { transform: translateY(-3px); background: rgba(240,98,37,.14); }
+        @media (min-width: 640px) { .hms-cell { padding: 2.4rem 1.5rem 2.2rem; } .hms-val { font-size: 3rem; } .hms-lbl { font-size: 12px; max-width: none; } }
+        @media (min-width: 1024px) { .hms-cell { padding: 2.9rem 1.5rem 2.6rem; gap: .7rem; } .hms-ico { width: 4.75rem; height: 4.75rem; } .hms-ico svg { width: 2.5rem; height: 2.5rem; } .hms-val { font-size: 3.4rem; } .hms-cell::after { top: 5.3rem; } }
+        @media (prefers-reduced-motion: reduce) { .hms-cell, .hms-ico { transition: none; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hc-layer, .hc-ui { transform: none !important; }
+            .hc-ui { opacity: 1 !important; }
+            .hc-photo, .hc-haze, .hc-mist, .hc-climber-lamp, .hc-dot::after, .hc-scroll i::after,
+            .hc-title > span, .hc-t2 > span, .hc-lede, .hc-actions, .hc-link, .hc-alt, .hc-eyebrow::before, .hc-eyebrow::after { animation: none !important; }
+            .hc-film { transition: none; }
+            .hci-statement span { opacity: 1 !important; transform: none !important; }
+            .hci-rope::after { transform: none; }
+        }
     </style>
+    <link rel="stylesheet" href="/booking-modal.css?v=5">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden relative">
 
@@ -197,7 +446,7 @@
         <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
             <!-- Brand lock-up -->
             <a href="/" class="group flex shrink-0 items-center gap-3">
-                <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
                 <span class="hidden flex-col leading-none sm:flex">
                     <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
                     <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">High corridors of Nepal · Est. 1993</span>
@@ -231,103 +480,122 @@
     </header>
 
 
-    <!-- 01 — THE HERO MANIFESTO  ·  redesigned 2026-09-01 (see _docs/REVERT-notes.md § "Hero redesign") -->
-    <!-- REVERT: restore public/index.html.prehero.bak (or `git checkout public/index.html`),
-         drop "IBM+Plex+Sans" from the Google Fonts <link> above, then `npm run build:css`. -->
-    <section id="manifesto" data-media class="relative min-h-[54vh] md:min-h-[62vh] flex flex-col overflow-hidden antialiased px-6 pt-8 pb-12 md:pt-10 md:pb-14 md:px-12 lg:px-20 border-b border-border bg-background">
-
-        <!-- Background: graded black-and-white Himalayan panorama -->
-        <div id="hero-bg-parallax" class="absolute inset-0 z-0 scale-[1.04] transition-transform duration-300 ease-out">
-            <img id="hero-image" src="/images/hero-mountain.jpg"
-                 onerror="this.onerror=null;this.src='/images/hero-art.jpg'"
-                 alt="Black-and-white panorama of the high Himalaya"
-                 class="h-full w-full object-cover object-center opacity-90 [filter:grayscale(1)_contrast(1.14)_brightness(0.78)]">
-        </div>
-        <!-- Scrims: symmetric edges + bottom anchor + a soft centre wash for legibility -->
-        <div class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#14161a]/85 via-[#14161a]/45 to-[#14161a]"></div>
-        <div class="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,_rgba(20,22,26,0.55)_0%,_rgba(20,22,26,0.15)_45%,_transparent_75%)]"></div>
-        <div class="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[55vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.07] blur-[130px]"></div>
-
-        <!-- Cartographic frame: faint contour lines + corner registration marks -->
-        <svg class="pointer-events-none absolute inset-0 z-[2] h-full w-full opacity-[0.08] mix-blend-screen" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1200 800">
-            <g fill="none" stroke="#f06225" stroke-width="1">
-                <path d="M-40 640 C 220 560 380 604 560 540 C 760 470 940 512 1240 430"/>
-                <path d="M-40 704 C 240 636 420 672 620 604 C 840 528 1010 566 1240 500"/>
-                <path d="M-40 566 C 200 500 360 536 540 470 C 740 398 930 440 1240 360"/>
-                <path d="M-40 490 C 260 440 380 462 600 400 C 820 338 980 372 1240 300"/>
-            </g>
-        </svg>
-        <div class="pointer-events-none absolute left-4 top-4 z-[3] h-5 w-5 border-l border-t border-accent/45 md:left-8 md:top-8"></div>
-        <div class="pointer-events-none absolute right-4 top-4 z-[3] h-5 w-5 border-r border-t border-accent/45 md:right-8 md:top-8"></div>
-        <div class="pointer-events-none absolute bottom-4 left-4 z-[3] h-5 w-5 border-b border-l border-accent/45 md:bottom-8 md:left-8"></div>
-        <div class="pointer-events-none absolute bottom-4 right-4 z-[3] h-5 w-5 border-b border-r border-accent/45 md:bottom-8 md:right-8"></div>
-
-        <!-- Top telemetry rail — desktop only -->
-        <div class="relative z-10 w-full max-w-6xl mx-auto hidden md:flex items-center justify-between gap-4 border-b border-white/10 pb-3.5 font-mono text-[10px] uppercase tracking-[0.32em]">
-            <div class="flex items-center gap-2.5 text-accent">
-                <span class="relative flex h-1.5 w-1.5">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
-                    <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
-                </span>
-                <span id="hero-telemetry-coords" class="font-mono">27°59'N · 86°55'E</span>
-                <span class="hidden text-white/40 sm:inline">— Khumbu Himal</span>
+    <!-- 01 — THE HIGH CORRIDOR  ·  cinematic hero (2026-09-16, REVERT-notes § 6a)
+         Layers are pure decoration except the photo; hero-corridor.js drives
+         parallax, the altitude count, the Kathmandu clock and the expedition
+         films. Keep id="manifesto" + data-media and the hero-* ids (edit.js i18n).
+         REVERT: git checkout pre-hero -- public/index.html public/edit.js
+                 and delete public/hero-corridor.js -->
+    <section id="manifesto" data-media class="hc" aria-labelledby="hero-heading">
+        <div class="hc-stage">
+            <div class="hc-layer hc-plate">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="/images/hero-corridor-portrait.webp" type="image/webp">
+                    <source srcset="/images/hero-corridor.webp" type="image/webp">
+                    <img id="hero-image" src="/images/hero-corridor.jpg" width="1376" height="768" fetchpriority="high" decoding="async"
+                         alt="Ama Dablam at dusk, its summit catching the last light above a sea of cloud in the Khumbu"
+                         class="hc-photo">
+                </picture>
+                <video id="hc-film" class="hc-film" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
             </div>
-            <div class="hidden items-center gap-2 text-white/45 sm:flex">
-                <span class="text-white/70">1,350 m</span>
-                <i class="fa-solid fa-arrow-right-long text-[9px] text-accent"></i>
-                <span class="text-white/70">8,848 m</span>
+            <div class="hc-layer hc-haze" aria-hidden="true"></div>
+            <div class="hc-layer hc-ridge hc-ridge--mid" aria-hidden="true">
+                <svg viewBox="0 0 1440 300" preserveAspectRatio="none" width="100%" height="100%" focusable="false">
+                    <defs><linearGradient id="hcMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d0f11" stop-opacity="0"/><stop offset=".45" stop-color="#0d0f11" stop-opacity=".7"/><stop offset="1" stop-color="#0d0f11"/></linearGradient></defs>
+                    <path fill="url(#hcMid)" d="M0 170C120 150 200 120 300 128C420 138 470 190 600 200C700 208 760 170 860 150C960 130 1040 170 1140 180C1240 190 1320 140 1440 120V300H0Z"/>
+                </svg>
             </div>
+            <div class="hc-layer hc-ridge hc-ridge--near" aria-hidden="true">
+                <svg viewBox="0 0 1440 240" preserveAspectRatio="none" width="100%" height="100%" focusable="false">
+                    <defs><linearGradient id="hcNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1f23"/><stop offset=".4" stop-color="#101215"/><stop offset="1" stop-color="#0d0f11"/></linearGradient></defs>
+                    <path fill="url(#hcNear)" d="M0 128C90 112 160 84 240 78C300 74 340 104 420 122C520 144 600 136 700 124C780 114 840 104 900 99L912 98C960 100 1010 116 1080 134C1160 154 1220 104 1300 76C1350 60 1400 66 1440 82V240H0Z"/>
+                    <path fill="none" stroke="rgba(255,255,255,.09)" stroke-width="1" vector-effect="non-scaling-stroke" d="M0 128C90 112 160 84 240 78C300 74 340 104 420 122C520 144 600 136 700 124C780 114 840 104 900 99L912 98C960 100 1010 116 1080 134C1160 154 1220 104 1300 76C1350 60 1400 66 1440 82"/>
+                </svg>
+                <!-- human scale: one climber on the crest, ~1% of the frame height -->
+                <svg class="hc-climber" viewBox="0 0 12 16" width="11" height="15" focusable="false" style="position:absolute;left:62.9%;top:40.6%;transform:translate(-50%,-100%);overflow:visible">
+                    <g fill="#08090b" stroke="#08090b" stroke-width="1.2" stroke-linecap="round">
+                        <circle cx="5" cy="2.1" r="1.6" stroke="none"/>
+                        <path d="M5.2 4.2 5.6 9.4M5.6 9.4 3.8 15.4M5.6 9.4 7.4 15.4M5.4 5.4 8.6 8.2M8.6 8.2 10.4 15.6" fill="none"/>
+                        <rect x="2.4" y="4" width="2.6" height="4.2" rx=".6" stroke="none"/>
+                    </g>
+                    <circle class="hc-climber-lamp" cx="6.7" cy="1.9" r=".85" fill="#ffd2a8"/>
+                </svg>
+            </div>
+            <div class="hc-layer hc-mist" aria-hidden="true"></div>
+            <div class="hc-shade" aria-hidden="true"></div>
+            <div class="hc-grain" aria-hidden="true"></div>
         </div>
 
-        <!-- Centred hero content -->
-        <div class="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center py-8 md:py-10 text-center">
-            <div class="hidden md:flex items-center gap-3">
-                <span class="hidden h-px w-6 bg-accent/70 sm:block"></span>
-                <span id="hero-badge" data-key="hero.badge" class="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-accent font-medium">EST. 1993 · THREE DECADES IN THE HIMALAYA</span>
-                <span class="hidden h-px w-6 bg-accent/70 sm:block"></span>
+        <div class="hc-ui">
+            <!-- 1 · expedition data -->
+            <div class="hc-top hc-mono">
+                <div class="hc-coords">
+                    <span id="hero-telemetry-coords">27°59'N · 86°55'E</span>
+                    <span id="hc-region">Sagarmatha Region · Nepal</span>
+                </div>
+                <div class="hc-status">
+                    <span class="hc-live"><span class="hc-dot" aria-hidden="true"></span>Autumn 2026 · Departures open</span>
+                    <span class="hc-clock">Kathmandu <time id="hc-clock">&mdash;</time> NPT</span>
+                    <div id="hc-films" class="hc-films" role="group" aria-label="Expedition films"></div>
+                </div>
             </div>
 
-            <h1 class="flex flex-col items-center font-heading uppercase leading-[0.85] tracking-tightest text-foreground text-[clamp(2.1rem,10vw,3rem)] sm:text-5xl md:mt-5 md:text-7xl lg:text-[5.75rem] xl:text-[6.5rem]">
-                <span id="hero-title-primary" data-key="hero.title_primary" class="block font-light text-white">HIMALAYAN</span>
-                <span class="my-2 block h-px w-14 bg-accent/70 md:my-3 md:w-24"></span>
-                <span id="hero-title-italic" data-key="hero.title_italic" class="block font-semibold text-accent">MAGIC ADVENTURE</span>
-            </h1>
+            <!-- 2 · identity + one clear path -->
+            <div class="hc-body">
+                <p class="hc-eyebrow hc-mono"><span id="hero-badge" data-key="hero.badge">The High Corridors of Nepal</span></p>
+                <h1 id="hero-heading" class="hc-title">
+                    <span id="hero-title-primary" data-key="hero.title_primary" class="hc-t1">HIMALAYAN</span>
+                    <span id="hero-title-italic" data-key="hero.title_italic" class="hc-t2"><span>MAGIC</span> <span class="hc-accent">ADVENTURE</span></span>
+                </h1>
+                <p id="hero-tagline" class="hc-lede md:hidden">Treks, high passes and Himalayan expeditions — led by local guides since 1993.</p>
+                <p id="hero-description" data-key="hero.description" class="hc-lede hidden md:block">Trekking routes, high passes and Himalayan expeditions — shaped by the local guides who have led these corridors since 1993.</p>
 
-            <!-- mobile: one minimal line -->
-            <p id="hero-tagline" class="mx-auto mt-4 md:hidden max-w-xs font-sans text-[13px] leading-relaxed text-white/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">
-                Leave the ordinary behind and ascend into legend.
-            </p>
-            <!-- desktop: full caption -->
-            <p id="hero-description" data-key="hero.description" class="mx-auto mt-5 hidden md:block max-w-xl font-sans text-base leading-relaxed text-white/85 [text-shadow:0_1px_10px_rgba(0,0,0,0.75)]">
-                Nepal&rsquo;s trekking trails and 8,000-metre expeditions &mdash; led since 1993 by the certified local guides who live beneath these mountains.
-            </p>
+                <div class="hc-actions">
+                    <a href="/treks" class="hc-btn hc-btn--primary">
+                        <span>Explore the Himalaya</span>
+                        <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+                    </a>
+                    <a href="/expeditions" class="hc-btn hc-btn--quiet">View Expeditions</a>
+                </div>
+                <a href="/contact" class="hc-link hc-mono" data-book="">Plan a custom ascent <span aria-hidden="true">&rarr;</span></a>
 
-            <!-- Two clear paths -->
-            <div class="mt-6 md:mt-7 flex w-full max-w-md flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
-                <a href="/treks" class="group inline-flex items-center justify-center gap-3 border border-accent bg-accent px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] font-semibold text-background transition-colors hover:bg-accent-hover">
-                    <span>Trekking Trails</span>
-                    <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
-                </a>
-                <a href="/expeditions" class="group inline-flex items-center justify-center gap-3 border border-white/30 bg-[#14161a]/55 px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white backdrop-blur-md transition-colors hover:border-accent hover:text-accent">
-                    <span>Expeditions</span>
-                    <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
-                </a>
+                <div class="hc-alt"><span id="hc-alt-label" class="hc-alt-label">Summit · Sagarmatha / Everest</span><span class="hc-alt-row"><span id="hc-alt-num">8,848.86</span><span class="hc-alt-unit">M</span></span></div>
             </div>
 
-            <a href="/contact" class="group mt-4 hidden md:inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55 hover:text-accent transition-colors">
-                <span>Plan a custom ascent</span>
-                <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
-            </a>
+            <!-- 3 · altitude instrumentation -->
+            <div class="hc-rail hc-mono">
+                <a href="#corridor" class="hc-scroll"><i aria-hidden="true"></i><span class="hidden sm:inline">Scroll</span><span class="sr-only">to the flagship routes</span></a>
+                <ol class="hc-profile hidden xl:block" aria-label="The Everest corridor by elevation">
+                    <li style="left:0"><span style="left:0;transform:none">Kathmandu<b>1,400 m</b></span></li>
+                    <li style="left:27.4%"><span>Namche<b>3,440</b></span></li>
+                    <li style="left:53.2%"><span>Base Camp<b>5,364</b></span></li>
+                    <li style="left:100%"><span style="left:auto;right:0;transform:none">Summit<b>8,848.86 m</b></span></li>
+                </ol>
+                <div class="hc-side">
+                    <p id="hc-caption" class="hc-caption" aria-live="polite">In frame &mdash; <a href="/expeditions/ama-dablam">Ama Dablam, 6,812 m</a></p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- STATS MATRIX ROW -->
-    <section id="stats-grid" class="grid grid-cols-2 md:grid-cols-4 border-b border-border bg-[#1b1e22]">
-        <!-- Dynamically loaded stats -->
+    <!-- THE BREATH — hero → flagship routes. #stats-grid lives here now (edit.js renderStats). -->
+    <section id="corridor" data-media class="hc-interlude" aria-labelledby="corridor-statement">
+        <div class="hci-inner">
+            <span class="hci-rope" aria-hidden="true"></span>
+            <p class="hci-kicker hc-mono">Between the trailhead and the summit</p>
+            <p id="corridor-statement" class="hci-statement">
+                <span>The Himalaya is not a destination.</span>
+                <span>It is a <em>direction.</em></span>
+            </p>
+            <p class="hci-note">Three decades of routes, written by the people who walk them. Pick a trail, a pass or a summit &mdash; we&rsquo;ll build the ascent around you.</p>
+        </div>
+        <div id="stats-grid" class="grid grid-cols-2 md:grid-cols-4">
+            <!-- Dynamically loaded stats -->
+        </div>
     </section>
 
     <!-- 02 — THE EXPEDITION MATRIX (Choose Your Corridor) -->
-    <section id="expeditions" class="relative py-16 md:py-24 border-b border-border bg-[#16181b] overflow-hidden">
+    <section id="expeditions" class="relative py-14 md:py-20 border-b border-border bg-[#16181b] overflow-hidden">
         <!-- Topographic Contour Lines Background & Compass Rose -->
         <div class="pointer-events-none absolute inset-0 z-0 opacity-15 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent"></div>
         <div class="pointer-events-none absolute top-10 right-10 z-0 opacity-25 hidden md:block text-muted-foreground font-mono text-[10px] tracking-widest text-center">
@@ -369,7 +637,7 @@
             <p id="flagship-hint" class="mt-2 font-mono text-[9px] uppercase tracking-[0.25em] text-muted-foreground/70 md:hidden">Swipe for more &rarr;</p>
 
             <div class="mt-8">
-                <a href="/contact" class="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/contact" data-book="" class="group inline-flex items-center gap-3 text-muted-foreground hover:text-foreground transition-colors">
                     <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/40 font-heading text-lg text-accent group-hover:bg-accent/10 transition-all">+</span>
                     <span class="font-mono text-[10px] uppercase tracking-[0.2em] leading-relaxed">Planning a peak-climbing objective, or a custom expedition?<br class="hidden sm:block">Talk to our expedition desk.</span>
                 </a>
@@ -380,7 +648,7 @@
     <!-- Hidden below lg on purpose (2026-09-10 declutter): the interactive map is
          a desktop experience and was a long scroll on a phone. Revert = drop the
          `hidden lg:block` below. -->
-    <section id="explore" class="relative hidden lg:block px-6 py-16 md:px-20 md:py-24 border-b border-border bg-[#1b1e22] overflow-hidden">
+    <section id="explore" class="relative hidden lg:block px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22] overflow-hidden">
         <style>
             .hme-region{fill:#23272d;stroke:rgba(240,98,37,.20);stroke-width:1.25;cursor:pointer;outline:none;transition:fill .35s ease,stroke .35s ease,opacity .35s ease;}
             .hme-region:hover{fill:rgba(240,98,37,.13);}
@@ -406,6 +674,7 @@
             #explore[data-lens="regions"] .hme-map .hme-prov-layer{opacity:0;pointer-events:none;}
             #explore[data-lens="regions"] .hme-prov-labels{opacity:0;pointer-events:none;}
             #explore[data-lens="provinces"] #hme-geo-layer{display:none;}
+            #explore[data-lens="provinces"] .hme-geo-land{display:none;}
             .hme-prov-labels{transition:opacity .35s ease;}
             #explore[data-lens="regions"] .hme-map .hme-region{fill:#1e2126;stroke:none;}
             #explore[data-lens="regions"] .hme-map .hme-peak{display:none;}
@@ -417,7 +686,7 @@
                viewBox in and reveals its peaks as expedition links. */
             #hme-geo-layer{ --rg-wash: rgba(240,98,37,.14); }
             #explore[data-lens="regions"] .hme-map .hme-region{fill:url(#hme-nepal-grad);stroke:rgba(240,98,37,.14);stroke-width:.75;}
-            .hme-graticule line{stroke:rgba(243,244,246,.045);stroke-width:.6;}
+            .hme-graticule line{stroke:rgba(243,244,246,.07);stroke-width:.6;}
             #explore[data-lens="provinces"] .hme-graticule{display:none;}
             #explore[data-lens="regions"] .hme-map .hme-ridge{stroke:rgba(243,244,246,.3);stroke-dasharray:3 5;animation:hmeRidge 34s linear infinite;}
             @keyframes hmeRidge{to{stroke-dashoffset:-160;}}
@@ -457,13 +726,26 @@
 
             /* "back to all of Nepal" — only while a region is open */
             #hme-geo-back{position:absolute;left:.9rem;top:.9rem;z-index:20;display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);background:rgba(16,18,21,.9);color:var(--muted-foreground);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:.5rem .8rem;cursor:pointer;backdrop-filter:blur(4px);transition:color .2s,border-color .2s;}
+            #hme-geo-back[hidden],#explore [data-explore-hint][hidden]{display:none;}
+            .hme-geo-land{fill:url(#hme-nepal-grad);stroke:rgba(240,98,37,.38);stroke-width:1.1;stroke-linejoin:round;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));}
             #hme-geo-back:hover{color:var(--accent);border-color:var(--accent);}
 
             @media (prefers-reduced-motion: reduce){#explore .hme-ridge{animation:none;}}
             body.light-mode #explore[data-lens="regions"] .hme-map .hme-region{fill:#e9e6df;stroke:rgba(214,77,22,.2);}
+            body.light-mode .hme-geo-land{fill:#ece8e0;stroke:rgba(214,77,22,.35);filter:none;}
             body.light-mode .hme-rg-peak-tri{fill:#fff;}
             body.light-mode .hme-graticule line{stroke:rgba(28,30,33,.06);}
 
+            /* ---- phone sheet (opened from the menu: openExploreNepal) ---- */
+            #hme-x-close{display:none;position:fixed;top:1rem;right:1rem;z-index:30;height:2.75rem;width:2.75rem;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--card);color:var(--foreground);cursor:pointer;}
+            #hme-x-close:hover{border-color:var(--accent);color:var(--accent);}
+            @media (max-width:1023px){
+                #explore.hme-x-open{display:block;position:fixed;inset:0;z-index:70;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4.25rem 1rem 3rem;border:0;}
+                #explore.hme-x-open #hme-x-close{display:flex;}
+                #explore.hme-x-open .hme-mapframe{padding:.5rem;}
+                #explore.hme-x-open #explore-panel{min-height:0;scroll-margin-top:4.5rem;}
+                #explore.hme-x-open .hme-rg-label{display:none;}
+            }
             .hme-xpanel{scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
             .hme-xpanel::-webkit-scrollbar{width:4px;}
             .hme-xpanel::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);border-radius:2px;}
@@ -474,6 +756,10 @@
             @media (prefers-reduced-motion: reduce){.hme-xbody{animation:none;}.hme-xrow:hover{transform:none;}}
         </style>
         <div class="pointer-events-none absolute inset-0 z-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent"></div>
+
+        <button type="button" id="hme-x-close" onclick="closeExploreNepal()" aria-label="Close Explore Nepal">
+            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
 
         <div class="relative z-10 max-w-7xl mx-auto">
             <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03 — Explore Nepal</span>
@@ -515,8 +801,8 @@
                     <!-- Zoom-out control (Regions lens, only while a region is open) -->
                     <button type="button" id="hme-geo-back" hidden>&larr; All of Nepal</button>
 
-                    <div class="relative w-full" style="aspect-ratio: 960 / 300;">
-                        <svg class="hme-map h-full w-full" viewBox="20 40 960 300" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                    <div class="relative w-full" style="aspect-ratio: 960 / 312;">
+                        <svg class="hme-map h-full w-full" viewBox="20 40 960 312" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                             <!-- 7 provinces, west to east (the "Provinces" lens) -->
                             <g class="hme-prov-layer">
                             <path class="hme-region" data-region="sudurpashchim" role="button" tabindex="0" aria-label="Sudurpashchim Province" onmouseenter="hoverExploreRegion('sudurpashchim')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('sudurpashchim')" onfocus="hoverExploreRegion('sudurpashchim')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('sudurpashchim');}" d="M40,150 L130,108 L212,132 L205,280 L165,268 L92,222 L45,174 Z"></path>
@@ -547,25 +833,25 @@
 
                         <!-- Province labels -->
                         <div class="hme-prov-labels pointer-events-none absolute inset-0">
-                        <div class="pointer-events-none absolute" style="left:11.5%; top:51.3%; transform:translate(-50%,-50%);">
+                        <div class="pointer-events-none absolute" style="left:11.5%; top:49.3%; transform:translate(-50%,-50%);">
                             <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="sudurpashchim">Sudurpashchim</span>
                         </div>
-                        <div class="pointer-events-none absolute" style="left:31.5%; top:45.3%; transform:translate(-50%,-50%);">
+                        <div class="pointer-events-none absolute" style="left:31.5%; top:43.6%; transform:translate(-50%,-50%);">
                             <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="karnali">Karnali</span>
                         </div>
-                        <div class="pointer-events-none absolute" style="left:35%; top:76.8%; transform:translate(-50%,-50%);">
+                        <div class="pointer-events-none absolute" style="left:35%; top:73.8%; transform:translate(-50%,-50%);">
                             <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="lumbini">Lumbini</span>
                         </div>
-                        <div class="pointer-events-none absolute" style="left:51.2%; top:39.5%; transform:translate(-50%,-50%);">
+                        <div class="pointer-events-none absolute" style="left:51.2%; top:38.0%; transform:translate(-50%,-50%);">
                             <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="gandaki">Gandaki</span>
                         </div>
-                        <div class="pointer-events-none absolute" style="left:67.2%; top:39.5%; transform:translate(-50%,-50%);">
+                        <div class="pointer-events-none absolute" style="left:67.2%; top:38.0%; transform:translate(-50%,-50%);">
                             <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="bagmati">Bagmati</span>
                         </div>
-                        <div class="pointer-events-none absolute" style="left:67.2%; top:75%; transform:translate(-50%,-50%);">
+                        <div class="pointer-events-none absolute" style="left:67.2%; top:72.1%; transform:translate(-50%,-50%);">
                             <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="madhesh">Madhesh</span>
                         </div>
-                        <div class="pointer-events-none absolute" style="left:88.5%; top:35.5%; transform:translate(-50%,-50%);">
+                        <div class="pointer-events-none absolute" style="left:88.5%; top:34.1%; transform:translate(-50%,-50%);">
                             <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="koshi">Koshi</span>
                         </div>
                         </div><!-- /.hme-prov-labels -->
@@ -593,7 +879,7 @@
     </section>
 
     <!-- 04 — COMPARE TREKS -->
-    <section id="compare-home" data-media class="relative px-6 py-16 md:px-20 md:py-24 border-b border-border bg-[#191b1f] overflow-hidden">
+    <section id="compare-home" data-media class="relative px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#191b1f] overflow-hidden">
         <div class="pointer-events-none absolute inset-0 z-0">
             <img src="/images/langtang_real.jpg" class="h-full w-full object-cover object-[50%_40%] opacity-[0.07]" alt="" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-b from-[#191b1f] via-[#191b1f]/95 to-[#191b1f]"></div>
@@ -643,6 +929,17 @@
             #trek-finder .fdr-chip.is-on .fdr-tick{width:9px;}
             #trek-finder .finder-card:focus-visible,#trek-finder .fdr-sel:focus-visible,#trek-finder button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
             #trek-finder .fdr-ico{width:13px;height:13px;flex:none;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+            #trek-finder .fdr-lbl .fdr-ico{width:15px;height:15px;color:var(--accent);}
+            #trek-finder .fdr-chip .fdr-ico{width:16px;height:16px;}
+            #trek-finder .fdr-chip{gap:.5rem;padding:.55rem .8rem;}
+            /* segmented options: a Lucide icon above each label */
+            #trek-finder .fdr-seg .finder-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;min-height:66px;padding:.7rem .3rem .6rem;}
+            #trek-finder .fdr-seg .finder-card .fdr-opt-ico{width:22px;height:22px;stroke-width:1.35;color:var(--muted-foreground);transition:color .2s ease,transform .3s cubic-bezier(.2,.7,.2,1);}
+            #trek-finder .fdr-seg .finder-card:hover .fdr-opt-ico{color:var(--accent);transform:translateY(-2px);}
+            #trek-finder .fdr-seg .finder-card.is-on .fdr-opt-ico{color:#fff;}
+            #trek-finder .fdr-grp{align-items:center;}
+            #trek-finder .fdr-grp-ico{display:grid;place-items:center;width:34px;height:34px;flex:none;border:1px solid rgba(240,98,37,.4);background:rgba(240,98,37,.08);color:var(--accent);}
+            #trek-finder .fdr-grp-ico .fdr-ico{width:18px;height:18px;}
 
             /* ---- editorial group headers ---- */
             #trek-finder .fdr-grp{display:flex;align-items:baseline;gap:.55rem;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
@@ -665,13 +962,13 @@
             /* ---- personality strip ---- */
             #fdr-persona{display:none;align-items:center;gap:.9rem;margin-top:1rem;padding:.85rem 1rem;border:1px solid rgba(240,98,37,.32);background:linear-gradient(90deg,rgba(240,98,37,.08),transparent 70%);}
             #fdr-persona.is-on{display:flex;}
-            #fdr-persona .fdr-pico{width:26px;height:26px;flex:none;stroke:var(--accent);fill:none;stroke-width:1.4;}
+            #fdr-persona .fdr-pico{width:34px;height:34px;stroke-linecap:round;stroke-linejoin:round;flex:none;stroke:var(--accent);fill:none;stroke-width:1.4;}
 
             /* ---- mobile sheet (opened from the Explore menu) ---- */
             @media (max-width:1023px){
                 /* comfortable touch targets everywhere in the sheet */
                 #trek-finder .fdr-chip{min-height:44px;padding:.6rem .75rem;}
-                #trek-finder .fdr-seg .finder-card{min-height:48px;}
+                #trek-finder .fdr-seg .finder-card{min-height:66px;}
                 #trek-finder.fdr-open{display:block;position:fixed;inset:0;z-index:70;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#16181b;padding:4.25rem 1rem 3rem;}
                 #trek-finder.fdr-open #fdr-close{display:flex;}
                 body.fdr-locked{overflow:hidden;}
@@ -679,7 +976,41 @@
             #fdr-close{display:none;position:fixed;top:1rem;right:1rem;z-index:5;height:2.75rem;width:2.75rem;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--card);color:var(--foreground);cursor:pointer;}
             #fdr-close:hover{border-color:var(--accent);color:var(--accent);}
 
+            /* ---- route console (2026-09-16, REVERT-notes § 6b) ---- */
+            #trek-finder .fdr-console{display:grid;border:1px solid var(--border);background:rgba(17,19,22,.72);position:relative;}
+            @media (min-width:1024px){#trek-finder .fdr-console{grid-template-columns:minmax(0,1fr) 22.5rem;}#trek-finder .fdr-readout{border-left:1px solid var(--border);}}
+            @media (max-width:1023px){#trek-finder .fdr-readout{border-top:1px solid var(--border);}}
+            #trek-finder .fdr-console::before,#trek-finder .fdr-console::after{content:"";position:absolute;width:10px;height:10px;border-color:var(--accent);opacity:.7;pointer-events:none;}
+            #trek-finder .fdr-console::before{top:-1px;left:-1px;border-top:1px solid;border-left:1px solid;}
+            #trek-finder .fdr-console::after{bottom:-1px;right:-1px;border-bottom:1px solid;border-right:1px solid;}
+            #trek-finder .fdr-bar-head{display:flex;justify-content:space-between;gap:1rem;padding:.6rem 1rem;border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-foreground);}
+            @media (min-width:768px){#trek-finder .fdr-bar-head{padding:.6rem 1.5rem;}}
+            #trek-finder .fdr-bar-head > span:first-child{display:inline-flex;align-items:center;gap:.55rem;color:var(--foreground);}
+            #trek-finder .fdr-led{width:6px;height:6px;border-radius:50%;background:var(--muted-foreground);opacity:.5;}
+            #trek-finder .fdr-led.is-live{background:var(--accent);opacity:1;box-shadow:0 0 0 3px rgba(240,98,37,.18);}
+            #trek-finder .fdr-readout{background:linear-gradient(180deg,rgba(255,255,255,.015),transparent 40%);}
+            #fdr-readout-state{transition:color .3s ease;}
+            #trek-finder.is-touched #fdr-readout-state{color:var(--accent);}
+
+            #trek-finder .fdr-scope-wrap{position:relative;padding-top:1.1rem;}
+            #trek-finder .fdr-scope-grid span{position:absolute;top:0;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.14em;color:var(--muted-foreground);opacity:.7;white-space:nowrap;}
+            #trek-finder .fdr-scope{position:relative;height:84px;border-bottom:1px solid var(--border);
+                background-image:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:18.18% 100%;}
+            #trek-finder .fdr-bar{position:absolute;bottom:0;width:2px;margin-left:-1px;background:var(--muted-foreground);opacity:.45;transform-origin:bottom;
+                transition:opacity .35s ease,background-color .35s ease,transform .45s cubic-bezier(.2,.7,.2,1);}
+            #trek-finder .fdr-bar.is-dim{opacity:.12;transform:scaleY(.55);}
+            #trek-finder .fdr-bar.is-hit{background:var(--accent);opacity:.75;}
+            #trek-finder .fdr-bar.is-top{background:var(--accent);opacity:1;width:3px;box-shadow:0 0 12px rgba(240,98,37,.55);}
+            #trek-finder .fdr-bar.is-top::after{content:"";position:absolute;left:50%;top:-7px;width:5px;height:5px;margin-left:-2.5px;background:var(--accent);transform:rotate(45deg);}
+
+            #trek-finder .fdr-log{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1rem;list-style:none;padding:0;}
+            #trek-finder .fdr-log:empty{display:none;}
+            #trek-finder .fdr-log li{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--foreground);border:1px solid var(--border);padding:.3rem .5rem;}
+            #trek-finder .fdr-log li b{font-weight:500;color:var(--accent);margin-right:.35rem;}
+            .light-mode #trek-finder .fdr-console{background:rgba(255,255,255,.7);}
+
             @media (prefers-reduced-motion: reduce){
+                #trek-finder .fdr-bar{transition:none;}
                 #trek-finder .fdr-ridge path,#trek-finder .fdr-ridge .fdr-walker,
                 #trek-finder .finder-card,#trek-finder .fdr-chip,#trek-finder .fdr-sel{transition:none;}
                 #trek-finder.is-touched .fdr-ridge .fdr-walker{transform:translate(58px,-19px);}
@@ -689,20 +1020,31 @@
         <!-- one coherent stroke-icon family, defined once -->
         <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
             <defs>
-                <symbol id="i-boot" viewBox="0 0 24 24"><path d="M8.5 3.5v8.2l-3 2.4V19h13v-2.6c0-1.2-.9-1.9-2.4-2.4l-4.6-1.6V3.5z"/><path d="M5.5 16.4h13"/></symbol>
-                <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
-                <symbol id="i-mtn" viewBox="0 0 24 24"><path d="M2 20l7-12 4 6.5L15.5 11 22 20z"/><path d="M7.4 12.6L9 10l1.6 2.6"/></symbol>
-                <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
-                <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></symbol>
-                <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></symbol>
-                <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18v3"/><rect x="3" y="7.5" width="18" height="12" rx="2"/><circle cx="16.5" cy="13.5" r="1.2"/></symbol>
-                <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.6 6 .7-4.5 4.2 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.8l6-.7z"/></symbol>
-                <symbol id="i-remote" viewBox="0 0 24 24"><path d="M3 17h18"/><path d="M5.5 13.5l3.5-5 3 4.5 2-3 4.5 7.5"/><path d="M3 6h3M18 6h3"/></symbol>
-                <symbol id="i-culture" viewBox="0 0 24 24"><path d="M4 20V11l8-6 8 6v9"/><path d="M10 20v-5h4v5"/></symbol>
-                <symbol id="i-ascent" viewBox="0 0 24 24"><path d="M3 19l7-8 3.5 4L21 5"/><path d="M21 5v5m0-5h-5"/></symbol>
-                <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.4"/><path d="M9 7l1.4-2.5h3.2L15 7"/></symbol>
-                <symbol id="i-path" viewBox="0 0 24 24"><path d="M4 20c4 0 3-6 7-6s3 6 7 6"/><path d="M4 12c4 0 3-6 7-6s3 6 7 6"/></symbol>
-                <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9z"/></symbol>
+                <!-- Lucide icons (lucide.dev, ISC licence) -->
+                <symbol id="i-boot" viewBox="0 0 24 24"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></symbol>
+                <symbol id="i-compass" viewBox="0 0 24 24"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/></symbol>
+                <symbol id="i-mtn" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/></symbol>
+                <symbol id="i-pin" viewBox="0 0 24 24"><path d="M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0"/><circle cx="12" cy="8" r="2"/><path d="M8.714 14h-3.71a1 1 0 0 0-.948.683l-2.004 6A1 1 0 0 0 3 22h18a1 1 0 0 0 .948-1.316l-2-6a1 1 0 0 0-.949-.684h-3.712"/></symbol>
+                <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+                <symbol id="i-clock" viewBox="0 0 24 24"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h5"/><path d="M17.5 17.5 16 16.3V14"/><circle cx="16" cy="16" r="6"/></symbol>
+                <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+                <symbol id="i-star" viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></symbol>
+                <symbol id="i-remote" viewBox="0 0 24 24"><path d="M10 10h4"/><path d="M19 7V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v3"/><path d="M20 21a2 2 0 0 0 2-2v-3.851c0-1.39-2-2.962-2-4.829V8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2z"/><path d="M22 16H2"/><path d="M4 21a2 2 0 0 1-2-2v-3.851c0-1.39 2-2.962 2-4.829V8a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v11a2 2 0 0 1-2 2z"/><path d="M9 7V4a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v3"/></symbol>
+                <symbol id="i-culture" viewBox="0 0 24 24"><path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2l8 5H4z"/></symbol>
+                <symbol id="i-ascent" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></symbol>
+                <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+                <symbol id="i-path" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+                <symbol id="i-spark" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></symbol>
+                <symbol id="i-backpack" viewBox="0 0 24 24"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 10h8"/><path d="M8 18h8"/><path d="M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></symbol>
+                <symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></symbol>
+                <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></symbol>
+                <symbol id="i-rain" viewBox="0 0 24 24"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M3 20a5 5 0 1 1 8.9-4H13a3 3 0 0 1 2 5.24"/><path d="M11 20v2"/><path d="M7 19v2"/></symbol>
+                <symbol id="i-snow" viewBox="0 0 24 24"><path d="M2 12h20"/><path d="M12 2v20"/><path d="m20 16-4-4 4-4"/><path d="m4 8 4 4-4 4"/><path d="m16 4-4 4-4-4"/><path d="m8 20 4-4 4 4"/></symbol>
+                <symbol id="i-timer" viewBox="0 0 24 24"><path d="M10 2h4"/><path d="m12 14 3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+                <symbol id="i-cal" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M17 14h-6"/><path d="M13 18H7"/><path d="M7 14h.01"/><path d="M17 18h.01"/></symbol>
+                <symbol id="i-caldays" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></symbol>
+                <symbol id="i-tent" viewBox="0 0 24 24"><path d="M3.5 21 14 3"/><path d="M20.5 21 10 3"/><path d="M15.5 21 12 15l-3.5 6"/><path d="M2 21h20"/></symbol>
+                <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></symbol>
             </defs>
         </svg>
 
@@ -717,16 +1059,12 @@
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto">
-            <div class="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+            <div class="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
                 <div>
-                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">05 — Find Your Trek</span>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">05 — Route Console</span>
                     <h2 class="mt-2 font-heading text-3xl md:text-5xl font-light uppercase leading-[0.95] tracking-tightest text-foreground">
                         What Kind of<br><span class="font-semibold text-accent">Trekker</span> Are You?
                     </h2>
-                </div>
-                <div class="mt-1 shrink-0 border border-accent/40 bg-accent/5 px-3 py-2 text-right">
-                    <span id="finder-count" class="block font-heading text-xl leading-none text-accent">38 trails</span>
-                    <span id="finder-count-sub" class="mt-1 block font-mono text-[8px] uppercase tracking-[0.24em] text-accent/60">In the catalogue</span>
                 </div>
             </div>
 
@@ -741,20 +1079,23 @@
                 </svg>
             </div>
 
-            <div class="mt-6 border border-border bg-[#14161a]/60 p-4 md:p-6 grid gap-6 lg:grid-cols-3 lg:gap-8">
+            <div class="fdr-console mt-6">
+            <div class="fdr-deck">
+            <div class="fdr-bar-head"><span><i class="fdr-led" aria-hidden="true"></i>Input</span><span class="hidden sm:inline">Set as many or as few as you like</span></div>
+            <div class="p-4 md:p-6 grid gap-6 lg:grid-cols-3 lg:gap-7">
                 <div>
-                    <div class="fdr-grp"><b>01</b><span>Experience</span></div>
-                    <span class="fdr-lbl"><svg class="fdr-ico"><use href="#i-boot"/></svg>How much have you done?</span>
+                    <div class="fdr-grp"><i class="fdr-grp-ico" aria-hidden="true"><svg class="fdr-ico" aria-hidden="true"><use href="#i-boot"/></svg></i><b>01</b><span>Experience</span></div>
+                    <span class="fdr-lbl"><svg class="fdr-ico" aria-hidden="true"><use href="#i-ascent"/></svg>How much have you done?</span>
                     <div id="finder-experience-cards" class="fdr-seg" role="group" aria-label="Experience level">
-                        <button type="button" data-value="first" aria-pressed="false" onclick="selectFinderCard('experience','first')" class="finder-card">First-timer</button>
-                        <button type="button" data-value="experienced" aria-pressed="false" onclick="selectFinderCard('experience','experienced')" class="finder-card">Experienced</button>
-                        <button type="button" data-value="alpinist" aria-pressed="false" onclick="selectFinderCard('experience','alpinist')" class="finder-card">Alpinist</button>
+                        <button type="button" data-value="first" aria-pressed="false" onclick="selectFinderCard('experience','first')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-backpack"/></svg><span>First-timer</span></button>
+                        <button type="button" data-value="experienced" aria-pressed="false" onclick="selectFinderCard('experience','experienced')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-mountain"/></svg><span>Experienced</span></button>
+                        <button type="button" data-value="alpinist" aria-pressed="false" onclick="selectFinderCard('experience','alpinist')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-mtn"/></svg><span>Alpinist</span></button>
                     </div>
                 </div>
 
                 <div>
-                    <div class="fdr-grp"><b>02</b><span>Where</span></div>
-                    <span class="fdr-lbl"><svg class="fdr-ico"><use href="#i-pin"/></svg>Region</span>
+                    <div class="fdr-grp"><i class="fdr-grp-ico" aria-hidden="true"><svg class="fdr-ico" aria-hidden="true"><use href="#i-compass"/></svg></i><b>02</b><span>Where</span></div>
+                    <span class="fdr-lbl"><svg class="fdr-ico" aria-hidden="true"><use href="#i-pin"/></svg>Region</span>
                     <select id="finder-region-sel" onchange="setFinderValue('region', this.value)" class="fdr-sel" aria-label="Region">
                         <option value="">Anywhere</option>
                         <option value="everest">Everest</option>
@@ -765,25 +1106,25 @@
                         <option value="dolpo">Dolpo</option>
                         <option value="farwest">Far West</option>
                     </select>
-                    <span class="fdr-lbl mt-4"><svg class="fdr-ico"><use href="#i-sun"/></svg>Season</span>
+                    <span class="fdr-lbl mt-4"><svg class="fdr-ico" aria-hidden="true"><use href="#i-sun"/></svg>Season</span>
                     <div id="finder-season-cards" class="fdr-seg" role="group" aria-label="Season">
-                        <button type="button" data-value="Spring" aria-pressed="false" onclick="selectFinderCard('season','Spring')" class="finder-card">Spring</button>
-                        <button type="button" data-value="Summer" aria-pressed="false" onclick="selectFinderCard('season','Summer')" class="finder-card">Summer</button>
-                        <button type="button" data-value="Autumn" aria-pressed="false" onclick="selectFinderCard('season','Autumn')" class="finder-card">Autumn</button>
-                        <button type="button" data-value="Winter" aria-pressed="false" onclick="selectFinderCard('season','Winter')" class="finder-card">Winter</button>
+                        <button type="button" data-value="Spring" aria-pressed="false" onclick="selectFinderCard('season','Spring')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-sprout"/></svg><span>Spring</span></button>
+                        <button type="button" data-value="Summer" aria-pressed="false" onclick="selectFinderCard('season','Summer')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-rain"/></svg><span>Summer</span></button>
+                        <button type="button" data-value="Autumn" aria-pressed="false" onclick="selectFinderCard('season','Autumn')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-path"/></svg><span>Autumn</span></button>
+                        <button type="button" data-value="Winter" aria-pressed="false" onclick="selectFinderCard('season','Winter')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-snow"/></svg><span>Winter</span></button>
                     </div>
                 </div>
 
                 <div>
-                    <div class="fdr-grp"><b>03</b><span>How you travel</span></div>
-                    <span class="fdr-lbl"><svg class="fdr-ico"><use href="#i-clock"/></svg>Days on the trail</span>
+                    <div class="fdr-grp"><i class="fdr-grp-ico" aria-hidden="true"><svg class="fdr-ico" aria-hidden="true"><use href="#i-route"/></svg></i><b>03</b><span>How you travel</span></div>
+                    <span class="fdr-lbl"><svg class="fdr-ico" aria-hidden="true"><use href="#i-clock"/></svg>Days on the trail</span>
                     <div id="finder-duration-cards" class="fdr-seg" role="group" aria-label="Days on the trail">
-                        <button type="button" data-value="short" aria-pressed="false" onclick="selectFinderCard('duration','short')" class="finder-card">5&ndash;10</button>
-                        <button type="button" data-value="mid" aria-pressed="false" onclick="selectFinderCard('duration','mid')" class="finder-card">10&ndash;15</button>
-                        <button type="button" data-value="long" aria-pressed="false" onclick="selectFinderCard('duration','long')" class="finder-card">15&ndash;20</button>
-                        <button type="button" data-value="epic" aria-pressed="false" onclick="selectFinderCard('duration','epic')" class="finder-card">20+</button>
+                        <button type="button" data-value="short" aria-pressed="false" onclick="selectFinderCard('duration','short')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-timer"/></svg><span>5&ndash;10</span></button>
+                        <button type="button" data-value="mid" aria-pressed="false" onclick="selectFinderCard('duration','mid')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-cal"/></svg><span>10&ndash;15</span></button>
+                        <button type="button" data-value="long" aria-pressed="false" onclick="selectFinderCard('duration','long')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-caldays"/></svg><span>15&ndash;20</span></button>
+                        <button type="button" data-value="epic" aria-pressed="false" onclick="selectFinderCard('duration','epic')" class="finder-card"><svg class="fdr-ico fdr-opt-ico" aria-hidden="true"><use href="#i-tent"/></svg><span>20+</span></button>
                     </div>
-                    <span class="fdr-lbl mt-4"><svg class="fdr-ico"><use href="#i-wallet"/></svg>Budget <span class="normal-case tracking-normal text-muted-foreground/50">&middot; land cost pp</span></span>
+                    <span class="fdr-lbl mt-4"><svg class="fdr-ico" aria-hidden="true"><use href="#i-wallet"/></svg>Budget <span class="normal-case tracking-normal text-muted-foreground/50">&middot; land cost pp</span></span>
                     <select id="finder-budget-sel" onchange="setFinderValue('budget', this.value)" class="fdr-sel" aria-label="Budget">
                         <option value="">Any budget</option>
                         <option value="b1">Under $1,000</option>
@@ -794,17 +1135,36 @@
                 </div>
 
                 <div class="lg:col-span-3">
-                    <span class="fdr-lbl"><svg class="fdr-ico"><use href="#i-star"/></svg>Looking for <span class="normal-case tracking-normal text-muted-foreground/50">&middot; pick any</span></span>
+                    <span class="fdr-lbl"><svg class="fdr-ico" aria-hidden="true"><use href="#i-star"/></svg>Looking for <span class="normal-case tracking-normal text-muted-foreground/50">&middot; pick any</span></span>
                     <div id="finder-style-cards" class="flex flex-wrap gap-1.5" role="group" aria-label="What you are looking for">
-                        <button type="button" data-value="iconic" aria-pressed="false" onclick="selectFinderCard('style','iconic')" class="finder-card fdr-chip"><svg class="fdr-ico"><use href="#i-star"/></svg>Iconic<span class="fdr-tick">&#10003;</span></button>
-                        <button type="button" data-value="remote" aria-pressed="false" onclick="selectFinderCard('style','remote')" class="finder-card fdr-chip"><svg class="fdr-ico"><use href="#i-remote"/></svg>Remote<span class="fdr-tick">&#10003;</span></button>
-                        <button type="button" data-value="culture" aria-pressed="false" onclick="selectFinderCard('style','culture')" class="finder-card fdr-chip"><svg class="fdr-ico"><use href="#i-culture"/></svg>Culture<span class="fdr-tick">&#10003;</span></button>
-                        <button type="button" data-value="challenge" aria-pressed="false" onclick="selectFinderCard('style','challenge')" class="finder-card fdr-chip"><svg class="fdr-ico"><use href="#i-ascent"/></svg>Challenge<span class="fdr-tick">&#10003;</span></button>
-                        <button type="button" data-value="photo" aria-pressed="false" onclick="selectFinderCard('style','photo')" class="finder-card fdr-chip"><svg class="fdr-ico"><use href="#i-camera"/></svg>Photography<span class="fdr-tick">&#10003;</span></button>
-                        <button type="button" data-value="slow" aria-pressed="false" onclick="selectFinderCard('style','slow')" class="finder-card fdr-chip"><svg class="fdr-ico"><use href="#i-path"/></svg>Slow travel<span class="fdr-tick">&#10003;</span></button>
+                        <button type="button" data-value="iconic" aria-pressed="false" onclick="selectFinderCard('style','iconic')" class="finder-card fdr-chip"><svg class="fdr-ico" aria-hidden="true"><use href="#i-star"/></svg>Iconic<span class="fdr-tick">&#10003;</span></button>
+                        <button type="button" data-value="remote" aria-pressed="false" onclick="selectFinderCard('style','remote')" class="finder-card fdr-chip"><svg class="fdr-ico" aria-hidden="true"><use href="#i-remote"/></svg>Remote<span class="fdr-tick">&#10003;</span></button>
+                        <button type="button" data-value="culture" aria-pressed="false" onclick="selectFinderCard('style','culture')" class="finder-card fdr-chip"><svg class="fdr-ico" aria-hidden="true"><use href="#i-culture"/></svg>Culture<span class="fdr-tick">&#10003;</span></button>
+                        <button type="button" data-value="challenge" aria-pressed="false" onclick="selectFinderCard('style','challenge')" class="finder-card fdr-chip"><svg class="fdr-ico" aria-hidden="true"><use href="#i-ascent"/></svg>Challenge<span class="fdr-tick">&#10003;</span></button>
+                        <button type="button" data-value="photo" aria-pressed="false" onclick="selectFinderCard('style','photo')" class="finder-card fdr-chip"><svg class="fdr-ico" aria-hidden="true"><use href="#i-camera"/></svg>Photography<span class="fdr-tick">&#10003;</span></button>
+                        <button type="button" data-value="slow" aria-pressed="false" onclick="selectFinderCard('style','slow')" class="finder-card fdr-chip"><svg class="fdr-ico" aria-hidden="true"><use href="#i-path"/></svg>Slow travel<span class="fdr-tick">&#10003;</span></button>
                     </div>
                 </div>
             </div>
+
+            </div>
+
+            <aside class="fdr-readout" aria-label="Live route readout">
+                <div class="fdr-bar-head"><span><i class="fdr-led is-live" aria-hidden="true"></i>Readout</span><span id="fdr-readout-state">Standby</span></div>
+                <div class="p-4 md:p-6">
+                    <div class="flex items-end justify-between gap-4">
+                        <div role="status" aria-live="polite">
+                            <span id="finder-count" class="block font-heading text-5xl font-light leading-none tracking-tightest text-foreground [font-variant-numeric:tabular-nums]">38 trails</span>
+                            <span id="finder-count-sub" class="mt-2 block font-mono text-[9px] uppercase tracking-[0.26em] text-muted-foreground">In the catalogue</span>
+                        </div>
+                        <span id="fdr-top-alt" class="text-right font-mono text-[9px] uppercase tracking-[0.2em] leading-relaxed text-muted-foreground"></span>
+                    </div>
+
+                    <div class="fdr-scope-wrap mt-6" aria-hidden="true">
+                        <div class="fdr-scope-grid"><span style="left:0">1,000 m</span><span style="left:36.4%">3,000</span><span style="left:72.7%">5,000</span><span style="right:0">6,500</span></div>
+                        <div id="fdr-scope" class="fdr-scope"></div>
+                    </div>
+                    <p class="mt-2 font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/70">Every trail by max altitude &middot; bar height = days</p>
 
             <div id="fdr-persona" role="status" aria-live="polite">
                 <svg class="fdr-pico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spark"/></svg>
@@ -815,11 +1175,16 @@
                 </div>
             </div>
 
-            <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
-                <span id="finder-hint" class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Start exploring &mdash; select a few preferences</span>
-                <button type="button" id="finder-reset-btn" onclick="resetTrekFinder()" class="hidden border border-border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-all hover:border-accent hover:text-accent active:scale-95">Reset</button>
+                    <ul id="fdr-log" class="fdr-log" aria-label="Active preferences"></ul>
+
+                    <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+                        <span id="finder-hint" class="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Start exploring &mdash; select a few preferences</span>
+                        <button type="button" id="finder-reset-btn" onclick="resetTrekFinder()" class="hidden border border-border px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-all hover:border-accent hover:text-accent active:scale-95">Reset</button>
+                    </div>
+                </div>
+            </aside>
             </div>
-            <div id="finder-results" class="mt-4"></div>
+            <div id="finder-results" class="mt-6"></div>
         </div>
     </section>
 
@@ -844,7 +1209,7 @@
     </section>
 
     <!-- CONNECT  ·  a hybrid mini-about + reach-us band (replaced the legacy copy 2026-09-08) -->
-    <section id="about" class="relative overflow-hidden px-6 py-16 md:px-20 md:py-24 bg-[#191b1f] border-b border-border">
+    <section id="about" class="relative overflow-hidden px-6 py-14 md:px-20 md:py-20 bg-[#191b1f] border-b border-border">
         <div class="pointer-events-none absolute inset-0 z-0">
             <img src="/images/hero-mountain.jpg" class="h-full w-full object-cover object-center opacity-[0.06] grayscale" alt="" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-b from-[#191b1f] via-[#191b1f]/92 to-[#191b1f]"></div>
@@ -856,7 +1221,7 @@
                 Talk to our <span class="font-semibold text-accent">expedition directors</span>
             </h2>
             <p class="mx-auto mt-5 max-w-2xl font-sans text-sm leading-relaxed text-white/70 md:text-base">
-                Join us and discover the magic of the Himalayas, where every trek is an opportunity for adventure, discovery, and personal transformation. With three decades of expertise, we are honoured to be your trusted partner in this incredible journey.
+                Tell us the route, your dates and how high you&rsquo;ve been before. An expedition director in Kathmandu replies with an honest read on whether it fits &mdash; the days, the permits, the altitude plan and what it will ask of you.
             </p>
 
             <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -907,7 +1272,7 @@
             <!-- Brand row -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
                 <a href="/" class="flex items-center gap-4 group">
-                    <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                    <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
                     <div>
                         <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                         <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -1075,11 +1440,14 @@
     </div>
 
     <!-- SCRIPT LOADER -->
-    <script src="/mountains.js?v=1"></script>
-    <script src="/treks.js?v=6"></script>
-    <script src="/peaks.js?v=3"></script>
-    <script src="/stories.js?v=1"></script>
-    <script src="/edit.js?v=25.2"></script>
+    <script src="/mountains.js?v=2"></script>
+    <script src="/data/expeditions.js"></script>
+    <script src="/treks.js?v=7"></script>
+    <script src="/data/treks.js"></script>
+    <script src="/peaks.js?v=4"></script>
+    <script src="/data/stories.js"></script>
+    <script src="/stories.js?v=3"></script>
+    <script src="/edit.js?v=25.9"></script>
     <script>
     /* Homepage Compare-Treks preview table (04) */
     (function () {
@@ -1122,12 +1490,15 @@
     })();
     </script>
     <script src="/announce.js?v=2"></script>
-<script src="/backdrop.js?v=1" defer></script>
-<script src="/menu.js?v=9"></script>
+<script src="/backdrop.js?v=2" defer></script>
+<script src="/menu.js?v=10"></script>
 <script src="/back.js?v=1"></script>
 <script src="/altitude.js?v=1" defer></script>
+<script src="/hero-corridor.js?v=2" defer></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
+<script src="/booking-client.js?v=1" defer></script>
+<script src="/booking-modal.js?v=2" defer></script>
 </body>
 </html>

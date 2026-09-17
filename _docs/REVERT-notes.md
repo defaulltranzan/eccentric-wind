@@ -1178,3 +1178,115 @@ hover clips resolve, stay deferred until hover, play on enter (Kangchenjunga
 git checkout public/altitude.js public/mountains.js public/*.html
 rm public/backdrop.js public/videos/kangchenjunga.mp4 public/videos/annapurna.mp4
 ```
+
+## § 6 — "The High Corridor" hero + route console (2026-09-16)
+
+**Full revert (everything in this section):** `git checkout pre-hero -- public/index.html public/edit.js public/tailwind.css`
+then delete `public/hero-corridor.js`, `public/images/hero-corridor.webp`, `hero-corridor.jpg`, `hero-corridor-portrait.webp`.
+The old hero markup is also saved verbatim in `_docs/hero-corridor-old-markup.html`.
+
+### 6a. Hero (#manifesto) — cinematic layered hero
+- Markup: `index.html` #manifesto rebuilt (class `hc`): photo plate (WebP/portrait crop of hero-mountain.jpg) →
+  haze → outlined altitude numerals → mid + near SVG ridges (+ tiny climber) → mist → shade → grain → UI.
+  CSS: the `01 — THE HIGH CORRIDOR` block in index.html `<style>` (replaced Ken Burns + slider CSS).
+- New `public/hero-corridor.js` (defer): pointer/scroll parallax via --hx/--hy/--hp, altitude count-up,
+  Kathmandu clock, expedition films (the 4 clips that were hero slides 2–5 — now a channel selector
+  top-right that swaps the plate to video and retunes the instrument from window.MOUNTAINS).
+- `edit.js`: removed initHeroSlider/HERO_VIDEO_SLIDES/heroVideoSlideHTML + old mousemove parallax;
+  coord writer now targets #hero-telemetry-coords; new setHeroTitleLines() splits "MAGIC ADVENTURE"
+  into two lines; en/ne/zh heroBadge/heroTagline/heroDesc rewritten; stats → 1993 / 38 / 31 / 100%.
+- CTAs: primary Explore the Himalaya (/treks) · quiet View Expeditions · text Plan a custom ascent.
+- New `#corridor` interlude between hero and 02 (statement + rope line, `data-media`); `#stats-grid` moved into it.
+
+### 6b. Trek Finder → Route Console (#trek-finder)
+- Same controls/IDs/handlers. Wrapped in `.fdr-console` (Input deck + Readout aside). #finder-count,
+  #fdr-persona, #finder-hint, #finder-reset-btn moved into the readout; new #fdr-scope (38-trail
+  altitude band), #fdr-log, #fdr-top-alt, #fdr-readout-state fed by `renderFinderReadout()` in edit.js
+  (called from filterTrekFinder; no scoring changes). Kicker "05 — Find Your Trek" → "05 — Route Console".
+
+### 6c. Polish
+- "Connect with us" band paragraph rewritten (generic tourism copy → what actually happens when you enquire).
+
+### 6d. Altitude readout made legible (2026-09-16, same day)
+- `.hc-alt` changed from a huge faint blended watermark (bottom-right, half-covered by the ridge) to a clear
+  solid readout: label "Summit · Sagarmatha / Everest" + 8,848.86 M, vertically centred on the right
+  (phones: centred above the title). `#hc-alt-label` added; hero-corridor.js (v=2) retunes it for films.
+  Revert: restore the old `.hc-alt` rules from `git show pre-hero`-era § 6a (difference-blend watermark).
+
+### 6e. Centred hero column (2026-09-16, same day)
+- Eyebrow, title, description, CTAs and custom-ascent link are centred (`.hc-body` text-align:center,
+  centred flex rows, eyebrow gets a mirrored rule). Shade is now a dark radial pool behind the column.
+- `.hc-alt` readout moved out of the stage into `.hc-body`, under the CTAs (in flow, centred).
+- Spacing/title size tightened so the bottom rail still fits the first screen; "Plan a custom ascent"
+  hidden on phones (as in the pre-redesign hero). Revert to the left-aligned 6d state: restore
+  scratch copy or `git diff` the `.hc-body/.hc-eyebrow/.hc-lede/.hc-actions/.hc-link/.hc-alt` rules.
+
+## § 7 — Backend + admin dashboard (2026-09-16)
+
+Guide: `_docs/BACKEND.md`. Revert everything: `git reset --hard pre-backend-build` (tag set right before this work;
+the hero redesign is committed underneath it).
+
+- Content records moved out of the browser data files into `data/content/{treks,expeditions,stories}.json`
+  (script: `scripts/migrate-static-data.js`; original files kept in `_docs/data-split-backup/`).
+  `public/treks.js`, `mountains.js`, `peaks.js`, `stories.js` now hold only defaults/helpers.
+- Pages load server-generated `/data/treks.js`, `/data/expeditions.js` (after mountains.js, before peaks.js),
+  `/data/stories.js` (before stories.js). Round-trip verified identical to the old globals.
+- New server code: `src/config/env.js`, `src/data/` (file + Supabase drivers), `src/services/`
+  (content, booking, media, notify), `src/middleware/adminSession.js`, `src/controllers/{admin,public}Controller.js`,
+  `src/routes/adminRoutes.js`. `inquiryController.js` removed (`/api/inquiry` now aliases `/api/bookings`).
+- `server.js`: rate limit now `/api` only (static files no longer 429), data scripts + dynamic `/sitemap.xml`
+  + `/admin` mounted before static; `app.listen` only when run directly.
+- `/admin` = `public/admin/` (vanilla JS). `supabase/schema.sql`, `.env.example`, `scripts/admin-password.js`,
+  `scripts/db-push.js`. npm scripts `admin:password`, `db:push`; dev loads `.env`.
+- Contact form: live trip list (`/api/trips`), `?trip=<slug>` preselect, preferred-date field, honeypot,
+  inline status instead of alert(). Trek/expedition "Plan this…" buttons link `/contact?trip=<slug>`.
+
+## § 7b — Backend hardening v1.1 (2026-09-17)
+
+Revert: `git reset --hard backend-v1` (tag on the first backend commit).
+- Bookings: per-field errors (`fields`), Idempotency-Key + 10-min duplicate collapse, `details` extras, status `history`,
+  `page_url`, `popup` source, pagination, Kathmandu-dated refs, email alert capped at 4 s. New `public/booking-client.js`
+  (window.HMABooking) used by contact.html — the popup form should use it too.
+- Content: stale-save 409 (`expectedUpdatedAt`), `data.formerSlugs` + 301 redirects, real 404 for unknown/draft slugs,
+  single-pass reorder, stronger sanitizer.
+- Server: CORS limited to SITE_URL/ALLOWED_ORIGINS (no credentials), JSON limits (64 KB public / 1.5 MB admin),
+  static caching (images 7 d, html/js/css revalidate, admin no-store), `/api/health`, `/api/admin/pulse`,
+  sessions bound to credentials, configurable data dir + rate limits, data-script outage → empty 503 script.
+- Admin UI: branded sign-in + "Base camp" dashboard, live new-booking badge, bookings status chips, history timeline,
+  extras, pager, phone card layout, stale-save prompt.
+- `npm test` suite in `test/api.test.js`; `supabase/schema.sql` adds the new booking columns (re-runnable).
+
+## § 8 — Booking popup "Plan your adventure" (2026-09-17)
+
+Revert: `git reset --hard backend-v1.1`.
+- New `public/booking-modal.js` + `public/booking-modal.css` (+ `<link>`/`<script>` in 13 public pages, not 404).
+- Card "Book" pills: `treks.html` card(), `collection.js` mtCard(), `edit.js` flagshipCardHTML() (card now wrapped in a
+  positioned div; tagTR moved down to top-[3.4rem]), `expeditions.html` best sellers. Hero "Plan a custom ascent" +
+  flagship desk link got `data-book=""`; trek finder CTA → "Plan <top match> →" opening the popup.
+- Backend: `GET /api/trips/:slug` (contentService.bookingView), popup rules in bookingService (first/last name, phone
+  and trip required, `preferred_month`, country → details, date_precision), dedupe now also compares people/date/phone.
+- Admin: trek "Cost & inclusions" + expedition "Pricing & inclusions" sections (`included`, `excluded`, expedition price
+  tiers); bookings show month-precision dates.
+
+## § 9 — Homepage polish round (2026-09-17)
+
+Restore point: tag `pre-polish-v1` (= commit 1bcad7d). `git checkout pre-polish-v1 -- <file>` reverts one file.
+
+- **Stats row** (`edit.js` renderStats + `STAT_ICONS`, CSS `.hms-*` in index.html "the breath" block): orange
+  figures in boxed cells, each with a big Lucide icon (landmark / route / mountain-snow / badge-check).
+  A stat can pick its own icon with `icon: '<name>'` if the name exists in `STAT_ICONS`. Values/labels still
+  live in the `stats` arrays of i18n en/ne/zh.
+- **Explore Nepal on phones**: menu.js row `Explore Nepal` (mobileOnly, action `openExploreNepal`). On phones
+  `#explore` opens as a full-screen sheet (`.hme-x-open`, close button `#hme-x-close`). `/#explore` and
+  `/#trek-finder` deep links open the sheets on phones (`openHashSheet` in edit.js); the hash is cleared on close.
+- **Explore map fixes**: the Regions view now draws the Nepal silhouette (`.hme-geo-land`, inserted under the
+  ridgeline by buildGeoLayer — it used to be invisible because the province layer is hidden in that lens);
+  `#hme-geo-back[hidden]` and the provinces hint now really hide; viewBox 960×312 so the south edge isn't clipped.
+- **Trek finder**: all icons are Lucide symbols (`<defs>` in #trek-finder); segmented options show an icon above
+  the label; group headers have an icon badge.
+- **Hero title** ~12% larger (`.hc-title` clamps). Phones get extra bottom padding so the 8,848.86 readout
+  clears the floating theme/language widgets; small phones shorten the eyebrow/readout rules.
+- **Logo**: `logo-badge(-dark)-90/180/270.png` pre-sharpened variants + `srcset/sizes` on every header/footer
+  (generated from the 340px originals). Delete the `srcset`/`sizes` attributes to go back to the single PNG.
+- **Spacing**: homepage sections `py-16 md:py-24` → `py-14 md:py-20`; interlude/stats bottom padding reduced.
+- Cache bumps: edit.js v=25.9, menu.js v=10, booking-modal.js v=2.

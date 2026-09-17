@@ -8,8 +8,8 @@
     <link rel="canonical" id="canonical-link" href="https://himalayanmagic.com/expeditions/">
 
     <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
-    <link rel="icon" type="image/png" href="/images/logo-icon.png">
-    <link rel="apple-touch-icon" href="/images/logo-icon.png">
+    <link rel="icon" type="image/png" href="/images/logo-badge.png">
+    <link rel="apple-touch-icon" href="/images/logo-badge.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,7 +30,65 @@
         details.acc[open] .acc-plus { transform:rotate(45deg); }
         .hx-nav-link.active { color: var(--accent); }
         @media (prefers-reduced-motion: reduce) { .fade-up { opacity:1; transform:none; transition:none; } }
+
+        /* ===== Altitude/acclimatisation profile chart — see /safety-tools.js, single-peak mode ===== */
+        .ap-grids { display:grid; gap:1.25rem; margin-top:1.5rem; }
+        @media (min-width:900px){ .ap-grids { grid-template-columns:3fr 2fr; align-items:start; } }
+        .ap-chart { position:relative; width:100%; }
+        .ap-svg { width:100%; height:auto; display:block; overflow:visible; touch-action:pan-y; }
+        .ap-svg:focus { outline:1px solid var(--accent); outline-offset:4px; }
+        .ap-grid { stroke:var(--border); stroke-width:1; }
+        .ap-ylab, .ap-xlab { fill:var(--muted-foreground); font-family:'IBM Plex Mono',monospace; font-size:11px; }
+        .ap-axis-title { fill:var(--muted-foreground); font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.14em; text-transform:uppercase; }
+        .ap-ref { stroke:var(--accent); stroke-width:1; stroke-dasharray:2 4; opacity:.45; }
+        .ap-reflab { fill:var(--accent); font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; opacity:.8; }
+        .ap-fill-top { stop-color:var(--accent); stop-opacity:.26; }
+        .ap-fill-bot { stop-color:var(--accent); stop-opacity:0; }
+        .ap-line { fill:none; stroke:var(--accent); stroke-width:2.5; stroke-linejoin:round; stroke-linecap:round; }
+        .ap-hitick { stroke:var(--accent); stroke-width:1; stroke-dasharray:1 3; opacity:.5; }
+        .ap-hidot { fill:var(--accent); opacity:.55; }
+        .ap-cursor { stroke:var(--foreground); stroke-width:1; stroke-dasharray:2 3; opacity:.4; transition:opacity .15s; }
+        .ap-node { fill:var(--background); stroke:var(--accent); stroke-width:2; transition:r .12s ease, opacity .2s ease; }
+        .light-mode .ap-node { fill:#fff; }
+        .ap-node.is-rest { stroke:var(--muted-foreground); }
+        .ap-node.is-warn { fill:#f59e0b; stroke:#f59e0b; }
+        .ap-node.is-crit { fill:#ef4444; stroke:#ef4444; }
+        .ap-node.is-summit { fill:var(--accent); stroke:var(--accent); }
+        .ap-node.is-active { r:7; stroke-width:3; }
+        .ap-capture { cursor:crosshair; }
+        .ap-tip { position:absolute; z-index:5; pointer-events:none; background:#16181b; border:1px solid var(--border); border-left:2px solid var(--accent); padding:.55rem .7rem; font-family:'IBM Plex Mono',monospace; display:flex; flex-direction:column; gap:.15rem; min-width:148px; box-shadow:0 12px 30px rgba(0,0,0,.4); }
+        .light-mode .ap-tip { background:#fff; }
+        .ap-tip-day { font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        .ap-tip-alt { font-size:15px; color:var(--foreground); }
+        .ap-tip-alt span { font-size:10px; color:var(--muted-foreground); }
+        .ap-tip-gain { font-size:10px; color:var(--muted-foreground); }
+        .ap-tip-gain.is-warn { color:#f59e0b; } .ap-tip-gain.is-crit { color:#ef4444; } .ap-tip-gain.is-down { color:#4ade80; }
+        .ap-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); margin-top:1.25rem; }
+        @media (min-width:560px){ .ap-stats { grid-template-columns:repeat(4,1fr); } }
+        .ap-chip { background:var(--card); padding:.75rem .85rem; display:flex; flex-direction:column; gap:.25rem; }
+        .ap-chip-k { font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; letter-spacing:.14em; color:var(--muted-foreground); }
+        .ap-chip-v { font-family:'Oswald',sans-serif; font-size:1.1rem; color:var(--foreground); }
+        .ap-detail { border:1px solid var(--border); background:#1b1e22; padding:1.05rem 1.15rem; }
+        .light-mode .ap-detail { background:#fff; }
+        .ap-detail-head { display:flex; align-items:center; gap:.55rem; flex-wrap:wrap; }
+        .ap-detail-day { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--accent); }
+        .ap-badge { font-family:'IBM Plex Mono',monospace; font-size:8.5px; text-transform:uppercase; letter-spacing:.1em; padding:.2rem .45rem; border:1px solid currentColor; }
+        .ap-badge.is-warn { color:#f59e0b; } .ap-badge.is-crit { color:#ef4444; } .ap-badge.is-rest { color:var(--muted-foreground); }
+        .ap-detail-title { font-family:'Oswald',sans-serif; font-weight:400; text-transform:uppercase; letter-spacing:-.01em; color:var(--foreground); font-size:1.1rem; margin:.5rem 0 .55rem; }
+        .ap-detail-row { display:flex; flex-wrap:wrap; gap:.3rem 1rem; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted-foreground); }
+        .ap-detail-row b { color:var(--foreground); }
+        .ap-detail-row .is-warn { color:#f59e0b; } .ap-detail-row .is-crit { color:#ef4444; } .ap-detail-row .is-down { color:#4ade80; }
+        .ap-detail-tip { font-family:'IBM Plex Mono',monospace; font-size:11px; line-height:1.6; color:var(--muted-foreground); margin-top:.65rem; padding-top:.65rem; border-top:1px solid var(--border); }
+        .ap-verdict { border:1px solid var(--border); border-left:3px solid var(--accent); padding:1.05rem 1.15rem; margin-top:1.15rem; }
+        .ap-verdict.is-ok { border-left-color:#4ade80; } .ap-verdict.is-warn { border-left-color:#f59e0b; } .ap-verdict.is-crit { border-left-color:#ef4444; } .ap-verdict.is-info { border-left-color:var(--accent); }
+        .ap-verdict-k { font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted-foreground); }
+        .ap-verdict p { font-family:'IBM Plex Mono',monospace; font-size:11.5px; line-height:1.7; color:var(--foreground); margin:.5rem 0 .6rem; }
+        .ap-verdict-link { font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); }
+        .ap-legend { display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; margin-top:1.35rem; font-family:'IBM Plex Mono',monospace; font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted-foreground); }
+        .ap-legend i { display:inline-block; width:10px; height:10px; margin-right:.4rem; vertical-align:middle; font-style:normal; }
+        @media (prefers-reduced-motion: reduce){ .ap-line, .ap-node, .ap-cursor { transition:none !important; } }
     </style>
+    <link rel="stylesheet" href="/booking-modal.css?v=5">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -40,7 +98,7 @@
 <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
         <a href="/" class="group flex shrink-0 items-center gap-3">
-            <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
             <span class="hidden flex-col leading-none sm:flex">
                 <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
                 <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Mountaineering Expeditions · Est. 1993</span>
@@ -72,19 +130,22 @@
 
 <main id="mtn-root" class="flex-1"></main>
 
-<div id="mobile-cta" class="fixed bottom-0 left-0 right-0 z-50 lg:hidden border-t border-border bg-[#101215]/95 backdrop-blur-md px-4 py-3 flex items-center gap-3 translate-y-full transition-transform">
-    <div class="flex-1 min-w-0">
-        <span class="lbl block">Expedition</span>
-        <span id="mcta-name" class="block font-heading text-sm uppercase text-white truncate">—</span>
+<!-- booking dock: full-width bar on phones, floating dock on laptops. Opens the booking popup (booking-modal.js). -->
+<div id="mobile-cta" class="hmb-dock" role="region" aria-label="Book this expedition" inert>
+    <img id="mcta-img" class="hmb-dock-img" alt="" aria-hidden="true" decoding="async">
+    <div class="hmb-dock-info">
+        <span id="mcta-kicker" class="hmb-dock-kicker">Expedition</span>
+        <span id="mcta-name" class="hmb-dock-name">—</span>
+        <span id="mcta-meta" class="hmb-dock-meta"></span>
     </div>
-    <a href="/contact" class="shrink-0 bg-accent text-background font-mono text-[10px] uppercase tracking-widest font-semibold px-4 py-2.5">Plan this Climb</a>
+    <a id="mcta-book" href="/contact" class="hmb-dock-btn">Plan this climb<svg viewBox="0 0 18 10" fill="none" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></a>
 </div>
 
 <footer class="relative bg-[#121417] border-t border-border px-6 py-16 md:px-20 text-muted-foreground font-mono text-xs overflow-hidden">
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -132,21 +193,26 @@
     </div>
 </footer>
 
-<div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+<div class="fixed bottom-24 right-6 z-50 flex items-center gap-3 lg:bottom-6">
     <button onclick="hxToggleTheme()" class="h-11 w-11 rounded-full border border-border bg-card/90 backdrop-blur-md text-foreground flex items-center justify-center shadow-2xl hover:border-accent hover:text-accent transition-all">
         <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
     </button>
 </div>
 
-<script src="/mountains.js?v=1"></script>
-<script src="/peaks.js?v=3"></script>
-<script src="/treks.js?v=6"></script>
-<script src="/expedition-render.js?v=3"></script>
-<script src="/backdrop.js?v=1" defer></script>
-<script src="/menu.js?v=9"></script>
+<script src="/mountains.js?v=2"></script>
+<script src="/data/expeditions.js"></script>
+<script src="/peaks.js?v=4"></script>
+<script src="/treks.js?v=7"></script>
+<script src="/data/treks.js"></script>
+<script src="/expedition-render.js?v=5"></script>
+<script src="/safety-tools.js?v=4"></script>
+<script src="/backdrop.js?v=2" defer></script>
+<script src="/menu.js?v=10"></script>
 <script src="/back.js?v=1"></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/theme.js?v=2"></script>
+<script src="/booking-client.js?v=1" defer></script>
+<script src="/booking-modal.js?v=2" defer></script>
 </body>
 </html>

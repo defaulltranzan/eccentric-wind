@@ -36,20 +36,20 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "EST. 1993 · THREE DECADES IN THE HIMALAYA",
+    heroBadge: "The High Corridors of Nepal",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "Leave the ordinary behind and ascend into legend.",
-    heroDesc: "Nepal's trekking trails and 8,000-metre expeditions — led since 1993 by the certified local guides who live beneath these mountains.",
+    heroTagline: "Treks, high passes and Himalayan expeditions — led by local guides since 1993.",
+    heroDesc: "Trekking routes, high passes and Himalayan expeditions — shaped by the local guides who have led these corridors since 1993.",
     btnViewExpeditions: "Begin Climbing",
     scrollElevation: "SCROLL FOR ELEVATION",
     
     // Stats Matrix
     stats: [
-      { value: "30+", label: "Years of Safety Legacy" },
-      { value: "100%", label: "Certified Sherpa Guides" },
-      { value: "Guaranteed", label: "Group Departures" },
-      { value: "Eco-Safe", label: "Sustainable Expeditions" }
+      { value: "1993", label: "Founded in Kathmandu" },
+      { value: "38", label: "Trekking trails mapped" },
+      { value: "31", label: "Peaks we climb" },
+      { value: "100%", label: "Licensed local guides" }
     ],
     
     // 02 Expedition Matrix
@@ -148,20 +148,20 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "सन् १९९३ देखि · हिमालयमा तीन दशक",
+    heroBadge: "नेपालका उच्च हिमाली करिडोर",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "साधारणलाई पछाडि छोड्नुहोस्, किंवदन्तीमा चढ्नुहोस्।",
+    heroTagline: "पदयात्रा, उच्च पास र हिमाली अभियान — सन् १९९३ देखि स्थानीय गाइडहरूको नेतृत्वमा।",
     heroDesc: "नेपालका पदयात्रा मार्ग र ८,००० मिटरका अभियानहरू — सन् १९९३ देखि, यी हिमालको फेदमा बस्ने प्रमाणित स्थानीय गाइडहरूको नेतृत्वमा।",
     btnViewExpeditions: "अभियानहरू हेर्नुहोस्",
     scrollElevation: "उचाइको लागि स्क्रोल गर्नुहोस्",
     
     // Stats Matrix
     stats: [
-      { value: "३०+", label: "सुरक्षा इतिहास (वर्ष)" },
-      { value: "१००%", label: "प्रमाणित स्थानीय शेर्पा गाइड" },
-      { value: "ग्यारेन्टी", label: "नियमित समूह प्रस्थान" },
-      { value: "इको-सुरक्षित", label: "दिगो हिमाली पदयात्रा" }
+      { value: "१९९३", label: "काठमाडौंमा स्थापना" },
+      { value: "३८", label: "पदयात्रा मार्ग" },
+      { value: "३१", label: "आरोहण गरिने चुचुरा" },
+      { value: "१००%", label: "इजाजतप्राप्त स्थानीय गाइड" }
     ],
     
     // 02 Expedition Matrix
@@ -260,20 +260,20 @@ const i18n = {
     
     // Top Bar & Manifesto
     coordSystem: "27°59'N · 86°55'E",
-    heroBadge: "自 1993 年 · 深耕喜马拉雅三十余年",
+    heroBadge: "尼泊尔的高山走廊",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "把平凡留在身后，攀上传奇之巅。",
+    heroTagline: "徒步路线、高山垭口与喜马拉雅探险 —— 自 1993 年起由当地向导带领。",
     heroDesc: "尼泊尔的徒步路线与 8,000 米级探险 —— 自 1993 年起，由生活在这些雪山脚下的持证当地向导带领。",
     btnViewExpeditions: "浏览探险路线",
     scrollElevation: "向下滚动探索海拔",
     
     // Stats Matrix
     stats: [
-      { value: "30+", label: "年卓越安全传承" },
-      { value: "100%", label: "本地认证夏尔巴向导" },
-      { value: "保证出发", label: "固定团队定期排期" },
-      { value: "生态安全", label: "可持续环保高山徒步" }
+      { value: "1993", label: "创立于加德满都" },
+      { value: "38", label: "条徒步路线" },
+      { value: "31", label: "座攀登山峰" },
+      { value: "100%", label: "持证当地向导" }
     ],
     
     // 02 Expedition Matrix
@@ -524,6 +524,14 @@ function selectLanguage(lang) {
   applyLanguageUI();
 }
 
+// "MAGIC ADVENTURE" → two stacked lines, the last word in the accent colour.
+function setHeroTitleLines(el, text) {
+  const words = String(text || '').trim().split(/\s+/);
+  const last = words.length > 1 ? words.pop() : '';
+  el.innerHTML = '<span>' + escapeHtml(words.join(' ')) + '</span>' +
+    (last ? ' <span class="hc-accent">' + escapeHtml(last) + '</span>' : '');
+}
+
 // ==========================================
 // 6. MULTILINGUAL UI APPLICATION
 // ==========================================
@@ -541,7 +549,7 @@ function applyLanguageUI() {
   if (btnEditMode) btnEditMode.innerHTML = `<i class="fa-solid fa-pen-to-square mr-1"></i> ${t.btnEnableEdit}`;
 
   // 3. Manifesto & Hero
-  const coordEl = document.querySelector('#manifesto span.font-mono');
+  const coordEl = document.getElementById('hero-telemetry-coords');
   if (coordEl) coordEl.innerText = t.coordSystem;
   
   // Check if user has custom edited hero; if default, use translated version
@@ -551,7 +559,7 @@ function applyLanguageUI() {
     const hPrimary = document.getElementById('hero-title-primary');
     if (hPrimary) hPrimary.innerText = t.heroTitlePrimary;
     const hItalic = document.getElementById('hero-title-italic');
-    if (hItalic) hItalic.innerText = t.heroTitleItalic;
+    if (hItalic) setHeroTitleLines(hItalic, t.heroTitleItalic);
     const hDesc = document.getElementById('hero-description');
     if (hDesc) hDesc.innerText = t.heroDesc;
     const hTag = document.getElementById('hero-tagline');
@@ -627,7 +635,7 @@ function applyLanguageUI() {
      a country/region foot and an Explore link to the full guide.
    ========================================================================== */
 const FLAGSHIP_STATE = { cat: 'treks' };
-const FLAGSHIP_CARD_LIMIT = 6;
+const FLAGSHIP_CARD_LIMIT = 10;
 
 const FLAGSHIP_SUB = {
   treks: 'The trails we walk most — tea-house treks from a week to a month. Each tile opens a full route guide: day-by-day itinerary, altitude profile, season, cost and permits.',
@@ -681,9 +689,15 @@ function flagshipTrekItems() {
 /* the flagship eight-thousanders */
 function flagshipPeakItems() {
   const M = window.MOUNTAINS || {};
-  return Object.keys(M).map(k => M[k]).filter(m => m.bestseller)
-    .sort((a, b) => a.bestseller - b.bestseller)
-    .slice(0, FLAGSHIP_CARD_LIMIT).map(m => {
+  let list = Object.keys(M).map(k => M[k]).filter(m => m.bestseller)
+    .sort((a, b) => a.bestseller - b.bestseller);
+  if (list.length < FLAGSHIP_CARD_LIMIT) {
+    const seen = new Set(list.map(m => m.slug));
+    const more = Object.keys(M).map(k => M[k]).filter(m => !seen.has(m.slug))
+      .sort((a, b) => a.rank - b.rank);
+    list = list.concat(more);
+  }
+  return list.slice(0, FLAGSHIP_CARD_LIMIT).map(m => {
       const elev = m.elevationLabel || ((m.elevationM || 0).toLocaleString() + ' m');
       const d = m.difficulty || {};
       const dvals = ['technical', 'altitude', 'exposure', 'weather', 'objectiveHazard']
@@ -772,13 +786,16 @@ function flagshipCardHTML(c) {
   const bg = c.image
     ? `<div class="absolute inset-0 z-0 bg-cover bg-center opacity-45 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700 ease-out" style="background-image:url('${escapeHtml(c.image)}')"></div>`
     : `<div class="absolute inset-0 z-0 opacity-[0.5] bg-[radial-gradient(circle_at_28%_18%,rgba(240,98,37,0.16),transparent_55%),repeating-linear-gradient(118deg,rgba(255,255,255,0.045)_0_1px,transparent_1px_23px)]"></div>`;
+  const bookSlug = String(c.href || '').split('/').filter(Boolean).pop() || '';
+  const bookType = String(c.href || '').indexOf('/treks/') === 0 ? 'trek' : 'expedition';
   return `
+    <div class="relative h-[440px] w-[290px] sm:w-[320px] shrink-0 snap-start transition-transform duration-500 hover:-translate-y-1">
     <a href="${c.href}" aria-label="${escapeHtml(c.name + ' — ' + c.big + ' ' + c.unit + (c.foot ? ', ' + c.foot : ''))}"
-       class="hme-flag group relative block h-[440px] w-[290px] sm:w-[320px] shrink-0 snap-start overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:border-accent">
+       class="hme-flag group relative block h-full w-full overflow-hidden border border-border bg-[#181a1e] transition-all duration-500 hover:border-accent hover:shadow-2xl focus:outline-none focus-visible:border-accent">
       ${bg}
       <div class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/78 to-[#181a1e]/20"></div>
       <span class="absolute top-4 left-4 z-10 bg-black/45 border border-white/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-white">${c.tagTL}</span>
-      ${c.tagTR ? `<span class="absolute top-4 right-4 z-10 bg-accent/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-background">${escapeHtml(c.tagTR)}</span>` : ''}
+      ${c.tagTR ? `<span class="absolute top-[3.4rem] right-4 z-10 bg-accent/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.15em] text-background">${escapeHtml(c.tagTR)}</span>` : ''}
       <div class="relative z-10 flex h-full flex-col justify-end p-6">
         <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground truncate">${escapeHtml(c.kicker)}</span>
         <div class="mt-1 flex items-end gap-1.5">
@@ -795,7 +812,9 @@ function flagshipCardHTML(c) {
           <span class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-accent shrink-0">Explore <i class="fa-solid fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i></span>
         </div>
       </div>
-    </a>`;
+    </a>
+    ${bookSlug ? `<a href="/contact?trip=${escapeHtml(bookSlug)}" class="hmb-card-book" style="top:16px;right:16px" data-book="${escapeHtml(bookSlug)}" data-book-type="${bookType}" aria-label="Book ${escapeHtml(c.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Book</a>` : ''}
+    </div>`;
 }
 
 function renderFlagship() {
@@ -923,6 +942,16 @@ function renderWebsite() {
 }
 
 // Render Stats Grid
+// Lucide icons (lucide.dev, ISC) for the stats row — one per stat, in order.
+// A stat may name its own with `icon: 'mountain-snow'`.
+const STAT_ICONS = {
+  landmark: '<path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2l8 5H4z"/>',
+  route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+  'mountain-snow': '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/>',
+  'badge-check': '<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>'
+};
+const STAT_ICON_ORDER = ['landmark', 'route', 'mountain-snow', 'badge-check'];
+
 function renderStats() {
   const statsGrid = document.getElementById('stats-grid');
   if (!statsGrid) return;
@@ -933,12 +962,13 @@ function renderStats() {
 
   statsList.forEach((stat, idx) => {
     const div = document.createElement('div');
-    // 2-col on mobile / 4-col on md+. Row dividers on mobile, column dividers on md.
-    div.className = "border-border border-b md:border-b-0 border-r even:border-r-0 md:border-r md:last:border-r-0 px-4 py-10 sm:p-8 lg:py-14 text-center";
+    div.className = 'hms-cell';
+    const icon = STAT_ICONS[stat.icon] || STAT_ICONS[STAT_ICON_ORDER[idx % STAT_ICON_ORDER.length]];
     div.innerHTML = `
-      <div class="font-heading text-[2.6rem] leading-[0.88] sm:text-5xl lg:text-[3.25rem] font-light tracking-tightest text-accent antialiased [font-feature-settings:'tnum'] mb-2 cursor-text"
+      <span class="hms-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">${icon}</svg></span>
+      <div class="hms-val font-heading font-light tracking-tightest text-accent antialiased [font-feature-settings:'tnum'] cursor-text"
            data-stat-idx="${idx}" data-field="value">${escapeHtml(stat.value)}</div>
-      <div class="font-mono text-[11px] sm:text-xs uppercase tracking-[0.15em] leading-snug text-muted-foreground cursor-text"
+      <div class="hms-lbl font-mono uppercase text-muted-foreground cursor-text"
            data-stat-idx="${idx}" data-field="label">${escapeHtml(stat.label)}</div>
     `;
     statsGrid.appendChild(div);
@@ -1302,6 +1332,7 @@ function filterTrekFinder() {
   applyFinderPersona(active);
 
   if (active === 0) {
+    renderFinderReadout(model, [], 0);
     resultsEl.innerHTML = '';
     if (countEl) countEl.innerText = '38 trails';
     setFinderCountSub('In the catalogue');
@@ -1342,6 +1373,8 @@ function filterTrekFinder() {
   setFinderCountSub('Of 38 trails');
   if (hintEl) hintEl.innerText = 'Your matches are ready — ' + matches.length +
     (matches.length === 1 ? ' trail matches' : ' trails match') + ' your style';
+
+  renderFinderReadout(model, matches, active);
 
   const top = matches[0];
   const rest = matches.slice(1);
@@ -1401,8 +1434,60 @@ function filterTrekFinder() {
       }).join('') + '</div>' : '') +
     '<div class="mt-8 flex flex-col sm:flex-row gap-3">' +
       '<a href="/compare?t=' + encodeURIComponent(matches.slice(0, 3).map((s) => s.m.slug).join(',')) + '" class="flex-1 text-center border border-border px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground hover:border-accent hover:text-accent transition-all">Compare these →</a>' +
-      '<a href="/contact" class="flex-1 text-center bg-accent text-background px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-accent-hover transition-colors">Get a personalised plan →</a>' +
+      '<a href="/contact?trip=' + encodeURIComponent(top.m.slug) + '" data-book="' + escapeHtml(top.m.slug) + '" data-book-type="trek" class="flex-1 text-center bg-accent text-background px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-accent-hover transition-colors">Plan ' + escapeHtml(top.m.name) + ' →</a>' +
     '</div>';
+}
+
+/* ----------------------------------------------------------------------------
+   Route console readout  (2026-09-16, REVERT-notes § 6b)
+   Draws every trail as a bar on a 1,000–6,500 m axis (height = days), lights
+   the matches, and logs the active answers. Reads the same scored matches —
+   no scoring logic lives here.
+   -------------------------------------------------------------------------- */
+const FINDER_GROUP_NAMES = { experience: 'Level', region: 'Region', season: 'Season', duration: 'Days', budget: 'Budget' };
+const FINDER_SHORT = {
+  experience: { first: 'First-timer', experienced: 'Experienced', alpinist: 'Alpinist' },
+  region: { everest: 'Everest', annapurna: 'Annapurna', langtang: 'Langtang', manaslu: 'Manaslu', mustang: 'Mustang', dolpo: 'Dolpo', farwest: 'Far West' },
+  duration: { short: '5–10', mid: '10–15', long: '15–20', epic: '20+' },
+  budget: { b1: '< $1,000', b2: '$1–2k', b3: '$2–3.5k', b4: '$3.5k+' },
+  style: { iconic: 'Iconic', remote: 'Remote', culture: 'Culture', challenge: 'Challenge', photo: 'Photography', slow: 'Slow travel' }
+};
+
+function renderFinderReadout(model, matches, active) {
+  const scope = document.getElementById('fdr-scope');
+  const log = document.getElementById('fdr-log');
+  const state = document.getElementById('fdr-readout-state');
+  const topAlt = document.getElementById('fdr-top-alt');
+  const lo = 1000, hi = 6500;
+  const hit = {};
+  matches.forEach((s) => { hit[s.m.slug] = true; });
+  const topSlug = matches[0] ? matches[0].m.slug : null;
+
+  if (scope) {
+    scope.innerHTML = model.filter((m) => m.maxAltM).map((m) => {
+      const x = (Math.max(lo, Math.min(hi, m.maxAltM)) - lo) / (hi - lo) * 100;
+      const h = 22 + Math.min(1, (m.days || 8) / 24) * 78;
+      const cls = !active ? '' : m.slug === topSlug ? ' is-top' : hit[m.slug] ? ' is-hit' : ' is-dim';
+      return '<span class="fdr-bar' + cls + '" style="left:' + x.toFixed(2) + '%;height:' + h.toFixed(0) + '%" title="' + escapeHtml(m.name + ' · ' + m.maxAlt) + '"></span>';
+    }).join('');
+  }
+  if (state) state.innerText = active ? 'Live · ' + active + ' signal' + (active === 1 ? '' : 's') : 'Standby';
+  if (topAlt) {
+    topAlt.innerHTML = matches[0]
+      ? 'Top match<br><span class="text-accent">' + escapeHtml(matches[0].m.name) + '</span><br>' + escapeHtml(String(matches[0].m.maxAlt).split('(')[0].replace(/^[≈~\s]+/, '').trim())
+      : '';
+  }
+  if (log) {
+    const items = [];
+    Object.keys(FINDER_GROUP_NAMES).forEach((g) => {
+      const v = finderState[g];
+      if (!v) return;
+      const label = g === 'season' ? v : ((FINDER_SHORT[g] || {})[v] || v);
+      items.push('<li><b>' + FINDER_GROUP_NAMES[g] + '</b>' + escapeHtml(label) + '</li>');
+    });
+    (finderState.style || []).forEach((s) => items.push('<li><b>Style</b>' + escapeHtml(FINDER_SHORT.style[s] || s) + '</li>'));
+    log.innerHTML = items.join('');
+  }
 }
 
 /* ----------------------------------------------------------------------------
@@ -1472,7 +1557,8 @@ function closeTrekFinder() {
   const sec = document.getElementById('trek-finder');
   if (!sec) return;
   sec.classList.remove('fdr-open');
-  document.body.classList.remove('fdr-locked');
+  if (!document.querySelector('#explore.hme-x-open')) document.body.classList.remove('fdr-locked');
+  clearSheetHash('#trek-finder');
   sec.removeAttribute('role');
   sec.removeAttribute('aria-modal');
   document.removeEventListener('keydown', finderEscHandler);
@@ -1965,7 +2051,7 @@ let exploreLockedGeo = null;
 let geoLayerBuilt = false;
 let geoZoomRaf = null;
 let geoZoomFallback = null;
-const GEO_FULL_VIEW = [20, 40, 960, 300];
+const GEO_FULL_VIEW = [20, 40, 960, 312];
 const GEO_NEPAL_PATH = 'M40,150 L130,108 L212,132 L300,92 L382,118 L452,78 L520,104 L586,68 L652,98 L712,60 L772,82 L858,52 L900,60 L965,96 L965,150 L892,214 L812,262 L745,298 L658,320 L566,334 L470,342 L388,332 L314,315 L240,298 L165,268 L92,222 L45,174 Z';
 
 function svgEl(tag, attrs) {
@@ -1992,6 +2078,12 @@ function buildGeoLayer() {
   grad.appendChild(svgEl('stop', { offset: '1', 'stop-color': '#181b1f' }));
   defs.appendChild(grad);
   layer.appendChild(defs);
+
+  // the country itself (the province layer is hidden in this lens) — drawn
+  // beneath the ridgeline so the Tibet border stays on top
+  const ridge = layer.ownerSVGElement && layer.ownerSVGElement.querySelector('.hme-ridge');
+  const land = svgEl('path', { class: 'hme-geo-land', d: GEO_NEPAL_PATH, 'vector-effect': 'non-scaling-stroke' });
+  if (ridge) ridge.parentNode.insertBefore(land, ridge); else layer.appendChild(land);
 
   // faint survey graticule behind the country
   const gratG = svgEl('g', { class: 'hme-graticule', 'clip-path': 'url(#hme-nepal-clip)' });
@@ -2258,6 +2350,56 @@ function initExplore() {
   buildGeoLayer();
   initExploreLens();
   setExploreLens('regions');
+}
+
+/* Explore Nepal on phones — like the trek finder, the section is
+   `hidden lg:block`, so the menu opens it as a full-screen sheet. */
+function openExploreNepal() {
+  const sec = document.getElementById('explore');
+  if (!sec) { window.location.href = '/#explore'; return; }
+  if (!window.matchMedia('(max-width: 1023px)').matches) {
+    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  if (typeof closeMenu === 'function') closeMenu();
+  sec.classList.add('hme-x-open');
+  document.body.classList.add('fdr-locked');
+  sec.setAttribute('role', 'dialog');
+  sec.setAttribute('aria-modal', 'true');
+  sec.setAttribute('aria-label', 'Explore Nepal');
+  sec.scrollTop = 0;
+  const close = document.getElementById('hme-x-close');
+  if (close) close.focus();
+  document.addEventListener('keydown', exploreEscHandler);
+}
+
+function closeExploreNepal() {
+  const sec = document.getElementById('explore');
+  if (!sec) return;
+  sec.classList.remove('hme-x-open');
+  if (!document.querySelector('#trek-finder.fdr-open')) document.body.classList.remove('fdr-locked');
+  clearSheetHash('#explore');
+  sec.removeAttribute('role');
+  sec.removeAttribute('aria-modal');
+  document.removeEventListener('keydown', exploreEscHandler);
+}
+
+function exploreEscHandler(e) { if (e.key === 'Escape') closeExploreNepal(); }
+
+// /#explore and /#trek-finder (e.g. from the menu on another page): on phones
+// the sections are hidden, so open them as sheets; desktop scrolls natively.
+function openHashSheet() {
+  if (!window.matchMedia('(max-width: 1023px)').matches) return;
+  if (location.hash === '#explore') openExploreNepal();
+  else if (location.hash === '#trek-finder') openTrekFinder();
+}
+window.addEventListener('hashchange', openHashSheet);
+
+// drop the hash once a sheet closes, so the same link opens it again
+function clearSheetHash(hash) {
+  if (location.hash === hash && window.history && history.replaceState) {
+    history.replaceState(history.state, '', location.pathname + location.search);
+  }
 }
 
 function scrollTrekGrid(direction) {
@@ -2798,104 +2940,10 @@ function setHeroSlide(index) {
   });
 }
 
-// Hero Mountain Mouse Parallax & Dynamic Topography
-// Hero Mountain Mouse Parallax
-window.addEventListener('mousemove', (e) => {
-  const heroParallax = document.getElementById('hero-bg-parallax');
-  if (heroParallax) {
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 12;
-    heroParallax.style.transform = `scale(1.08) translate(${x}px, ${y}px)`;
-  }
-});
+// Hero parallax, films and instrumentation live in /hero-corridor.js (REVERT-notes § 6a).
 
 // Scroll barometer now lives in /altitude.js (self-injecting, all pages that
 // load it). Revert: REVERT-notes § 5af.
-
-// 3D Mountain Perspective Video Slider
-const heroVideoSlides = [
-  {
-    id: "everest",
-    title: "01 // SAGARMATHA RIDGE · 5,364M",
-    coords: "27°59'N · 86°55'E",
-    src: "/videos/hero.mp4",
-    altSrc: "/videos/hero.mp4.mp4",
-    poster: "/images/ebc.png"
-  },
-  {
-    id: "annapurna",
-    title: "02 // THORONG LA CIRQUE · 5,416M",
-    coords: "28°47'N · 83°56'E",
-    src: "/videos/annapurna.mp4",
-    altSrc: "/images/annapurna.png",
-    poster: "/images/annapurna.png"
-  },
-  {
-    id: "manaslu",
-    title: "03 // SPIRIT MOUNTAIN PASS · 5,106M",
-    coords: "28°33'N · 84°37'E",
-    src: "/videos/manaslu.mp4",
-    altSrc: "/images/manaslu.png",
-    poster: "/images/manaslu.png"
-  }
-];
-
-let currentHeroVideoIndex = 0;
-
-function switchHeroVideo(direction) {
-  if (direction === 'next') {
-    currentHeroVideoIndex = (currentHeroVideoIndex + 1) % heroVideoSlides.length;
-  } else if (direction === 'prev') {
-    currentHeroVideoIndex = (currentHeroVideoIndex - 1 + heroVideoSlides.length) % heroVideoSlides.length;
-  } else if (typeof direction === 'number') {
-    currentHeroVideoIndex = direction;
-  }
-  updateHeroVideoUI();
-}
-
-function updateHeroVideoUI() {
-  const slide = heroVideoSlides[currentHeroVideoIndex];
-  const video = document.getElementById('hero-video');
-  const label = document.getElementById('hero-video-title');
-  const coord = document.getElementById('hero-telemetry-coords');
-
-  if (label) label.innerText = slide.title;
-  if (coord) coord.innerText = slide.coords;
-
-  if (video) {
-    video.style.opacity = '0.4';
-    setTimeout(() => {
-      video.poster = slide.poster;
-      video.src = slide.src;
-      video.playbackRate = 0.625;
-      video.play().catch(() => {});
-      video.style.opacity = '0.9';
-    }, 200);
-  }
-
-  // Update Indicator Pills
-  heroVideoSlides.forEach((_, idx) => {
-    const pill = document.getElementById(`hero-slide-pill-${idx}`);
-    if (pill) {
-      if (idx === currentHeroVideoIndex) {
-        pill.className = "h-1.5 w-8 rounded-full bg-accent cursor-pointer transition-all";
-      } else {
-        pill.className = "h-1.5 w-2 rounded-full bg-white/30 hover:bg-white/60 cursor-pointer transition-all";
-      }
-    }
-  });
-}
-
-// Slow down hero video playback to stretch from 10s to 16s (0.625x speed)
-function initHeroVideoSpeed() {
-  const heroVideo = document.getElementById('hero-video');
-  if (heroVideo) {
-    heroVideo.playbackRate = 0.625;
-    heroVideo.addEventListener('loadedmetadata', () => {
-      heroVideo.playbackRate = 0.625;
-    });
-  }
-}
 
 // ==========================================
 // 9. LIFECYCLE INITIALIZATION
@@ -2906,8 +2954,8 @@ window.addEventListener('DOMContentLoaded', () => {
   initFlagshipTabs();
   renderFlagship();
   loadContent();
-  initHeroVideoSpeed();
   initExplore();
+  openHashSheet();
 });
 
 

@@ -1,0 +1,120 @@
+const fs = require('fs');
+const path = require('path');
+const env = require('../config/env');
+const session = require('../middleware/adminSession');
+const content = require('../services/contentService');
+const bookings = require('../services/bookingService');
+const { driver } = require('../data');
+
+const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+
+/* /data/treks.js · /data/expeditions.js · /data/stories.js
+ * Signed-in admins also see drafts (so they can preview before publishing). */
+exports.dataScript = (collection) => wrap(async (req, res) => {
+  const isAdmin = !!session.sessionFrom(req);
+  try {
+    const js = await content.buildScript(collection, { includeDrafts: isAdmin });
+    res.set('Content-Type', 'application/javascript; charset=utf-8');
+    res.set('Cache-Control', isAdmin ? 'private, no-store' : 'public, max-age=60, s-maxage=60, stale-while-revalidate=600');
+    res.set('Vary', 'Cookie');
+    res.send(js);
+  } catch (err) {
+    // Never let a data outage throw a script error into the page — log and send an empty, valid script.
+    console.error('[data] ' + collection + ' script failed:', err.message);
+    res.status(503).set('Content-Type', 'application/javascript; charset=utf-8').set('Cache-Control', 'no-store')
+      .send('/* content temporarily unavailable */\n');
+  }
+});
+
+/* Trip list for booking forms and popups. */
+exports.trips = wrap(async (req, res) => {
+  res.set('Cache-Control', 'public, max-age=120, s-maxage=120, stale-while-revalidate=600');
+  res.json({ status: 'success', items: await content.trips() });
+});
+
+/* One trip's booking view (image, facts, price tiers, inclusions) for the booking popup. */
+exports.tripDetail = wrap(async (req, res) => {
+  const slug = String(req.params.slug || '').toLowerCase();
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return res.status(404).json({ status: 'error', message: 'Trip not found.' });
+  const type = req.query.type === 'trek' || req.query.type === 'expedition' ? req.query.type : null;
+  const trip = await content.bookingView(slug, type);
+  res.set('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=600');
+  res.json({ status: 'success', trip });
+});
+
+/* POST /api/bookings — the booking contract (see _docs/BACKEND.md → "Booking API"). */
+exports.createBooking = wrap(async (req, res) => {
+  const b = await bookings.create(req.body, {
+    userAgent: req.get('user-agent'),
+    referer: req.get('referer'),
+    idempotencyKey: req.get('idempotency-key')
+  });
+  const newsletter = b.source === 'newsletter';
+  res.status(b.replayed ? 200 : 201).json({
+    status: 'success',
+    ref: b.ref,
+    inquiryId: b.ref,
+    booking: bookings.publicView(b),
+    message: newsletter
+      ? 'You are on the list.'
+      : 'Request received. An expedition director will reply to ' + (b.email || 'you') + ' within 24 hours. Your reference is ' + b.ref + '.'
+  });
+});
+
+/* GET /api/health — uptime checks. Reports storage reachability, never secrets. */
+exports.health = wrap(async (req, res) => {
+  const started = Date.now();
+  let storage = 'ok';
+  try { await driver.ping(); } catch (err) { storage = 'unreachable'; }
+  res.set('Cache-Control', 'no-store');
+  res.status(storage === 'ok' ? 200 : 503).json({
+    status: storage === 'ok' ? 'ok' : 'degraded',
+    storage: driver.name,
+    storageStatus: storage,
+    latencyMs: Date.now() - started,
+    time: new Date().toISOString()
+  });
+});
+
+/* Page shells for /treks/:slug, /expeditions/:slug, /stories/:slug:
+ * published → 200 · renamed → 301 to the new address · unknown or draft → real 404
+ * (the template still renders its friendly "not found" state). Admins can preview drafts. */
+const PUBLIC_DIR = path.join(__dirname, '../../public');
+exports.contentPage = (collection, file, base) => wrap(async (req, res) => {
+  const slug = String(req.params.slug || '').toLowerCase();
+  let status = 'found', target = slug;
+  try {
+    const isAdmin = !!session.sessionFrom(req);
+    const r = await content.resolve(collection, slug, { includeDrafts: isAdmin });
+    status = r.status;
+    target = r.slug;
+  } catch (err) {
+    console.error('[page] could not resolve ' + collection + '/' + slug + ':', err.message);
+  }
+  if (status === 'moved') {
+    const qs = req.originalUrl.indexOf('?') > -1 ? req.originalUrl.slice(req.originalUrl.indexOf('?')) : '';
+    return res.redirect(301, base + encodeURIComponent(target) + qs);
+  }
+  if (status !== 'found') res.status(404).set('X-Robots-Tag', 'noindex');
+  res.sendFile(path.join(PUBLIC_DIR, file));
+});
+
+/* Sitemap: static pages from public/sitemap.xml + every published trek, expedition and story. */
+const STATIC_SITEMAP = path.join(__dirname, '../../public/sitemap.xml');
+exports.sitemap = wrap(async (req, res) => {
+  const xml = fs.readFileSync(STATIC_SITEMAP, 'utf8');
+  const dynamic = /\/(treks|stories)\/[^<]+<\/loc>|\/expeditions\/(?!(8000m|7000m|6000m|trekking-peaks)<)[^<]+<\/loc>/;
+  const staticUrls = (xml.match(/<url>[\s\S]*?<\/url>/g) || []).filter((u) => !dynamic.test(u));
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const entry = (loc, lastmod, priority) => '  <url>\n    <loc>' + esc(env.siteUrl + loc) + '</loc>\n' +
+    (lastmod ? '    <lastmod>' + String(lastmod).slice(0, 10) + '</lastmod>\n' : '') +
+    '    <changefreq>monthly</changefreq>\n    <priority>' + priority + '</priority>\n  </url>';
+  const [treks, exps, stories] = await Promise.all([content.list('treks'), content.list('expeditions'), content.list('stories')]);
+  const urls = staticUrls.map((u) => '  ' + u.trim())
+    .concat(treks.map((r) => entry('/treks/' + r.slug, r.updated_at, '0.8')))
+    .concat(exps.map((r) => entry('/expeditions/' + r.slug, r.updated_at, '0.7')))
+    .concat(stories.map((r) => entry('/stories/' + r.slug, (r.data && (r.data.updated || r.data.date)) || r.updated_at, '0.6')));
+  res.set('Content-Type', 'application/xml; charset=utf-8');
+  res.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+  res.send('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.join('\n') + '\n</urlset>\n');
+});

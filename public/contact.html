@@ -39,8 +39,8 @@
 
     <!-- Tailwind CSS -->
     <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
-    <link rel="icon" type="image/png" href="/images/logo-icon.png">
-    <link rel="apple-touch-icon" href="/images/logo-icon.png">
+    <link rel="icon" type="image/png" href="/images/logo-badge.png">
+    <link rel="apple-touch-icon" href="/images/logo-badge.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -80,6 +80,7 @@
             transform: translateY(-100%);
         }
     </style>
+    <link rel="stylesheet" href="/booking-modal.css?v=5">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -101,7 +102,7 @@
     <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
             <a href="/" class="group flex shrink-0 items-center gap-3">
-                <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
                 <span class="hidden flex-col leading-none sm:flex">
                     <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
                     <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Headquarters Contact</span>
@@ -222,28 +223,32 @@
                         <form id="contact-form" onsubmit="handleInquirySubmit(event)" class="space-y-4 font-mono text-xs">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-wider text-muted-foreground">Full Name *</label>
-                                    <input type="text" id="inq-name" required placeholder="e.g. Alex Morgan" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
+                                    <label for="inq-name" class="text-[10px] uppercase tracking-wider text-muted-foreground">Full Name *</label>
+                                    <input type="text" id="inq-name" autocomplete="name" maxlength="120" required placeholder="e.g. Alex Morgan" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
                                 </div>
                                 <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-wider text-muted-foreground">Email Address *</label>
-                                    <input type="email" id="inq-email" required placeholder="name@domain.com" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
+                                    <label for="inq-email" class="text-[10px] uppercase tracking-wider text-muted-foreground">Email Address *</label>
+                                    <input type="email" id="inq-email" autocomplete="email" maxlength="200" required placeholder="name@domain.com" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-wider text-muted-foreground">Phone / WhatsApp</label>
-                                    <input type="text" id="inq-phone" placeholder="+1 (555) 000-0000" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
+                                    <label for="inq-phone" class="text-[10px] uppercase tracking-wider text-muted-foreground">Phone / WhatsApp</label>
+                                    <input type="tel" id="inq-phone" autocomplete="tel" maxlength="40" placeholder="+1 (555) 000-0000" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
                                 </div>
                                 <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-wider text-muted-foreground">Team Size</label>
-                                    <input type="number" id="inq-crew" min="1" max="25" value="1" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
+                                    <label for="inq-crew" class="text-[10px] uppercase tracking-wider text-muted-foreground">Team Size</label>
+                                    <input type="number" id="inq-crew" min="1" max="50" value="1" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
+                                </div>
+                                <div class="space-y-1">
+                                    <label for="inq-date" class="text-[10px] uppercase tracking-wider text-muted-foreground">Preferred Start</label>
+                                    <input type="date" id="inq-date" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent" style="color-scheme:dark">
                                 </div>
                             </div>
 
                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase tracking-wider text-muted-foreground">Target Route / Mountain Corridor</label>
+                                <label for="inq-trek" class="text-[10px] uppercase tracking-wider text-muted-foreground">Target Route / Mountain Corridor</label>
                                 <select id="inq-trek" class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent">
                                     <option value="Everest Base Camp (14 Days)">Everest Base Camp & Kala Patthar (14 Days)</option>
                                     <option value="Everest 3 Passes (18 Days)">Everest Three Passes Ultimate (18 Days)</option>
@@ -256,13 +261,19 @@
                             </div>
 
                             <div class="space-y-1">
-                                <label class="text-[10px] uppercase tracking-wider text-muted-foreground">Expedition Details / Special Requirements</label>
-                                <textarea id="inq-msg" rows="4" placeholder="Mention dates, fitness level, dietary needs, or gear requirements..." class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent"></textarea>
+                                <label for="inq-msg" class="text-[10px] uppercase tracking-wider text-muted-foreground">Expedition Details / Special Requirements</label>
+                                <textarea id="inq-msg" maxlength="5000" rows="4" placeholder="Mention dates, fitness level, dietary needs, or gear requirements..." class="w-full bg-[#1b1e22] border border-border p-3 text-white outline-none focus:border-accent"></textarea>
+                            </div>
+
+                            <!-- spam trap: hidden from people, filled by bots -->
+                            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+                                <label for="inq-website">Website</label><input type="text" id="inq-website" tabindex="-1" autocomplete="off">
                             </div>
 
                             <button type="submit" id="inq-submit-btn" class="w-full py-4 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-widest font-semibold transition-all">
                                 <i class="fa-solid fa-paper-plane mr-2"></i> Transmit Proposal to Coordinators
                             </button>
+                            <p id="inq-status" role="status" aria-live="polite" class="hidden border p-4 text-[11px] leading-relaxed normal-case tracking-normal"></p>
                         </form>
                     </div>
                 </div>
@@ -276,7 +287,7 @@
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -325,6 +336,7 @@
 </footer>
 
     <!-- SCRIPT -->
+    <script src="/booking-client.js?v=1"></script>
     <script>
         let lastScrollTop = 0;
         const announcement = document.getElementById('announcement-bar');
@@ -352,41 +364,121 @@
             }
         }
 
+        /* Trip list + submission go through the shared booking client (/booking-client.js).
+           The static <option>s stay as a fallback if the trip list cannot load. */
+        (function loadTrips() {
+            var sel = document.getElementById('inq-trek');
+            var wanted = new URLSearchParams(location.search).get('trip');
+            var d = document.getElementById('inq-date');
+            if (d) d.min = new Date().toISOString().slice(0, 10);
+            if (!window.HMABooking) return;
+            HMABooking.trips().then(function (items) {
+                if (!items.length) return;
+                var groups = { trek: 'Trekking trails', expedition: 'Mountaineering expeditions' };
+                sel.innerHTML = '';
+                var custom = document.createElement('option');
+                custom.value = 'custom:';
+                custom.textContent = 'Custom / not sure yet';
+                sel.appendChild(custom);
+                Object.keys(groups).forEach(function (type) {
+                    var og = document.createElement('optgroup');
+                    og.label = groups[type];
+                    items.filter(function (t) { return t.type === type; }).forEach(function (t) {
+                        var o = document.createElement('option');
+                        o.value = t.type + ':' + t.slug;
+                        o.textContent = t.name + (t.days ? ' (' + t.days + '+ days)' : t.elevation ? ' · ' + t.elevation : '');
+                        og.appendChild(o);
+                    });
+                    if (og.children.length) sel.appendChild(og);
+                });
+                sel.value = 'custom:';
+                if (wanted) {
+                    var match = Array.prototype.find.call(sel.options, function (o) { return o.value.split(':')[1] === wanted; });
+                    if (match) sel.value = match.value;
+                }
+            }).catch(function () {});
+        })();
+
+        var INQ_FIELD_IDS = { name: 'inq-name', email: 'inq-email', phone: 'inq-phone', people: 'inq-crew', preferred_date: 'inq-date', message: 'inq-msg' };
+        var inqKey = null; // one key per form fill — a retry after a network error can never create a duplicate
+
+        function clearFieldErrors() {
+            Object.keys(INQ_FIELD_IDS).forEach(function (k) {
+                var el = document.getElementById(INQ_FIELD_IDS[k]);
+                if (!el) return;
+                el.removeAttribute('aria-invalid');
+                el.style.borderColor = '';
+                var msg = document.getElementById(INQ_FIELD_IDS[k] + '-err');
+                if (msg) msg.remove();
+            });
+        }
+        function showFieldErrors(fields) {
+            var first = null;
+            Object.keys(fields || {}).forEach(function (k) {
+                var el = document.getElementById(INQ_FIELD_IDS[k]);
+                if (!el) return;
+                el.setAttribute('aria-invalid', 'true');
+                el.style.borderColor = '#ef4444';
+                var msg = document.createElement('span');
+                msg.id = INQ_FIELD_IDS[k] + '-err';
+                msg.className = 'block pt-1 text-[10px] normal-case tracking-normal text-red-300';
+                msg.textContent = fields[k];
+                el.setAttribute('aria-describedby', msg.id);
+                el.insertAdjacentElement('afterend', msg);
+                if (!first) first = el;
+            });
+            if (first) first.focus();
+        }
+
         async function handleInquirySubmit(event) {
             event.preventDefault();
+            const form = document.getElementById('contact-form');
             const btn = document.getElementById('inq-submit-btn');
+            const status = document.getElementById('inq-status');
+            const label = '<i class="fa-solid fa-paper-plane mr-2"></i> Transmit Proposal to Coordinators';
+            const show = (ok, text) => {
+                status.textContent = text;
+                status.className = 'border p-4 text-[11px] leading-relaxed normal-case tracking-normal ' +
+                    (ok ? 'border-[#f06225]/50 bg-[#f06225]/10 text-foreground' : 'border-red-500/50 bg-red-500/10 text-red-200');
+            };
+            if (btn.disabled) return;
+            if (!window.HMABooking) { show(false, 'The booking service did not load. Please refresh the page, or message us on WhatsApp.'); return; }
+            clearFieldErrors();
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Transmitting...';
 
+            const trip = document.getElementById('inq-trek');
+            const parts = (trip.value || '').split(':');
+            const known = parts.length === 2 && parts[1];
             const payload = {
+                source: new URLSearchParams(location.search).get('trip') ? 'trip-page' : 'contact-form',
                 name: document.getElementById('inq-name').value,
                 email: document.getElementById('inq-email').value,
                 phone: document.getElementById('inq-phone').value,
-                crew: document.getElementById('inq-crew').value,
-                trek: document.getElementById('inq-trek').value,
-                message: document.getElementById('inq-msg').value
+                people: document.getElementById('inq-crew').value,
+                preferred_date: document.getElementById('inq-date').value,
+                trip_type: known ? parts[0] : '',
+                trip_slug: known ? parts[1] : '',
+                trip_name: trip.options[trip.selectedIndex] ? trip.options[trip.selectedIndex].textContent : '',
+                message: document.getElementById('inq-msg').value,
+                website: document.getElementById('inq-website').value
             };
 
-            try {
-                const response = await fetch('/api/inquiry', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    alert(`[ PROPOSAL TRANSMITTED ]\n\n${result.message}\nReference ID: ${result.inquiryId}`);
-                    document.getElementById('contact-form').reset();
-                } else {
-                    alert(`[ NOTICE ] ${result.message}`);
-                }
-            } catch (err) {
-                alert("Network error connecting to Kathmandu desk. Please WhatsApp us directly.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Transmit Proposal to Coordinators';
+            inqKey = inqKey || HMABooking.newKey();
+            const result = await HMABooking.submit(payload, { key: inqKey });
+            if (result.ok) {
+                show(true, result.message);
+                form.reset();
+                trip.value = trip.options[0] ? trip.options[0].value : '';
+                inqKey = null;
+            } else {
+                showFieldErrors(result.fields);
+                show(false, result.message);
+                if (!result.retryable) inqKey = null;
             }
+            btn.disabled = false;
+            btn.innerHTML = label;
+            status.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
     </script>
 <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
@@ -395,11 +487,12 @@
     </button>
 </div>
 <script src="/announce.js?v=2"></script>
-<script src="/backdrop.js?v=1" defer></script>
-<script src="/menu.js?v=9"></script>
+<script src="/backdrop.js?v=2" defer></script>
+<script src="/menu.js?v=10"></script>
 <script src="/back.js?v=1"></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/theme.js?v=2"></script>
+<script src="/booking-modal.js?v=2" defer></script>
 </body>
 </html>

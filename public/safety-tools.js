@@ -47,7 +47,7 @@
     var statsEl = $('ap-stats');
     var verdictEl = $('ap-verdict');
     var legendEl = $('ap-legend');
-    if (!selEl || !chartEl) return;
+    if (!chartEl) return;
 
     var TREKS = window.TREKS || {};
     var MOUNTAINS = window.MOUNTAINS || {};
@@ -477,6 +477,19 @@
         '<span class="ap-verdict-k">' + esc(m.verdictKicker) + '</span><p>' + m.verdictText + '</p>' +
         '<a class="ap-verdict-link" href="' + esc(m.href) + '">' + esc(m.linkLabel) + ' →</a>';
     }
+
+    /* -------- SINGLE-PEAK MODE ----------------------------------------
+       expedition pages embed this chart pinned to their own mountain —
+       host carries data-peak-slug, there is no <select>, no other peaks
+       or treks are listed. See _docs/REVERT-notes.md § 5w. */
+    var singleSlug = host.getAttribute('data-peak-slug');
+    if (singleSlug) {
+      var rawSingle = MOUNTAINS[singleSlug] || PEAKS_DATA[singleSlug];
+      if (!rawSingle) { host.style.display = 'none'; return; }
+      render(buildPeak(rawSingle, getPeak ? getPeak(singleSlug) : null));
+      return;
+    }
+    if (!selEl) return;
 
     /* -------- BUILD THE SELECT + WIRE UP ----------------------------- */
     var treks = Object.keys(TREKS).map(function (k) { return TREKS[k]; })

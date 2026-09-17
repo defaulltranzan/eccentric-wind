@@ -163,7 +163,8 @@
       ? '<video class="mt-video absolute inset-0 h-full w-full object-cover" muted loop playsinline preload="none" ' +
         'aria-hidden="true" tabindex="-1" data-src="' + esc(m.heroVideo) + '"></video>'
       : '';
-    return '<a href="' + esc(m.href) + '" class="mt group relative block overflow-hidden border border-border bg-card ' + cls + '" ' +
+    return '<div class="relative ' + cls + '">' +
+      '<a href="' + esc(m.href) + '" class="mt group relative block h-full overflow-hidden border border-border bg-card" ' +
       'aria-label="' + esc(m.name + ', ' + m.elevationLabel + ', ' + m.countryLabel + ', ' + m.range) + '">' +
       '<div class="mt-shimmer absolute inset-0"></div>' + img + vid +
       '<div class="mt-scrim absolute inset-0"></div>' +
@@ -189,7 +190,9 @@
           '<span class="font-mono text-[10px] uppercase tracking-widest text-white/80">' + esc(m.seasonPrimary ? m.seasonPrimary + ' window' : m.rangeKey) + '</span>' +
           '<span class="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white shrink-0">Explore ' + ARROW + '</span>' +
         '</div>' +
-      '</div></a>';
+      '</div></a>' +
+    '<a href="/contact?trip=' + esc(m.slug) + '" class="hmb-card-book" data-book="' + esc(m.slug) + '" data-book-type="expedition" aria-label="Book ' + esc(m.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Book</a>' +
+    '</div>';
   }
 
   function applyAtlas() {
@@ -252,15 +255,17 @@
      Hover clips (peaks carrying `heroVideo`).
      Plays for exactly as long as the pointer is inside the card. The file is
      only ever requested on the first hover, so a visitor who never hovers K2
-     pays nothing for it. Skipped entirely on touch (no true hover) and under
-     prefers-reduced-motion.
+     pays nothing for it. Skipped under prefers-reduced-motion.
+     On touch (no true hover): the first tap on a card previews its clip
+     instead of navigating; the card is a live link, so a second tap (or a tap
+     while the clip is already playing) goes through to the route as normal.
      --------------------------------------------------------------------- */
   var CAN_HOVER = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var NO_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var FADE_MS = 550;   // keep in step with .mt-video's opacity transition
 
   function bindVideos(sel) {
-    if (!CAN_HOVER || NO_MOTION) return;
+    if (NO_MOTION) return;
     document.querySelectorAll((sel || '') + ' .mt-video').forEach(function (v) {
       if (v.dataset.bound) return;
       v.dataset.bound = '1';
@@ -270,7 +275,7 @@
 
       function start() {
         if (offTimer) { clearTimeout(offTimer); offTimer = null; }
-        if (!v.src && v.dataset.src) v.src = v.dataset.src;   // first hover only
+        if (!v.src && v.dataset.src) v.src = v.dataset.src;   // first hover/tap only
         v.classList.add('is-playing');
         var p = v.play();
         // play() rejects if the pointer leaves before it resolves — not an error
@@ -289,10 +294,31 @@
         }, FADE_MS);
       }
 
-      card.addEventListener('mouseenter', start);
-      card.addEventListener('mouseleave', stop);
-      card.addEventListener('focus', start);    // keyboard parity
+      card.addEventListener('focus', start);    // keyboard parity, all pointer types
       card.addEventListener('blur', stop);
+
+      if (CAN_HOVER) {
+        card.addEventListener('mouseenter', start);
+        card.addEventListener('mouseleave', stop);
+        return;
+      }
+
+      // Touch (no true hover): a genuine tap fires a 'click' — a scroll/swipe
+      // never does — so this only ever fires on deliberate taps. First tap
+      // previews the clip and is swallowed; the second follows the link.
+      card.addEventListener('click', function (e) {
+        if (card.dataset.hmePreviewSeen) return;
+        e.preventDefault();
+        HME_STOP_OTHER_PREVIEWS(card);
+        start();
+        card.dataset.hmePreviewSeen = '1';
+      });
+      card.__hmeStopPreview = function () { stop(); delete card.dataset.hmePreviewSeen; };
+    });
+  }
+  function HME_STOP_OTHER_PREVIEWS(exceptCard) {
+    document.querySelectorAll('.mt').forEach(function (c) {
+      if (c !== exceptCard && c.__hmeStopPreview) c.__hmeStopPreview();
     });
   }
 

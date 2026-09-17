@@ -6,6 +6,7 @@ module.exports = {
     './public/**/*.html',
     './public/**/*.js',
     '!./public/tailwind.css',
+    '!./public/admin/**',
   ],
   theme: {
     extend: {

@@ -8,8 +8,8 @@
     <link rel="canonical" href="https://himalayanmagic.com/expeditions">
 
     <script>try{if(localStorage.getItem('vo_theme')==='light'){document.documentElement.classList.add('light-mode')}}catch(e){}</script>
-    <link rel="icon" type="image/png" href="/images/logo-icon.png">
-    <link rel="apple-touch-icon" href="/images/logo-icon.png">
+    <link rel="icon" type="image/png" href="/images/logo-badge.png">
+    <link rel="apple-touch-icon" href="/images/logo-badge.png">
     <link rel="stylesheet" href="/tailwind.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -44,6 +44,7 @@
             .mt, .mt-img, .mt-arrow, .ex-band, .ex-band-img { transition:none !important; }
         }
     </style>
+    <link rel="stylesheet" href="/booking-modal.css?v=5">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -53,7 +54,7 @@
 <header class="relative z-40 border-b border-border bg-[#16181b]/95 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between gap-6">
         <a href="/" class="group flex shrink-0 items-center gap-3">
-            <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+            <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 88px, 75px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-[4.25rem] md:h-20 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
             <span class="hidden flex-col leading-none sm:flex">
                 <span class="font-heading text-[15px] font-medium uppercase leading-tight tracking-[0.12em] text-white">Himalayan Magic Adventure</span>
                 <span class="mt-1 hidden text-[9px] uppercase tracking-[0.3em] text-accent xl:block">Mountaineering Expeditions · Est. 1993</span>
@@ -238,7 +239,7 @@
     <div class="relative z-10 max-w-7xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-border pb-12">
             <a href="/" class="flex items-center gap-4 group">
-                <img src="/images/logo-badge-dark.png" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
+                <img src="/images/logo-badge-dark.png" srcset="/images/logo-badge-dark-90.png 90w, /images/logo-badge-dark-180.png 180w, /images/logo-badge-dark-270.png 270w, /images/logo-badge-dark.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="Himalayan Magic Adventure" width="340" height="309" class="hme-logo-dark h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105"><img src="/images/logo-badge.png" srcset="/images/logo-badge-90.png 90w, /images/logo-badge-180.png 180w, /images/logo-badge-270.png 270w, /images/logo-badge.png 340w" sizes="(min-width: 768px) 141px, 124px" alt="" aria-hidden="true" width="340" height="309" class="hme-logo-light h-28 md:h-32 w-auto shrink-0 object-contain transition-transform group-hover:scale-105">
                 <div>
                     <span class="block font-heading text-xl md:text-2xl font-light tracking-widest text-white uppercase leading-none">Himalayan Magic<br>Adventure</span>
                     <span class="block text-[9px] text-accent tracking-[0.35em] uppercase mt-2">High Corridors of Nepal · Est. 1993</span>
@@ -305,8 +306,9 @@ function hmeApplyTheme() {
 }
 hmeApplyTheme();
 </script>
-<script src="/mountains.js?v=1"></script>
-<script src="/peaks.js?v=3"></script>
+<script src="/mountains.js?v=2"></script>
+<script src="/data/expeditions.js"></script>
+<script src="/peaks.js?v=4"></script>
 <script>
   // data-driven counts for the collection tiles (progressive enhancement)
   try {
@@ -329,7 +331,8 @@ hmeApplyTheme();
         var img = p.image
           ? '<img src="' + e(p.image) + '" alt="" aria-hidden="true" loading="lazy" class="mt-img absolute inset-0 h-full w-full object-cover opacity-0">'
           : '<div class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(240,98,37,0.12),transparent_55%),repeating-linear-gradient(115deg,rgba(255,255,255,0.04)_0_1px,transparent_1px_22px)]"></div>';
-        return '<a href="' + e(p.href) + '" class="mt group relative flex flex-col justify-end overflow-hidden border border-border bg-[#181a1e] min-h-[240px]">' +
+        return '<div class="relative">' +
+          '<a href="' + e(p.href) + '" class="mt group relative flex h-full flex-col justify-end overflow-hidden border border-border bg-[#181a1e] min-h-[240px]">' +
           img +
           '<div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#181a1e] via-[#181a1e]/72 to-[#181a1e]/15"></div>' +
           '<span class="absolute top-3 left-3 z-10 bg-black/45 border border-white/15 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.18em] text-white">' + e(p.categoryLabel || '') + '</span>' +
@@ -338,7 +341,9 @@ hmeApplyTheme();
             '<span class="font-heading text-xl md:text-2xl font-light uppercase tracking-tight text-white leading-tight group-hover:text-accent transition-colors block mt-0.5">' + e(p.name.replace(/^Mount /, '')) + '</span>' +
             '<span class="font-mono text-[10px] text-accent mt-1 block">' + e(p.elevationDisplay || '') + '</span>' +
             '<span class="mt-2 inline-flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-white/70">Explore <span class="mt-arrow">&rarr;</span></span>' +
-          '</div></a>';
+          '</div></a>' +
+          '<a href="/contact?trip=' + e(p.slug) + '" class="hmb-card-book" data-book="' + e(p.slug) + '" data-book-type="expedition" aria-label="Book ' + e(p.name) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>Book</a>' +
+          '</div>';
       }).join('');
       grid.querySelectorAll('.mt-img').forEach(function (im) {
         if (im.complete) im.classList.add('loaded');
@@ -364,12 +369,14 @@ hmeApplyTheme();
   document.querySelectorAll('.fade-up').forEach(function (el) { io.observe(el); });
 </script>
 <script src="/announce.js?v=2"></script>
-<script src="/backdrop.js?v=1" defer></script>
-<script src="/menu.js?v=9"></script>
+<script src="/backdrop.js?v=2" defer></script>
+<script src="/menu.js?v=10"></script>
 <script src="/back.js?v=1"></script>
 <script src="/altitude.js?v=1" defer></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
+<script src="/booking-client.js?v=1" defer></script>
+<script src="/booking-modal.js?v=2" defer></script>
 </body>
 </html>

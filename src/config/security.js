@@ -4,6 +4,9 @@ const rateLimit = require('express-rate-limit');
 /**
  * Configure standard security HTTP headers with Helmet
  */
+const env = require('./env');
+const supabaseOrigin = env.supabase.url ? [env.supabase.url] : [];
+
 const helmetConfig = helmet({
   contentSecurityPolicy: {
     directives: {
@@ -12,7 +15,8 @@ const helmetConfig = helmet({
       scriptSrcAttr: ["'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
-      imgSrc: ["'self'", "data:", "https://images.unsplash.com", "https://*.unsplash.com"],
+      imgSrc: ["'self'", "data:", "blob:", "https://images.unsplash.com", "https://*.unsplash.com", ...supabaseOrigin],
+      mediaSrc: ["'self'", ...supabaseOrigin],
       connectSrc: ["'self'"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
@@ -27,7 +31,7 @@ const helmetConfig = helmet({
  */
 const globalLimiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 120,
+  max: parseInt(process.env.API_RATE_LIMIT, 10) || 120,
   standardHeaders: true,
   legacyHeaders: false,
   message: { status: 'error', message: 'Too many requests, please slow down.' }
