@@ -1841,6 +1841,9 @@ const exploreGeo = {
 
 // Draw order / tab order, west to east; terai last.
 const EXPLORE_GEO_ORDER = ['west', 'dhaulagiri', 'annapurna', 'manaslu', 'langtang', 'rolwaling', 'everest', 'kanchenjunga', 'terai'];
+// the real map (explore-map.js) reads these — `const` alone does not reach window
+window.exploreGeo = exploreGeo;
+window.EXPLORE_GEO_ORDER = EXPLORE_GEO_ORDER;
 
 // Map a trek's free-text `region` string to a canonical geo-region key.
 function regionKeyForTrek(t) {

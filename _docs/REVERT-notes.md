@@ -1363,3 +1363,37 @@ if there are any, otherwise the strongest recent ones. The review-card CSS moved
 - **Revert:** delete the `data-hmr-wrap` section from trek.html / expedition.html.
 
 Cache bumps: explore-map.js v=13, card-fx.js v=4, reviews.js v=5.
+
+## § 12 — Region-first map, compare back in table form, plain phone hero (2026-09-18)
+
+Restore point: tag `pre-regions` (= commit a0716ba).
+
+**1. Explore Nepal is region-first now.** The opening view shows only the nine trekking regions
+(the same ones as `exploreGeo` in edit.js) with their trail counts. Tapping one flies the map to that
+region's box, reveals only that region's trailheads, peaks and passes, and fills the panel with
+`renderGeoRegion()` — the trails list (→ /treks/<slug>), the peaks (→ /expeditions/<slug>) and the
+trailheads, exactly as the old drawn map did. "All regions" returns. Category chips are gone.
+- Region boxes/centres live in `REGIONS` at the top of `public/explore-map.js`.
+- `window.exploreGeo` / `window.EXPLORE_GEO_ORDER` are now exported from edit.js (a `const` never
+  reached `window`, so the map fell back to raw keys).
+- Two MapLibre gotchas fixed: a marker element must not be given `position`/`transform` in CSS (it
+  breaks MapLibre's own positioning — the labels now sit inside the pin), and `.hgl-reset[hidden]`
+  needed an explicit `display:none`.
+
+**2. Homepage compare (04) is back to the /compare layout**: a column per trail with the photo on top,
+then labelled rows — but each row label carries a Lucide icon, altitude has a shared-scale bar,
+difficulty is five squares, and the best value in a row is picked out with a small tag.
+Change the three routes in the `slugs` array in the inline script in index.html.
+
+**3. /compare compares peaks too.** Two buttons at the top switch between "Compare treks" and
+"Compare peaks". Peak mode reads window.MOUNTAINS + PEAKS_DATA and compares summit altitude, band,
+expedition length, base camp, normal route, season, technical/altitude/remoteness/weather grades and
+the permit authority, with its own verdict panel. Shareable as `?mode=peaks&p=slug,slug`.
+
+**4. The phone hero is plain.** The telemetry row (coordinates, departure status, film switcher) is
+desktop-only; phones show the eyebrow, the name, one sentence, the buttons and the summit figure, and
+the hero is a little shorter (`min(78svh, 640px)`).
+
+Reverting any one piece: `git checkout pre-regions -- <file>` — the map is public/explore-map.js
+(+ the `#explore` block in index.html), compare is the inline script in index.html, peaks mode is
+public/compare.js + public/compare.html, the phone hero is the `max-width: 767px` block in index.html.
