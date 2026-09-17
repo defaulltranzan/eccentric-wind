@@ -21881,5 +21881,75 @@
     },
     "created_at": "2026-09-16T09:17:18.270Z",
     "updated_at": "2026-09-16T09:17:18.270Z"
+  },
+  {
+    "id": "tre_609869accac1a65e",
+    "slug": "test",
+    "published": false,
+    "sort_order": 39,
+    "kind": null,
+    "data": {
+      "name": "test",
+      "tagline": "tag",
+      "province": "gandaki",
+      "region": "",
+      "heroImage": "/uploads/treks/8-7809f697.png",
+      "summary": "",
+      "popular": true,
+      "stats": {
+        "duration": "",
+        "difficulty": "",
+        "maxAltitude": "",
+        "maxAltitudePoint": "",
+        "bestSeason": "",
+        "startPoint": "",
+        "endPoint": "",
+        "distanceKm": "",
+        "walkHours": ""
+      },
+      "seo": {
+        "title": "",
+        "description": ""
+      },
+      "overview": [],
+      "highlights": [],
+      "suitability": {
+        "physical": 5,
+        "technical": 1,
+        "altitude": 5,
+        "remoteness": 5,
+        "walkHours": "",
+        "terrain": "",
+        "weatherExposure": "",
+        "goodFor": [],
+        "notIdeal": []
+      },
+      "why": {
+        "lead": "",
+        "paragraphs": []
+      },
+      "passes": [],
+      "acclimatization": {},
+      "itinerary": [],
+      "routePoints": [],
+      "permits": [],
+      "cost": {
+        "note": "",
+        "tiers": [],
+        "breakdown": []
+      },
+      "transport": {},
+      "equipment": [],
+      "safety": {},
+      "faq": [],
+      "relatedTreks": [],
+      "relatedDestinations": [],
+      "hotelsNote": "",
+      "slug": "test"
+    },
+    "title": "test",
+    "featured": false,
+    "created_at": "2026-09-17T08:07:25.798Z",
+    "updated_at": "2026-09-17T08:07:25.798Z"
   }
 ]
