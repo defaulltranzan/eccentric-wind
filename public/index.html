@@ -650,248 +650,258 @@
             </div>
         </div>
     </section>
-    <!-- 03 — EXPLORE (Interactive Map of Nepal) -->
-    <!-- Hidden below lg on purpose (2026-09-10 declutter): the interactive map is
-         a desktop experience and was a long scroll on a phone. Revert = drop the
-         `hidden lg:block` below. -->
-    <section id="explore" class="relative hidden lg:block px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22] overflow-hidden">
+    <!-- 03 — EXPLORE NEPAL (three-step map: Nepal → region → place) -->
+    <!-- The map is drawn from our own GeoJSON as plain SVG — no WebGL, no
+         tiles, no API key, and no free zoom. Engine: /explore-map.js.
+         Revert: git show <tag map-fx-v1>:public/index.html for the MapLibre build. -->
+    <section id="explore" data-level="0" data-layer="regions" class="relative px-5 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22] overflow-hidden">
         <style>
-            .hme-region{fill:#23272d;stroke:rgba(240,98,37,.20);stroke-width:1.25;cursor:pointer;outline:none;transition:fill .35s ease,stroke .35s ease,opacity .35s ease;}
-            .hme-region:hover{fill:rgba(240,98,37,.13);}
-            .hme-map[data-active] .hme-region{opacity:.25;}
-            .hme-map[data-active] .hme-region.is-active{opacity:1;fill:rgba(240,98,37,.16);stroke:var(--accent);stroke-width:1.75;}
-            .hme-region.is-active{fill:rgba(240,98,37,.16);stroke:var(--accent);}
-            .hme-terai{fill:#2a2216;}
-            .hme-ridge{fill:none;stroke:rgba(243,244,246,.30);stroke-width:1;stroke-dasharray:2 3.5;}
-            .hme-peak-tri{fill:#0f1113;stroke:var(--accent);stroke-width:1.4;transition:transform .35s ease,fill .35s ease;transform-box:fill-box;transform-origin:50% 100%;}
-            .hme-map[data-active] .hme-peak{opacity:.28;transition:opacity .35s ease;}
-            .hme-map[data-active] .hme-peak.is-active{opacity:1;}
-            .hme-peak.is-active .hme-peak-tri{transform:scale(1.45);fill:var(--accent);}
-            .hme-region-label{transition:color .3s ease;}
-            .hme-region-label.is-active{color:var(--accent);}
-
-            /* ── Lens toggle ─────────────────────────────────────────── */
-            .hme-lens-tab{padding:.5rem .85rem;border:1px solid var(--border);background:rgba(16,18,21,.5);color:var(--muted-foreground);cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s,background .2s;}
-            .hme-lens-tab:hover{border-color:var(--accent);color:var(--foreground);}
-            .hme-lens-tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
-            .hme-lens-tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-
-            /* ── Regions lens: the province layer + its labels step back ─ */
-            #explore[data-lens="regions"] .hme-map .hme-prov-layer{opacity:0;pointer-events:none;}
-            #explore[data-lens="regions"] .hme-prov-labels{opacity:0;pointer-events:none;}
-            #explore[data-lens="provinces"] #hme-geo-layer{display:none;}
-            #explore[data-lens="provinces"] .hme-geo-land{display:none;}
-            .hme-prov-labels{transition:opacity .35s ease;}
-            #explore[data-lens="regions"] .hme-map .hme-region{fill:#1e2126;stroke:none;}
-            #explore[data-lens="regions"] .hme-map .hme-peak{display:none;}
-            #explore[data-lens="regions"] .hme-map .hme-ridge{stroke:rgba(243,244,246,.22);}
-
-            /* ── Regions lens: 8 mountain regions + Terai ───────────────
-               A quiet field-survey map. Names ghost in as the pointer
-               nears it, a region lights on hover, opening one eases the
-               viewBox in and reveals its peaks as expedition links. */
-            #hme-geo-layer{ --rg-wash: rgba(240,98,37,.14); }
-            #explore[data-lens="regions"] .hme-map .hme-region{fill:url(#hme-nepal-grad);stroke:rgba(240,98,37,.14);stroke-width:.75;}
-            .hme-graticule line{stroke:rgba(243,244,246,.07);stroke-width:.6;}
-            #explore[data-lens="provinces"] .hme-graticule{display:none;}
-            #explore[data-lens="regions"] .hme-map .hme-ridge{stroke:rgba(243,244,246,.3);stroke-dasharray:3 5;animation:hmeRidge 34s linear infinite;}
-            @keyframes hmeRidge{to{stroke-dashoffset:-160;}}
-
-            .hme-rg-wash{fill:transparent;transition:fill .35s ease;}
-            .hme-rg-wash.is-active{fill:var(--rg-wash);}
-            .hme-rg-mark{fill:var(--muted-foreground);stroke:none;transition:fill .3s ease,opacity .3s ease;}
-            .hme-rg-mark.is-lowland{fill:none;stroke:var(--muted-foreground);stroke-width:1.4;}
-            .hme-map[data-geo-active] .hme-rg-mark{fill:#565c66;}
-            .hme-map[data-geo-active] .hme-rg-mark.is-lowland{stroke:#565c66;}
-            .hme-rg-mark.is-active{fill:var(--accent);}
-            .hme-rg-mark.is-lowland.is-active{stroke:var(--accent);}
-            .hme-map.hme-zoomed .hme-rg-mark:not(.is-active){opacity:0;}
-            .hme-rg-label{fill:var(--muted-foreground);font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:1.3px;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .3s ease,fill .25s ease;}
-            .hme-map:hover .hme-rg-label{opacity:.34;}
-            .hme-rg-label.is-active,.hme-map:hover .hme-rg-label.is-active{opacity:1;fill:var(--accent);}
-            .hme-map.hme-zoomed .hme-rg-label{opacity:0 !important;}
-            @media (hover:none){.hme-rg-label{opacity:.32;}}
-
-            /* named peaks — hidden until the region is open */
-            .hme-rg-peak{opacity:0;pointer-events:none;transition:opacity .3s ease .05s;}
-            .hme-map.hme-zoomed .hme-rg-peak.is-active{opacity:1;pointer-events:auto;}
-            .hme-rg-peak-tri{fill:#14161a;stroke:var(--accent);stroke-width:1.4;}
-            .hme-rg-peak:hover .hme-rg-peak-tri{fill:var(--accent);}
-            .hme-rg-peak-lbl{fill:var(--foreground);font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.6px;}
-            .hme-rg-peak:hover .hme-rg-peak-lbl{fill:var(--accent);}
-
-            .hme-rg-hit{fill:transparent;cursor:pointer;outline:none;}
-            .hme-rg-hit:focus-visible{fill:rgba(240,98,37,.08);}
-            .hme-map.hme-zoomed .hme-rg-hit:not(.is-active){pointer-events:none;}
-
-            /* survey-map corner brackets on the map frame */
-            .hme-mapframe::after{content:"";position:absolute;inset:7px;border:1px solid var(--accent);opacity:.3;pointer-events:none;
-              -webkit-mask:linear-gradient(#000 0 0) top left,linear-gradient(#000 0 0) top right,linear-gradient(#000 0 0) bottom left,linear-gradient(#000 0 0) bottom right;
-              mask:linear-gradient(#000 0 0) top left,linear-gradient(#000 0 0) top right,linear-gradient(#000 0 0) bottom left,linear-gradient(#000 0 0) bottom right;
-              -webkit-mask-size:16px 16px;mask-size:16px 16px;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
-
-            /* "back to all of Nepal" — only while a region is open */
-            #hme-geo-back{position:absolute;left:.9rem;top:.9rem;z-index:20;display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);background:rgba(16,18,21,.9);color:var(--muted-foreground);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:.5rem .8rem;cursor:pointer;backdrop-filter:blur(4px);transition:color .2s,border-color .2s;}
-            #hme-geo-back[hidden],#explore [data-explore-hint][hidden]{display:none;}
-            .hme-geo-land{fill:url(#hme-nepal-grad);stroke:rgba(240,98,37,.38);stroke-width:1.1;stroke-linejoin:round;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));}
-            #hme-geo-back:hover{color:var(--accent);border-color:var(--accent);}
-
-            @media (prefers-reduced-motion: reduce){#explore .hme-ridge{animation:none;}}
-            body.light-mode #explore[data-lens="regions"] .hme-map .hme-region{fill:#e9e6df;stroke:rgba(214,77,22,.2);}
-            body.light-mode .hme-geo-land{fill:#ece8e0;stroke:rgba(214,77,22,.35);filter:none;}
-            body.light-mode .hme-rg-peak-tri{fill:#fff;}
-            body.light-mode .hme-graticule line{stroke:rgba(28,30,33,.06);}
-
-            /* ---- phone sheet (opened from the menu: openExploreNepal) ---- */
-            #hme-x-close{display:none;position:fixed;top:1rem;right:1rem;z-index:30;height:2.75rem;width:2.75rem;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--card);color:var(--foreground);cursor:pointer;}
-            #hme-x-close:hover{border-color:var(--accent);color:var(--accent);}
-            @media (max-width:1023px){
-                #explore.hme-x-open{display:block;position:fixed;inset:0;z-index:70;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4.25rem 1rem 3rem;border:0;}
-                #explore.hme-x-open #hme-x-close{display:flex;}
-                #explore.hme-x-open .hme-mapframe{padding:.5rem;}
-                #explore.hme-x-open #explore-panel{min-height:0;scroll-margin-top:4.5rem;}
-                #explore.hme-x-open .hme-rg-label{display:none;}
+            /* ==== Explore Nepal =================================================
+               Everything in this section is scoped to #explore and themed from
+               the tokens below, so light mode is a single block of overrides. */
+            #explore{
+                --ne-land-top:#242930;
+                --ne-land-bottom:#181b1f;
+                --ne-prov:rgba(255,255,255,.07);
+                --ne-grat:rgba(255,255,255,.045);
+                --ne-zone:rgba(240,98,37,.07);
+                --ne-zone-alt:rgba(240,98,37,.12);
+                --ne-zone-hot:rgba(240,98,37,.26);
+                --ne-lowland:rgba(198,158,74,.10);
+                --ne-zone-line:rgba(240,98,37,.16);
+                --ne-pin-bg:rgba(17,19,22,.94);
+                --ne-pin-fg:#cfd4db;
+                --ne-pin-line:rgba(255,255,255,.22);
+                --ne-label:#fff;
+                --ne-label-sub:rgba(255,255,255,.58);
+                --ne-shadow:0 2px 10px rgba(0,0,0,.95);
+                --ne-canvas:#16181b;
             }
-            /* ---- real map (MapLibre) ------------------------------------- */
-            .hgl-map{display:none;width:100%;aspect-ratio:960/548;background:#111316;}
-            .hme-mapframe.is-gl-ready .hgl-map{display:block;}
-            /* once the real map is up, the drawn fallback and its chrome step aside */
-            .hme-mapframe.is-gl-ready > .relative.w-full,
-            .hme-mapframe.is-gl-ready #hme-geo-back,
-            .hme-mapframe.is-gl-ready #hme-peak-index,
-            .hme-mapframe.is-gl-ready > .pointer-events-none.absolute,
-            .hme-mapframe.is-gl-ready ~ * [data-explore-hint]{display:none!important;}
-            #explore:has(.hme-mapframe.is-gl-ready) #explore-lens,
-            #explore:has(.hme-mapframe.is-gl-ready) #explore-lens-label,
-            #explore:has(.hme-mapframe.is-gl-ready) [data-explore-hint],
-            #explore.has-gl #explore-lens,
-            #explore.has-gl #explore-lens-label,
-            #explore.has-gl [data-explore-hint]{display:none;}
-            /* region markers: the only thing on the map until you pick one */
-            /* no position/transform on the marker root: MapLibre owns that */
-            .hgl-region{display:block;background:none;border:0;padding:0;cursor:pointer;
-                transition:opacity .3s ease,transform .35s cubic-bezier(.2,.7,.2,1);transform-origin:bottom center;}
-            .hgl-region.is-off{visibility:hidden;opacity:0;pointer-events:none;}
-            .hgl-region-pin{position:relative;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid rgba(240,98,37,.55);
-                background:rgba(17,19,22,.92);color:var(--accent);box-shadow:0 10px 24px -10px rgba(0,0,0,.95);transition:background .25s,color .25s,transform .3s;}
-            .hgl-region-pin::after{content:"";position:absolute;width:38px;height:38px;border-radius:50%;border:1px solid rgba(240,98,37,.35);animation:hglPulse 3.4s ease-out infinite;}
-            @keyframes hglPulse{0%{transform:scale(1);opacity:.55;}70%{transform:scale(1.7);opacity:0;}100%{opacity:0;}}
-            .hgl-region-pin .hgl-pin-ico{width:19px;height:19px;position:relative;z-index:1;}
-            .hgl-region-lbl{position:absolute;left:50%;top:calc(100% + .25rem);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;
-                line-height:1.15;text-shadow:0 2px 10px rgba(0,0,0,.95);pointer-events:none;white-space:nowrap;}
-            .hgl-region.is-above .hgl-region-lbl{top:auto;bottom:calc(100% + .25rem);}
-            .hgl-region-lbl b{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#fff;}
-            .hgl-region-lbl i{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);}
-            .hgl-region:hover .hgl-region-pin,.hgl-region:focus-visible .hgl-region-pin{background:var(--accent);color:#14161a;transform:translateY(-3px) scale(1.06);}
-            .hgl-region:focus-visible{outline:none;}
-            @media (max-width:640px){.hgl-region-lbl i{display:none;}.hgl-region-lbl b{font-size:9px;letter-spacing:.08em;}.hgl-region-pin{width:32px;height:32px;}.hgl-region-pin .hgl-pin-ico{width:16px;height:16px;}}
-            body.light-mode .hgl-region-pin{background:#fff;}
-            body.light-mode .hgl-region-lbl b{color:#16181b;text-shadow:0 1px 6px rgba(255,255,255,.9);}
+            body.light-mode #explore{
+                --ne-land-top:#efeae1;
+                --ne-land-bottom:#e4ded2;
+                --ne-prov:rgba(28,30,33,.12);
+                --ne-grat:rgba(28,30,33,.06);
+                --ne-zone:rgba(214,77,22,.08);
+                --ne-zone-alt:rgba(214,77,22,.14);
+                --ne-zone-hot:rgba(214,77,22,.3);
+                --ne-lowland:rgba(160,126,50,.14);
+                --ne-zone-line:rgba(214,77,22,.22);
+                --ne-pin-bg:#fff;
+                --ne-pin-fg:#4b5158;
+                --ne-pin-line:rgba(28,30,33,.2);
+                --ne-label:#16181b;
+                --ne-label-sub:#6b7078;
+                --ne-shadow:0 1px 6px rgba(255,255,255,.9);
+                --ne-canvas:#f4f1ea;
+            }
 
-            /* the region list in the panel */
-            .hgl-region-list{display:grid;gap:.35rem;margin-top:1.1rem;}
-            .hgl-region-btn{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;min-height:42px;padding:.55rem .75rem;
-                border:1px solid var(--border);background:transparent;color:var(--foreground);font-family:'IBM Plex Mono',monospace;font-size:10.5px;
-                letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,background .2s,transform .2s;text-align:left;}
-            .hgl-region-btn b{font-weight:500;color:var(--accent);}
-            .hgl-region-btn:hover{border-color:var(--accent);background:rgba(240,98,37,.07);transform:translateX(3px);}
-            .hgl-panel-back{margin-top:1.1rem;display:inline-flex;align-items:center;gap:.4rem;border:0;background:none;padding:0;cursor:pointer;
-                font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-foreground);transition:color .2s;}
-            .hgl-panel-back:hover{color:var(--accent);}
-            @media (prefers-reduced-motion: reduce){.hgl-region-pin::after{animation:none;}}
+            /* ---- the layer bar ------------------------------------------ */
+            #ne-chips{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+            #ne-chips::-webkit-scrollbar{display:none;}
+            .ne-chip{display:inline-flex;align-items:center;gap:.45rem;flex:0 0 auto;min-height:40px;padding:.45rem .8rem;
+                border:1px solid var(--border);background:rgba(16,18,21,.45);color:var(--muted-foreground);cursor:pointer;
+                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+                transition:color .2s,border-color .2s,background .2s;}
+            body.light-mode .ne-chip{background:rgba(255,255,255,.5);}
+            .ne-chip:hover{color:var(--foreground);border-color:rgba(240,98,37,.5);}
+            .ne-chip[aria-selected="true"]{color:var(--accent);border-color:var(--accent);background:rgba(240,98,37,.1);}
+            .ne-chip b{font-weight:500;opacity:.6;font-size:9px;}
+            .ne-chip-ico{width:14px;height:14px;}
+            .ne-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
-            .hgl-reset[hidden]{display:none;}
-            .hgl-reset{position:absolute;z-index:5;left:1.1rem;top:1.1rem;display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--border);
-                background:rgba(16,18,21,.92);color:var(--muted-foreground);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
-                text-transform:uppercase;padding:.5rem .75rem;cursor:pointer;backdrop-filter:blur(4px);transition:color .2s,border-color .2s;}
-            .hgl-reset:hover{color:var(--accent);border-color:var(--accent);}
-            .hgl-reset .hgl-ico{width:14px;height:14px;}
+            /* ---- the frame ---------------------------------------------- */
+            .ne-frame{position:relative;border:1px solid var(--border);background:var(--ne-canvas);padding:.75rem;}
+            @media (min-width:768px){.ne-frame{padding:1rem;}}
+            .ne-map{position:relative;width:100%;aspect-ratio:1000/560;background:var(--ne-canvas);
+                touch-action:pan-y;overflow:hidden;contain:layout paint;}
+            @media (max-width:767px){.ne-map{aspect-ratio:4/3;}}
+            .ne-frame.is-failed .ne-map{display:none;}
+            .ne-svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
 
-            /* markers */
-            .hgl-marker{display:flex;flex-direction:column;align-items:center;gap:.2rem;background:none;border:0;padding:0;cursor:pointer;color:#fff;
-                transition:opacity .25s ease,transform .25s cubic-bezier(.2,.7,.2,1);transform-origin:bottom center;}
-            /* MapLibre sets an inline opacity on marker elements, so hide with
-               visibility (which inline styles do not fight) */
-            .hgl-marker.is-off{visibility:hidden;pointer-events:none;transform:scale(.7);}
-            .hgl-marker.is-crowded{visibility:hidden;pointer-events:none;transform:scale(.55);}
-            .hgl-marker.is-off .hgl-label,.hgl-marker.is-crowded .hgl-label{visibility:hidden;}
-            .hgl-marker.is-nolabel .hgl-label{opacity:0;}
-            .hgl-marker.is-nolabel:hover .hgl-label,.hgl-marker.is-nolabel:focus-visible .hgl-label,.hgl-marker.is-open .hgl-label{opacity:1;}
-            .hgl-neighbour{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:rgba(255,255,255,.26);pointer-events:none;white-space:nowrap;}
-            body.light-mode .hgl-neighbour{color:rgba(28,30,33,.3);}
-            .hgl-pin{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
-                background:rgba(17,19,22,.92);color:#cfd4db;box-shadow:0 6px 16px -6px rgba(0,0,0,.9);transition:border-color .2s,background .2s,color .2s,transform .25s;}
-            .hgl-pin-ico{width:14px;height:14px;}
-            .hgl-marker.is-major .hgl-pin{width:32px;height:32px;border-color:rgba(240,98,37,.7);color:var(--accent);}
-            .hgl-marker.is-major .hgl-pin-ico{width:17px;height:17px;}
-            .hgl-marker.is-peak .hgl-pin{border-color:rgba(240,98,37,.45);color:var(--accent);}
-            .hgl-marker.is-nature .hgl-pin{border-color:rgba(96,165,250,.45);color:#8fb8f0;}
-            .hgl-marker.is-pass .hgl-pin{border-color:rgba(255,255,255,.35);}
-            .hgl-label{display:flex;flex-direction:column;align-items:center;line-height:1.1;text-shadow:0 2px 8px rgba(0,0,0,.95);pointer-events:none;
-                opacity:0;transition:opacity .25s ease;white-space:nowrap;}
-            .hgl-label b{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.08em;color:#fff;}
-            .hgl-label i{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-style:normal;letter-spacing:.06em;color:rgba(255,255,255,.55);}
-            .hgl-marker.is-major .hgl-label,.hgl-marker:hover .hgl-label,.hgl-marker.is-open .hgl-label,.hgl-marker:focus-visible .hgl-label{opacity:1;}
-            .hgl-marker:hover .hgl-pin,.hgl-marker:focus-visible .hgl-pin{background:var(--accent);border-color:var(--accent);color:#14161a;transform:translateY(-2px);}
-            .hgl-marker.is-open .hgl-pin{background:var(--accent);border-color:#fff;color:#14161a;box-shadow:0 0 0 4px rgba(240,98,37,.22);}
-            .hgl-marker:focus-visible{outline:none;}
+            .ne-grat line{stroke:var(--ne-grat);stroke-width:1;vector-effect:non-scaling-stroke;}
+            .ne-landmass{fill:url(#ne-land);}
+            .ne-prov{fill:none;stroke:var(--ne-prov);stroke-width:1;vector-effect:non-scaling-stroke;}
+            .ne-glow{fill:none;stroke:var(--accent);stroke-width:7;opacity:.14;vector-effect:non-scaling-stroke;}
+            .ne-outline{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:.85;vector-effect:non-scaling-stroke;}
+            .ne-zone{fill:var(--ne-zone);stroke:var(--ne-zone-line);stroke-width:.9;vector-effect:non-scaling-stroke;
+                transition:fill .3s ease,opacity .3s ease;}
+            .ne-zone:nth-child(2n){fill:var(--ne-zone-alt);}
+            .ne-zone.is-lowland{fill:var(--ne-lowland);}
+            .ne-zone.is-hot{fill:var(--ne-zone-hot);}
+            .ne-zone.is-muted{fill:transparent;stroke:transparent;}
+            /* inside a region the wash steps back — the points are the subject now */
+            #explore:not([data-level="0"]) .ne-zone:not(.is-muted){fill:rgba(240,98,37,.05);stroke:transparent;}
+            body.light-mode #explore:not([data-level="0"]) .ne-zone:not(.is-muted){fill:rgba(214,77,22,.06);}
+            .ne-pin.is-summit,.ne-pin.is-region{z-index:3;}
+            .ne-pin.is-open{z-index:4;}
+            #explore:not([data-layer="regions"]) .ne-zone{fill:transparent;stroke:transparent;}
+            .ne-hit{fill:transparent;cursor:pointer;}
+            #explore:not([data-level="0"]) .ne-hit,
+            #explore:not([data-layer="regions"]) .ne-hit{pointer-events:none;}
 
-            /* map panel */
-            .hgl-panel{animation:hmeXfade .35s cubic-bezier(.2,.7,.3,1);}
-            .hgl-panel-kind{display:inline-flex;align-items:center;gap:.4rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
-            .hgl-panel-kind .hgl-ico,.hgl-key .hgl-ico{width:14px;height:14px;}
-            .hgl-panel-name{margin-top:.6rem;font-family:Oswald,sans-serif;font-weight:300;font-size:1.9rem;line-height:1;text-transform:uppercase;letter-spacing:-.01em;color:var(--foreground);}
-            .hgl-panel-el{margin-top:.35rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);}
-            .hgl-panel-note{margin-top:.75rem;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;line-height:1.6;color:var(--muted-foreground);}
-            .hgl-panel-lbl{display:block;margin-top:1.25rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-foreground);}
-            .hgl-rows{margin-top:.5rem;display:grid;gap:.35rem;}
-            .hgl-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.6rem .7rem;border:1px solid var(--border);
-                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--foreground);text-decoration:none;
-                transition:border-color .2s,background .2s,transform .2s;}
-            .hgl-row svg{width:15px;height:9px;color:var(--accent);}
-            .hgl-row:hover{border-color:var(--accent);background:rgba(240,98,37,.07);transform:translateX(3px);}
-            .hgl-panel-cta{margin-top:1.1rem;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:44px;padding:.7rem 1rem;
-                border:1px solid var(--accent);background:var(--accent);color:#14161a;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
-                letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:background .25s,box-shadow .25s;}
-            .hgl-panel-cta svg{width:16px;height:9px;}
-            .hgl-panel-cta:hover{background:#ff7a3d;box-shadow:0 0 0 4px rgba(240,98,37,.16);}
-            .hgl-legend-list{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.45rem;}
-            .hgl-legend-list li{display:flex;align-items:center;gap:.6rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}
-            .hgl-legend-list b{margin-left:auto;font-weight:500;color:var(--foreground);}
-            .hgl-key{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(17,19,22,.9);color:#cfd4db;}
-            .hgl-key.is-peak{border-color:rgba(240,98,37,.45);color:var(--accent);}
-            .hgl-key.is-nature{border-color:rgba(96,165,250,.45);color:#8fb8f0;}
-            .hgl-panel-fine{margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:8.5px;line-height:1.6;letter-spacing:.06em;color:rgba(255,255,255,.34);}
+            /* ---- pins ---------------------------------------------------- */
+            .ne-pins{position:absolute;inset:0;pointer-events:none;}
+            .ne-pin{position:absolute;transform:translate(-50%,-50%);background:none;border:0;padding:0;margin:0;
+                cursor:pointer;pointer-events:auto;line-height:0;color:inherit;}
+            .ne-pin:focus-visible{outline:none;}
+            .ne-dot{position:relative;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+                border:1px solid var(--ne-pin-line);background:var(--ne-pin-bg);color:var(--ne-pin-fg);
+                box-shadow:0 6px 16px -6px rgba(0,0,0,.9);transition:background .2s,border-color .2s,color .2s,transform .25s;}
+            .ne-dot-ico{width:13px;height:13px;}
+            .ne-tag{position:absolute;left:50%;top:calc(100% + .3rem);transform:translateX(-50%);
+                display:flex;flex-direction:column;align-items:center;line-height:1.15;white-space:nowrap;
+                text-shadow:var(--ne-shadow);pointer-events:none;transition:opacity .25s ease;}
+            .ne-pin.is-above .ne-tag{top:auto;bottom:calc(100% + .3rem);}
+            .ne-tag b{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.09em;
+                text-transform:uppercase;color:var(--ne-label);}
+            .ne-tag i{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-style:normal;letter-spacing:.12em;
+                text-transform:uppercase;color:var(--ne-label-sub);}
+            /* four label lanes: above/below the pin, near/far from it, with a
+               leader line on the far ones so the name still reads as attached */
+            .ne-pin.is-far .ne-tag{top:calc(100% + 1.55rem);}
+            .ne-pin.is-far.is-above .ne-tag{top:auto;bottom:calc(100% + 1.55rem);}
+            .ne-pin.is-far .ne-tag::after{content:"";position:absolute;left:50%;bottom:100%;width:1px;height:1.25rem;
+                background:linear-gradient(to top,rgba(240,98,37,.55),transparent);}
+            .ne-pin.is-far.is-above .ne-tag::after{bottom:auto;top:100%;
+                background:linear-gradient(to bottom,rgba(240,98,37,.55),transparent);}
+            /* a name can also sit beside its pin when there is no room above
+               or below — four places to try before it drops to hover-only */
+            .ne-pin.is-right .ne-tag{left:calc(100% + .35rem);top:50%;bottom:auto;transform:translateY(-50%);align-items:flex-start;}
+            .ne-pin.is-left .ne-tag{left:auto;right:calc(100% + .35rem);top:50%;bottom:auto;transform:translateY(-50%);align-items:flex-end;}
+            .ne-pin.is-left .ne-tag::after,.ne-pin.is-right .ne-tag::after{display:none;}
+            /* inside a region the names get out of each other's way */
+            #explore:not([data-level="0"]) .ne-pin.is-point .ne-tag b{font-size:9px;letter-spacing:.06em;}
+            #explore:not([data-level="0"]) .ne-pin.is-point:not(.is-major) .ne-tag i{display:none;}
+            .ne-pin.is-quiet .ne-tag{opacity:0;}
+            .ne-pin.is-quiet:hover .ne-tag,.ne-pin.is-quiet:focus-visible .ne-tag,.ne-pin.is-open .ne-tag{opacity:1;}
+            .ne-pin:hover .ne-dot,.ne-pin:focus-visible .ne-dot{background:var(--accent);border-color:var(--accent);color:#14161a;transform:scale(1.12);}
+            .ne-pin.is-open .ne-dot{background:var(--accent);border-color:#fff;color:#14161a;box-shadow:0 0 0 4px rgba(240,98,37,.22);}
 
-            /* MapLibre chrome, restyled to the brand */
-            .hgl-map .maplibregl-ctrl-group{background:rgba(16,18,21,.92);border:1px solid var(--border);border-radius:0;box-shadow:none;}
-            .hgl-map .maplibregl-ctrl-group button+button{border-top:1px solid var(--border);}
-            .hgl-map .maplibregl-ctrl-group button .maplibregl-ctrl-icon{filter:invert(78%);}
-            .hgl-map .maplibregl-ctrl-group button:hover{background:rgba(240,98,37,.16);}
-            .hgl-map .maplibregl-ctrl-scale{background:rgba(16,18,21,.7);border-color:rgba(255,255,255,.25);color:var(--muted-foreground);
-                font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;border-radius:0;}
-            .hgl-map .maplibregl-canvas:focus{outline:none;}
-            body.light-mode .hgl-map{background:#efeae1;}
-            body.light-mode .hgl-pin{background:#fff;color:#4b5158;border-color:rgba(28,30,33,.2);}
-            body.light-mode .hgl-label b{color:#16181b;text-shadow:0 1px 6px rgba(255,255,255,.9);}
-            body.light-mode .hgl-label i{color:#6b7078;}
-            @media (max-width:1023px){.hgl-map{aspect-ratio:3/4;}.hgl-reset{left:.75rem;top:.75rem;}}
-            @media (prefers-reduced-motion: reduce){.hgl-marker,.hgl-pin,.hgl-panel{transition:none;animation:none;}}
+            .ne-pin.is-region .ne-dot{width:36px;height:36px;border-color:rgba(240,98,37,.55);color:var(--accent);}
+            .ne-pin.is-region .ne-dot-ico{width:18px;height:18px;}
+            .ne-pin.is-region .ne-tag b{font-size:10.5px;letter-spacing:.13em;}
+            .ne-pin.is-region .ne-tag i{color:var(--accent);}
+            .ne-pin.is-region .ne-dot::after{content:"";position:absolute;inset:-1px;border-radius:50%;
+                border:1px solid rgba(240,98,37,.35);animation:nePulse 3.6s ease-out infinite;}
+            .ne-pin.is-region.is-hot .ne-dot{background:var(--accent);color:#14161a;transform:scale(1.1);}
+            @keyframes nePulse{0%{transform:scale(1);opacity:.55;}70%{transform:scale(1.75);opacity:0;}100%{opacity:0;}}
 
-            .hme-xpanel{scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
-            .hme-xpanel::-webkit-scrollbar{width:4px;}
-            .hme-xpanel::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);border-radius:2px;}
-            @keyframes hmeXfade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-            .hme-xbody{animation:hmeXfade .4s cubic-bezier(.2,.7,.3,1);}
+            .ne-pin.is-summit .ne-dot{width:32px;height:32px;border-color:rgba(240,98,37,.75);color:var(--accent);}
+            .ne-pin.is-summit .ne-dot-ico{width:16px;height:16px;}
+            .ne-pin.is-peak .ne-dot{border-color:rgba(240,98,37,.45);color:var(--accent);}
+            .ne-pin.is-nature .ne-dot{border-color:rgba(96,165,250,.45);color:#8fb8f0;}
+            .ne-pin.is-pass .ne-dot{border-color:rgba(255,255,255,.4);}
+            body.light-mode .ne-pin.is-pass .ne-dot{border-color:rgba(28,30,33,.35);}
+
+            @media (max-width:767px){
+                .ne-dot{width:21px;height:21px;}
+                .ne-dot-ico{width:11px;height:11px;}
+                .ne-pin.is-region .ne-dot{width:25px;height:25px;}
+                .ne-pin.is-region .ne-dot-ico{width:13px;height:13px;}
+                .ne-pin.is-summit .ne-dot{width:24px;height:24px;}
+                .ne-pin.is-summit .ne-dot-ico{width:12px;height:12px;}
+                .ne-tag b{font-size:9px;letter-spacing:.06em;}
+                .ne-tag i{display:none;}
+                /* the pin stays small; the thing you tap does not */
+                .ne-pin::before{content:"";position:absolute;inset:-11px;border-radius:50%;}
+                /* nine names will not fit across a phone, so they live in the
+                   line under the map and in the list below it */
+                /* whatever still fits keeps its name; the rest are named in the
+                   line under the map and in the list below it */
+                .ne-pin.is-region.is-hot .ne-tag{opacity:1;}
+            }
+
+            /* ---- map chrome ---------------------------------------------- */
+            .ne-back[hidden]{display:none;}
+            /* The way back out. Reads as a control first and a label second:
+               an accent arrow tile, with where it goes written beside it. */
+            .ne-back{position:absolute;z-index:6;left:1rem;top:1rem;display:inline-flex;align-items:center;gap:.6rem;
+                min-height:40px;padding:0 .9rem 0 0;border:1px solid var(--accent);background:rgba(16,18,21,.92);
+                color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+                text-transform:uppercase;cursor:pointer;backdrop-filter:blur(6px);
+                box-shadow:0 10px 24px -12px rgba(0,0,0,.95);
+                transition:background .2s,color .2s,box-shadow .2s;}
+            body.light-mode .ne-back{background:rgba(255,255,255,.94);}
+            .ne-back-ico{display:grid;place-items:center;width:38px;height:38px;flex:0 0 auto;
+                background:rgba(240,98,37,.16);transition:background .2s,transform .2s;}
+            .ne-back-ico svg{width:17px;height:17px;}
+            .ne-back:hover{background:var(--accent);color:#14161a;box-shadow:0 12px 26px -12px rgba(240,98,37,.7);}
+            .ne-back:hover .ne-back-ico{background:rgba(0,0,0,.14);transform:translateX(-2px);}
+            .ne-back:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+            /* on a phone the arrow is the whole button — the line under the map
+               already says where you are, and the map needs the room */
+            @media (max-width:767px){
+                .ne-back{padding:0;gap:0;}
+                .ne-back-txt{display:none;}
+            }
+
+            .ne-compass{position:absolute;top:1.5rem;right:1.5rem;z-index:4;opacity:.4;pointer-events:none;}
+            @media (max-width:767px){.ne-compass{display:none;}}
+
+            .ne-foot{margin-top:.9rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.25rem .75rem;
+                text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;
+                text-transform:uppercase;color:var(--muted-foreground);}
+            .ne-foot .ne-sep{opacity:.4;}
+            .ne-now{color:var(--accent);}
+
+            /* ---- the panel ----------------------------------------------- */
+            .ne-xpanel{scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
+            .ne-xpanel::-webkit-scrollbar{width:4px;}
+            .ne-xpanel::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);border-radius:2px;}
+            @keyframes neFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+            .ne-panel,.hme-xbody{animation:neFade .35s cubic-bezier(.2,.7,.3,1);}
+            .ne-p-lbl{display:block;margin-top:1.15rem;font-family:'IBM Plex Mono',monospace;font-size:9px;
+                letter-spacing:.26em;text-transform:uppercase;color:var(--muted-foreground);}
+            .ne-panel > .ne-p-lbl:first-child{margin-top:0;}
+            .ne-p-sub{display:block;margin-top:1.15rem;margin-bottom:.4rem;font-family:'IBM Plex Mono',monospace;
+                font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+            .ne-p-kind{display:inline-flex;align-items:center;gap:.4rem;font-family:'IBM Plex Mono',monospace;font-size:9px;
+                letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+            .ne-p-kind .ne-ico{width:14px;height:14px;}
+            .ne-p-name{margin-top:.6rem;font-family:Oswald,sans-serif;font-weight:300;font-size:1.9rem;line-height:1;
+                text-transform:uppercase;letter-spacing:-.01em;color:var(--foreground);}
+            .ne-p-el{margin-top:.35rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+                text-transform:uppercase;color:var(--accent);}
+            .ne-p-el.is-soft{color:var(--muted-foreground);letter-spacing:.14em;}
+            .ne-p-note{margin-top:.75rem;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;line-height:1.6;color:var(--muted-foreground);}
+            .ne-p-fine{margin-top:1.15rem;font-family:'IBM Plex Mono',monospace;font-size:8.5px;line-height:1.7;
+                letter-spacing:.06em;color:var(--muted-foreground);opacity:.75;}
+            .ne-list{margin-top:.5rem;display:grid;gap:.35rem;}
+            .ne-list.is-regions{margin-top:1rem;}
+            .ne-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;min-height:42px;
+                padding:.55rem .75rem;border:1px solid var(--border);background:transparent;color:var(--foreground);
+                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+                text-align:left;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s,transform .2s;}
+            .ne-row b{font-weight:500;color:var(--accent);}
+            .ne-row:hover{border-color:var(--accent);background:rgba(240,98,37,.07);transform:translateX(3px);}
+            .ne-arrow{width:15px;height:9px;color:var(--accent);flex:0 0 auto;}
+            .ne-cta{margin-top:1.1rem;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;
+                min-height:46px;padding:.7rem 1rem;border:1px solid var(--accent);background:var(--accent);color:#14161a;
+                font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.16em;
+                text-transform:uppercase;text-decoration:none;transition:background .25s,box-shadow .25s;}
+            .ne-cta .ne-arrow{color:currentColor;width:16px;height:9px;}
+            .ne-cta:hover{background:#ff7a3d;box-shadow:0 0 0 4px rgba(240,98,37,.16);}
+            .ne-back-row{display:flex;width:100%;align-items:center;justify-content:flex-start;gap:.45rem;margin-bottom:1rem;border:0;background:none;
+                padding:0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+                text-transform:uppercase;color:var(--muted-foreground);transition:color .2s;}
+            .ne-back-row.is-end{margin-top:1.5rem;margin-bottom:0;}
+            .ne-back-row:hover{color:var(--accent);}
+            .ne-back-row .ne-ico{width:14px;height:14px;}
+
+            /* rows written by renderGeoRegion() in edit.js */
             .hme-xrow{transition:border-color .2s ease,background .2s ease,transform .2s ease;}
             .hme-xrow:hover{border-color:var(--accent);transform:translateX(3px);}
-            @media (prefers-reduced-motion: reduce){.hme-xbody{animation:none;}.hme-xrow:hover{transform:none;}}
-        </style>
-        <div class="pointer-events-none absolute inset-0 z-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent"></div>
 
-        <button type="button" id="hme-x-close" onclick="closeExploreNepal()" aria-label="Close Explore Nepal">
-            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
+            @media (prefers-reduced-motion: reduce){
+                .ne-panel,.hme-xbody{animation:none;}
+                .hme-xrow:hover,.ne-row:hover{transform:none;}
+                .ne-pin.is-region .ne-dot::after{animation:none;}
+                .ne-zone,.ne-dot,.ne-tag{transition:none;}
+            }
+        </style>
+
+        <div class="pointer-events-none absolute inset-0 z-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto">
             <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03 — Explore Nepal</span>
@@ -900,31 +910,31 @@
                     Explore <span class="font-semibold text-accent">Nepal</span>
                 </h2>
                 <p class="max-w-md font-mono text-xs leading-relaxed text-muted-foreground md:text-sm">
-                    Start with a region, not a checklist. Tap one of the nine trekking regions to open the trails we guide there, the peaks above it and where each route begins.
+                    Start with a place, not a checklist. Tap a trekking region to open the trails we guide there, the peaks above it and where each route begins — or switch the layer to go straight to the passes and the eight-thousanders.
                 </p>
             </div>
 
             <div class="mt-8 flex flex-wrap items-center gap-3">
-                <span id="explore-lens-label" class="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">View by</span>
-                <div id="explore-lens" role="tablist" aria-label="Explore Nepal by" class="flex gap-2 font-mono text-[10px] uppercase tracking-[0.2em]">
-                    <button type="button" role="tab" data-lens="regions" aria-selected="true" class="hme-lens-tab">Regions</button>
-                    <button type="button" role="tab" data-lens="provinces" aria-selected="false" class="hme-lens-tab">Provinces</button>
-                </div>
+                <span class="shrink-0 font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Show</span>
+                <div id="ne-chips" role="tablist" aria-label="Map layer" class="min-w-0 flex-1"></div>
             </div>
 
             <div class="mt-6 grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] gap-6 md:gap-7 lg:items-start">
 
-                <!-- Interactive Map -->
-                <div class="hme-mapframe relative border border-border bg-[#16181b] p-3 md:p-4">
-                    <!-- Real map of Nepal (MapLibre GL, /explore-map.js). If it cannot load,
-                         the drawn SVG map below stays on screen instead. -->
-                    <div id="nepal-map" class="hgl-map" role="application" aria-label="Map of Nepal: trailheads, peaks, passes and places we guide"></div>
-                    <button type="button" id="map-reset" class="hgl-reset" hidden>
-                        <svg class="hgl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-                        <span data-map-back-label>All regions</span>
+                <div class="ne-frame">
+                    <!-- The engine (/explore-map.js) draws the SVG and the pins in here. -->
+                    <div id="nepal-map" class="ne-map" role="application" aria-label="Map of Nepal: trekking regions, peaks, passes and trailheads"></div>
+
+                    <!-- Step back out of a region / a place. The engine shows it
+                         from step 2 on and writes where it goes. Esc does the same. -->
+                    <button type="button" id="map-reset" class="ne-back" hidden aria-label="Back">
+                        <span class="ne-back-ico">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                        </span>
+                        <span class="ne-back-txt" data-map-back-label>All of Nepal</span>
                     </button>
-                    <!-- Compass -->
-                    <div class="pointer-events-none absolute top-5 right-5 z-20 opacity-40 hidden md:block">
+
+                    <div class="ne-compass">
                         <div class="h-12 w-12 rounded-full border border-white/20 flex items-center justify-center relative font-mono text-[8px] tracking-widest text-muted-foreground">
                             <span class="absolute top-1">N</span>
                             <span class="absolute bottom-1">S</span>
@@ -934,84 +944,15 @@
                         </div>
                     </div>
 
-                    <!-- Peak index (revealed on hover — Provinces lens) -->
-                    <div id="hme-peak-index" class="pointer-events-none absolute left-4 top-4 z-20 hidden w-[220px] border border-accent/30 bg-[#14161a]/95 p-3 backdrop-blur-sm"></div>
-
-                    <!-- Zoom-out control (Regions lens, only while a region is open) -->
-                    <button type="button" id="hme-geo-back" hidden>&larr; All of Nepal</button>
-
-                    <div class="relative w-full" style="aspect-ratio: 960 / 312;">
-                        <svg class="hme-map h-full w-full" viewBox="20 40 960 312" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                            <!-- 7 provinces, west to east (the "Provinces" lens) -->
-                            <g class="hme-prov-layer">
-                            <path class="hme-region" data-region="sudurpashchim" role="button" tabindex="0" aria-label="Sudurpashchim Province" onmouseenter="hoverExploreRegion('sudurpashchim')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('sudurpashchim')" onfocus="hoverExploreRegion('sudurpashchim')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('sudurpashchim');}" d="M40,150 L130,108 L212,132 L205,280 L165,268 L92,222 L45,174 Z"></path>
-                            <path class="hme-region" data-region="karnali" role="button" tabindex="0" aria-label="Karnali Province" onmouseenter="hoverExploreRegion('karnali')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('karnali')" onfocus="hoverExploreRegion('karnali')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('karnali');}" d="M212,132 L300,92 L382,118 L452,78 L462,192 L405,226 L300,238 L205,280 Z"></path>
-                            <path class="hme-region" data-region="lumbini" role="button" tabindex="0" aria-label="Lumbini Province" onmouseenter="hoverExploreRegion('lumbini')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('lumbini')" onfocus="hoverExploreRegion('lumbini')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('lumbini');}" d="M205,280 L300,238 L405,226 L462,192 L520,232 L560,220 L566,334 L470,342 L388,332 L314,315 L240,298 L165,268 Z"></path>
-                            <path class="hme-region" data-region="gandaki" role="button" tabindex="0" aria-label="Gandaki Province" onmouseenter="hoverExploreRegion('gandaki')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('gandaki')" onfocus="hoverExploreRegion('gandaki')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('gandaki');}" d="M452,78 L520,104 L586,68 L600,210 L560,220 L520,232 L462,192 Z"></path>
-                            <path class="hme-region" data-region="bagmati" role="button" tabindex="0" aria-label="Bagmati Province" onmouseenter="hoverExploreRegion('bagmati')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('bagmati')" onfocus="hoverExploreRegion('bagmati')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('bagmati');}" d="M586,68 L652,98 L712,60 L772,82 L770,235 L690,250 L600,210 Z"></path>
-                            <path class="hme-region hme-terai" data-region="madhesh" role="button" tabindex="0" aria-label="Madhesh Province" onmouseenter="hoverExploreRegion('madhesh')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('madhesh')" onfocus="hoverExploreRegion('madhesh')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('madhesh');}" d="M560,220 L600,210 L690,250 L770,235 L812,262 L745,298 L658,320 L566,334 Z"></path>
-                            <path class="hme-region" data-region="koshi" role="button" tabindex="0" aria-label="Koshi Province" onmouseenter="hoverExploreRegion('koshi')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('koshi')" onfocus="hoverExploreRegion('koshi')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('koshi');}" d="M772,82 L858,52 L900,60 L965,96 L965,150 L892,214 L812,262 L770,235 Z"></path>
-                            </g>
-
-                            <!-- Northern ridgeline (Tibet border) -->
-                            <path class="hme-ridge" d="M40,150 L130,108 L212,132 L300,92 L382,118 L452,78 L520,104 L586,68 L652,98 L712,60 L772,82 L858,52 L900,60 L965,96"></path>
-
-                            <!-- The eight 8,000 m peaks -->
-                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M487,92 L481,104 L493,104 Z"></path></g>
-                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M517,112 L511,124 L523,124 Z"></path></g>
-                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M557,90 L551,102 L563,102 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M806,98 L800,110 L812,110 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M833,80 L825,94 L841,94 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M847,102 L841,114 L853,114 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M863,88 L857,100 L869,100 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M940,82 L934,94 L946,94 Z"></path></g>
-
-                            <!-- Regions lens — clip + region washes, dots, labels, peak marks, hit areas — injected by buildGeoLayer() -->
-                            <g id="hme-geo-layer"></g>
-                        </svg>
-
-                        <!-- Province labels -->
-                        <div class="hme-prov-labels pointer-events-none absolute inset-0">
-                        <div class="pointer-events-none absolute" style="left:11.5%; top:49.3%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="sudurpashchim">Sudurpashchim</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:31.5%; top:43.6%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="karnali">Karnali</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:35%; top:73.8%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="lumbini">Lumbini</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:51.2%; top:38.0%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="gandaki">Gandaki</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:67.2%; top:38.0%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="bagmati">Bagmati</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:67.2%; top:72.1%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="madhesh">Madhesh</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:88.5%; top:34.1%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="koshi">Koshi</span>
-                        </div>
-                        </div><!-- /.hme-prov-labels -->
-                    </div>
-
-                    <p class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-mono text-[9px] uppercase tracking-widest text-muted-foreground" data-explore-hint="regions">
-                        <span>Hover to explore <span class="opacity-50">&middot;</span> tap to open a region</span>
-                        <span class="opacity-50">&mdash;</span>
-                        <span>8 ranges <span class="opacity-50">+</span> the Terai <span class="opacity-50">&middot;</span> 38 trails</span>
-                    </p>
-                    <p class="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-mono text-[9px] uppercase tracking-widest text-muted-foreground" data-explore-hint="provinces" hidden>
-                        <span class="md:hidden">Tap a province &middot;</span>
-                        <span><span class="text-accent">&#9650;</span> 8 peaks above 8,000 m</span>
-                        <span class="opacity-50">&mdash;</span>
-                        <span>5 in Koshi &middot; 3 in Gandaki</span>
+                    <p class="ne-foot">
+                        <span id="ne-now" class="ne-now">Nepal <span class="ne-sep">&rarr;</span> region <span class="ne-sep">&rarr;</span> place</span>
+                        <span class="ne-sep">&mdash;</span>
+                        <span>8 ranges <span class="ne-sep">+</span> the Terai <span class="ne-sep">&middot;</span> 38 trails</span>
                     </p>
                 </div>
 
-                <!-- Info Panel — beside the map -->
-                <div id="explore-panel" class="hme-xpanel border border-border bg-card p-5 md:p-6 min-h-[300px] lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
-                    <!-- Populated by JS: renderGeoRegion() / renderExploreRegion() -->
+                <div id="explore-panel" class="ne-xpanel border border-border bg-card p-5 md:p-6 min-h-[300px] lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
+                    <!-- Written by /explore-map.js and renderGeoRegion() in edit.js -->
                 </div>
             </div>
         </div>
@@ -1753,10 +1694,10 @@
     <script src="/peaks.js?v=4"></script>
     <script src="/data/stories.js"></script>
     <script src="/stories.js?v=3"></script>
-    <script src="/explore-map.js?v=17" defer></script>
+    <script src="/explore-map.js?v=41" defer></script>
     <script src="/data/reviews.js"></script>
     <script src="/reviews.js?v=5" defer></script>
-    <script src="/edit.js?v=26"></script>
+    <script src="/edit.js?v=29"></script>
     <script>
     /* Homepage Compare-Treks (04) — the /compare layout (a column per trail,
        photo on top) with icons, bars and the best value in each row picked out.
@@ -1901,7 +1842,7 @@
     </script>
     <script src="/announce.js?v=2"></script>
 <script src="/backdrop.js?v=2" defer></script>
-<script src="/menu.js?v=10"></script>
+<script src="/menu.js?v=11"></script>
 <script src="/card-fx.js?v=4" defer></script>
 <script src="/back.js?v=1"></script>
 <script src="/altitude.js?v=1" defer></script>

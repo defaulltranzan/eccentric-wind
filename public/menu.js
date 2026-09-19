@@ -32,9 +32,10 @@
     // branches below, and drop `hidden lg:block` from #trek-finder.
     { name: 'What kind of trekker are you?', href: '/#trek-finder',
       overlayOnly: true, mobileOnly: true, action: 'openTrekFinder' },
-    // Phone-only, same pattern: the homepage map (#explore) opens as a sheet.
+    // The homepage map is in the page at every width now, so this is just a
+    // jump link; openExploreNepal() scrolls to it.
     { name: 'Explore Nepal', href: '/#explore',
-      overlayOnly: true, mobileOnly: true, action: 'openExploreNepal' },
+      overlayOnly: true, action: 'openExploreNepal' },
     { name: 'Compare Treks', short: 'Compare', href: '/compare', overlayOnly: true },
     { name: 'Expedition Atlas', short: 'Expeditions', href: '/expeditions', children: [
       { name: 'The Full Atlas', href: '/expeditions', all: true },

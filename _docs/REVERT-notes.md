@@ -1397,3 +1397,55 @@ the hero is a little shorter (`min(78svh, 640px)`).
 Reverting any one piece: `git checkout pre-regions -- <file>` — the map is public/explore-map.js
 (+ the `#explore` block in index.html), compare is the inline script in index.html, peaks mode is
 public/compare.js + public/compare.html, the phone hero is the `max-width: 767px` block in index.html.
+
+## § 13 — Explore Nepal is plain SVG now; MapLibre is gone (2026-09-18)
+
+Restore point: tag `pre-map-svg`.
+
+Client note: "the map section is lagging… make it simple with only 3 step zoom… must work on
+mobile… lag free and clutter free with no broken links."
+
+**1. MapLibre is deleted.** `public/vendor/` (maplibre-gl.js 4.7.1, 803 kB) is gone. Do not put a
+map library back in this section: free zoom plus 65 DOM markers re-projected on every frame of
+every gesture *was* the lag. There is no WebGL, no canvas, no tiles and no API key any more.
+
+**2. Three steps, no gestures.** `public/explore-map.js` is a new engine that draws the same
+`public/data/nepal.geo.json` as plain SVG, Mercator-projected once at boot into a fixed 1000-wide
+user space. States: `0` Nepal (nine region territories) → `1` one region → `2` one place. Between
+transitions nothing runs at all; during one, only the `<svg viewBox>` and the ~10 visible pins'
+`left`/`top` change, for 520 ms.
+- Region territories are computed, not drawn: eight longitude bands (`BANDS`) cut at the lowland
+  divide, which is read off the country outline itself (`spanAt()`, `TERAI_SHARE`). Moving a
+  region boundary = editing one number in `BANDS`.
+- `glide()` has a `setTimeout` guard: animation frames stop in a tab that is not painting, and
+  without it the map would freeze at the frame the zoom started on.
+- `thin()` must be given the *destination* rectangle, not the current one, or every zoom ends
+  with labels thinned for the previous view.
+- Boot is lazy: IntersectionObserver for the fast path, `requestIdleCallback` as the guarantee
+  (IO never fires for a zero-size or unpainted container).
+
+**3. The layer bar** (`#ne-chips`): Regions · Trails · Peaks · Passes · Expeditions. At step 1 a
+layer shows across the country; inside a region it filters. With Regions selected, a busy region
+shows only the headline set (summit/pass/trailhead/major) and a quiet one shows everything.
+
+**4. Deleted with it:** the drawn SVG fallback map and its CSS, the Regions⇄Provinces lens
+toggle, `buildGeoLayer` / `geoZoom` / `setExploreLens` / `renderExploreRegion` / `highlightGeo`
+in edit.js (~27 kB), the phone sheet (`hme-x-open`, `closeExploreNepal`), and the stale
+light-mode map rules in `build/tw-input.css`. `#explore` is in the page at every width now —
+no more `hidden lg:block`. Provinces still render as faint base geography.
+`exploreGeo` in edit.js lost its viewBox fields; it is pure content.
+
+**5. Data:** four Rolwaling points were added to `public/data/places.json` (Singati & Chetchet,
+Beding, Tsho Rolpa, Tashi Lapcha) because the region opened to an empty frame without them.
+They are published figures, not surveyed — flagged in that file's own `note` for the client to
+check. Point→trail links are derived from the trek records themselves (`passes[].name`,
+`routePoints[].name`, `stats.maxAltitudePoint`) so a pin never offers a link we do not have.
+
+**Gotcha worth remembering:** cutting code out of edit.js by `indexOf(marker)` matched an
+*earlier* duplicate comment header and silently deleted the whole `exploreGeo` block.
+`node --check` passes (syntax only) and hoisted functions still exist, so the only symptom was
+`window.exploreGeo === undefined`. Check marker uniqueness first.
+
+**Revert:** `git checkout pre-map-svg -- public/index.html public/edit.js public/menu.js
+public/data/places.json build/tw-input.css`, restore `public/vendor/` from that tag, and delete
+`public/explore-map.js`'s new contents in favour of the tagged version.
