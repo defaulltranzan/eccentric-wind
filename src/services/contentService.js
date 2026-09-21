@@ -7,8 +7,12 @@ const { driver, fileDriver } = require('../data');
 const COLLECTIONS = {
   treks: { label: 'Trek', titleKey: 'name', path: '/treks/' },
   expeditions: { label: 'Expedition', titleKey: 'name', path: '/expeditions/' },
-  stories: { label: 'Story', titleKey: 'title', path: '/stories/' }
+  stories: { label: 'Story', titleKey: 'title', path: '/stories/' },
+  // Traveller reviews quoted from Tripadvisor. One row holds the rating
+  // summary (kind 'source'); the rest are individual reviews (kind 'review').
+  reviews: { label: 'Review', titleKey: 'title', path: '' }
 };
+const REVIEW_KINDS = ['review', 'source'];
 const EXPEDITION_KINDS = ['peak', 'eight-thousander'];
 const PEAK_CATEGORIES = ['8000', '7000', '6000', 'trekking'];
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -298,6 +302,12 @@ async function buildScript(collection, { includeDrafts = false } = {}) {
       'window.PEAKS_DATA = ' + jsLiteral(map((r) => r.kind !== 'eight-thousander')) + ';\n';
   } else if (collection === 'stories') {
     js = header + 'window.STORIES = ' + jsLiteral(map(() => true)) + ';\n';
+  } else if (collection === 'reviews') {
+    const reviews = rows.filter((r) => r.kind !== 'source').map((r) => Object.assign({ slug: r.slug }, r.data));
+    const src = rows.find((r) => r.kind === 'source');
+    js = header +
+      'window.REVIEWS = ' + jsLiteral(reviews) + ';\n' +
+      'window.REVIEW_SOURCE = ' + jsLiteral(src ? src.data : null) + ';\n';
   } else {
     throw httpError(404, 'Unknown collection.');
   }
@@ -390,6 +400,7 @@ async function stats() {
 module.exports = {
   COLLECTIONS,
   EXPEDITION_KINDS,
+  REVIEW_KINDS,
   slugify,
   list,
   summaries,

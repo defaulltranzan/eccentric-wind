@@ -13,7 +13,7 @@ const loginLimiter = rateLimit({
   message: { status: 'error', message: 'Too many sign-in attempts. Try again in 15 minutes.' }
 });
 
-const COLLECTION = ':collection(treks|expeditions|stories)';
+const COLLECTION = ':collection(treks|expeditions|stories|reviews)';
 
 router.post('/login', loginLimiter, admin.login);
 router.post('/logout', admin.logout);

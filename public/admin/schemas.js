@@ -271,6 +271,75 @@
     }
   };
 
+
+  /* ------------------------------------------------------------------
+     Traveller reviews quoted from Tripadvisor.
+     Two record kinds: 'review' (one traveller) and 'source' (the rating
+     summary panel — rating, review count and the bar chart).            */
+  var REVIEW = {
+    titleKey: 'title',
+    folder: 'general',
+    publicPath: function () { return '/#reviews'; },
+    kinds: [['review', 'Traveller review'], ['source', 'Rating summary (Tripadvisor panel)']],
+    sections: [
+      { title: 'The review', kinds: ['review'], fields: [
+        { path: 'title', label: 'Review headline', type: 'text', required: true, placeholder: 'Successful 12 day EBC trek' },
+        { path: 'slug', label: 'URL slug', type: 'slug', help: 'Only used as the record id — reviews have no page of their own.' },
+        { path: 'quote', label: 'Quote shown on the site', type: 'textarea', rows: 5, help: 'A short excerpt in the traveller\u2019s own words. Use \u2026 where you cut text. Roughly 25\u201350 words reads best.' },
+        { path: 'rating', label: 'Rating (1\u20135)', type: 'number', quarter: true },
+        { path: 'travelDate', label: 'When they travelled', type: 'text', placeholder: 'Mar 2023', quarter: true },
+        { path: 'party', label: 'Travelled as', type: 'text', list: ['Solo', 'Couple', 'Friends', 'Family', 'Group'], quarter: true },
+        { path: 'writtenAt', label: 'Review date', type: 'date', quarter: true }
+      ] },
+      { title: 'Who wrote it', kinds: ['review'], fields: [
+        { path: 'author', label: 'Traveller name', type: 'text', half: true, placeholder: 'Ben O' },
+        { path: 'location', label: 'Where they are from', type: 'text', half: true, placeholder: 'London, United Kingdom' },
+        { path: 'guide', label: 'Guide they name (credited on the card)', type: 'text', half: true, placeholder: 'Pemba Sherpa' },
+        { path: 'featured', label: 'Featured review', type: 'checkbox', half: true }
+      ] },
+      { title: 'The trip', kinds: ['review'], fields: [
+        { path: 'trip', label: 'Trip label on the card', type: 'text', half: true, placeholder: 'Everest Base Camp' },
+        { path: 'tripSlug', label: 'Trek / expedition slug (links the card)', type: 'text', half: true, help: 'e.g. everest-base-camp. Leave empty if we do not run that route.' },
+        { path: 'tripType', label: 'Trip type', type: 'select', options: [['trek', 'Trek'], ['expedition', 'Expedition']], half: true }
+      ] },
+      { title: 'Source', kinds: ['review'], fields: [
+        { path: 'sourceName', label: 'Review site', type: 'text', half: true, placeholder: 'Tripadvisor' },
+        { path: 'url', label: 'Link to the original review', type: 'text', help: 'Paste the review\u2019s own Tripadvisor link so visitors can verify it.' }
+      ] },
+      { title: 'Rating summary', kinds: ['source'], fields: [
+        { path: 'title', label: 'Record name (admin only)', type: 'text', required: true },
+        { path: 'slug', label: 'Record id', type: 'slug' },
+        { path: 'sourceName', label: 'Review site', type: 'text', half: true, placeholder: 'Tripadvisor' },
+        { path: 'listingName', label: 'Listing name on that site', type: 'text', half: true },
+        { path: 'rating', label: 'Overall rating', type: 'number', step: '0.1', third: true },
+        { path: 'reviewCount', label: 'Number of reviews', type: 'number', third: true },
+        { path: 'checkedAt', label: 'Figures checked on', type: 'date', third: true },
+        { path: 'url', label: 'Link to the listing', type: 'text' },
+        { path: 'distribution', label: 'Rating breakdown', type: 'repeater',
+          itemLabel: function (it) { return (it.label || 'Band') + ' \u00b7 ' + (it.count || 0); },
+          newItem: function () { return { label: '', count: 0 }; },
+          fields: [
+            { path: 'label', label: 'Band', type: 'text', half: true },
+            { path: 'count', label: 'Reviews', type: 'number', half: true }
+          ] }
+      ] }
+    ],
+    template: function (kind) {
+      if (kind === 'source') {
+        return {
+          source: 'tripadvisor', sourceName: 'Tripadvisor', listingName: 'Himalayan Magic Adventures',
+          rating: 5, reviewCount: 0, url: '', checkedAt: new Date().toISOString().slice(0, 10),
+          distribution: [{ label: 'Excellent', count: 0 }, { label: 'Very good', count: 0 }, { label: 'Average', count: 0 }, { label: 'Poor', count: 0 }, { label: 'Terrible', count: 0 }]
+        };
+      }
+      return {
+        author: '', location: '', rating: 5, title: '', quote: '', travelDate: '', party: 'Solo',
+        writtenAt: new Date().toISOString().slice(0, 10), trip: '', tripSlug: '', tripType: 'trek',
+        guide: '', source: 'tripadvisor', sourceName: 'Tripadvisor', url: ''
+      };
+    }
+  };
+
   /* ------------------------------------------------------------------
      Article body ⇄ plain text.
        ## Heading            ### Sub-heading          --- (divider)
@@ -367,7 +436,8 @@
     collections: {
       treks: { label: 'Treks', singular: 'Trek', schema: TREK },
       expeditions: { label: 'Expeditions', singular: 'Expedition', schema: EXPEDITION },
-      stories: { label: 'Stories', singular: 'Story', schema: STORY }
+      stories: { label: 'Stories', singular: 'Story', schema: STORY },
+      reviews: { label: 'Reviews', singular: 'Review', schema: REVIEW }
     },
     blocksToText: blocksToText,
     textToBlocks: textToBlocks

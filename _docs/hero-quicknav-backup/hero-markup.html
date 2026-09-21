@@ -1,0 +1,98 @@
+    <!-- 01 — THE HIGH CORRIDOR  ·  cinematic hero (2026-09-16, REVERT-notes § 6a)
+         Layers are pure decoration except the photo; hero-corridor.js drives
+         parallax, the altitude count, the Kathmandu clock and the expedition
+         films. Keep id="manifesto" + data-media and the hero-* ids (edit.js i18n).
+         REVERT: git checkout pre-hero -- public/index.html public/edit.js
+                 and delete public/hero-corridor.js -->
+    <section id="manifesto" data-media class="hc" aria-labelledby="hero-heading">
+        <div class="hc-stage">
+            <div class="hc-layer hc-plate">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="/images/hero-corridor-portrait.webp" type="image/webp">
+                    <source srcset="/images/hero-corridor.webp" type="image/webp">
+                    <img id="hero-image" src="/images/hero-corridor.jpg" width="1376" height="768" fetchpriority="high" decoding="async"
+                         alt="Ama Dablam at dusk, its summit catching the last light above a sea of cloud in the Khumbu"
+                         class="hc-photo">
+                </picture>
+                <video id="hc-film" class="hc-film" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
+            </div>
+            <div class="hc-layer hc-haze" aria-hidden="true"></div>
+            <div class="hc-layer hc-ridge hc-ridge--mid" aria-hidden="true">
+                <svg viewBox="0 0 1440 300" preserveAspectRatio="none" width="100%" height="100%" focusable="false">
+                    <defs><linearGradient id="hcMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d0f11" stop-opacity="0"/><stop offset=".45" stop-color="#0d0f11" stop-opacity=".7"/><stop offset="1" stop-color="#0d0f11"/></linearGradient></defs>
+                    <path fill="url(#hcMid)" d="M0 170C120 150 200 120 300 128C420 138 470 190 600 200C700 208 760 170 860 150C960 130 1040 170 1140 180C1240 190 1320 140 1440 120V300H0Z"/>
+                </svg>
+            </div>
+            <div class="hc-layer hc-ridge hc-ridge--near" aria-hidden="true">
+                <svg viewBox="0 0 1440 240" preserveAspectRatio="none" width="100%" height="100%" focusable="false">
+                    <defs><linearGradient id="hcNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1f23"/><stop offset=".4" stop-color="#101215"/><stop offset="1" stop-color="#0d0f11"/></linearGradient></defs>
+                    <path fill="url(#hcNear)" d="M0 128C90 112 160 84 240 78C300 74 340 104 420 122C520 144 600 136 700 124C780 114 840 104 900 99L912 98C960 100 1010 116 1080 134C1160 154 1220 104 1300 76C1350 60 1400 66 1440 82V240H0Z"/>
+                    <path fill="none" stroke="rgba(255,255,255,.09)" stroke-width="1" vector-effect="non-scaling-stroke" d="M0 128C90 112 160 84 240 78C300 74 340 104 420 122C520 144 600 136 700 124C780 114 840 104 900 99L912 98C960 100 1010 116 1080 134C1160 154 1220 104 1300 76C1350 60 1400 66 1440 82"/>
+                </svg>
+                <!-- human scale: one climber on the crest, ~1% of the frame height -->
+                <svg class="hc-climber" viewBox="0 0 12 16" width="11" height="15" focusable="false" style="position:absolute;left:62.9%;top:40.6%;transform:translate(-50%,-100%);overflow:visible">
+                    <g fill="#08090b" stroke="#08090b" stroke-width="1.2" stroke-linecap="round">
+                        <circle cx="5" cy="2.1" r="1.6" stroke="none"/>
+                        <path d="M5.2 4.2 5.6 9.4M5.6 9.4 3.8 15.4M5.6 9.4 7.4 15.4M5.4 5.4 8.6 8.2M8.6 8.2 10.4 15.6" fill="none"/>
+                        <rect x="2.4" y="4" width="2.6" height="4.2" rx=".6" stroke="none"/>
+                    </g>
+                    <circle class="hc-climber-lamp" cx="6.7" cy="1.9" r=".85" fill="#ffd2a8"/>
+                </svg>
+            </div>
+            <div class="hc-layer hc-mist" aria-hidden="true"></div>
+            <div class="hc-shade" aria-hidden="true"></div>
+            <div class="hc-grain" aria-hidden="true"></div>
+        </div>
+
+        <div class="hc-ui">
+            <!-- 1 · expedition data -->
+            <div class="hc-top hc-mono">
+                <div class="hc-coords">
+                    <span id="hero-telemetry-coords">27°59'N · 86°55'E</span>
+                    <span id="hc-region">Sagarmatha Region · Nepal</span>
+                </div>
+                <div class="hc-status">
+                    <span class="hc-live"><span class="hc-dot" aria-hidden="true"></span>Autumn 2026 · Departures open</span>
+                    <span class="hc-clock">Kathmandu <time id="hc-clock">&mdash;</time> NPT</span>
+                    <div id="hc-films" class="hc-films" role="group" aria-label="Expedition films"></div>
+                </div>
+            </div>
+
+            <!-- 2 · identity + one clear path -->
+            <div class="hc-body">
+                <p class="hc-eyebrow hc-mono"><span id="hero-badge" data-key="hero.badge">The High Corridors of Nepal</span></p>
+                <h1 id="hero-heading" class="hc-title">
+                    <span id="hero-title-primary" data-key="hero.title_primary" class="hc-t1">HIMALAYAN</span>
+                    <span id="hero-title-italic" data-key="hero.title_italic" class="hc-t2"><span>MAGIC</span> <span class="hc-accent">ADVENTURE</span></span>
+                </h1>
+                <p id="hero-tagline" class="hc-lede md:hidden">Treks, high passes and Himalayan expeditions — led by local guides since 1993.</p>
+                <p id="hero-description" data-key="hero.description" class="hc-lede hidden md:block">Trekking routes, high passes and Himalayan expeditions — shaped by the local guides who have led these corridors since 1993.</p>
+
+                <div class="hc-actions">
+                    <a href="/treks" class="hc-btn hc-btn--primary">
+                        <span>Explore the Himalaya</span>
+                        <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+                    </a>
+                    <a href="/expeditions" class="hc-btn hc-btn--quiet">View Expeditions</a>
+                </div>
+                <a href="/contact" class="hc-link hc-mono" data-book="">Plan a custom ascent <span aria-hidden="true">&rarr;</span></a>
+
+                <div class="hc-alt"><span id="hc-alt-label" class="hc-alt-label">Summit · Sagarmatha / Everest</span><span class="hc-alt-row"><span id="hc-alt-num">8,848.86</span><span class="hc-alt-unit">M</span></span></div>
+            </div>
+
+            <!-- 3 · altitude instrumentation -->
+            <div class="hc-rail hc-mono">
+                <a href="#corridor" class="hc-scroll"><i aria-hidden="true"></i><span class="hidden sm:inline">Scroll</span><span class="sr-only">to the flagship routes</span></a>
+                <ol class="hc-profile hidden xl:block" aria-label="The Everest corridor by elevation">
+                    <li style="left:0"><span style="left:0;transform:none">Kathmandu<b>1,400 m</b></span></li>
+                    <li style="left:27.4%"><span>Namche<b>3,440</b></span></li>
+                    <li style="left:53.2%"><span>Base Camp<b>5,364</b></span></li>
+                    <li style="left:100%"><span style="left:auto;right:0;transform:none">Summit<b>8,848.86 m</b></span></li>
+                </ol>
+                <div class="hc-side">
+                    <p id="hc-caption" class="hc-caption" aria-live="polite">In frame &mdash; <a href="/expeditions/ama-dablam">Ama Dablam, 6,812 m</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+

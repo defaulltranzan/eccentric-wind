@@ -44,7 +44,7 @@
             .mt, .mt-img, .mt-arrow, .ex-band, .ex-band-img { transition:none !important; }
         }
     </style>
-    <link rel="stylesheet" href="/booking-modal.css?v=5">
+    <link rel="stylesheet" href="/booking-modal.css?v=6">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -111,7 +111,7 @@
         </p>
         <div id="peak-collections" class="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-3 sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 sm:overflow-visible">
             <a href="/expeditions/8000m" class="ex-band group relative flex flex-col justify-end overflow-hidden border border-border min-h-[280px] md:min-h-[360px] shrink-0 snap-start w-[82%] max-w-[300px] sm:w-auto sm:max-w-none sm:shrink">
-                <img src="/images/everest_real.jpg" alt="" aria-hidden="true" loading="lazy" class="ex-band-img absolute inset-0 h-full w-full object-cover opacity-40">
+                <img src="/images/peaks/8000ers/everest.png" alt="" aria-hidden="true" loading="lazy" class="ex-band-img absolute inset-0 h-full w-full object-cover opacity-40">
                 <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/72 to-[#0c0e10]/15"></div>
                 <span class="absolute top-4 left-4 z-10 font-mono text-[9px] uppercase tracking-[0.25em] text-white/65" data-count="8000">14 peaks</span>
                 <div class="relative z-10 p-5">
@@ -246,6 +246,8 @@
                 </div>
             </a>
             <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+                <!-- Tripadvisor rating pill — filled by /reviews.js from /data/reviews.js -->
+                <p data-hmr-pill class="mt-5"></p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
             <div>
@@ -370,13 +372,16 @@ hmeApplyTheme();
 </script>
 <script src="/announce.js?v=2"></script>
 <script src="/backdrop.js?v=2" defer></script>
-<script src="/menu.js?v=10"></script>
-<script src="/back.js?v=1"></script>
+<script src="/menu.js?v=13"></script>
+<script src="/card-fx.js?v=4" defer></script>
+<script src="/data/reviews.js"></script>
+<script src="/reviews.js?v=5" defer></script>
+<script src="/back.js?v=2"></script>
 <script src="/altitude.js?v=1" defer></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
 <script src="/booking-client.js?v=1" defer></script>
-<script src="/booking-modal.js?v=2" defer></script>
+<script src="/booking-modal.js?v=3" defer></script>
 </body>
 </html>

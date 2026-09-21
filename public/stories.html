@@ -99,7 +99,7 @@
             .j-card .j-img, .j-card:hover .j-img, .j-feat .j-feat-img, .j-feat:hover .j-feat-img { transition:none; transform:none; }
         }
     </style>
-    <link rel="stylesheet" href="/booking-modal.css?v=5">
+    <link rel="stylesheet" href="/booking-modal.css?v=6">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden">
 
@@ -253,6 +253,8 @@
                 </div>
             </a>
             <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew.</p>
+                <!-- Tripadvisor rating pill — filled by /reviews.js from /data/reviews.js -->
+                <p data-hmr-pill class="mt-5"></p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 py-12">
             <div>
@@ -561,13 +563,16 @@
 })();
 </script>
 <script src="/backdrop.js?v=2" defer></script>
-<script src="/menu.js?v=10"></script>
-<script src="/back.js?v=1"></script>
+<script src="/menu.js?v=13"></script>
+<script src="/card-fx.js?v=4" defer></script>
+<script src="/data/reviews.js"></script>
+<script src="/reviews.js?v=5" defer></script>
+<script src="/back.js?v=2"></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/altitude.js?v=1" defer></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/theme.js?v=2"></script>
 <script src="/booking-client.js?v=1" defer></script>
-<script src="/booking-modal.js?v=2" defer></script>
+<script src="/booking-modal.js?v=3" defer></script>
 </body>
 </html>

@@ -7,7 +7,8 @@ const env = require('../../config/env');
 
 const { url, serviceKey, bucket } = env.supabase;
 const TIMEOUT_MS = 10000;
-const TABLES = new Set(['treks', 'expeditions', 'stories', 'bookings']);
+const TABLES = new Set([
+  'reviews','treks', 'expeditions', 'stories', 'bookings']);
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function table(name) {
@@ -189,5 +190,22 @@ module.exports = {
       headers: { 'Content-Type': mime, 'x-upsert': 'false', 'Cache-Control': 'public, max-age=31536000, immutable' }
     });
     return url + '/storage/v1/object/public/' + encodeURIComponent(bucket) + '/' + objectPath;
+  },
+
+  /* The mirror of saveMedia: only URLs that point at this project's own
+     bucket are touched, and a missing object is not an error. */
+  async deleteMedia(mediaUrl) {
+    const prefix = url + '/storage/v1/object/public/' + encodeURIComponent(bucket) + '/';
+    const raw = String(mediaUrl || '');
+    if (raw.indexOf(prefix) !== 0) return false;
+    const objectPath = raw.slice(prefix.length);
+    if (!objectPath || objectPath.indexOf('..') > -1) return false;
+    try {
+      await request('/storage/v1/object/' + encodeURIComponent(bucket) + '/' + objectPath, { method: 'DELETE' });
+      return true;
+    } catch (err) {
+      if (err.status === 404) return false;
+      throw err;
+    }
   }
 };

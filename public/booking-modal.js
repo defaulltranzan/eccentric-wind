@@ -224,6 +224,8 @@
           '<img class="hmb-visual-img" alt="" decoding="async">' +
           '<div class="hmb-brand"><img src="/images/logo-badge-dark-90.png" alt="" width="44" height="40"><span>Himalayan Magic<small>Adventure · Est. 1993</small></span></div>' +
           '<div class="hmb-trip"></div>' +
+          // Tripadvisor rating, filled by /reviews.js when the data script is on the page
+          '<div class="hmb-trust" data-hmb-trust hidden></div>' +
         '</aside>' +
         '<section class="hmb-panel">' +
           '<header class="hmb-head">' +
@@ -1045,6 +1047,18 @@
     if (Math.abs((window.scrollY || 0) - scrollY) > 2) window.scrollTo(0, scrollY);
   }
 
+  /* Tripadvisor rating in the visual pane — social proof where it counts.
+     Silently stays hidden when /data/reviews.js is not on the page. */
+  function fillTrust() {
+    var slot = root && root.querySelector('[data-hmb-trust]');
+    if (!slot || slot.dataset.done) return;
+    var html = window.HMAReviews && window.HMAReviews.pill ? window.HMAReviews.pill({ size: 11 }) : '';
+    if (!html) return;
+    slot.innerHTML = html;
+    slot.hidden = false;
+    slot.dataset.done = '1';
+  }
+
   function open(opts) {
     opts = opts || {};
     if (!root) build();
@@ -1064,6 +1078,7 @@
 
     if (!isOpen) {
       isOpen = true;
+      fillTrust();
       render();
       root.hidden = false;
       lockPage();

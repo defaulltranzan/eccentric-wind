@@ -226,7 +226,7 @@ html.light-mode, body.light-mode {
    Only literal-valued surfaces get a transition. */
 @media (prefers-reduced-motion: no-preference) {
   .light-mode [class*="bg-[#"] { transition: background-color .3s ease; }
-  .light-mode .hme-region, .light-mode .hme-terai, .light-mode .hme-ridge, .light-mode .hme-peak-tri { transition: fill .35s ease, stroke .35s ease; }
+  .light-mode .ne-zone, .light-mode .ne-landmass { transition: fill .35s ease, stroke .35s ease; }
 }
 /* theme.js adds this for two frames around the token swap */
 .hme-theme-switching, .hme-theme-switching *, .hme-theme-switching *::before, .hme-theme-switching *::after {
@@ -376,14 +376,7 @@ body.light-mode #hme-menu-close { background: rgba(255,255,255,.9); color: #1c1e
 /* announcement bar stays on accent — just soften the inner chip */
 body.light-mode #hme-annc-tag { background: rgba(0,0,0,.16); }
 
-/* explore map SVG */
-body.light-mode .hme-region { fill: #ece9e3; stroke: rgba(214,77,22,.28); }
-body.light-mode .hme-region:hover { fill: rgba(214,77,22,.10); }
-body.light-mode .hme-terai { fill: #e7e0cf; }
-body.light-mode .hme-map[data-active] .hme-region.is-active,
-body.light-mode .hme-region.is-active { fill: rgba(214,77,22,.14); stroke: var(--accent); }
-body.light-mode .hme-ridge { stroke: rgba(28,30,33,.28); }
-body.light-mode .hme-peak-tri { fill: #ffffff; }
+/* The Explore Nepal map themes itself from tokens on #explore (index.html). */
 
 /* scrollbars */
 body.light-mode ::-webkit-scrollbar-track { background: #f1efea; }

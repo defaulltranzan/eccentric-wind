@@ -28,9 +28,10 @@
         "lon": 86.925
       },
       "inNepal": true,
-      "heroImage": "/images/everest_real.jpg",
+      "heroImage": "/images/peaks/8000ers/everest.png",
       "heroVideo": "/videos/hero.mp4",
       "gallery": [
+        "/images/peaks/8000ers/everest.png",
         "/images/everest_real.jpg",
         "/images/ebc.png",
         "/images/hero-mountain.jpg"
@@ -285,9 +286,10 @@
         "lon": 76.5133
       },
       "inNepal": false,
-      "heroImage": "/images/hero-mountain.jpg",
+      "heroImage": "/images/peaks/8000ers/k2.jpg",
       "heroVideo": "/videos/k2.mp4",
       "gallery": [
+        "/images/peaks/8000ers/k2.jpg",
         "/images/hero-mountain.jpg",
         "/images/manaslu_real.jpg",
         "/images/everest_real.jpg"
@@ -526,9 +528,10 @@
         "lon": 88.1475
       },
       "inNepal": true,
-      "heroImage": "/images/hero-mountain.jpg",
+      "heroImage": "/images/peaks/8000ers/kangchenjunga.jpg",
       "heroVideo": "/videos/kangchenjunga.mp4",
       "gallery": [
+        "/images/peaks/8000ers/kangchenjunga.jpg",
         "/images/hero-mountain.jpg",
         "/images/manaslu_real.jpg",
         "/images/langtang_real.jpg"
@@ -756,8 +759,9 @@
         "lon": 86.9333
       },
       "inNepal": true,
-      "heroImage": "/images/ebc.png",
+      "heroImage": "/images/peaks/8000ers/lhotse.jpg",
       "gallery": [
+        "/images/peaks/8000ers/lhotse.jpg",
         "/images/ebc.png",
         "/images/everest_real.jpg",
         "/images/hero-mountain.jpg"
@@ -987,8 +991,9 @@
         "lon": 87.0883
       },
       "inNepal": true,
-      "heroImage": "/images/hero-mountain.jpg",
+      "heroImage": "/images/peaks/8000ers/makalu.jpg",
       "gallery": [
+        "/images/peaks/8000ers/makalu.jpg",
         "/images/hero-mountain.jpg",
         "/images/ebc.png",
         "/images/manaslu_real.jpg"
@@ -1220,8 +1225,9 @@
         "lon": 86.6608
       },
       "inNepal": true,
-      "heroImage": "/images/hero-mountain.jpg",
+      "heroImage": "/images/peaks/8000ers/cho-oyu.jpg",
       "gallery": [
+        "/images/peaks/8000ers/cho-oyu.jpg",
         "/images/hero-mountain.jpg",
         "/images/langtang_real.jpg",
         "/images/ebc.png"
@@ -1453,8 +1459,9 @@
         "lon": 83.4875
       },
       "inNepal": true,
-      "heroImage": "/images/hero-mountain.jpg",
+      "heroImage": "/images/peaks/8000ers/dhaulagiri.jpg",
       "gallery": [
+        "/images/peaks/8000ers/dhaulagiri.jpg",
         "/images/hero-mountain.jpg",
         "/images/manaslu.png",
         "/images/annapurna_real.jpg"
@@ -1679,8 +1686,9 @@
         "lon": 84.5597
       },
       "inNepal": true,
-      "heroImage": "/images/manaslu_real.jpg",
+      "heroImage": "/images/peaks/8000ers/manaslu.jpg",
       "gallery": [
+        "/images/peaks/8000ers/manaslu.jpg",
         "/images/manaslu_real.jpg",
         "/images/manaslu.png",
         "/images/hero-mountain.jpg"
@@ -1906,8 +1914,9 @@
         "lon": 74.5892
       },
       "inNepal": false,
-      "heroImage": "/images/hero-mountain.jpg",
+      "heroImage": "/images/peaks/8000ers/nanga-parbat.jpg",
       "gallery": [
+        "/images/peaks/8000ers/nanga-parbat.jpg",
         "/images/hero-mountain.jpg",
         "/images/manaslu_real.jpg",
         "/images/everest_real.jpg"
@@ -2136,9 +2145,10 @@
         "lon": 83.8203
       },
       "inNepal": true,
-      "heroImage": "/images/annapurna_real.jpg",
+      "heroImage": "/images/peaks/8000ers/annapurna.jpg",
       "heroVideo": "/videos/annapurna.mp4",
       "gallery": [
+        "/images/peaks/8000ers/annapurna.jpg",
         "/images/annapurna_real.jpg",
         "/images/annapurna.png",
         "/images/hero-mountain.jpg"
@@ -2367,8 +2377,9 @@
         "lon": 76.6964
       },
       "inNepal": false,
-      "heroImage": "/images/manaslu_real.jpg",
+      "heroImage": "/images/peaks/8000ers/gasherbrum-i.jpg",
       "gallery": [
+        "/images/peaks/8000ers/gasherbrum-i.jpg",
         "/images/manaslu_real.jpg",
         "/images/hero-mountain.jpg",
         "/images/manaslu.png"
@@ -2589,8 +2600,9 @@
         "lon": 76.5656
       },
       "inNepal": false,
-      "heroImage": "/images/hero-mountain.jpg",
+      "heroImage": "/images/peaks/8000ers/broad-peak.jpg",
       "gallery": [
+        "/images/peaks/8000ers/broad-peak.jpg",
         "/images/hero-mountain.jpg",
         "/images/manaslu_real.jpg",
         "/images/manaslu.png"
@@ -2820,8 +2832,9 @@
         "lon": 76.6533
       },
       "inNepal": false,
-      "heroImage": "/images/manaslu.png",
+      "heroImage": "/images/peaks/8000ers/gasherbrum-ii.jpg",
       "gallery": [
+        "/images/peaks/8000ers/gasherbrum-ii.jpg",
         "/images/manaslu.png",
         "/images/manaslu_real.jpg",
         "/images/hero-mountain.jpg"
@@ -3031,8 +3044,9 @@
         "lon": 85.7792
       },
       "inNepal": false,
-      "heroImage": "/images/langtang_real.jpg",
+      "heroImage": "/images/peaks/8000ers/shishapangma.jpg",
       "gallery": [
+        "/images/peaks/8000ers/shishapangma.jpg",
         "/images/langtang_real.jpg",
         "/images/hero-mountain.jpg",
         "/images/manaslu.png"
@@ -6233,7 +6247,7 @@
         "lon": 86.861,
         "approx": true
       },
-      "heroImage": "/images/peaks/ama-dablam.jpg",
+      "heroImage": "/images/peaks/8000ers/ama-dablam.jpg",
       "heroCredit": {
         "author": "Vyacheslav Argenberg",
         "license": "CC BY 4.0",
@@ -6241,7 +6255,9 @@
         "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ama_Dablam%2C_Nepal.jpg",
         "changes": "cropped and compressed"
       },
-      "gallery": [],
+      "gallery": [
+        "/images/peaks/8000ers/ama-dablam.jpg"
+      ],
       "tagline": "The Matterhorn of the Khumbu",
       "summary": "Ama Dablam (6,812 m — older sources give 6,856 m) is the striking, spired peak that dominates the Everest Base Camp trail above Pangboche. It is not a trekking peak but a Ministry-permitted expedition peak, and one of the most technical mountains regularly guided anywhere: the South-West Ridge involves steep granite, fixed rope on rock and ice, relentless exposure, and an upper mountain overhung by the hanging Dablam serac. First climbed in 1961.",
       "seo": {

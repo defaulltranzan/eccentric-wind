@@ -39,7 +39,7 @@ const i18n = {
     heroBadge: "The High Corridors of Nepal",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "Treks, high passes and Himalayan expeditions — led by local guides since 1993.",
+    heroTagline: "Led by local guides since 1993.",
     heroDesc: "Trekking routes, high passes and Himalayan expeditions — shaped by the local guides who have led these corridors since 1993.",
     btnViewExpeditions: "Begin Climbing",
     scrollElevation: "SCROLL FOR ELEVATION",
@@ -105,7 +105,7 @@ const i18n = {
     btnDeclareIntent: "Declare Intent",
     
     // 06 Dispatches
-    sec06Label: "06 — The Field Journal",
+    sec06Label: "07 — The Field Journal",
     sec06Heading: "Stories From The <span class='font-semibold text-accent'>High Places</span>",
     btnWriteDispatch: "+ Write Dispatch",
     readJournal: "READ STORY",
@@ -151,7 +151,7 @@ const i18n = {
     heroBadge: "नेपालका उच्च हिमाली करिडोर",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "पदयात्रा, उच्च पास र हिमाली अभियान — सन् १९९३ देखि स्थानीय गाइडहरूको नेतृत्वमा।",
+    heroTagline: "सन् १९९३ देखि स्थानीय गाइडहरूको नेतृत्वमा।",
     heroDesc: "नेपालका पदयात्रा मार्ग र ८,००० मिटरका अभियानहरू — सन् १९९३ देखि, यी हिमालको फेदमा बस्ने प्रमाणित स्थानीय गाइडहरूको नेतृत्वमा।",
     btnViewExpeditions: "अभियानहरू हेर्नुहोस्",
     scrollElevation: "उचाइको लागि स्क्रोल गर्नुहोस्",
@@ -217,7 +217,7 @@ const i18n = {
     btnDeclareIntent: "इरादा पेश गर्नुहोस्",
     
     // 06 Dispatches
-    sec06Label: "०६ — फिल्ड जर्नल",
+    sec06Label: "०७ — फिल्ड जर्नल",
     sec06Heading: "उच्च हिमालका <span class='font-semibold text-accent'>कथाहरू</span>",
     btnWriteDispatch: "+ नयाँ रिपोर्ट लेख्नुहोस्",
     readJournal: "कथा पढ्नुहोस्",
@@ -263,7 +263,7 @@ const i18n = {
     heroBadge: "尼泊尔的高山走廊",
     heroTitlePrimary: "HIMALAYAN",
     heroTitleItalic: "MAGIC ADVENTURE",
-    heroTagline: "徒步路线、高山垭口与喜马拉雅探险 —— 自 1993 年起由当地向导带领。",
+    heroTagline: "自 1993 年起，由当地向导带领。",
     heroDesc: "尼泊尔的徒步路线与 8,000 米级探险 —— 自 1993 年起，由生活在这些雪山脚下的持证当地向导带领。",
     btnViewExpeditions: "浏览探险路线",
     scrollElevation: "向下滚动探索海拔",
@@ -329,7 +329,7 @@ const i18n = {
     btnDeclareIntent: "提交攀登意愿",
     
     // 06 Dispatches
-    sec06Label: "06 — 山野随笔",
+    sec06Label: "07 — 山野随笔",
     sec06Heading: "来自<span class='font-semibold text-accent'>群山之巅</span>的纪实故事",
     btnWriteDispatch: "+ 撰写探险简报",
     readJournal: "阅读全文",
@@ -1557,7 +1557,7 @@ function closeTrekFinder() {
   const sec = document.getElementById('trek-finder');
   if (!sec) return;
   sec.classList.remove('fdr-open');
-  if (!document.querySelector('#explore.hme-x-open')) document.body.classList.remove('fdr-locked');
+  document.body.classList.remove('fdr-locked');
   clearSheetHash('#trek-finder');
   sec.removeAttribute('role');
   sec.removeAttribute('aria-modal');
@@ -1739,63 +1739,53 @@ const exploreRegions = {
 };
 
 // ==========================================================================
-// EXPLORE — Regions lens  (the DEFAULT view)
+// EXPLORE — the trekking regions (the map’s data)
 // --------------------------------------------------------------------------
 // Nepal read the way trekkers name it: 8 mountain regions along the range +
 // the Terai lowlands. Every one of the 38 treks in treks.js and all 8 of
 // Nepal's eight-thousanders fall into exactly one region (see matchRegions —
 // the exact free-text `trek.region` strings each region absorbs).
 //
-// Geometry is in the map's viewBox space (0 0 1000 380):
-//   band  = [x0, x1]  vertical slice of the country that selects this region
-//   dot   = [x, y]     the marker on the ridge
-//   label = [x, y]     anchor for the region name (shown on hover / when active)
-//   zoom  = [x, y, w, h] viewBox the map eases to when the region is opened
-// Peak elevations are static, well-established figures (mountains.js / peaks.js).
+// There is no geometry here any more: /explore-map.js slices the real
+// country outline into these nine regions itself, so a region is described
+// only by what we say about it. Fields: name, aka, province, matchRegions
+// (the exact free-text `trek.region` strings it absorbs), char, trailheads
+// and peaks. Peak elevations are static, well-established figures
+// (they match the expeditions database).
 // COPY NOTE: `char` lines are concise first drafts — worth a client read,
 // like the pending photography.
 // ==========================================================================
 const exploreGeo = {
   'west': {
     name: 'Far West & Dolpo', aka: 'Dolpo · Rara · Humla · Api', province: 'karnali',
-    band: [40, 305], dot: [206, 120], label: [206, 120], labelPos: 'below',
-    zoom: [26, 37, 396, 124],
     matchRegions: ['Dolpo', 'Rara', 'Humla'],
     char: "Nepal's wild, dry north-west — the medieval valleys and turquoise lakes of Dolpo, the pine-ringed water of Rara, and the old salt road through Humla to Tibet.",
     trailheads: 'Juphal · Jumla · Simikot',
-    peaks: [{ name: 'Kanjiroba', elev: '6,883 m' }, { name: 'Api', elev: '7,132 m', slug: 'api-himal', pt: [118, 128] }]
+    peaks: [{ name: 'Kanjiroba', elev: '6,883 m' }, { name: 'Api', elev: '7,132 m', slug: 'api-himal' }]
   },
   'dhaulagiri': {
     name: 'Dhaulagiri', province: 'gandaki',
-    band: [305, 410], dot: [356, 100], label: [356, 100], labelPos: 'below',
-    zoom: [236, 27, 322, 101],
     matchRegions: ['Dhaulagiri'],
     char: 'The seventh-highest mountain on earth and the high glaciated circuit around it, crossing two passes above 5,000 m with full camping support.',
     trailheads: 'Beni · Darbang',
-    peaks: [{ name: 'Dhaulagiri I', elev: '8,167 m', slug: 'dhaulagiri', pt: [352, 96] }, { name: 'Putha Hiunchuli', elev: '7,246 m', slug: 'putha-hiunchuli', pt: [322, 118] }]
+    peaks: [{ name: 'Dhaulagiri I', elev: '8,167 m', slug: 'dhaulagiri' }, { name: 'Putha Hiunchuli', elev: '7,246 m', slug: 'putha-hiunchuli' }]
   },
   'annapurna': {
     name: 'Annapurna & Mustang', aka: 'Circuit · Sanctuary · Lo', province: 'gandaki',
-    band: [410, 500], dot: [452, 96], label: [452, 96], labelPos: 'above',
-    zoom: [322, 23, 340, 106],
     matchRegions: ['Annapurna', 'Annapurna (Nar–Phu)', 'Mustang'],
     char: "Nepal's most-walked trails — the Circuit over the Thorong La, the Sanctuary to Base Camp, the deepest gorge on earth, and the walled kingdom of Lo behind the range.",
     trailheads: 'Pokhara · Besisahar · Jomsom',
-    peaks: [{ name: 'Annapurna I', elev: '8,091 m', slug: 'annapurna', pt: [452, 92] }, { name: 'Machhapuchhre', elev: '6,993 m' }]
+    peaks: [{ name: 'Annapurna I', elev: '8,091 m', slug: 'annapurna' }, { name: 'Machhapuchhre', elev: '6,993 m' }]
   },
   'manaslu': {
     name: 'Manaslu & Ganesh', aka: 'Larke La · Tsum', province: 'gandaki',
-    band: [500, 572], dot: [534, 90], label: [534, 90], labelPos: 'above',
-    zoom: [410, 23, 322, 101],
     matchRegions: ['Manaslu', 'Manaslu (Tsum)', 'Ganesh Himal / Ruby Valley'],
     char: 'The eighth-highest mountain, circled on a restricted-area trail over the Larke La, with the sacred Tsum valley and the quiet Ganesh foothills alongside.',
     trailheads: 'Soti Khola · Machha Khola · Arughat',
-    peaks: [{ name: 'Manaslu', elev: '8,163 m', slug: 'manaslu', pt: [532, 86] }, { name: 'Himlung Himal', elev: '7,126 m', slug: 'himlung-himal', pt: [558, 72] }]
+    peaks: [{ name: 'Manaslu', elev: '8,163 m', slug: 'manaslu' }, { name: 'Himlung Himal', elev: '7,126 m', slug: 'himlung-himal' }]
   },
   'langtang': {
     name: 'Langtang & Helambu', aka: 'Gosaikunda · Tamang Heritage', province: 'bagmati',
-    band: [572, 690], dot: [626, 94], label: [626, 94], labelPos: 'below',
-    zoom: [500, 24, 344, 108],
     matchRegions: ['Langtang', 'Langtang / Gosaikunda', 'Langtang (Tamang Heritage)', 'Langtang (Jugal Himal)', 'Helambu'],
     char: 'The closest alpine wilderness to Kathmandu — the glacier-head valley of Langtang, the sacred lakes of Gosaikunda and the Tamang ridges of Helambu.',
     trailheads: 'Syabrubesi · Dhunche · Sundarijal',
@@ -1803,8 +1793,6 @@ const exploreGeo = {
   },
   'rolwaling': {
     name: 'Rolwaling', aka: 'Tashi Lapcha', province: 'bagmati',
-    band: [690, 748], dot: [718, 74], label: [718, 74], labelPos: 'above',
-    zoom: [592, 17, 322, 101],
     matchRegions: ['Rolwaling'],
     char: 'A steep, sacred valley below Gauri Shankar, linked to the Khumbu by the technical Tashi Lapcha pass — a wilderness route for experienced trekkers.',
     trailheads: 'Chetchet · Gongar',
@@ -1812,26 +1800,21 @@ const exploreGeo = {
   },
   'everest': {
     name: 'Everest & Makalu', aka: 'Khumbu · Barun', province: 'koshi',
-    band: [748, 892], dot: [818, 80], label: [818, 80], labelPos: 'above',
-    zoom: [672, 20, 360, 113],
     matchRegions: ['Khumbu (Everest)', 'Makalu–Barun', 'Makalu (Barun)'],
     char: 'The Sherpa heartland — the trails to Everest Base Camp, the Gokyo lakes and the three passes, and the wild Barun valley under Makalu next door.',
     trailheads: 'Lukla · Tumlingtar',
-    peaks: [{ name: 'Everest', elev: '8,849 m', slug: 'everest', pt: [816, 72] }, { name: 'Cho Oyu', elev: '8,188 m', slug: 'cho-oyu', pt: [786, 86] }, { name: 'Makalu', elev: '8,485 m', slug: 'makalu', pt: [848, 94] }, { name: 'Lhotse', elev: '8,516 m', slug: 'lhotse' }]
+    peaks: [{ name: 'Everest', elev: '8,849 m', slug: 'everest' }, { name: 'Cho Oyu', elev: '8,188 m', slug: 'cho-oyu' }, { name: 'Makalu', elev: '8,485 m', slug: 'makalu' }, { name: 'Lhotse', elev: '8,516 m', slug: 'lhotse' }]
   },
   'kanchenjunga': {
     name: 'Kanchenjunga', aka: 'The Far East', province: 'koshi',
-    band: [892, 965], dot: [934, 92], label: [934, 92], labelPos: 'left',
-    zoom: [770, 27, 322, 101],
     matchRegions: ['Kanchenjunga', 'Kanchenjunga–Makalu'],
     char: "The third-highest mountain, in Nepal's far-eastern corner on the Sikkim border — a long restricted-area trek to the north and south base camps.",
     trailheads: 'Taplejung · Suketar',
-    peaks: [{ name: 'Kangchenjunga', elev: '8,586 m', slug: 'kangchenjunga', pt: [934, 84] }]
+    peaks: [{ name: 'Kangchenjunga', elev: '8,586 m', slug: 'kangchenjunga' }]
   },
   'terai': {
     name: 'Terai & Lowlands', aka: 'Lumbini · Bardiya · Janakpur', province: 'lumbini',
-    band: [200, 820], dot: [440, 300], label: [440, 300], labelPos: 'below', lowland: true,
-    zoom: [96, 202, 760, 238],
+    lowland: true,
     matchRegions: ['Lumbini', 'Bardiya', 'Rukum–Rolpa', 'Janakpur (Mithila)'],
     char: 'The southern plains — the birthplace of the Buddha at Lumbini, the jungle of Bardiya, the Mithila temple city of Janakpur. Cultural walking, not altitude.',
     trailheads: 'Bhairahawa · Nepalgunj · Janakpur',
@@ -1841,6 +1824,9 @@ const exploreGeo = {
 
 // Draw order / tab order, west to east; terai last.
 const EXPLORE_GEO_ORDER = ['west', 'dhaulagiri', 'annapurna', 'manaslu', 'langtang', 'rolwaling', 'everest', 'kanchenjunga', 'terai'];
+// the real map (explore-map.js) reads these — `const` alone does not reach window
+window.exploreGeo = exploreGeo;
+window.EXPLORE_GEO_ORDER = EXPLORE_GEO_ORDER;
 
 // Map a trek's free-text `region` string to a canonical geo-region key.
 function regionKeyForTrek(t) {
@@ -1861,198 +1847,14 @@ function geoTreksFor(key) {
     .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
 }
 
-let exploreLockedRegion = null;
-
-function highlightExploreRegion(id) {
-  const svg = document.querySelector('.hme-map');
-  if (svg) {
-    if (id) svg.dataset.active = id;
-    else svg.removeAttribute('data-active');
-  }
-  document.querySelectorAll('.hme-region').forEach(path => {
-    path.classList.toggle('is-active', path.dataset.region === id);
-  });
-  document.querySelectorAll('.hme-peak').forEach(g => {
-    g.classList.toggle('is-active', g.dataset.region === id);
-  });
-  document.querySelectorAll('.hme-region-label').forEach(label => {
-    label.classList.toggle('is-active', label.dataset.regionLabel === id);
-  });
-
-  const idx = document.getElementById('hme-peak-index');
-  if (idx) {
-    const region = exploreRegions[id];
-    if (id && region && region.peaks && region.peaks.length) {
-      idx.innerHTML = `
-        <span class="block font-mono text-[8px] uppercase tracking-[0.25em] text-accent mb-2">${escapeHtml(region.peaksLabel || 'Peaks')}</span>
-        ${region.peaks.map(p => `
-          <div class="flex items-baseline justify-between gap-3 py-[3px]">
-            <span class="font-mono text-[10px] text-foreground">${escapeHtml(p.name)}</span>
-            <span class="font-mono text-[10px] text-accent">${escapeHtml(p.elev)}</span>
-          </div>`).join('')}
-      `;
-      idx.classList.remove('hidden');
-    } else {
-      idx.classList.add('hidden');
-      idx.innerHTML = '';
-    }
-  }
-}
-
-function exploreTrailsFor(id) {
-  if (!window.TREKS) return [];
-  return Object.keys(window.TREKS).map(k => window.TREKS[k])
-    .filter(t => t && t.province === id)
-    .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
-}
-
-function renderExploreRegion(id) {
-  const panel = document.getElementById('explore-panel');
-  if (!panel) return;
-
-  const region = exploreRegions[id];
-  if (!region) {
-    panel.innerHTML = `
-      <div class="m-auto text-center max-w-xs">
-        <span class="block h-2 w-2 rounded-full bg-accent mx-auto mb-4 animate-pulse"></span>
-        <span class="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Pick a province</span>
-        <p class="mt-4 font-mono text-xs leading-relaxed text-muted-foreground">
-          Tap the map to open a province &mdash; what it&rsquo;s known for, the trails we guide there, the peaks above it and the places worth the detour.
-        </p>
-        <div class="mt-5 flex flex-wrap justify-center gap-1.5">
-          ${Object.keys(exploreRegions).map(rk => `<button type="button" onclick="clickExploreRegion('${rk}')" class="border border-border px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-muted-foreground transition-all hover:border-accent hover:text-accent">${escapeHtml(exploreRegions[rk].name.replace(' Province', ''))}</button>`).join('')}
-        </div>
-      </div>
-    `;
-    return;
-  }
-
-  const secHead = (label) => `<span class="mt-6 mb-2 block font-mono text-[9px] uppercase tracking-[0.25em] text-accent">${label}</span>`;
-  const shortName = region.name.replace(' Province', '');
-
-  // ── Known for ──────────────────────────────────────────────────────────
-  const knownItems = (region.peaks && region.peaks.length)
-    ? region.peaks.map(p => ({ big: p.name, small: p.elev }))
-    : region.attractions.slice(0, 3).map(a => ({ big: a, small: '' }));
-  const knownHtml = `
-    ${secHead(region.peaks && region.peaks.length ? (region.peaksLabel || 'Known for') : 'Known for')}
-    <div class="space-y-1.5">
-      ${knownItems.map(k => `
-        <div class="flex items-baseline justify-between gap-3 border-b border-border/50 pb-1.5">
-          <span class="font-heading text-lg uppercase tracking-tight text-foreground leading-none">${escapeHtml(k.big)}</span>
-          ${k.small ? `<span class="shrink-0 font-mono text-[11px] text-accent">${escapeHtml(k.small)}</span>` : ''}
-        </div>`).join('')}
-    </div>`;
-
-  // ── Trails ─────────────────────────────────────────────────────────────
-  const trails = exploreTrailsFor(id);
-  let trailsHtml = '';
-  if (trails.length) {
-    trailsHtml = secHead('Trails we guide here') + '<div class="space-y-1.5">' +
-      trails.slice(0, 6).map(t => {
-        const st = t.stats || {};
-        const meta = [st.difficulty, st.maxAltitude].filter(Boolean).join(' · ');
-        return `<a href="/treks/${escapeHtml(t.slug)}" class="hme-xrow block border border-border px-3 py-2">
-          <span class="block font-mono text-[11px] uppercase tracking-wide text-foreground">${escapeHtml(t.name)}</span>
-          ${meta ? `<span class="mt-0.5 block font-mono text-[9px] uppercase tracking-widest text-muted-foreground">${escapeHtml(meta)}</span>` : ''}
-        </a>`;
-      }).join('') + '</div>' +
-      `<a href="/treks#${id}" class="mt-2.5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent hover:gap-3 transition-all">All ${escapeHtml(shortName)} trails (${trails.length}) &rarr;</a>`;
-  } else {
-    trailsHtml = secHead('Trails') +
-      `<p class="font-mono text-[11px] leading-relaxed text-muted-foreground">We don&rsquo;t run a scheduled trek in ${escapeHtml(shortName)} yet &mdash; <a href="/contact" class="text-accent hover:underline">ask us about a custom route</a>.</p>`;
-  }
-
-  // ── Expeditions ────────────────────────────────────────────────────────
-  let expHtml = '';
-  const expSlugs = (region.expeditions || []).filter(s => window.MOUNTAINS && window.MOUNTAINS[s]);
-  if (expSlugs.length) {
-    expHtml = secHead('Eight-thousanders above it') + '<div class="space-y-1.5">' +
-      expSlugs.map(s => {
-        const m = window.MOUNTAINS[s];
-        return `<a href="/expeditions/${escapeHtml(m.slug)}" class="hme-xrow flex items-baseline justify-between gap-3 border border-border px-3 py-2">
-          <span class="font-mono text-[11px] uppercase tracking-wide text-foreground">${escapeHtml(m.name)}</span>
-          <span class="shrink-0 font-mono text-[10px] text-accent">${escapeHtml(m.elevationLabel || '')}</span>
-        </a>`;
-      }).join('') + '</div>';
-  } else if (region.peaks && region.peaks.length) {
-    expHtml = secHead('Peaks') +
-      `<p class="font-mono text-[11px] leading-relaxed text-muted-foreground">No 8,000 m summits &mdash; the high points are ${region.peaks.map(p => escapeHtml(p.name) + ' (' + escapeHtml(p.elev) + ')').join(', ')}.</p>`;
-  }
-
-  // ── Culture & places (factual lists only) ──────────────────────────────
-  const cultureHtml = secHead('Culture &amp; places') + `
-    <div class="grid grid-cols-2 gap-x-5 gap-y-4">
-      <div>
-        <span class="block font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/70">Towns &amp; hubs</span>
-        <ul class="mt-1.5 space-y-1">${region.destinations.map(x => `<li class="font-mono text-[11px] leading-snug text-foreground">${escapeHtml(x)}</li>`).join('')}</ul>
-      </div>
-      <div>
-        <span class="block font-mono text-[9px] uppercase tracking-[0.15em] text-muted-foreground/70">Parks &amp; landmarks</span>
-        <ul class="mt-1.5 space-y-1">${region.attractions.map(x => `<li class="font-mono text-[11px] leading-snug text-foreground">${escapeHtml(x)}</li>`).join('')}</ul>
-      </div>
-    </div>`;
-
-  // ── Stories ────────────────────────────────────────────────────────────
-  const storiesHtml = `<div class="mt-6 border-t border-border pt-4">
-      <a href="/stories" class="hme-xrow flex items-center justify-between gap-3 border border-border px-3 py-2.5">
-        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground">Stories &amp; field notes</span>
-        <span class="shrink-0 font-mono text-[11px] text-accent">&rarr;</span>
-      </a>
-    </div>`;
-
-  panel.innerHTML = `
-    <div class="hme-xbody">
-      <div class="flex items-center justify-between gap-4">
-        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">${escapeHtml(region.tag)}</span>
-        <span class="font-mono text-[9px] uppercase tracking-widest text-muted-foreground whitespace-nowrap">${escapeHtml(region.coords)}</span>
-      </div>
-      <h3 class="mt-3 font-heading text-3xl md:text-4xl uppercase tracking-tight text-foreground leading-[0.95]">${escapeHtml(region.name)}</h3>
-      <p class="mt-3 font-mono text-xs leading-relaxed text-muted-foreground">${escapeHtml(region.blurb)}</p>
-      ${knownHtml}
-      ${trailsHtml}
-      ${expHtml}
-      ${cultureHtml}
-      ${storiesHtml}
-    </div>
-  `;
-}
-
-function hoverExploreRegion(id) {
-  // Hover only previews the map itself — the discovery panel updates on click.
-  if (exploreLockedRegion) return;
-  highlightExploreRegion(id);
-}
-
-function unhoverExploreRegion() {
-  if (exploreLockedRegion) return;
-  highlightExploreRegion(null);
-}
-
-function clickExploreRegion(id) {
-  exploreLockedRegion = (exploreLockedRegion === id) ? null : id;
-  renderExploreRegion(exploreLockedRegion);
-  highlightExploreRegion(exploreLockedRegion);
-  // On tap (no hover), bring the panel into view on narrow screens.
-  if (exploreLockedRegion && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches) {
-    const panel = document.getElementById('explore-panel');
-    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-}
-
 // ==========================================================================
-// EXPLORE — Regions lens: build the layer, hover-to-reveal, zoom-on-select
-// Rest state = silhouette + ridge + 9 region marks. Hover a region and it
-// lights up; open one and the map eases in and its named peaks appear as
-// links to the expedition pages.
+// EXPLORE — the panel beside the map
+// --------------------------------------------------------------------------
+// The map itself lives in /explore-map.js (own GeoJSON, plain SVG, three
+// zoom steps). This file owns the region data (exploreGeo, above) and the
+// region panel it writes, and exposes clickGeo/geoZoomOut so anything else
+// on the page can drive the map.
 // ==========================================================================
-let exploreLens = 'regions';
-let exploreLockedGeo = null;
-let geoLayerBuilt = false;
-let geoZoomRaf = null;
-let geoZoomFallback = null;
-const GEO_FULL_VIEW = [20, 40, 960, 312];
-const GEO_NEPAL_PATH = 'M40,150 L130,108 L212,132 L300,92 L382,118 L452,78 L520,104 L586,68 L652,98 L712,60 L772,82 L858,52 L900,60 L965,96 L965,150 L892,214 L812,262 L745,298 L658,320 L566,334 L470,342 L388,332 L314,315 L240,298 L165,268 L92,222 L45,174 Z';
 
 function svgEl(tag, attrs) {
   const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -2061,163 +1863,16 @@ function svgEl(tag, attrs) {
 }
 
 // Build the region layer once: clip, per-region wash + mark + label + peaks + hit.
-function buildGeoLayer() {
-  if (geoLayerBuilt) return;
-  const layer = document.getElementById('hme-geo-layer');
-  if (!layer) return;
-  geoLayerBuilt = true;
-
-  const defs = svgEl('defs', {});
-  const clip = svgEl('clipPath', { id: 'hme-nepal-clip' });
-  clip.appendChild(svgEl('path', { d: GEO_NEPAL_PATH }));
-  defs.appendChild(clip);
-  // subtle north→south elevation gradient for the silhouette
-  const grad = svgEl('linearGradient', { id: 'hme-nepal-grad', x1: '0', y1: '0', x2: '0', y2: '1' });
-  grad.appendChild(svgEl('stop', { offset: '0', 'stop-color': '#262b31' }));
-  grad.appendChild(svgEl('stop', { offset: '0.55', 'stop-color': '#1e2126' }));
-  grad.appendChild(svgEl('stop', { offset: '1', 'stop-color': '#181b1f' }));
-  defs.appendChild(grad);
-  layer.appendChild(defs);
-
-  // the country itself (the province layer is hidden in this lens) — drawn
-  // beneath the ridgeline so the Tibet border stays on top
-  const ridge = layer.ownerSVGElement && layer.ownerSVGElement.querySelector('.hme-ridge');
-  const land = svgEl('path', { class: 'hme-geo-land', d: GEO_NEPAL_PATH, 'vector-effect': 'non-scaling-stroke' });
-  if (ridge) ridge.parentNode.insertBefore(land, ridge); else layer.appendChild(land);
-
-  // faint survey graticule behind the country
-  const gratG = svgEl('g', { class: 'hme-graticule', 'clip-path': 'url(#hme-nepal-clip)' });
-  for (let gx = 120; gx < 965; gx += 120) gratG.appendChild(svgEl('line', { x1: gx, y1: 40, x2: gx, y2: 350 }));
-  for (let gy = 90; gy < 330; gy += 70) gratG.appendChild(svgEl('line', { x1: 30, y1: gy, x2: 970, y2: gy }));
-  layer.appendChild(gratG);
-
-  const washG = svgEl('g', { 'clip-path': 'url(#hme-nepal-clip)' });
-  const markG = svgEl('g', {});
-  const peakG = svgEl('g', {});
-  const hitG = svgEl('g', {});
-
-  EXPLORE_GEO_ORDER.forEach(key => {
-    const g = exploreGeo[key];
-    const [x0, x1] = g.band;
-    const count = geoTreksFor(key).length;
-
-    washG.appendChild(svgEl('rect', {
-      class: 'hme-rg-wash', 'data-geo': key,
-      x: x0, y: g.lowland ? 196 : 0, width: x1 - x0, height: g.lowland ? 170 : 250
-    }));
-
-    // region mark — a small mountain glyph (hollow diamond for the Terai)
-    const [mx, my] = g.dot;
-    const mark = g.lowland
-      ? svgEl('rect', { class: 'hme-rg-mark is-lowland', 'data-geo': key, x: mx - 3, y: my - 3, width: 6, height: 6, transform: `rotate(45 ${mx} ${my})`, 'vector-effect': 'non-scaling-stroke' })
-      : svgEl('path', { class: 'hme-rg-mark', 'data-geo': key, d: `M${mx},${my - 8} L${mx - 7},${my + 3} L${mx + 7},${my + 3} Z`, 'vector-effect': 'non-scaling-stroke' });
-    markG.appendChild(mark);
-
-    const anchor = g.labelPos === 'left' ? 'end' : g.labelPos === 'right' ? 'start' : 'middle';
-    const dx = g.labelPos === 'left' ? -10 : g.labelPos === 'right' ? 10 : 0;
-    const dy = g.labelPos === 'above' ? -13 : g.labelPos === 'below' ? 20 : 4;
-    const label = svgEl('text', {
-      class: 'hme-rg-label', 'data-geo': key,
-      x: g.label[0] + dx, y: g.label[1] + dy, 'text-anchor': anchor
-    });
-    label.textContent = g.name;
-    markG.appendChild(label);
-
-    // named peaks — shown only when this region is open; the ones with an
-    // expedition page are links.
-    (g.peaks || []).forEach(p => {
-      if (!p.pt) return;
-      const [px, py] = p.pt;
-      const wrap = p.slug
-        ? svgEl('a', { class: 'hme-rg-peak', 'data-geo': key, href: '/expeditions/' + p.slug, 'aria-label': p.name + ' — ' + p.elev })
-        : svgEl('g', { class: 'hme-rg-peak', 'data-geo': key });
-      wrap.appendChild(svgEl('path', { class: 'hme-rg-peak-tri', d: `M${px},${py - 9} L${px - 6},${py + 2} L${px + 6},${py + 2} Z`, 'vector-effect': 'non-scaling-stroke' }));
-      const pl = svgEl('text', { class: 'hme-rg-peak-lbl', x: px, y: py + 14, 'text-anchor': 'middle' });
-      pl.textContent = p.name + (p.slug ? '  ↗' : '');
-      wrap.appendChild(pl);
-      peakG.appendChild(wrap);
-    });
-
-    const hit = svgEl('rect', {
-      class: 'hme-rg-hit', 'data-geo': key,
-      x: g.lowland ? 232 : x0, y: g.lowland ? 252 : 0,
-      width: g.lowland ? 560 : (x1 - x0), height: g.lowland ? 110 : 252,
-      role: 'button', tabindex: '0',
-      'aria-label': g.name + ' — ' + (count ? count + ' trek' + (count > 1 ? 's' : '') : 'custom routes')
-    });
-    hitG.appendChild(hit);
-  });
-
-  layer.appendChild(washG);
-  layer.appendChild(peakG);
-  layer.appendChild(markG);
-  layer.appendChild(hitG);
-
-  const pick = e => { const n = e.target.closest('.hme-rg-hit'); return n && n.dataset.geo; };
-  hitG.addEventListener('mouseover', e => { const k = pick(e); if (k) hoverGeo(k); });
-  hitG.addEventListener('mouseout', e => { if (pick(e)) unhoverGeo(); });
-  hitG.addEventListener('focusin', e => { const k = pick(e); if (k) hoverGeo(k); });
-  hitG.addEventListener('focusout', e => { if (pick(e)) unhoverGeo(); });
-  hitG.addEventListener('click', e => { const k = pick(e); if (k) clickGeo(k); });
-  hitG.addEventListener('keydown', e => {
-    const k = pick(e);
-    if (k && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); clickGeo(k); }
-  });
-}
-
-function highlightGeo(key) {
-  const svg = document.querySelector('.hme-map');
-  if (svg) {
-    if (key) svg.dataset.geoActive = key; else svg.removeAttribute('data-geo-active');
-  }
-  document.querySelectorAll('.hme-rg-wash, .hme-rg-mark, .hme-rg-label, .hme-rg-peak, .hme-rg-hit').forEach(el => {
-    el.classList.toggle('is-active', el.dataset.geo === key);
-  });
-}
-
-function hoverGeo(key) { if (!exploreLockedGeo) highlightGeo(key); }
-function unhoverGeo() { if (!exploreLockedGeo) highlightGeo(null); }
-
-// Ease the SVG viewBox toward `target` ([x,y,w,h]); snap when animation
-// frames are unavailable (reduced-motion, or a hidden/minimised window).
-function geoZoom(target) {
-  const svg = document.querySelector('.hme-map');
-  if (!svg) return;
-  const dest = target.join(' ');
-  if (geoZoomRaf) cancelAnimationFrame(geoZoomRaf);
-  if (geoZoomFallback) clearTimeout(geoZoomFallback);
-  const reduce = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || document.hidden;
-  if (reduce) { svg.setAttribute('viewBox', dest); return; }
-  const from = (svg.getAttribute('viewBox') || GEO_FULL_VIEW.join(' ')).split(/[ ,]+/).map(Number);
-  const t0 = performance.now(), dur = 480;
-  const ease = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-  const step = now => {
-    const p = Math.min(1, (now - t0) / dur), k = ease(p);
-    svg.setAttribute('viewBox', from.map((v, i) => v + (target[i] - v) * k).join(' '));
-    if (p < 1) geoZoomRaf = requestAnimationFrame(step); else geoZoomRaf = null;
-  };
-  geoZoomRaf = requestAnimationFrame(step);
-  geoZoomFallback = setTimeout(() => { svg.setAttribute('viewBox', dest); }, dur + 120);
-}
-
+// Drive the map from anywhere on the page. /explore-map.js replaces both of
+// these as soon as it is up; these stand-ins keep the links working if it is
+// still loading (or could not).
 function clickGeo(key) {
-  const opening = exploreLockedGeo !== key;
-  exploreLockedGeo = opening ? key : null;
-  renderGeoRegion(exploreLockedGeo);
-  highlightGeo(exploreLockedGeo);
-  const svg = document.querySelector('.hme-map');
-  const back = document.getElementById('hme-geo-back');
-  if (svg) svg.classList.toggle('hme-zoomed', opening);
-  if (back) back.hidden = !opening;
-  geoZoom(opening ? (exploreGeo[key].zoom || GEO_FULL_VIEW) : GEO_FULL_VIEW);
-  if (opening && window.matchMedia && window.matchMedia('(max-width: 1023px)').matches) {
-    const panel = document.getElementById('explore-panel');
-    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
+  if (!exploreGeo[key]) return;
+  renderGeoRegion(key);
 }
 
 function geoZoomOut() {
-  if (exploreLockedGeo) clickGeo(exploreLockedGeo);
+  renderGeoRegion(null);
 }
 
 // treks.html (GEO_REGION_GROUPS) reads #<key> and filters to exactly this group.
@@ -2274,8 +1929,11 @@ function renderGeoRegion(key) {
     peaksHtml = '<div class="space-y-1.5">' + g.peaks.map(p => {
       const row = `<span class="font-heading text-base uppercase tracking-tight text-foreground leading-none">${esc(p.name)}</span>
         <span class="shrink-0 font-mono text-[11px] text-accent">${esc(p.elev)}${p.slug ? ' &rarr;' : ''}</span>`;
+      // eight-thousanders live at /expeditions/<slug>, every other peak at
+      // /expeditions/peaks/<slug> — both resolve, but only one is canonical
+      const base = p.slug && (window.MOUNTAINS || {})[p.slug] ? '/expeditions/' : '/expeditions/peaks/';
       return p.slug
-        ? `<a href="/expeditions/${esc(p.slug)}" class="hme-xrow flex items-baseline justify-between gap-3 border-b border-border/50 pb-1.5">${row}</a>`
+        ? `<a href="${base}${esc(p.slug)}" class="hme-xrow flex items-baseline justify-between gap-3 border-b border-border/50 pb-1.5">${row}</a>`
         : `<div class="flex items-baseline justify-between gap-3 border-b border-border/50 pb-1.5">${row}</div>`;
     }).join('') + '</div>';
   }
@@ -2299,99 +1957,20 @@ function renderGeoRegion(key) {
     </div>`;
 }
 
-function setExploreLens(lens) {
-  if (lens !== 'regions' && lens !== 'provinces') return;
-  exploreLens = lens;
-  const sec = document.getElementById('explore');
-  const svg = document.querySelector('.hme-map');
-  if (sec) sec.dataset.lens = lens;
-  if (svg) { svg.dataset.lens = lens; svg.classList.remove('hme-zoomed'); }
-  document.querySelectorAll('#explore-lens [data-lens]').forEach(b => {
-    b.setAttribute('aria-selected', b.dataset.lens === lens ? 'true' : 'false');
-  });
-  document.querySelectorAll('#explore [data-explore-hint]').forEach(el => {
-    el.hidden = el.dataset.exploreHint !== lens;
-  });
-  const back = document.getElementById('hme-geo-back');
-  if (back) back.hidden = true;
-  exploreLockedRegion = null;
-  exploreLockedGeo = null;
-  highlightExploreRegion(null);
-  highlightGeo(null);
-  geoZoom(GEO_FULL_VIEW);
-  if (lens === 'regions') renderGeoRegion(null);
-  else renderExploreRegion(null);
-}
-
-function initExploreLens() {
-  const tabs = document.getElementById('explore-lens');
-  if (tabs && !tabs.dataset.wired) {
-    tabs.dataset.wired = '1';
-    tabs.addEventListener('click', e => {
-      const b = e.target.closest('[data-lens]');
-      if (b) setExploreLens(b.dataset.lens);
-    });
-    tabs.addEventListener('keydown', e => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      e.preventDefault();
-      setExploreLens(exploreLens === 'regions' ? 'provinces' : 'regions');
-      const b = tabs.querySelector(`[data-lens="${exploreLens}"]`);
-      if (b) b.focus();
-    });
-  }
-  const back = document.getElementById('hme-geo-back');
-  if (back && !back.dataset.wired) {
-    back.dataset.wired = '1';
-    back.addEventListener('click', geoZoomOut);
-  }
-}
-
-function initExplore() {
-  buildGeoLayer();
-  initExploreLens();
-  setExploreLens('regions');
-}
-
-/* Explore Nepal on phones — like the trek finder, the section is
-   `hidden lg:block`, so the menu opens it as a full-screen sheet. */
+/* The menu's "Explore Nepal" entry. The section is in the page at every
+   width now, so this just moves to it. */
 function openExploreNepal() {
   const sec = document.getElementById('explore');
   if (!sec) { window.location.href = '/#explore'; return; }
-  if (!window.matchMedia('(max-width: 1023px)').matches) {
-    sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    return;
-  }
   if (typeof closeMenu === 'function') closeMenu();
-  sec.classList.add('hme-x-open');
-  document.body.classList.add('fdr-locked');
-  sec.setAttribute('role', 'dialog');
-  sec.setAttribute('aria-modal', 'true');
-  sec.setAttribute('aria-label', 'Explore Nepal');
-  sec.scrollTop = 0;
-  const close = document.getElementById('hme-x-close');
-  if (close) close.focus();
-  document.addEventListener('keydown', exploreEscHandler);
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function closeExploreNepal() {
-  const sec = document.getElementById('explore');
-  if (!sec) return;
-  sec.classList.remove('hme-x-open');
-  if (!document.querySelector('#trek-finder.fdr-open')) document.body.classList.remove('fdr-locked');
-  clearSheetHash('#explore');
-  sec.removeAttribute('role');
-  sec.removeAttribute('aria-modal');
-  document.removeEventListener('keydown', exploreEscHandler);
-}
-
-function exploreEscHandler(e) { if (e.key === 'Escape') closeExploreNepal(); }
-
-// /#explore and /#trek-finder (e.g. from the menu on another page): on phones
-// the sections are hidden, so open them as sheets; desktop scrolls natively.
+// /#trek-finder (e.g. from the menu on another page): on phones the finder is
+// hidden, so open it as a sheet; desktop scrolls to it natively.
 function openHashSheet() {
   if (!window.matchMedia('(max-width: 1023px)').matches) return;
-  if (location.hash === '#explore') openExploreNepal();
-  else if (location.hash === '#trek-finder') openTrekFinder();
+  if (location.hash === '#trek-finder') openTrekFinder();
 }
 window.addEventListener('hashchange', openHashSheet);
 
@@ -2954,7 +2533,6 @@ window.addEventListener('DOMContentLoaded', () => {
   initFlagshipTabs();
   renderFlagship();
   loadContent();
-  initExplore();
   openHashSheet();
 });
 

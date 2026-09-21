@@ -213,15 +213,6 @@
                 radial-gradient(ellipse 46% 50% at 50% 55%, rgba(13,15,17,.72) 0%, rgba(13,15,17,.48) 45%, rgba(13,15,17,.12) 80%, transparent 100%),
                 linear-gradient(180deg, rgba(13,15,17,.62) 0%, rgba(13,15,17,.1) 24%, rgba(13,15,17,.1) 64%, rgba(13,15,17,.6) 100%); }
 
-        /* altitude readout — in the centred column, under the actions */
-        .hc-alt { margin-top: 1.1rem; display: flex; flex-direction: column; align-items: center; gap: .45rem; animation: hcFade 1.2s .7s both; }
-        .hc-alt-label { display: inline-flex; align-items: center; gap: .7rem; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500;
-            letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.9); text-shadow: 0 1px 8px rgba(0,0,0,.85); }
-        .hc-alt-label::before, .hc-alt-label::after { content: ""; width: 1.75rem; height: 1px; background: var(--accent); }
-        .hc-alt-row { display: flex; align-items: flex-start; gap: .3rem; font-family: 'Oswald', sans-serif; font-weight: 300; line-height: .9;
-            letter-spacing: -.01em; font-size: clamp(2.5rem, min(4.2vw, 5.6vh), 4rem); font-variant-numeric: tabular-nums; color: #fff;
-            text-shadow: 0 1px 2px rgba(0,0,0,.5), 0 4px 28px rgba(0,0,0,.6); }
-        .hc-alt-unit { font-size: .3em; line-height: 1; margin-top: .3em; font-weight: 500; color: var(--accent); }
         .hc-ridge { left: -2%; right: -2%; bottom: -1px; width: 104%; }
         .hc-ridge--mid { height: 34%; opacity: .5; transform: translate3d(calc(var(--hx) * -18px), calc(var(--hp) * 40px), 0); }
         .hc-ridge--near { height: 25%; transform: translate3d(calc(var(--hx) * -30px), 0, 0); }
@@ -233,13 +224,17 @@
 
         /* ---- interface layer ---- */
         .hc-ui { position: relative; z-index: 2; width: 100%; max-width: 88rem; margin: 0 auto;
-            display: grid; grid-template-rows: auto 1fr auto; padding: 1.5rem 1.25rem 1.25rem;
+            /* one column, stated: the player and the doors share row 3, and
+               without this the grid invents a second column and sits them
+               side by side instead of stacking them */
+            display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto;
+            padding: 1.5rem 1.25rem 1.25rem;
             transform: translate3d(0, calc(var(--hp) * -40px), 0); opacity: calc(1 - var(--hp) * 1.1); }
         @media (min-width: 768px) { .hc-ui { padding: 2rem 3rem 1.75rem; } }
         @media (min-width: 1280px) { .hc-ui { padding: 2.25rem 5rem 2rem; } }
 
         .hc-mono { font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: .26em; font-size: 10px; }
-        .hc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+        .hc-top { grid-row: 1; grid-column: 1; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
         .hc-coords { display: grid; gap: .3rem; color: rgba(255,255,255,.55); }
         .hc-coords #hero-telemetry-coords { color: #fff; letter-spacing: .22em; }
         .hc-status { display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; color: rgba(255,255,255,.55); text-align: right; }
@@ -248,7 +243,7 @@
         .hc-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--accent); opacity: 0; animation: hcPing 2.8s ease-out infinite; }
         @keyframes hcPing { 0% { transform: scale(.4); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
 
-        .hc-body { align-self: end; justify-self: center; width: 100%; max-width: 52rem; margin-inline: auto; text-align: center; padding: 4.5rem 0 1.5rem; }
+        .hc-body { grid-row: 2; grid-column: 1; align-self: end; justify-self: center; width: 100%; max-width: 52rem; margin-inline: auto; text-align: center; padding: 4.5rem 0 1.5rem; }
         @media (min-width: 1024px) { .hc-body { align-self: center; padding: .5rem 0; } }
         .hc-eyebrow { display: flex; justify-content: center; align-items: center; gap: .9rem; color: #ff7a3d; font-weight: 600; text-shadow: 0 1px 10px rgba(0,0,0,.8); }
         .hc-eyebrow::after { content: ""; width: 2.25rem; height: 1px; background: currentColor; transform-origin: right; animation: hcRule 1.2s .2s cubic-bezier(.2,.7,.2,1) both; }
@@ -282,100 +277,326 @@
         .hc-btn--quiet { padding: 0 .1rem; color: #fff; border-bottom: 1px solid rgba(255,255,255,.28); min-height: 2.75rem; }
         .hc-btn--quiet:hover { border-color: var(--accent); color: var(--accent); }
         .hc-btn:focus-visible, .hc-link:focus-visible, .hc-film-btn:focus-visible, .hc-scroll:focus-visible, .hc-caption a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-        .hc-link { display: flex; width: fit-content; margin: .8rem auto 0; gap: .5rem; color: rgba(255,255,255,.72); text-shadow: 0 1px 8px rgba(0,0,0,.8); transition: color .3s; animation: hcFade 1.2s .6s both; }
+        .hc-link { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; color: rgba(255,255,255,.72); text-shadow: 0 1px 8px rgba(0,0,0,.8); transition: color .3s; animation: hcFade 1.2s .6s both; }
         .hc-link:hover { color: #fff; }
 
-        /* bottom rail: corridor profile · scroll cue · films · caption */
-        .hc-rail { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.1); }
+        /* ---- the four doors: the bottom band of the hero -------------------
+           The reference the client sent puts four ways in under the headline,
+           as icons rather than paragraphs. That is the whole point on a phone:
+           one glance, four targets, no reading. Desktop gets the descriptions
+           and a link; phones get the ring and one word. Icons are Lucide. */
+        .hc-foot { grid-row: 3; grid-column: 1; align-self: end; display: grid; gap: .75rem; animation: hcFade .9s .4s both; }
+        .hc-doors { display: grid; grid-template-columns: repeat(4, 1fr); align-items: stretch; border-top: 1px solid rgba(255,255,255,.12); }
+        .hc-door { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
+            gap: .7rem; padding: 1.35rem .9rem 1.1rem; transition: background-color .35s ease; }
+        .hc-door + .hc-door::before { content: ""; position: absolute; left: 0; top: 16%; bottom: 16%; width: 1px; background: rgba(255,255,255,.12); }
+        .hc-door:hover { background: rgba(240,98,37,.06); }
+        .hc-door-ring { position: relative; display: grid; place-items: center; width: 4.85rem; height: 4.85rem; border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.3); color: #ffffff;
+            background: radial-gradient(125% 125% at 50% 0%, rgba(255,255,255,.14), rgba(13,15,17,.68) 64%);
+            backdrop-filter: blur(4px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 16px 34px -20px rgba(0,0,0,.95);
+            transition: border-color .35s ease, color .35s ease, background .35s ease, transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease; }
+        .hc-door-ring svg { width: 2.45rem; height: 2.45rem; position: relative; z-index: 1; transition: transform .35s cubic-bezier(.2,.7,.2,1), filter .35s ease; }
+        /* the survey ring and its bearing mark — the same chart language as the
+           compass and the map, so the doors read as part of the instrument */
+        .hc-door-ring::before { content: ""; position: absolute; inset: -9px; border-radius: 50%;
+            border: 1px dashed rgba(255,255,255,.24); transition: border-color .35s ease, transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease; }
+        .hc-door-ring::after { content: ""; position: absolute; top: -9px; left: 50%; width: 1.5px; height: 9px;
+            background: var(--accent); opacity: .75; transform: translateX(-50%); transition: height .35s ease, opacity .35s ease, box-shadow .35s ease; }
+        
+        /* Interactive orange glow on mouse hover (PC), finger tap/hold (mobile), and keyboard focus */
+        .hc-door:hover .hc-door-ring,
+        .hc-door:active .hc-door-ring,
+        .hc-door:focus-visible .hc-door-ring {
+            border-color: var(--accent); color: #ffffff; transform: translateY(-4px) scale(1.05);
+            background: radial-gradient(125% 125% at 50% 0%, #ff7a3d, var(--accent) 70%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 20px 42px -12px rgba(240,98,37,.85), 0 0 32px rgba(240,98,37,.6); }
+        .hc-door:hover .hc-door-ring svg,
+        .hc-door:active .hc-door-ring svg,
+        .hc-door:focus-visible .hc-door-ring svg {
+            transform: scale(1.08); filter: drop-shadow(0 2px 6px rgba(0,0,0,.35)); }
+        .hc-door:hover .hc-door-ring::before,
+        .hc-door:active .hc-door-ring::before,
+        .hc-door:focus-visible .hc-door-ring::before {
+            border-color: rgba(240,98,37,.85); transform: scale(1.12); box-shadow: 0 0 18px rgba(240,98,37,.35); }
+        .hc-door:hover .hc-door-ring::after,
+        .hc-door:active .hc-door-ring::after,
+        .hc-door:focus-visible .hc-door-ring::after {
+            height: 13px; opacity: 1; box-shadow: 0 0 8px var(--accent); }
+        .hc-door-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: .24em;
+            text-transform: uppercase; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.85); }
+        .hc-door-label i { display: none; font-style: normal; }
+        .hc-door-note { max-width: 15rem; font-family: 'IBM Plex Sans', sans-serif; font-size: .78125rem; line-height: 1.45;
+            color: rgba(255,255,255,.58); text-shadow: 0 1px 6px rgba(0,0,0,.8); }
+        .hc-door-go { display: inline-flex; align-items: center; gap: .45rem; font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); opacity: .85;
+            transition: opacity .3s ease; }
+        .hc-door-go svg { width: 16px; height: 9px; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+        .hc-door:hover .hc-door-go { opacity: 1; }
+        .hc-door:hover .hc-door-go svg { transform: translateX(4px); }
+        .hc-door:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+        /* ---- film mode -----------------------------------------------------
+           A film is the only thing worth looking at while it runs, so the hero
+           empties: the name, the lede, the buttons, the doors and the telemetry
+           all leave. The player band takes the doors' place. */
+        #manifesto.is-film .hc-body,
+        #manifesto.is-film .hc-foot,
+        #manifesto.is-film .hc-top { opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity .5s ease, visibility .5s ease; }
+        #manifesto.is-film .hc-shade { background: linear-gradient(180deg, rgba(13,15,17,.5) 0%, transparent 22%, transparent 55%, rgba(13,15,17,.82) 100%); }
+        #manifesto.is-film .hc-ridge, #manifesto.is-film .hc-mist, #manifesto.is-film .hc-haze { opacity: 0; transition: opacity .6s ease; }
+
+        .hc-player[hidden] { display: none; }
+        .hc-player { grid-row: 3; grid-column: 1; align-self: end; display: flex; flex-direction: column; align-items: center;
+            gap: .85rem; padding-bottom: .25rem; animation: hcFade .6s .25s both; }
+        .hc-pl-slider { display: flex; align-items: center; gap: 1rem; }
+        .hc-pl-arrow { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem;
+            border: 1px solid rgba(255,255,255,.25); background: rgba(13,15,17,.5); color: #fff; cursor: pointer;
+            backdrop-filter: blur(3px); transition: border-color .25s, background-color .25s, color .25s; }
+        .hc-pl-arrow svg { width: 1.1rem; height: 1.1rem; }
+        .hc-pl-arrow:hover { border-color: var(--accent); background: var(--accent); color: #14161a; }
+        .hc-pl-dots { display: inline-flex; align-items: center; gap: .55rem; }
+        .hc-pl-dot { width: .5rem; height: .5rem; border-radius: 50%; border: 1px solid rgba(255,255,255,.5);
+            background: transparent; padding: 0; cursor: pointer; transition: background-color .25s, border-color .25s, transform .25s; }
+        .hc-pl-dot[aria-current="true"] { background: var(--accent); border-color: var(--accent); transform: scale(1.35); }
+        .hc-pl-dot:hover { border-color: var(--accent); }
+        .hc-pl-name { display: flex; align-items: baseline; gap: .6rem; font-family: 'Oswald', sans-serif; font-weight: 300;
+            text-transform: uppercase; letter-spacing: -.01em; font-size: clamp(1.5rem, 4.5vw, 2.4rem); line-height: 1; color: #fff;
+            text-shadow: 0 2px 18px rgba(0,0,0,.8); }
+        .hc-pl-name i { font-family: 'IBM Plex Mono', monospace; font-style: normal; font-size: 10px; font-weight: 500;
+            letter-spacing: .2em; color: var(--accent); }
+        .hc-pl-cta { display: inline-flex; align-items: center; gap: .8rem; min-height: 3rem; padding: 0 1.5rem;
+            border: 1px solid var(--accent); background: var(--accent); color: #14161a;
+            font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 600; letter-spacing: .18em;
+            text-transform: uppercase; transition: background-color .3s, box-shadow .3s; }
+        .hc-pl-cta svg { width: 17px; height: 10px; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+        .hc-pl-cta:hover { background: #ff7a3d; box-shadow: 0 0 0 4px rgba(240,98,37,.16); }
+        .hc-pl-cta:hover svg { transform: translateX(4px); }
+        .hc-pl-close { border: 0; background: none; padding: .25rem .5rem; cursor: pointer;
+            font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+            color: rgba(255,255,255,.55); transition: color .25s; }
+        .hc-pl-close:hover { color: #fff; }
+        .hc-pl-arrow:focus-visible, .hc-pl-dot:focus-visible, .hc-pl-cta:focus-visible, .hc-pl-close:focus-visible,
+        .hc-films-open:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+        /* the phones-only way in */
+        .hc-films-open { display: none; align-items: center; justify-content: center; gap: .6rem; margin: 1rem auto 0;
+            min-height: 2.75rem; padding: 0 1rem; border: 1px solid rgba(255,255,255,.25); background: rgba(13,15,17,.45);
+            color: rgba(255,255,255,.88); backdrop-filter: blur(3px); cursor: pointer;
+            transition: border-color .25s, color .25s; }
+        .hc-films-open svg { width: .8rem; height: .8rem; color: var(--accent); }
+        .hc-films-open b { font-weight: 500; color: var(--accent); }
+        .hc-films-open:hover { border-color: var(--accent); color: #fff; }
+        @media (max-width: 767px) { .hc-films-open:not([hidden]) { display: inline-flex; } }
+
+                /* the thin line under them: what is in frame, and the way down */
+        .hc-rail { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
         .hc-scroll { display: inline-flex; align-items: center; gap: .7rem; color: rgba(255,255,255,.6); transition: color .3s; }
         .hc-scroll:hover { color: #fff; }
         .hc-scroll i { position: relative; display: block; width: 1px; height: 2.25rem; background: rgba(255,255,255,.18); overflow: hidden; }
         .hc-scroll i::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--accent); animation: hcRope 2.4s cubic-bezier(.6,0,.4,1) infinite; }
         @keyframes hcRope { to { top: 100%; } }
-
-        .hc-profile { position: relative; flex: 1; max-width: 36rem; height: 3.1rem; margin: 0 1rem; list-style: none; padding: 0; }
-        .hc-profile::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.12), rgba(255,255,255,.35) 55%, var(--accent)); }
-        .hc-profile li { position: absolute; top: 50%; transform: translateX(-50%); }
-        .hc-profile li::before { content: ""; position: absolute; left: 50%; top: -3px; width: 1px; height: 7px; background: rgba(255,255,255,.55); }
-        .hc-profile li:last-child::before { top: -3.5px; left: calc(50% - 3.5px); width: 7px; height: 7px; background: var(--accent); transform: rotate(45deg); }
-        .hc-profile span { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 9px; letter-spacing: .18em; color: rgba(255,255,255,.5); }
-        .hc-profile b { font-weight: 500; color: rgba(255,255,255,.85); margin-left: .35rem; }
-        .hc-profile li:nth-child(odd) span { bottom: .55rem; }
-        .hc-profile li:nth-child(even) span { top: .55rem; }
-        .hc-profile li:last-child span { top: .55rem; bottom: auto; }
-        .hc-profile li:last-child b { color: var(--accent); }
-
-        .hc-side { display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; }
         .hc-films { display: flex; align-items: center; gap: .15rem; margin-top: .6rem; margin-right: -.55rem; }
         @media (min-width: 768px) { .hc-rail { padding-right: 13.5rem; } }
         .hc-films-label { color: rgba(255,255,255,.4); margin-right: .5rem; }
         .hc-film-btn { font: inherit; text-transform: uppercase; letter-spacing: inherit; padding: .45rem .55rem; color: rgba(255,255,255,.55); border-bottom: 1px solid transparent; transition: color .25s, border-color .25s; min-height: 2.25rem; }
         .hc-film-btn:hover { color: #fff; }
         .hc-film-btn[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
-        .hc-caption { color: rgba(255,255,255,.42); text-align: right; letter-spacing: .2em; }
+        .hc-caption { color: rgba(255,255,255,.42); letter-spacing: .2em; }
         .hc-caption a { color: rgba(255,255,255,.75); border-bottom: 1px solid rgba(255,255,255,.2); transition: color .25s, border-color .25s; }
         .hc-caption a:hover { color: var(--accent); border-color: var(--accent); }
 
-        /* ---- small phones: keep the eyebrow on one line, readout clear of the floating widgets ---- */
+        /* ---- phones (2026-09-19, REVERT-notes § 13) ------------------------
+           The client's note was that the phone hero says too much. So it now
+           says four things and shows four: one line of place, the name, one
+           sentence, one button — then the four doors as icons. Everything that
+           is instrumentation rather than navigation (the telemetry strip, the
+           summit counter, the film switcher, the in-frame caption) is
+           desktop-only. */
         @media (max-width: 400px) {
             .hc-eyebrow { gap: .55rem; letter-spacing: .2em; }
             .hc-eyebrow::before, .hc-eyebrow::after { width: 1rem; }
-            .hc-alt-label { gap: .45rem; letter-spacing: .16em; white-space: nowrap; }
-            .hc-alt-label::before, .hc-alt-label::after { width: .8rem; }
+            .hc-door-ring { width: 3.55rem; height: 3.55rem; }
+            .hc-door-ring svg { width: 1.8rem; height: 1.8rem; }
+            .hc-door-label { font-size: 8.5px; letter-spacing: .12em; }
         }
-        @media (max-width: 767px) and (max-height: 760px) {
-            .hc-body .hc-lede { margin-top: .8rem; }
-            .hc-body .hc-actions { margin-top: 1.1rem; }
-            .hc-body .hc-alt { margin-top: .6rem; }
-            .hc-body .hc-alt-row { font-size: 2.1rem; }
-            .hc-coords { display: none; }
-        }
-        /* ---- phones: peak in the upper half, words anchored low, no crowding ---- */
         @media (max-width: 767px) {
-            #manifesto.hc { min-height: min(84svh, 690px); }
+            #manifesto.hc { min-height: min(76svh, 620px); }
             .hc-photo, .hc-film { object-position: 50% 22%; }
-            .hc-shade { background: linear-gradient(180deg, rgba(13,15,17,.55) 0%, transparent 18%, rgba(13,15,17,.25) 36%, rgba(13,15,17,.84) 62%, rgba(13,15,17,.95) 100%); }
-            .hc-alt { margin-top: 1rem; }
-            .hc-alt-row { font-size: 2.4rem; }
+            .hc-shade { background: linear-gradient(180deg, rgba(13,15,17,.55) 0%, transparent 16%, rgba(13,15,17,.28) 34%, rgba(13,15,17,.86) 62%, rgba(13,15,17,.96) 100%); }
             .hc-ridge--near { height: 15%; } .hc-ridge--mid { height: 22%; }
-            .hc-status .hc-clock, #hc-region, .hc-caption { display: none; }
-            .hc-body { padding: .5rem 0 .5rem; }
+
+            /* instrumentation off */
+            .hc-top, .hc-coords, .hc-status, .hc-films, .hc-clock, #hc-region { display: none; }
             .hc-link { display: none; }
-            .hc-rail { display: none; }
-            .hc-lede { font-size: .95rem; margin-top: 1.1rem; }
-            .hc-actions { margin-top: 1.5rem; gap: .9rem 1.25rem; }
+            .hc-caption { display: none; }
+            .hc-btn--quiet { display: none; }
+
+            /* what is left, with room to breathe */
+            .hc-body { justify-content: center; padding: .5rem 0 0; }
+            .hc-eyebrow { font-size: 9px; }
+            /* smaller than it wants to be, on purpose: the photograph is the
+               reason anyone stays on this screen, and three lines of Oswald at
+               15vw covered most of the peak. */
+            .hc-title { font-size: clamp(2.5rem, 12.2vw, 4rem); }
+            .hc-lede { font-size: .9rem; margin-top: .75rem; max-width: 19rem; }
+            .hc-actions { margin-top: 1.25rem; gap: .9rem; }
             .hc-btn--primary { flex: 1 1 100%; justify-content: center; }
-            .hc-rail { border-top: 0; padding-top: .25rem; }
-            .hc-caption { font-size: 9px; text-align: left; }
-            .hc-scroll { display: none; }
-            .hc-rail { flex-direction: column; align-items: stretch; gap: .4rem; }
-            .hc-side { align-items: flex-start; gap: .2rem; }
-            .hc-top { flex-direction: column; gap: .7rem; }
-            .hc-status { align-items: flex-start; text-align: left; width: 100%; }
-            .hc-films { width: calc(100% + .55rem); margin: 0 0 0 -.55rem; overflow-x: auto; scrollbar-width: none; }
-            .hc-films::-webkit-scrollbar { display: none; }
-            .hc-film-btn { white-space: nowrap; letter-spacing: .16em; }
-            /* leave room under the readout for the floating theme / language widgets */
-            .hc-ui { padding-bottom: 4.6rem; }
+
+            /* the four doors: a ring and a word each, all four on one row */
+            .hc-foot { gap: .5rem; }
+            .hc-doors { gap: 0; }
+            .hc-door { gap: .6rem; padding: 1rem .3rem .85rem; }
+            .hc-door + .hc-door::before { top: 20%; bottom: 20%; }
+            .hc-door-ring { width: 3.95rem; height: 3.95rem; }
+            .hc-door-ring svg { width: 2.05rem; height: 2.05rem; }
+            .hc-door-ring::before { inset: -7px; }
+            .hc-door-ring::after { top: -7px; height: 7px; }
+            .hc-door-label { font-size: 9.5px; letter-spacing: .14em; }
+            .hc-door-label b { display: none; }
+            .hc-door-label i { display: inline; }
+            .hc-door-note, .hc-door-go { display: none; }
+
+            /* The scroll cue goes too: the doors are the invitation now, and
+               the floating theme / language widgets already own that corner. */
+            .hc-rail { display: none; }
+
+            .hc-player { gap: .7rem; }
+            .hc-pl-arrow { width: 2.5rem; height: 2.5rem; }
+            .hc-pl-cta { min-height: 2.75rem; padding: 0 1.1rem; font-size: 9.5px; letter-spacing: .14em; }
+            .hc-pl-name { font-size: 1.5rem; }
+
+            /* Phone hero: Company name placed cleanly above eyebrow and doors */
+            #manifesto.hc-min .hc-lede,
+            #manifesto.hc-min .hc-btn--primary { display: none; }
+            #manifesto.hc-min .hc-title {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-family: 'Oswald', sans-serif;
+                text-transform: uppercase;
+                font-size: clamp(2rem, 8.5vw, 2.75rem);
+                font-weight: 600;
+                line-height: 0.95;
+                letter-spacing: -0.01em;
+                text-shadow: 0 2px 14px rgba(0,0,0,.9), 0 1px 3px rgba(0,0,0,.8);
+                margin-top: 0;
+                margin-bottom: 0.85rem;
+                order: 1;
+            }
+            #manifesto.hc-min .hc-t1 {
+                display: inline;
+                color: var(--accent);
+                font-weight: 600;
+                margin-right: 0.35em;
+            }
+            #manifesto.hc-min .hc-t2 {
+                display: contents;
+            }
+            #manifesto.hc-min .hc-t2 > span:first-child {
+                display: inline;
+                color: #ffffff;
+                font-weight: 600;
+            }
+            #manifesto.hc-min .hc-t2 .hc-accent {
+                display: block;
+                color: #ffffff;
+                font-weight: 600;
+                letter-spacing: 0.02em;
+                margin-top: 0.12em;
+            }
+            #manifesto.hc-min .hc-eyebrow { font-size: 9.5px; letter-spacing: .28em; order: 2; margin-top: 0; }
+            #manifesto.hc-min .hc-actions { margin-top: 0; order: 3; }
+            #manifesto.hc-min .hc-films-open { margin-top: 1.1rem; }
+            #manifesto.hc-min .hc-body { padding: .5rem 0 0; display: flex; flex-direction: column; align-items: center; }
+            #manifesto.hc-min .hc-door-ring { width: 4.4rem; height: 4.4rem; }
+            #manifesto.hc-min .hc-door-ring svg { width: 2.25rem; height: 2.25rem; }
+            #manifesto.hc-min .hc-door-label { font-size: 10px; }
+            #manifesto.hc-min .hc-door { gap: .7rem; padding: 1.1rem .3rem .95rem; }
+
+                        /* The bottom-right corner of a phone already carries three pieces
+               of floating furniture — the compass, the social button and the
+               theme / language bar. The doors stop clear above all of them
+               rather than fighting for the same 90 pixels. */
+            .hc-ui { padding-bottom: 7.75rem; }
+        }
+        /* short phones: tighten the stack rather than dropping a door */
+        @media (max-width: 767px) and (max-height: 740px) {
+            .hc-body .hc-lede { display: none; }
+            .hc-body .hc-actions { margin-top: 1.1rem; }
+            .hc-door { padding: .85rem .35rem .7rem; }
         }
         @media (min-width: 1024px) and (max-width: 1279px) {
             .hc-ui { padding-left: 5rem; }
             .hc-ui { padding-right: 5rem; }
         }
-        @media (min-width: 768px) and (max-height: 820px) {
+        /* The doors take a band at the bottom, so everything above them runs a
+            little tighter — the whole hero has to land inside one screen. */
+        @media (min-width: 768px) {
+            .hc-lede { margin-top: .95rem; }
+            .hc-actions { margin-top: 1.15rem; }
+            .hc-foot { gap: .55rem; }
+            /* the floating theme / language pill owns the bottom-right corner
+               on every page — the doors stop above it rather than under it */
+            .hc-ui { padding-bottom: 5rem; }
+        }
+        @media (min-width: 768px) and (max-height: 960px) {
             .hc-title { font-size: clamp(3.9rem, min(9.8vw, 9.6vh), 9.75rem); }
-            .hc-alt { margin-top: 1rem; }
             .hc-body { padding: .5rem 0; }
-            .hc-lede { margin-top: 1rem; }
-            .hc-actions { margin-top: 1.25rem; }
-            .hc-link { margin-top: .75rem; }
+            .hc-lede { margin-top: .8rem; font-size: 1rem; }
+            .hc-actions { margin-top: 1rem; }
             .hc-films { margin-top: .3rem; }
+            .hc-door { gap: .55rem; padding: .9rem .9rem .8rem; }
+            .hc-door-ring { width: 4.25rem; height: 4.25rem; }
+            .hc-door-ring svg { width: 2.15rem; height: 2.15rem; }
+        }
+        @media (min-width: 768px) and (max-height: 830px) {
+            .hc-door-note { display: none; }
+        }
+        /* laptops at 720p: the doors keep their ring and their name, everything
+            that was a second or third way of saying the same thing steps out */
+        @media (min-width: 768px) and (max-height: 760px) {
+            .hc-title { font-size: clamp(3.2rem, min(8.6vw, 8vh), 9.75rem); }
+            .hc-door-go { display: none; }
+            .hc-link { display: none; }
+            .hc-rail { display: none; }
+            .hc-films { display: none; }
+            .hc-ui { padding-top: 1.5rem; }
+            .hc-lede { margin-top: .6rem; }
+            .hc-actions { margin-top: .8rem; }
+            .hc-door { padding: .55rem .9rem .5rem; gap: .5rem; }
+            .hc-door-ring { width: 3.85rem; height: 3.85rem; }
+            .hc-door-ring svg { width: 1.95rem; height: 1.95rem; }
         }
         @media (min-width: 768px) and (max-width: 1023px) {
             .hc-shade { background: radial-gradient(ellipse 72% 45% at 50% 62%, rgba(13,15,17,.75), rgba(13,15,17,.3) 70%, transparent), linear-gradient(180deg, rgba(13,15,17,.5), transparent 25%, transparent 60%, rgba(13,15,17,.7)); }
 
         }
 
+
+        /* ==== section ridges (2026-09-19, REVERT-notes § 16) ==================
+           The hero ends on a drawn ridgeline; the rest of the page used to end
+           on a 1px rule. These put the same horizon between every section: the
+           previous section's colour spills down in a mountain silhouette, with
+           a hairline crest over it. Three profiles, alternated, so it never
+           reads as a repeat. --ridge-from is the colour above the crest. */
+        :root { --ridge-above-reviews: #191b1f; }
+        @media (min-width: 1024px) { :root { --ridge-above-reviews: #16181b; } }
+        .sec-ridge { position: absolute; top: 0; left: 0; right: 0; height: 52px; z-index: 1;
+            pointer-events: none; line-height: 0; }
+        @media (min-width: 768px) { .sec-ridge { height: 76px; } }
+        .sec-ridge svg { display: block; width: 100%; height: 100%; }
+        .sec-ridge .rg-fill { fill: var(--ridge-from, #16181b); }
+        .sec-ridge .rg-line { fill: none; stroke: rgba(240,98,37,.34); stroke-width: 1.25;
+            vector-effect: non-scaling-stroke; }
+        .sec-ridge .rg-haze { fill: none; stroke: rgba(240,98,37,.12); stroke-width: 7;
+            vector-effect: non-scaling-stroke; }
+        body.light-mode .sec-ridge .rg-line { stroke: rgba(214,77,22,.4); }
+        /* the sections that carry one drop their straight rule — you get the
+           ridge or the line, never both */
+        .has-ridge { border-bottom-width: 0 !important; }
         /* ---- the breath between hero and routes ---- */
         .hc-interlude { position: relative; background: linear-gradient(180deg, #0d0f11 0%, #121417 55%, #16181b 100%); color: #fff; overflow: hidden; --ip: 1; }
         .hci-inner { position: relative; max-width: 88rem; margin: 0 auto; padding: 4.5rem 1.25rem 3rem 2.75rem; }
@@ -414,13 +635,13 @@
             .hc-layer, .hc-ui { transform: none !important; }
             .hc-ui { opacity: 1 !important; }
             .hc-photo, .hc-haze, .hc-mist, .hc-climber-lamp, .hc-dot::after, .hc-scroll i::after,
-            .hc-title > span, .hc-t2 > span, .hc-lede, .hc-actions, .hc-link, .hc-alt, .hc-eyebrow::before, .hc-eyebrow::after { animation: none !important; }
+            .hc-title > span, .hc-t2 > span, .hc-lede, .hc-actions, .hc-link, .hc-foot, .hc-eyebrow::before, .hc-eyebrow::after { animation: none !important; }
             .hc-film { transition: none; }
             .hci-statement span { opacity: 1 !important; transform: none !important; }
             .hci-rope::after { transform: none; }
         }
     </style>
-    <link rel="stylesheet" href="/booking-modal.css?v=5">
+    <link rel="stylesheet" href="/booking-modal.css?v=6">
 </head>
 <body class="selection:bg-accent selection:text-background min-h-screen flex flex-col overflow-x-hidden relative">
 
@@ -486,7 +707,13 @@
          films. Keep id="manifesto" + data-media and the hero-* ids (edit.js i18n).
          REVERT: git checkout pre-hero -- public/index.html public/edit.js
                  and delete public/hero-corridor.js -->
-    <section id="manifesto" data-media class="hc" aria-labelledby="hero-heading">
+    <!-- EXPERIMENT (2026-09-19, REVERT-notes § 16): the class "hc-min" strips
+         the phone hero back to the photograph and the four doors — no wordmark,
+         no lede, no primary button. The header logo already says who we are and
+         the Treks door already says "Explore the Himalaya", so on a phone both
+         were saying it twice. TO REVERT: delete hc-min from the class list
+         below. Nothing else changes; desktop never reads it. -->
+    <section id="manifesto" data-media class="hc hc-min" aria-labelledby="hero-heading">
         <div class="hc-stage">
             <div class="hc-layer hc-plate">
                 <picture>
@@ -547,7 +774,7 @@
                     <span id="hero-title-primary" data-key="hero.title_primary" class="hc-t1">HIMALAYAN</span>
                     <span id="hero-title-italic" data-key="hero.title_italic" class="hc-t2"><span>MAGIC</span> <span class="hc-accent">ADVENTURE</span></span>
                 </h1>
-                <p id="hero-tagline" class="hc-lede md:hidden">Treks, high passes and Himalayan expeditions — led by local guides since 1993.</p>
+                <p id="hero-tagline" class="hc-lede md:hidden">Led by local guides since 1993.</p>
                 <p id="hero-description" data-key="hero.description" class="hc-lede hidden md:block">Trekking routes, high passes and Himalayan expeditions — shaped by the local guides who have led these corridors since 1993.</p>
 
                 <div class="hc-actions">
@@ -556,23 +783,66 @@
                         <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
                     </a>
                     <a href="/expeditions" class="hc-btn hc-btn--quiet">View Expeditions</a>
+                    <a href="/contact" class="hc-link hc-mono" data-book="">Plan a custom ascent <span aria-hidden="true">&rarr;</span></a>
                 </div>
-                <a href="/contact" class="hc-link hc-mono" data-book="">Plan a custom ascent <span aria-hidden="true">&rarr;</span></a>
 
-                <div class="hc-alt"><span id="hc-alt-label" class="hc-alt-label">Summit · Sagarmatha / Everest</span><span class="hc-alt-row"><span id="hc-alt-num">8,848.86</span><span class="hc-alt-unit">M</span></span></div>
+                <!-- Phones cannot reach the film list in the telemetry row, so
+                     they get this one opener. hero-corridor.js unhides it. -->
+                <button type="button" id="hc-films-open" class="hc-films-open hc-mono" hidden>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg>
+                    <span>Watch the films</span><b id="hc-films-count">04</b>
+                </button>
             </div>
 
-            <!-- 3 · altitude instrumentation -->
-            <div class="hc-rail hc-mono">
-                <a href="#corridor" class="hc-scroll"><i aria-hidden="true"></i><span class="hidden sm:inline">Scroll</span><span class="sr-only">to the flagship routes</span></a>
-                <ol class="hc-profile hidden xl:block" aria-label="The Everest corridor by elevation">
-                    <li style="left:0"><span style="left:0;transform:none">Kathmandu<b>1,400 m</b></span></li>
-                    <li style="left:27.4%"><span>Namche<b>3,440</b></span></li>
-                    <li style="left:53.2%"><span>Base Camp<b>5,364</b></span></li>
-                    <li style="left:100%"><span style="left:auto;right:0;transform:none">Summit<b>8,848.86 m</b></span></li>
-                </ol>
-                <div class="hc-side">
+            <!-- 3 · the four doors (2026-09-19, REVERT-notes § 13)
+                 The hero's real job on a phone: four ways in, as icons, instead
+                 of four paragraphs. Lucide icons, inline. Desktop keeps the
+                 caption and the scroll cue either side of them.
+                 REVERT: git checkout pre-hero-nav -- public/index.html -->
+            <!-- Film mode (2026-09-19, REVERT-notes § 15): while a film plays the
+                 name, the lede, the buttons and the doors step aside so the
+                 footage is the whole screen. What is left is the slider, the
+                 peak's name and one link. Built by hero-corridor.js. -->
+            <div id="hc-player" class="hc-player" hidden></div>
+
+            <div class="hc-foot">
+                <nav class="hc-doors" aria-label="Where to start">
+                    <a class="hc-door" href="/treks">
+                        <span class="hc-door-ring">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></svg>
+                        </span>
+                        <span class="hc-door-label" data-hero-door="treks"><b>Trekking</b><i>Treks</i></span>
+                        <span class="hc-door-note">38 routes across nine regions, from the Khumbu to Dolpo.</span>
+                        <span class="hc-door-go">Explore treks <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
+                    </a>
+                    <a class="hc-door" href="/expeditions">
+                        <span class="hc-door-ring">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/></svg>
+                        </span>
+                        <span class="hc-door-label" data-hero-door="peaks"><b>Expeditions</b><i>Peaks</i></span>
+                        <span class="hc-door-note">The eight-thousanders and the peaks that train you for them.</span>
+                        <span class="hc-door-go">View expeditions <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
+                    </a>
+                    <a class="hc-door" href="/#explore">
+                        <span class="hc-door-ring">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>
+                        </span>
+                        <span class="hc-door-label" data-hero-door="map"><b>Explore Nepal</b><i>Map</i></span>
+                        <span class="hc-door-note">Start with a place — nine regions on one map.</span>
+                        <span class="hc-door-go">Open the map <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
+                    </a>
+                    <a class="hc-door" href="/altitude-safety">
+                        <span class="hc-door-ring">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                        </span>
+                        <span class="hc-door-label" data-hero-door="safety"><b>Altitude &amp; Safety</b><i>Safety</i></span>
+                        <span class="hc-door-note">How we acclimatise, and what we carry for you.</span>
+                        <span class="hc-door-go">Travel with us <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
+                    </a>
+                </nav>
+                <div class="hc-rail hc-mono">
                     <p id="hc-caption" class="hc-caption" aria-live="polite">In frame &mdash; <a href="/expeditions/ama-dablam">Ama Dablam, 6,812 m</a></p>
+                    <a href="#corridor" class="hc-scroll"><span>Scroll to explore</span><i aria-hidden="true"></i><span class="sr-only">to the flagship routes</span></a>
                 </div>
             </div>
         </div>
@@ -595,7 +865,7 @@
     </section>
 
     <!-- 02 — THE EXPEDITION MATRIX (Choose Your Corridor) -->
-    <section id="expeditions" class="relative py-14 md:py-20 border-b border-border bg-[#16181b] overflow-hidden">
+    <section id="expeditions" class="has-ridge relative py-14 md:py-20 border-b border-border bg-[#16181b] overflow-hidden">
         <!-- Topographic Contour Lines Background & Compass Rose -->
         <div class="pointer-events-none absolute inset-0 z-0 opacity-15 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent"></div>
         <div class="pointer-events-none absolute top-10 right-10 z-0 opacity-25 hidden md:block text-muted-foreground font-mono text-[10px] tracking-widest text-center">
@@ -644,122 +914,298 @@
             </div>
         </div>
     </section>
-    <!-- 03 — EXPLORE (Interactive Map of Nepal) -->
-    <!-- Hidden below lg on purpose (2026-09-10 declutter): the interactive map is
-         a desktop experience and was a long scroll on a phone. Revert = drop the
-         `hidden lg:block` below. -->
-    <section id="explore" class="relative hidden lg:block px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22] overflow-hidden">
+    <!-- 03 — EXPLORE NEPAL (three-step map: Nepal → region → place) -->
+    <!-- The map is drawn from our own GeoJSON as plain SVG — no WebGL, no
+         tiles, no API key, and no free zoom. Engine: /explore-map.js.
+         Revert: git show <tag map-fx-v1>:public/index.html for the MapLibre build. -->
+    <section id="explore" data-level="0" data-layer="regions" class="has-ridge relative px-5 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22] overflow-hidden">
+            <!-- ridge into this section -->
+            <div class="sec-ridge" style="--ridge-from:#16181b" aria-hidden="true">
+                <svg viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false">
+                    <path class="rg-fill" d="M0 54 L128 34 L246 60 L368 26 L512 62 L668 30 L818 57 L972 22 L1124 50 L1286 31 L1440 48 L1440 0 L0 0 Z"/>
+                    <path class="rg-haze" d="M0 54 L128 34 L246 60 L368 26 L512 62 L668 30 L818 57 L972 22 L1124 50 L1286 31 L1440 48"/>
+                    <path class="rg-line" d="M0 54 L128 34 L246 60 L368 26 L512 62 L668 30 L818 57 L972 22 L1124 50 L1286 31 L1440 48"/>
+                </svg>
+            </div>
+
         <style>
-            .hme-region{fill:#23272d;stroke:rgba(240,98,37,.20);stroke-width:1.25;cursor:pointer;outline:none;transition:fill .35s ease,stroke .35s ease,opacity .35s ease;}
-            .hme-region:hover{fill:rgba(240,98,37,.13);}
-            .hme-map[data-active] .hme-region{opacity:.25;}
-            .hme-map[data-active] .hme-region.is-active{opacity:1;fill:rgba(240,98,37,.16);stroke:var(--accent);stroke-width:1.75;}
-            .hme-region.is-active{fill:rgba(240,98,37,.16);stroke:var(--accent);}
-            .hme-terai{fill:#2a2216;}
-            .hme-ridge{fill:none;stroke:rgba(243,244,246,.30);stroke-width:1;stroke-dasharray:2 3.5;}
-            .hme-peak-tri{fill:#0f1113;stroke:var(--accent);stroke-width:1.4;transition:transform .35s ease,fill .35s ease;transform-box:fill-box;transform-origin:50% 100%;}
-            .hme-map[data-active] .hme-peak{opacity:.28;transition:opacity .35s ease;}
-            .hme-map[data-active] .hme-peak.is-active{opacity:1;}
-            .hme-peak.is-active .hme-peak-tri{transform:scale(1.45);fill:var(--accent);}
-            .hme-region-label{transition:color .3s ease;}
-            .hme-region-label.is-active{color:var(--accent);}
-
-            /* ── Lens toggle ─────────────────────────────────────────── */
-            .hme-lens-tab{padding:.5rem .85rem;border:1px solid var(--border);background:rgba(16,18,21,.5);color:var(--muted-foreground);cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s,background .2s;}
-            .hme-lens-tab:hover{border-color:var(--accent);color:var(--foreground);}
-            .hme-lens-tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
-            .hme-lens-tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-
-            /* ── Regions lens: the province layer + its labels step back ─ */
-            #explore[data-lens="regions"] .hme-map .hme-prov-layer{opacity:0;pointer-events:none;}
-            #explore[data-lens="regions"] .hme-prov-labels{opacity:0;pointer-events:none;}
-            #explore[data-lens="provinces"] #hme-geo-layer{display:none;}
-            #explore[data-lens="provinces"] .hme-geo-land{display:none;}
-            .hme-prov-labels{transition:opacity .35s ease;}
-            #explore[data-lens="regions"] .hme-map .hme-region{fill:#1e2126;stroke:none;}
-            #explore[data-lens="regions"] .hme-map .hme-peak{display:none;}
-            #explore[data-lens="regions"] .hme-map .hme-ridge{stroke:rgba(243,244,246,.22);}
-
-            /* ── Regions lens: 8 mountain regions + Terai ───────────────
-               A quiet field-survey map. Names ghost in as the pointer
-               nears it, a region lights on hover, opening one eases the
-               viewBox in and reveals its peaks as expedition links. */
-            #hme-geo-layer{ --rg-wash: rgba(240,98,37,.14); }
-            #explore[data-lens="regions"] .hme-map .hme-region{fill:url(#hme-nepal-grad);stroke:rgba(240,98,37,.14);stroke-width:.75;}
-            .hme-graticule line{stroke:rgba(243,244,246,.07);stroke-width:.6;}
-            #explore[data-lens="provinces"] .hme-graticule{display:none;}
-            #explore[data-lens="regions"] .hme-map .hme-ridge{stroke:rgba(243,244,246,.3);stroke-dasharray:3 5;animation:hmeRidge 34s linear infinite;}
-            @keyframes hmeRidge{to{stroke-dashoffset:-160;}}
-
-            .hme-rg-wash{fill:transparent;transition:fill .35s ease;}
-            .hme-rg-wash.is-active{fill:var(--rg-wash);}
-            .hme-rg-mark{fill:var(--muted-foreground);stroke:none;transition:fill .3s ease,opacity .3s ease;}
-            .hme-rg-mark.is-lowland{fill:none;stroke:var(--muted-foreground);stroke-width:1.4;}
-            .hme-map[data-geo-active] .hme-rg-mark{fill:#565c66;}
-            .hme-map[data-geo-active] .hme-rg-mark.is-lowland{stroke:#565c66;}
-            .hme-rg-mark.is-active{fill:var(--accent);}
-            .hme-rg-mark.is-lowland.is-active{stroke:var(--accent);}
-            .hme-map.hme-zoomed .hme-rg-mark:not(.is-active){opacity:0;}
-            .hme-rg-label{fill:var(--muted-foreground);font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:11px;letter-spacing:1.3px;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .3s ease,fill .25s ease;}
-            .hme-map:hover .hme-rg-label{opacity:.34;}
-            .hme-rg-label.is-active,.hme-map:hover .hme-rg-label.is-active{opacity:1;fill:var(--accent);}
-            .hme-map.hme-zoomed .hme-rg-label{opacity:0 !important;}
-            @media (hover:none){.hme-rg-label{opacity:.32;}}
-
-            /* named peaks — hidden until the region is open */
-            .hme-rg-peak{opacity:0;pointer-events:none;transition:opacity .3s ease .05s;}
-            .hme-map.hme-zoomed .hme-rg-peak.is-active{opacity:1;pointer-events:auto;}
-            .hme-rg-peak-tri{fill:#14161a;stroke:var(--accent);stroke-width:1.4;}
-            .hme-rg-peak:hover .hme-rg-peak-tri{fill:var(--accent);}
-            .hme-rg-peak-lbl{fill:var(--foreground);font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.6px;}
-            .hme-rg-peak:hover .hme-rg-peak-lbl{fill:var(--accent);}
-
-            .hme-rg-hit{fill:transparent;cursor:pointer;outline:none;}
-            .hme-rg-hit:focus-visible{fill:rgba(240,98,37,.08);}
-            .hme-map.hme-zoomed .hme-rg-hit:not(.is-active){pointer-events:none;}
-
-            /* survey-map corner brackets on the map frame */
-            .hme-mapframe::after{content:"";position:absolute;inset:7px;border:1px solid var(--accent);opacity:.3;pointer-events:none;
-              -webkit-mask:linear-gradient(#000 0 0) top left,linear-gradient(#000 0 0) top right,linear-gradient(#000 0 0) bottom left,linear-gradient(#000 0 0) bottom right;
-              mask:linear-gradient(#000 0 0) top left,linear-gradient(#000 0 0) top right,linear-gradient(#000 0 0) bottom left,linear-gradient(#000 0 0) bottom right;
-              -webkit-mask-size:16px 16px;mask-size:16px 16px;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;}
-
-            /* "back to all of Nepal" — only while a region is open */
-            #hme-geo-back{position:absolute;left:.9rem;top:.9rem;z-index:20;display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);background:rgba(16,18,21,.9);color:var(--muted-foreground);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:.5rem .8rem;cursor:pointer;backdrop-filter:blur(4px);transition:color .2s,border-color .2s;}
-            #hme-geo-back[hidden],#explore [data-explore-hint][hidden]{display:none;}
-            .hme-geo-land{fill:url(#hme-nepal-grad);stroke:rgba(240,98,37,.38);stroke-width:1.1;stroke-linejoin:round;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));}
-            #hme-geo-back:hover{color:var(--accent);border-color:var(--accent);}
-
-            @media (prefers-reduced-motion: reduce){#explore .hme-ridge{animation:none;}}
-            body.light-mode #explore[data-lens="regions"] .hme-map .hme-region{fill:#e9e6df;stroke:rgba(214,77,22,.2);}
-            body.light-mode .hme-geo-land{fill:#ece8e0;stroke:rgba(214,77,22,.35);filter:none;}
-            body.light-mode .hme-rg-peak-tri{fill:#fff;}
-            body.light-mode .hme-graticule line{stroke:rgba(28,30,33,.06);}
-
-            /* ---- phone sheet (opened from the menu: openExploreNepal) ---- */
-            #hme-x-close{display:none;position:fixed;top:1rem;right:1rem;z-index:30;height:2.75rem;width:2.75rem;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--card);color:var(--foreground);cursor:pointer;}
-            #hme-x-close:hover{border-color:var(--accent);color:var(--accent);}
-            @media (max-width:1023px){
-                #explore.hme-x-open{display:block;position:fixed;inset:0;z-index:70;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:4.25rem 1rem 3rem;border:0;}
-                #explore.hme-x-open #hme-x-close{display:flex;}
-                #explore.hme-x-open .hme-mapframe{padding:.5rem;}
-                #explore.hme-x-open #explore-panel{min-height:0;scroll-margin-top:4.5rem;}
-                #explore.hme-x-open .hme-rg-label{display:none;}
+            /* ==== Explore Nepal =================================================
+               Everything in this section is scoped to #explore and themed from
+               the tokens below, so light mode is a single block of overrides. */
+            #explore{
+                --ne-land-top:#242930;
+                --ne-land-bottom:#181b1f;
+                --ne-prov:rgba(255,255,255,.07);
+                --ne-grat:rgba(255,255,255,.045);
+                --ne-zone:rgba(240,98,37,.07);
+                --ne-zone-alt:rgba(240,98,37,.12);
+                --ne-zone-hot:rgba(240,98,37,.26);
+                --ne-lowland:rgba(198,158,74,.10);
+                --ne-zone-line:rgba(240,98,37,.16);
+                --ne-pin-bg:rgba(17,19,22,.94);
+                --ne-pin-fg:#cfd4db;
+                --ne-pin-line:rgba(255,255,255,.22);
+                --ne-label:#fff;
+                --ne-label-sub:rgba(255,255,255,.58);
+                --ne-shadow:0 2px 10px rgba(0,0,0,.95);
+                --ne-canvas:#16181b;
             }
-            .hme-xpanel{scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
-            .hme-xpanel::-webkit-scrollbar{width:4px;}
-            .hme-xpanel::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);border-radius:2px;}
-            @keyframes hmeXfade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-            .hme-xbody{animation:hmeXfade .4s cubic-bezier(.2,.7,.3,1);}
+            body.light-mode #explore{
+                --ne-land-top:#efeae1;
+                --ne-land-bottom:#e4ded2;
+                --ne-prov:rgba(28,30,33,.12);
+                --ne-grat:rgba(28,30,33,.06);
+                --ne-zone:rgba(214,77,22,.08);
+                --ne-zone-alt:rgba(214,77,22,.14);
+                --ne-zone-hot:rgba(214,77,22,.3);
+                --ne-lowland:rgba(160,126,50,.14);
+                --ne-zone-line:rgba(214,77,22,.22);
+                --ne-pin-bg:#fff;
+                --ne-pin-fg:#4b5158;
+                --ne-pin-line:rgba(28,30,33,.2);
+                --ne-label:#16181b;
+                --ne-label-sub:#6b7078;
+                --ne-shadow:0 1px 6px rgba(255,255,255,.9);
+                --ne-canvas:#f4f1ea;
+            }
+
+            /* ---- the layer bar ------------------------------------------ */
+            #ne-chips{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+            #ne-chips::-webkit-scrollbar{display:none;}
+            .ne-chip{display:inline-flex;align-items:center;gap:.45rem;flex:0 0 auto;min-height:40px;padding:.45rem .8rem;
+                border:1px solid var(--border);background:rgba(16,18,21,.45);color:var(--muted-foreground);cursor:pointer;
+                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+                transition:color .2s,border-color .2s,background .2s;}
+            body.light-mode .ne-chip{background:rgba(255,255,255,.5);}
+            .ne-chip:hover{color:var(--foreground);border-color:rgba(240,98,37,.5);}
+            .ne-chip[aria-selected="true"]{color:var(--accent);border-color:var(--accent);background:rgba(240,98,37,.1);}
+            .ne-chip b{font-weight:500;opacity:.6;font-size:9px;}
+            .ne-chip-ico{width:14px;height:14px;}
+            .ne-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+            /* ---- the frame ---------------------------------------------- */
+            .ne-frame{position:relative;display:flex;flex-direction:column;border:1px solid var(--border);background:var(--ne-canvas);padding:.75rem;}
+            @media (min-width:768px){.ne-frame{padding:1rem;}}
+            .ne-map{position:relative;width:100%;aspect-ratio:1000/560;background:var(--ne-canvas);
+                touch-action:pan-y;overflow:hidden;contain:layout paint;}
+            /* From lg up the two columns are one height: the panel sets it (and
+               scrolls inside if a region has a lot to say), the map drops its
+               aspect ratio and fills what is left. The engine re-fits the
+               viewBox to whatever shape the box ends up, so nothing distorts. */
+            @media (min-width:1024px){
+                .ne-cols{min-height:30rem;}
+                .ne-xpanel{max-height:34rem;overflow-y:auto;}
+                .ne-map{aspect-ratio:auto;flex:1 1 auto;min-height:0;}
+            }
+            @media (max-width:767px){.ne-map{aspect-ratio:4/3;}}
+            .ne-frame.is-failed .ne-map{display:none;}
+            .ne-svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+            .ne-grat line{stroke:var(--ne-grat);stroke-width:1;vector-effect:non-scaling-stroke;}
+            .ne-landmass{fill:url(#ne-land);}
+            .ne-prov{fill:none;stroke:var(--ne-prov);stroke-width:1;vector-effect:non-scaling-stroke;}
+            .ne-glow{fill:none;stroke:var(--accent);stroke-width:7;opacity:.14;vector-effect:non-scaling-stroke;}
+            .ne-outline{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:.85;vector-effect:non-scaling-stroke;}
+            .ne-zone{fill:var(--ne-zone);stroke:var(--ne-zone-line);stroke-width:.9;vector-effect:non-scaling-stroke;
+                transition:fill .3s ease,opacity .3s ease;}
+            .ne-zone:nth-child(2n){fill:var(--ne-zone-alt);}
+            .ne-zone.is-lowland{fill:var(--ne-lowland);}
+            .ne-zone.is-hot{fill:var(--ne-zone-hot);}
+            .ne-zone.is-muted{fill:transparent;stroke:transparent;}
+            /* inside a region the wash steps back — the points are the subject now */
+            #explore:not([data-level="0"]) .ne-zone:not(.is-muted){fill:rgba(240,98,37,.05);stroke:transparent;}
+            body.light-mode #explore:not([data-level="0"]) .ne-zone:not(.is-muted){fill:rgba(214,77,22,.06);}
+            .ne-pin.is-summit,.ne-pin.is-region{z-index:3;}
+            .ne-pin.is-open{z-index:4;}
+            #explore:not([data-layer="regions"]) .ne-zone{fill:transparent;stroke:transparent;}
+            .ne-hit{fill:transparent;cursor:pointer;}
+            #explore:not([data-level="0"]) .ne-hit,
+            #explore:not([data-layer="regions"]) .ne-hit{pointer-events:none;}
+
+            /* ---- pins ---------------------------------------------------- */
+            .ne-pins{position:absolute;inset:0;pointer-events:none;}
+            .ne-pin{position:absolute;transform:translate(-50%,-50%);background:none;border:0;padding:0;margin:0;
+                cursor:pointer;pointer-events:auto;line-height:0;color:inherit;}
+            .ne-pin:focus-visible{outline:none;}
+            .ne-dot{position:relative;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+                border:1px solid var(--ne-pin-line);background:var(--ne-pin-bg);color:var(--ne-pin-fg);
+                box-shadow:0 6px 16px -6px rgba(0,0,0,.9);transition:background .2s,border-color .2s,color .2s,transform .25s;}
+            .ne-dot-ico{width:13px;height:13px;}
+            .ne-tag{position:absolute;left:50%;top:calc(100% + .3rem);transform:translateX(-50%);
+                display:flex;flex-direction:column;align-items:center;line-height:1.15;white-space:nowrap;
+                text-shadow:var(--ne-shadow);pointer-events:none;transition:opacity .25s ease;}
+            .ne-pin.is-above .ne-tag{top:auto;bottom:calc(100% + .3rem);}
+            .ne-tag b{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.09em;
+                text-transform:uppercase;color:var(--ne-label);}
+            .ne-tag i{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-style:normal;letter-spacing:.12em;
+                text-transform:uppercase;color:var(--ne-label-sub);}
+            /* four label lanes: above/below the pin, near/far from it, with a
+               leader line on the far ones so the name still reads as attached */
+            .ne-pin.is-far .ne-tag{top:calc(100% + 1.55rem);}
+            .ne-pin.is-far.is-above .ne-tag{top:auto;bottom:calc(100% + 1.55rem);}
+            .ne-pin.is-far .ne-tag::after{content:"";position:absolute;left:50%;bottom:100%;width:1px;height:1.25rem;
+                background:linear-gradient(to top,rgba(240,98,37,.55),transparent);}
+            .ne-pin.is-far.is-above .ne-tag::after{bottom:auto;top:100%;
+                background:linear-gradient(to bottom,rgba(240,98,37,.55),transparent);}
+            /* a name can also sit beside its pin when there is no room above
+               or below — four places to try before it drops to hover-only */
+            .ne-pin.is-right .ne-tag{left:calc(100% + .35rem);top:50%;bottom:auto;transform:translateY(-50%);align-items:flex-start;}
+            .ne-pin.is-left .ne-tag{left:auto;right:calc(100% + .35rem);top:50%;bottom:auto;transform:translateY(-50%);align-items:flex-end;}
+            .ne-pin.is-left .ne-tag::after,.ne-pin.is-right .ne-tag::after{display:none;}
+            /* inside a region the names get out of each other's way */
+            #explore:not([data-level="0"]) .ne-pin.is-point .ne-tag b{font-size:9px;letter-spacing:.06em;}
+            #explore:not([data-level="0"]) .ne-pin.is-point:not(.is-major) .ne-tag i{display:none;}
+            .ne-pin.is-quiet .ne-tag{opacity:0;}
+            .ne-pin.is-quiet:hover .ne-tag,.ne-pin.is-quiet:focus-visible .ne-tag,.ne-pin.is-open .ne-tag{opacity:1;}
+            .ne-pin:hover .ne-dot,.ne-pin:focus-visible .ne-dot{background:var(--accent);border-color:var(--accent);color:#14161a;transform:scale(1.12);}
+            .ne-pin.is-open .ne-dot{background:var(--accent);border-color:#fff;color:#14161a;box-shadow:0 0 0 4px rgba(240,98,37,.22);}
+
+            .ne-pin.is-region .ne-dot{width:36px;height:36px;border-color:rgba(240,98,37,.55);color:var(--accent);}
+            .ne-pin.is-region .ne-dot-ico{width:18px;height:18px;}
+            .ne-pin.is-region .ne-tag b{font-size:10.5px;letter-spacing:.13em;}
+            .ne-pin.is-region .ne-tag i{color:var(--accent);}
+            .ne-pin.is-region .ne-dot::after{content:"";position:absolute;inset:-1px;border-radius:50%;
+                border:1px solid rgba(240,98,37,.35);animation:nePulse 3.6s ease-out infinite;}
+            .ne-pin.is-region.is-hot .ne-dot{background:var(--accent);color:#14161a;transform:scale(1.1);}
+            @keyframes nePulse{0%{transform:scale(1);opacity:.55;}70%{transform:scale(1.75);opacity:0;}100%{opacity:0;}}
+
+            .ne-pin.is-summit .ne-dot{width:32px;height:32px;border-color:rgba(240,98,37,.75);color:var(--accent);}
+            .ne-pin.is-summit .ne-dot-ico{width:16px;height:16px;}
+            .ne-pin.is-peak .ne-dot{border-color:rgba(240,98,37,.45);color:var(--accent);}
+            .ne-pin.is-nature .ne-dot{border-color:rgba(96,165,250,.45);color:#8fb8f0;}
+            .ne-pin.is-pass .ne-dot{border-color:rgba(255,255,255,.4);}
+            body.light-mode .ne-pin.is-pass .ne-dot{border-color:rgba(28,30,33,.35);}
+
+            @media (max-width:767px){
+                .ne-dot{width:21px;height:21px;}
+                .ne-dot-ico{width:11px;height:11px;}
+                .ne-pin.is-region .ne-dot{width:25px;height:25px;}
+                .ne-pin.is-region .ne-dot-ico{width:13px;height:13px;}
+                .ne-pin.is-summit .ne-dot{width:24px;height:24px;}
+                .ne-pin.is-summit .ne-dot-ico{width:12px;height:12px;}
+                .ne-tag b{font-size:9px;letter-spacing:.06em;}
+                .ne-tag i{display:none;}
+                /* the pin stays small; the thing you tap does not */
+                .ne-pin::before{content:"";position:absolute;inset:-11px;border-radius:50%;}
+                /* nine names will not fit across a phone, so they live in the
+                   line under the map and in the list below it */
+                /* whatever still fits keeps its name; the rest are named in the
+                   line under the map and in the list below it */
+                .ne-pin.is-region.is-hot .ne-tag{opacity:1;}
+            }
+
+            /* ---- map chrome ---------------------------------------------- */
+            .ne-back[hidden]{display:none;}
+            /* The way back out. Reads as a control first and a label second:
+               an accent arrow tile, with where it goes written beside it. */
+            .ne-back{position:absolute;z-index:6;left:1rem;top:1rem;display:inline-flex;align-items:center;gap:.6rem;
+                min-height:40px;padding:0 .9rem 0 0;border:1px solid var(--accent);background:rgba(16,18,21,.92);
+                color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+                text-transform:uppercase;cursor:pointer;backdrop-filter:blur(6px);
+                box-shadow:0 10px 24px -12px rgba(0,0,0,.95);
+                transition:background .2s,color .2s,box-shadow .2s;}
+            body.light-mode .ne-back{background:rgba(255,255,255,.94);}
+            .ne-back-ico{display:grid;place-items:center;width:38px;height:38px;flex:0 0 auto;
+                background:rgba(240,98,37,.16);transition:background .2s,transform .2s;}
+            .ne-back-ico svg{width:17px;height:17px;}
+            .ne-back:hover{background:var(--accent);color:#14161a;box-shadow:0 12px 26px -12px rgba(240,98,37,.7);}
+            .ne-back:hover .ne-back-ico{background:rgba(0,0,0,.14);transform:translateX(-2px);}
+            .ne-back:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+            /* on a phone the arrow is the whole button — the line under the map
+               already says where you are, and the map needs the room */
+            @media (max-width:767px){
+                .ne-back{padding:0;gap:0;}
+                .ne-back-txt{display:none;}
+            }
+
+            .ne-compass{position:absolute;top:1.5rem;right:1.5rem;z-index:4;opacity:.4;pointer-events:none;}
+            @media (max-width:767px){.ne-compass{display:none;}}
+
+            .ne-foot{margin-top:.9rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.25rem .75rem;
+                text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;
+                text-transform:uppercase;color:var(--muted-foreground);}
+            .ne-foot .ne-sep{opacity:.4;}
+            .ne-now{color:var(--accent);}
+
+            /* ---- the panel ----------------------------------------------- */
+            .ne-xpanel{scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
+            .ne-xpanel::-webkit-scrollbar{width:4px;}
+            .ne-xpanel::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);border-radius:2px;}
+            @keyframes neFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+            .ne-panel,.hme-xbody{animation:neFade .35s cubic-bezier(.2,.7,.3,1);}
+            .ne-p-lbl{display:block;margin-top:1.15rem;font-family:'IBM Plex Mono',monospace;font-size:9px;
+                letter-spacing:.26em;text-transform:uppercase;color:var(--muted-foreground);}
+            .ne-panel > .ne-p-lbl:first-child{margin-top:0;}
+            .ne-p-sub{display:block;margin-top:1.15rem;margin-bottom:.4rem;font-family:'IBM Plex Mono',monospace;
+                font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+            .ne-p-kind{display:inline-flex;align-items:center;gap:.4rem;font-family:'IBM Plex Mono',monospace;font-size:9px;
+                letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+            .ne-p-kind .ne-ico{width:14px;height:14px;}
+            .ne-p-name{margin-top:.6rem;font-family:Oswald,sans-serif;font-weight:300;font-size:1.9rem;line-height:1;
+                text-transform:uppercase;letter-spacing:-.01em;color:var(--foreground);}
+            .ne-p-el{margin-top:.35rem;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+                text-transform:uppercase;color:var(--accent);}
+            .ne-p-el.is-soft{color:var(--muted-foreground);letter-spacing:.14em;}
+            .ne-p-note{margin-top:.75rem;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;line-height:1.6;color:var(--muted-foreground);}
+            .ne-p-fine{margin-top:1.15rem;font-family:'IBM Plex Mono',monospace;font-size:8.5px;line-height:1.7;
+                letter-spacing:.06em;color:var(--muted-foreground);opacity:.75;}
+            /* the fold: phones only, and only while the list is shut */
+            .ne-reveal{display:none;position:relative;align-items:center;justify-content:center;gap:.6rem;
+                width:100%;min-height:52px;margin-top:1.1rem;padding:.8rem 1rem;border:1px solid var(--accent);
+                background:var(--accent);color:#14161a;cursor:pointer;
+                font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;
+                text-transform:uppercase;transition:background .25s;}
+            .ne-reveal .ne-ico{width:16px;height:16px;}
+            .ne-reveal b{font-weight:600;opacity:.6;}
+            .ne-reveal:hover{background:#ff7a3d;}
+            .ne-reveal:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+            /* the buzz: a ring leaves the button every few seconds, so it reads
+               as the live thing on screen without ever moving the layout */
+            .ne-reveal::before,.ne-reveal::after{content:"";position:absolute;inset:0;border:1px solid var(--accent);
+                pointer-events:none;animation:neBuzz 2.6s cubic-bezier(.2,.7,.3,1) infinite;}
+            .ne-reveal::after{animation-delay:1.3s;}
+            @keyframes neBuzz{0%{transform:scale(1);opacity:.75;}70%{transform:scale(1.07);opacity:0;}100%{opacity:0;}}
+            @media (max-width:1023px){
+                #explore-panel[data-fold="shut"] .ne-reveal{display:inline-flex;}
+                #explore-panel[data-fold="shut"] [data-ne-fold]{display:none;}
+                #explore-panel[data-fold="shut"] .ne-p-fine{display:none;}
+            }
+            @media (prefers-reduced-motion: reduce){.ne-reveal::before,.ne-reveal::after{animation:none;opacity:0;}}
+            .ne-list{margin-top:.5rem;display:grid;gap:.35rem;}
+            .ne-list.is-regions{margin-top:1rem;}
+            .ne-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;min-height:42px;
+                padding:.55rem .75rem;border:1px solid var(--border);background:transparent;color:var(--foreground);
+                font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+                text-align:left;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s,transform .2s;}
+            .ne-row b{font-weight:500;color:var(--accent);}
+            .ne-row:hover{border-color:var(--accent);background:rgba(240,98,37,.07);transform:translateX(3px);}
+            .ne-arrow{width:15px;height:9px;color:var(--accent);flex:0 0 auto;}
+            .ne-cta{margin-top:1.1rem;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;
+                min-height:46px;padding:.7rem 1rem;border:1px solid var(--accent);background:var(--accent);color:#14161a;
+                font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.16em;
+                text-transform:uppercase;text-decoration:none;transition:background .25s,box-shadow .25s;}
+            .ne-cta .ne-arrow{color:currentColor;width:16px;height:9px;}
+            .ne-cta:hover{background:#ff7a3d;box-shadow:0 0 0 4px rgba(240,98,37,.16);}
+            .ne-back-row{display:flex;width:100%;align-items:center;justify-content:flex-start;gap:.45rem;margin-bottom:1rem;border:0;background:none;
+                padding:0;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+                text-transform:uppercase;color:var(--muted-foreground);transition:color .2s;}
+            .ne-back-row.is-end{margin-top:1.5rem;margin-bottom:0;}
+            .ne-back-row:hover{color:var(--accent);}
+            .ne-back-row .ne-ico{width:14px;height:14px;}
+
+            /* rows written by renderGeoRegion() in edit.js */
             .hme-xrow{transition:border-color .2s ease,background .2s ease,transform .2s ease;}
             .hme-xrow:hover{border-color:var(--accent);transform:translateX(3px);}
-            @media (prefers-reduced-motion: reduce){.hme-xbody{animation:none;}.hme-xrow:hover{transform:none;}}
-        </style>
-        <div class="pointer-events-none absolute inset-0 z-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent"></div>
 
-        <button type="button" id="hme-x-close" onclick="closeExploreNepal()" aria-label="Close Explore Nepal">
-            <svg style="width:18px;height:18px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
+            @media (prefers-reduced-motion: reduce){
+                .ne-panel,.hme-xbody{animation:none;}
+                .hme-xrow:hover,.ne-row:hover{transform:none;}
+                .ne-pin.is-region .ne-dot::after{animation:none;}
+                .ne-zone,.ne-dot,.ne-tag{transition:none;}
+            }
+        </style>
+
+        <div class="pointer-events-none absolute inset-0 z-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/30 via-transparent to-transparent"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto">
             <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">03 — Explore Nepal</span>
@@ -768,24 +1214,31 @@
                     Explore <span class="font-semibold text-accent">Nepal</span>
                 </h2>
                 <p class="max-w-md font-mono text-xs leading-relaxed text-muted-foreground md:text-sm">
-                    Start with a place, not a checklist. Tap a mountain region to open the trails we guide there, the peaks above it and where each route begins &mdash; or switch to provinces for the administrative view.
+                    Start with a place, not a checklist. Tap a trekking region to open the trails we guide there, the peaks above it and where each route begins — or switch the layer to go straight to the passes and the eight-thousanders.
                 </p>
             </div>
 
             <div class="mt-8 flex flex-wrap items-center gap-3">
-                <span class="font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">View by</span>
-                <div id="explore-lens" role="tablist" aria-label="Explore Nepal by" class="flex gap-2 font-mono text-[10px] uppercase tracking-[0.2em]">
-                    <button type="button" role="tab" data-lens="regions" aria-selected="true" class="hme-lens-tab">Regions</button>
-                    <button type="button" role="tab" data-lens="provinces" aria-selected="false" class="hme-lens-tab">Provinces</button>
-                </div>
+                <span class="shrink-0 font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">Show</span>
+                <div id="ne-chips" role="tablist" aria-label="Map layer" class="min-w-0 flex-1"></div>
             </div>
 
-            <div class="mt-6 grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] gap-6 md:gap-7 lg:items-start">
+            <div class="ne-cols mt-6 grid grid-cols-1 lg:grid-cols-[1.55fr_1fr] gap-6 md:gap-7 lg:items-stretch">
 
-                <!-- Interactive Map -->
-                <div class="hme-mapframe relative border border-border bg-[#16181b] p-3 md:p-4">
-                    <!-- Compass -->
-                    <div class="pointer-events-none absolute top-5 right-5 z-20 opacity-40 hidden md:block">
+                <div class="ne-frame">
+                    <!-- The engine (/explore-map.js) draws the SVG and the pins in here. -->
+                    <div id="nepal-map" class="ne-map" role="application" aria-label="Map of Nepal: trekking regions, peaks, passes and trailheads"></div>
+
+                    <!-- Step back out of a region / a place. The engine shows it
+                         from step 2 on and writes where it goes. Esc does the same. -->
+                    <button type="button" id="map-reset" class="ne-back" hidden aria-label="Back">
+                        <span class="ne-back-ico">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                        </span>
+                        <span class="ne-back-txt" data-map-back-label>All of Nepal</span>
+                    </button>
+
+                    <div class="ne-compass">
                         <div class="h-12 w-12 rounded-full border border-white/20 flex items-center justify-center relative font-mono text-[8px] tracking-widest text-muted-foreground">
                             <span class="absolute top-1">N</span>
                             <span class="absolute bottom-1">S</span>
@@ -795,91 +1248,89 @@
                         </div>
                     </div>
 
-                    <!-- Peak index (revealed on hover — Provinces lens) -->
-                    <div id="hme-peak-index" class="pointer-events-none absolute left-4 top-4 z-20 hidden w-[220px] border border-accent/30 bg-[#14161a]/95 p-3 backdrop-blur-sm"></div>
-
-                    <!-- Zoom-out control (Regions lens, only while a region is open) -->
-                    <button type="button" id="hme-geo-back" hidden>&larr; All of Nepal</button>
-
-                    <div class="relative w-full" style="aspect-ratio: 960 / 312;">
-                        <svg class="hme-map h-full w-full" viewBox="20 40 960 312" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                            <!-- 7 provinces, west to east (the "Provinces" lens) -->
-                            <g class="hme-prov-layer">
-                            <path class="hme-region" data-region="sudurpashchim" role="button" tabindex="0" aria-label="Sudurpashchim Province" onmouseenter="hoverExploreRegion('sudurpashchim')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('sudurpashchim')" onfocus="hoverExploreRegion('sudurpashchim')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('sudurpashchim');}" d="M40,150 L130,108 L212,132 L205,280 L165,268 L92,222 L45,174 Z"></path>
-                            <path class="hme-region" data-region="karnali" role="button" tabindex="0" aria-label="Karnali Province" onmouseenter="hoverExploreRegion('karnali')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('karnali')" onfocus="hoverExploreRegion('karnali')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('karnali');}" d="M212,132 L300,92 L382,118 L452,78 L462,192 L405,226 L300,238 L205,280 Z"></path>
-                            <path class="hme-region" data-region="lumbini" role="button" tabindex="0" aria-label="Lumbini Province" onmouseenter="hoverExploreRegion('lumbini')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('lumbini')" onfocus="hoverExploreRegion('lumbini')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('lumbini');}" d="M205,280 L300,238 L405,226 L462,192 L520,232 L560,220 L566,334 L470,342 L388,332 L314,315 L240,298 L165,268 Z"></path>
-                            <path class="hme-region" data-region="gandaki" role="button" tabindex="0" aria-label="Gandaki Province" onmouseenter="hoverExploreRegion('gandaki')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('gandaki')" onfocus="hoverExploreRegion('gandaki')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('gandaki');}" d="M452,78 L520,104 L586,68 L600,210 L560,220 L520,232 L462,192 Z"></path>
-                            <path class="hme-region" data-region="bagmati" role="button" tabindex="0" aria-label="Bagmati Province" onmouseenter="hoverExploreRegion('bagmati')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('bagmati')" onfocus="hoverExploreRegion('bagmati')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('bagmati');}" d="M586,68 L652,98 L712,60 L772,82 L770,235 L690,250 L600,210 Z"></path>
-                            <path class="hme-region hme-terai" data-region="madhesh" role="button" tabindex="0" aria-label="Madhesh Province" onmouseenter="hoverExploreRegion('madhesh')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('madhesh')" onfocus="hoverExploreRegion('madhesh')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('madhesh');}" d="M560,220 L600,210 L690,250 L770,235 L812,262 L745,298 L658,320 L566,334 Z"></path>
-                            <path class="hme-region" data-region="koshi" role="button" tabindex="0" aria-label="Koshi Province" onmouseenter="hoverExploreRegion('koshi')" onmouseleave="unhoverExploreRegion()" onclick="clickExploreRegion('koshi')" onfocus="hoverExploreRegion('koshi')" onblur="unhoverExploreRegion()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickExploreRegion('koshi');}" d="M772,82 L858,52 L900,60 L965,96 L965,150 L892,214 L812,262 L770,235 Z"></path>
-                            </g>
-
-                            <!-- Northern ridgeline (Tibet border) -->
-                            <path class="hme-ridge" d="M40,150 L130,108 L212,132 L300,92 L382,118 L452,78 L520,104 L586,68 L652,98 L712,60 L772,82 L858,52 L900,60 L965,96"></path>
-
-                            <!-- The eight 8,000 m peaks -->
-                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M487,92 L481,104 L493,104 Z"></path></g>
-                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M517,112 L511,124 L523,124 Z"></path></g>
-                            <g class="hme-peak" data-region="gandaki"><path class="hme-peak-tri" d="M557,90 L551,102 L563,102 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M806,98 L800,110 L812,110 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M833,80 L825,94 L841,94 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M847,102 L841,114 L853,114 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M863,88 L857,100 L869,100 Z"></path></g>
-                            <g class="hme-peak" data-region="koshi"><path class="hme-peak-tri" d="M940,82 L934,94 L946,94 Z"></path></g>
-
-                            <!-- Regions lens — clip + region washes, dots, labels, peak marks, hit areas — injected by buildGeoLayer() -->
-                            <g id="hme-geo-layer"></g>
-                        </svg>
-
-                        <!-- Province labels -->
-                        <div class="hme-prov-labels pointer-events-none absolute inset-0">
-                        <div class="pointer-events-none absolute" style="left:11.5%; top:49.3%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="sudurpashchim">Sudurpashchim</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:31.5%; top:43.6%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="karnali">Karnali</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:35%; top:73.8%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="lumbini">Lumbini</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:51.2%; top:38.0%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="gandaki">Gandaki</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:67.2%; top:38.0%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="bagmati">Bagmati</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:67.2%; top:72.1%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-muted-foreground" data-region-label="madhesh">Madhesh</span>
-                        </div>
-                        <div class="pointer-events-none absolute" style="left:88.5%; top:34.1%; transform:translate(-50%,-50%);">
-                            <span class="hme-region-label block whitespace-nowrap font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-muted-foreground" data-region-label="koshi">Koshi</span>
-                        </div>
-                        </div><!-- /.hme-prov-labels -->
-                    </div>
-
-                    <p class="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-mono text-[9px] uppercase tracking-widest text-muted-foreground" data-explore-hint="regions">
-                        <span>Hover to explore <span class="opacity-50">&middot;</span> tap to open a region</span>
-                        <span class="opacity-50">&mdash;</span>
-                        <span>8 ranges <span class="opacity-50">+</span> the Terai <span class="opacity-50">&middot;</span> 38 trails</span>
-                    </p>
-                    <p class="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center font-mono text-[9px] uppercase tracking-widest text-muted-foreground" data-explore-hint="provinces" hidden>
-                        <span class="md:hidden">Tap a province &middot;</span>
-                        <span><span class="text-accent">&#9650;</span> 8 peaks above 8,000 m</span>
-                        <span class="opacity-50">&mdash;</span>
-                        <span>5 in Koshi &middot; 3 in Gandaki</span>
+                    <p class="ne-foot">
+                        <span id="ne-now" class="ne-now">Nepal <span class="ne-sep">&rarr;</span> region <span class="ne-sep">&rarr;</span> place</span>
+                        <span class="ne-sep">&mdash;</span>
+                        <span>8 ranges <span class="ne-sep">+</span> the Terai <span class="ne-sep">&middot;</span> 38 trails</span>
                     </p>
                 </div>
 
-                <!-- Info Panel — beside the map -->
-                <div id="explore-panel" class="hme-xpanel border border-border bg-card p-5 md:p-6 min-h-[300px] lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto">
-                    <!-- Populated by JS: renderGeoRegion() / renderExploreRegion() -->
+                <div id="explore-panel" class="ne-xpanel border border-border bg-card p-5 md:p-6 min-h-[300px]">
+                    <!-- Written by /explore-map.js and renderGeoRegion() in edit.js -->
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 04 — COMPARE TREKS -->
-    <section id="compare-home" data-media class="relative px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#191b1f] overflow-hidden">
+    <section id="compare-home" data-media class="has-ridge relative px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#191b1f] overflow-hidden">
+            <!-- ridge into this section -->
+            <div class="sec-ridge" style="--ridge-from:#1b1e22" aria-hidden="true">
+                <svg viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false">
+                    <path class="rg-fill" d="M0 46 C150 22 268 66 426 53 C566 42 646 15 802 31 C962 47 1046 67 1204 49 C1322 35 1382 41 1440 37 L1440 0 L0 0 Z"/>
+                    <path class="rg-haze" d="M0 46 C150 22 268 66 426 53 C566 42 646 15 802 31 C962 47 1046 67 1204 49 C1322 35 1382 41 1440 37"/>
+                    <path class="rg-line" d="M0 46 C150 22 268 66 426 53 C566 42 646 15 802 31 C962 47 1046 67 1204 49 C1322 35 1382 41 1440 37"/>
+                </svg>
+            </div>
+
+
+        <style>
+            /* ---- 04 Compare: the same column-per-trail layout as /compare,
+                   with icons, bars and the best value in each row picked out --- */
+            #compare-home .cmp-wrap{margin-top:2.25rem;overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(240,98,37,.5) transparent;}
+            #compare-home .cmp-wrap::-webkit-scrollbar{height:4px;}
+            #compare-home .cmp-wrap::-webkit-scrollbar-thumb{background:rgba(240,98,37,.45);}
+            #compare-home table.cmp{width:100%;border-collapse:collapse;min-width:640px;background:rgba(22,24,27,.75);border:1px solid var(--border);}
+            #compare-home table.cmp th,#compare-home table.cmp td{text-align:left;vertical-align:top;}
+            #compare-home .cmp-rowhead{width:11.5rem;padding:.85rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);
+                font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-foreground);}
+            #compare-home .cmp-rowhead span{display:inline-flex;align-items:center;gap:.5rem;}
+            #compare-home .cmp-rowhead svg{width:15px;height:15px;color:var(--accent);opacity:.85;flex:none;}
+            #compare-home table.cmp td.cmp-cell{padding:.85rem 1rem;border-left:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);
+                font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;color:rgba(255,255,255,.82);min-width:12.5rem;}
+            #compare-home tr:nth-child(even) td.cmp-cell,#compare-home tr:nth-child(even) .cmp-rowhead{background:rgba(255,255,255,.015);}
+            #compare-home td.cmp-cell.is-best{color:#fff;}
+            #compare-home .cmp-win{display:inline-flex;align-items:center;gap:.3rem;margin-left:.45rem;padding:.1rem .3rem;border:1px solid rgba(240,98,37,.5);
+                font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);vertical-align:middle;}
+
+            /* column heads: photo, name, buttons — as on /compare */
+            #compare-home .cmp-head{padding:0 0 1rem;border-left:1px solid rgba(255,255,255,.06);}
+            #compare-home .cmp-shot{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--border);}
+            #compare-home .cmp-shot img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+            #compare-home .cmp-head:hover .cmp-shot img{transform:scale(1.05);}
+            #compare-home .cmp-shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,22,25,0) 45%,rgba(20,22,25,.85));}
+            #compare-home .cmp-flag{position:absolute;z-index:2;top:.6rem;left:.6rem;display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .45rem;
+                background:var(--accent);color:#14161a;font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;}
+            #compare-home .cmp-flag svg{width:11px;height:11px;}
+            #compare-home .cmp-region{display:block;margin:.85rem 1rem 0;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);}
+            #compare-home .cmp-name{display:block;margin:.3rem 1rem 0;font-family:Oswald,sans-serif;font-weight:400;font-size:1.2rem;line-height:1.1;text-transform:uppercase;color:#fff;text-decoration:none;transition:color .2s;}
+            #compare-home .cmp-name:hover{color:var(--accent);}
+            #compare-home .cmp-btns{display:flex;flex-wrap:wrap;gap:.4rem;margin:.75rem 1rem 0;}
+            #compare-home .cmp-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .6rem;border:1px solid var(--border);
+                font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);text-decoration:none;transition:border-color .2s,color .2s;}
+            #compare-home .cmp-btn svg{width:13px;height:8px;}
+            #compare-home .cmp-btn:hover{border-color:var(--accent);color:var(--accent);}
+            #compare-home .cmp-btn.is-primary{background:var(--accent);border-color:var(--accent);color:#14161a;font-weight:600;}
+            #compare-home .cmp-btn.is-primary:hover{background:#ff7a3d;color:#14161a;}
+
+            /* infographics inside the cells */
+            #compare-home .cmp-alt{display:flex;align-items:baseline;gap:.6rem;}
+            #compare-home .cmp-alt b{font-family:Oswald,sans-serif;font-weight:300;font-size:1.35rem;line-height:1;color:#fff;font-feature-settings:'tnum';}
+            #compare-home td.cmp-cell.is-best .cmp-alt b{color:var(--accent);}
+            #compare-home .cmp-track{position:relative;flex:1;height:5px;background:rgba(255,255,255,.07);overflow:hidden;}
+            #compare-home .cmp-track i{position:absolute;inset:0 auto 0 0;display:block;background:var(--accent);width:calc(var(--h,0) * 100%);transform-origin:left;
+                transform:scaleX(var(--grow,0));transition:transform 1s cubic-bezier(.2,.7,.2,1);}
+            #compare-home .cmp-dots{display:inline-flex;gap:3px;vertical-align:middle;}
+            #compare-home .cmp-dots i{width:8px;height:8px;border:1px solid var(--accent);display:block;}
+            #compare-home .cmp-dots i.on{background:var(--accent);}
+            #compare-home .cmp-sub{display:block;margin-top:.25rem;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-foreground);}
+            #compare-home .cmp-yes{color:var(--accent);}
+            #compare-home .cmp-note{margin-top:.9rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}
+            body.light-mode #compare-home table.cmp{background:#fff;border-color:#e3ded5;}
+            body.light-mode #compare-home .cmp-name,body.light-mode #compare-home .cmp-alt b{color:#16181b;}
+            body.light-mode #compare-home td.cmp-cell{color:#3b4046;}
+            @media (prefers-reduced-motion: reduce){#compare-home .cmp-track i{transition:none;}#compare-home .cmp-shot img{transition:none;}}
+        </style>
         <div class="pointer-events-none absolute inset-0 z-0">
             <img src="/images/langtang_real.jpg" class="h-full w-full object-cover object-[50%_40%] opacity-[0.07]" alt="" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-b from-[#191b1f] via-[#191b1f]/95 to-[#191b1f]"></div>
@@ -899,7 +1350,8 @@
                     Build a comparison <i class="fa-solid fa-arrow-right text-[9px] group-hover:translate-x-1 transition-transform"></i>
                 </a>
             </div>
-            <div id="compare-home-table" class="mt-12 overflow-x-auto"></div>
+            <div class="cmp-wrap"><div id="compare-home-table"></div></div>
+            <p class="cmp-note">Swipe the table sideways on a phone &middot; <a href="/compare" class="text-accent hover:underline">build your own comparison</a></p>
         </div>
     </section>
 
@@ -907,7 +1359,7 @@
     <!-- 05 — FIND YOUR TREK  ·  redesigned 2026-09-10 (REVERT-notes § 5af).
          Hidden below lg; on phones it is opened as a sheet from the Explore
          menu ("What kind of trekker are you?") via openTrekFinder(). -->
-    <section id="trek-finder" class="relative hidden lg:block px-6 py-12 md:px-20 md:py-16 border-b border-border bg-[#16181b] overflow-hidden scroll-mt-16">
+    <section id="trek-finder" class="has-ridge relative hidden lg:block px-6 py-12 md:px-20 md:py-16 border-b border-border bg-[#16181b] overflow-hidden scroll-mt-16">
         <style>
             /* ---- shared control skin ---- */
             #trek-finder .fdr-lbl{display:flex;align-items:center;gap:.4rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:.45rem;}
@@ -1189,11 +1641,151 @@
     </section>
 
 
-    <!-- 06 — THE FIELD JOURNAL -->
-    <section id="dispatches" class="px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22]">
+
+    <!-- 06 — THE SUMMIT REGISTER  ·  traveller reviews quoted from Tripadvisor.
+         Cards + the rating panel are rendered by /reviews.js from /data/reviews.js
+         (admin: /admin → Reviews). Nothing here is hard-coded. -->
+    <section id="reviews" class="has-ridge relative px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#141619] overflow-hidden scroll-mt-16" aria-labelledby="reviews-heading">
+            <!-- ridge into this section -->
+            <div class="sec-ridge" style="--ridge-from:var(--ridge-above-reviews)" aria-hidden="true">
+                <svg viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false">
+                    <path class="rg-fill" d="M0 62 L162 30 L302 66 L432 19 L566 58 L706 35 L864 64 L1004 25 L1162 56 L1302 33 L1440 59 L1440 0 L0 0 Z"/>
+                    <path class="rg-haze" d="M0 62 L162 30 L302 66 L432 19 L566 58 L706 35 L864 64 L1004 25 L1162 56 L1302 33 L1440 59"/>
+                    <path class="rg-line" d="M0 62 L162 30 L302 66 L432 19 L566 58 L706 35 L864 64 L1004 25 L1162 56 L1302 33 L1440 59"/>
+                </svg>
+            </div>
+
+        <style>
+            #reviews .hmr-grid{display:grid;gap:1.75rem;margin-top:2.25rem;}
+            @media (min-width:1024px){#reviews .hmr-grid{grid-template-columns:19.5rem minmax(0,1fr);gap:2.25rem;align-items:start;}}
+
+            /* ---- rating panel ---- */
+            #reviews-panel{position:relative;border:1px solid var(--border);background:linear-gradient(180deg,rgba(27,30,34,.95),rgba(20,22,25,.95));padding:1.5rem 1.35rem 1.4rem;}
+            #reviews-panel::before{content:"";position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:1px solid var(--accent);border-left:1px solid var(--accent);}
+            @media (min-width:1024px){#reviews-panel{position:sticky;top:6rem;}}
+            #reviews .hmr-panel-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;}
+            #reviews .hmr-src{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#00aa6c;}
+            #reviews .hmr-verified{display:inline-flex;align-items:center;gap:.35rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-foreground);}
+            #reviews .hmr-score{display:flex;align-items:baseline;gap:.5rem;margin-top:.9rem;}
+            #reviews .hmr-score-n{font-family:Oswald,sans-serif;font-weight:300;font-size:4.25rem;line-height:.85;letter-spacing:-.03em;color:var(--accent);font-feature-settings:'tnum';}
+            #reviews .hmr-score-of{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-foreground);}
+            #reviews .hmr-score-bub{margin-top:.6rem;}
+            #reviews .hmr-count{margin-top:.55rem;font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;line-height:1.5;color:rgba(255,255,255,.62);}
+            #reviews .hmr-count b{font-weight:500;color:#fff;}
+            #reviews .hmr-bars{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.4rem;}
+            #reviews .hmr-bar{display:grid;grid-template-columns:5.2rem 1fr 1.6rem;align-items:center;gap:.55rem;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-foreground);}
+            #reviews .hmr-bar-track{height:4px;background:rgba(255,255,255,.07);position:relative;overflow:hidden;}
+            #reviews .hmr-bar-track i{position:absolute;inset:0 auto 0 0;background:#00aa6c;display:block;}
+            #reviews .hmr-bar:first-child .hmr-bar-n{color:#fff;}
+            #reviews .hmr-bar-n{text-align:right;font-feature-settings:'tnum';}
+            #reviews .hmr-cta{margin-top:1.25rem;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;width:100%;min-height:44px;padding:.7rem 1rem;border:1px solid var(--accent);background:var(--accent);color:#14161a;
+                font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:background .25s,box-shadow .25s;}
+            #reviews .hmr-cta svg{width:16px;height:9px;transition:transform .3s cubic-bezier(.2,.7,.2,1);}
+            #reviews .hmr-cta:hover{background:#ff7a3d;box-shadow:0 0 0 4px rgba(240,98,37,.16);}
+            #reviews .hmr-cta:hover svg{transform:translateX(4px);}
+            #reviews .hmr-fine{margin-top:.85rem;font-family:'IBM Plex Mono',monospace;font-size:8.5px;line-height:1.6;letter-spacing:.06em;color:rgba(255,255,255,.34);}
+
+            /* ---- card rail ---- */
+            #reviews .hmr-rail{position:relative;min-width:0;}
+            #reviews .hmr-card{flex:0 0 15.5rem;scroll-snap-align:start;padding:1.05rem 1rem .95rem;}
+            #reviews .hmr-card::after{font-size:3.2rem;top:.2rem;right:.6rem;}
+            #reviews .hmr-title{margin-top:.6rem;font-size:.9rem;}
+            #reviews .hmr-quote{margin-top:.5rem;font-size:.8125rem;line-height:1.55;
+                display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;}
+            #reviews .hmr-card-foot{padding-top:.75rem;}
+            #reviews .hmr-links{margin-top:.55rem;padding-top:.55rem;}
+            @media (min-width:640px){#reviews .hmr-card{flex-basis:18.5rem;padding:1.25rem 1.15rem 1.1rem;}}
+            @media (min-width:1024px){#reviews .hmr-card{flex-basis:20.5rem;}#reviews .hmr-quote{-webkit-line-clamp:6;}}
+            #reviews-track{display:flex;gap:.85rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:.25rem;margin:0 -1.5rem;padding-left:1.5rem;padding-right:1.5rem;scroll-padding-left:1.5rem;}
+            #reviews-track::-webkit-scrollbar{display:none;}
+            @media (min-width:1024px){#reviews-track{margin:0;padding-left:0;padding-right:0;scroll-padding-left:0;}}
+            #reviews a:focus-visible,#reviews button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+            /* ---- rail arrows ---- */
+            #reviews .hmr-arrows{display:none;gap:.5rem;}
+            @media (min-width:1024px){#reviews .hmr-arrows{display:flex;}}
+            #reviews .hmr-arrow{display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;border:1px solid var(--border);background:transparent;color:var(--muted-foreground);cursor:pointer;transition:border-color .2s,color .2s,opacity .2s;}
+            #reviews .hmr-arrow:hover:not(:disabled){border-color:var(--accent);color:var(--accent);}
+            #reviews .hmr-arrow:disabled{opacity:.3;cursor:default;}
+            #reviews .hmr-arrow svg{width:16px;height:9px;}
+            #reviews .hmr-arrow.is-prev svg{transform:rotate(180deg);}
+            #reviews .hmr-hint{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-foreground);}
+
+            /* ---- light mode ---- */
+            body.light-mode #reviews{background:#f4f1ea;}
+            body.light-mode #reviews-panel,body.light-mode #reviews .hmr-card{background:#fff;border-color:#e3ded5;}
+            body.light-mode #reviews .hmr-title,body.light-mode #reviews .hmr-who,body.light-mode #reviews .hmr-count b{color:#16181b;}
+            body.light-mode #reviews .hmr-quote{color:#3b4046;}
+            body.light-mode #reviews .hmr-count{color:#4b5158;}
+            body.light-mode #reviews .hmr-bar-track{background:rgba(28,30,33,.09);}
+            body.light-mode #reviews .hmr-links{border-top-color:rgba(28,30,33,.1);}
+            body.light-mode #reviews .hmr-fine{color:rgba(28,30,33,.45);}
+            body.light-mode #reviews .hmr-guide span{color:#6b7078;border-color:rgba(214,77,22,.35);}
+            body.light-mode #reviews .hmr-when,body.light-mode #reviews .hmr-verify,body.light-mode #reviews .hmr-hint{color:#6b7078;}
+            /* Phones: the panel is a strip, not a tile — you should reach a real
+               review inside one thumb-flick. The bar breakdown and the small
+               print stay on tablets and up. */
+            @media (max-width:767px){
+                #reviews .hmr-bars,#reviews .hmr-fine,#reviews .hmr-verified{display:none;}
+                #reviews-panel{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:.9rem;row-gap:.35rem;padding:.9rem 1rem;}
+                #reviews .hmr-panel-head{grid-column:2;align-self:end;}
+                #reviews .hmr-score{grid-row:1 / span 2;grid-column:1;margin-top:0;align-items:baseline;}
+                #reviews .hmr-score-n{font-size:2.9rem;}
+                #reviews .hmr-score-bub{grid-column:2;margin-top:0;align-self:start;}
+                #reviews .hmr-count{grid-column:1 / -1;margin-top:.5rem;font-size:.75rem;}
+                #reviews .hmr-cta{grid-column:1 / -1;margin-top:.7rem;min-height:40px;font-size:10px;}
+            }
+            @media (prefers-reduced-motion: reduce){#reviews .hmr-card{transition:none;}#reviews .hmr-card:hover{transform:none;}}
+        </style>
+
+        <div class="pointer-events-none absolute inset-0 z-0 opacity-[0.07] bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/40 via-transparent to-transparent"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+                <div>
+                    <span id="reviews-label" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">06 &mdash; The Summit Register</span>
+                    <h2 id="reviews-heading" class="mt-3 font-heading text-4xl md:text-6xl font-light uppercase leading-[0.92] tracking-tightest text-foreground">
+                        What Trekkers<br><span class="font-semibold text-accent">Write Afterwards</span>
+                    </h2>
+                </div>
+                <p id="reviews-lede" class="max-w-md font-sans text-[13px] md:text-sm leading-relaxed text-muted-foreground">
+                    Every word below was written by a traveller on Tripadvisor &mdash; not by us. Tap any card to read the original review, or the route it was written about.
+                </p>
+            </div>
+
+            <div class="hmr-grid">
+                <aside id="reviews-panel" aria-label="Tripadvisor rating summary"></aside>
+
+                <div class="hmr-rail">
+                    <div class="hmr-track-wrap">
+                        <div id="reviews-track" role="list" tabindex="0" aria-label="Traveller reviews"></div>
+                    </div>
+                    <div class="mt-5 flex items-center justify-between gap-4">
+                        <span class="hmr-hint">Swipe or drag for more &middot; every review links to its source</span>
+                        <div class="hmr-arrows">
+                            <button type="button" class="hmr-arrow is-prev" data-hmr-scroll="prev" aria-label="Previous reviews"><svg viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                            <button type="button" class="hmr-arrow" data-hmr-scroll="next" aria-label="More reviews"><svg viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07 — THE FIELD JOURNAL -->
+    <section id="dispatches" class="has-ridge relative overflow-hidden px-6 py-14 md:px-20 md:py-20 border-b border-border bg-[#1b1e22]">
+            <!-- ridge into this section -->
+            <div class="sec-ridge" style="--ridge-from:#141619" aria-hidden="true">
+                <svg viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false">
+                    <path class="rg-fill" d="M0 54 L128 34 L246 60 L368 26 L512 62 L668 30 L818 57 L972 22 L1124 50 L1286 31 L1440 48 L1440 0 L0 0 Z"/>
+                    <path class="rg-haze" d="M0 54 L128 34 L246 60 L368 26 L512 62 L668 30 L818 57 L972 22 L1124 50 L1286 31 L1440 48"/>
+                    <path class="rg-line" d="M0 54 L128 34 L246 60 L368 26 L512 62 L668 30 L818 57 L972 22 L1124 50 L1286 31 L1440 48"/>
+                </svg>
+            </div>
+
         <div class="max-w-7xl mx-auto">
             <div class="mb-12">
-                <span id="dispatches-label" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">06 — The Field Journal</span>
+                <span id="dispatches-label" class="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">07 — The Field Journal</span>
                 <h2 class="font-heading text-4xl font-light uppercase tracking-tightest text-white md:text-5xl mt-2">
                     STORIES FROM THE <span class="font-semibold text-accent">HIGH PLACES</span>
                 </h2>
@@ -1210,6 +1802,15 @@
 
     <!-- CONNECT  ·  a hybrid mini-about + reach-us band (replaced the legacy copy 2026-09-08) -->
     <section id="about" class="relative overflow-hidden px-6 py-14 md:px-20 md:py-20 bg-[#191b1f] border-b border-border">
+            <!-- ridge into this section -->
+            <div class="sec-ridge" style="--ridge-from:#1b1e22" aria-hidden="true">
+                <svg viewBox="0 0 1440 80" preserveAspectRatio="none" focusable="false">
+                    <path class="rg-fill" d="M0 46 C150 22 268 66 426 53 C566 42 646 15 802 31 C962 47 1046 67 1204 49 C1322 35 1382 41 1440 37 L1440 0 L0 0 Z"/>
+                    <path class="rg-haze" d="M0 46 C150 22 268 66 426 53 C566 42 646 15 802 31 C962 47 1046 67 1204 49 C1322 35 1382 41 1440 37"/>
+                    <path class="rg-line" d="M0 46 C150 22 268 66 426 53 C566 42 646 15 802 31 C962 47 1046 67 1204 49 C1322 35 1382 41 1440 37"/>
+                </svg>
+            </div>
+
         <div class="pointer-events-none absolute inset-0 z-0">
             <img src="/images/hero-mountain.jpg" class="h-full w-full object-cover object-center opacity-[0.06] grayscale" alt="" aria-hidden="true">
             <div class="absolute inset-0 bg-gradient-to-b from-[#191b1f] via-[#191b1f]/92 to-[#191b1f]"></div>
@@ -1281,6 +1882,8 @@
                 <p class="max-w-sm text-[11px] leading-relaxed text-[#7a7d84]">
                     A Nepali-owned trekking and expedition operator working the Himalaya and Karakoram for over thirty years. Every route led by licensed local guides and Sherpa climbing crew, with a turnaround discipline we do not bend.
                 </p>
+                <!-- Tripadvisor rating pill — filled by /reviews.js from /data/reviews.js -->
+                <p data-hmr-pill class="mt-5"></p>
             </div>
 
             <!-- Link columns -->
@@ -1447,58 +2050,163 @@
     <script src="/peaks.js?v=4"></script>
     <script src="/data/stories.js"></script>
     <script src="/stories.js?v=3"></script>
-    <script src="/edit.js?v=25.9"></script>
+    <script src="/explore-map.js?v=42" defer></script>
+    <script src="/data/reviews.js"></script>
+    <script src="/reviews.js?v=5" defer></script>
+    <script src="/edit.js?v=31"></script>
     <script>
-    /* Homepage Compare-Treks preview table (04) */
+    /* Homepage Compare-Treks (04) — the /compare layout (a column per trail,
+       photo on top) with icons, bars and the best value in each row picked out.
+       Data comes from the trek database; change the three routes in `slugs`. */
     (function () {
       var box = document.getElementById('compare-home-table');
       var T = window.TREKS || {};
       if (!box || !Object.keys(T).length) return;
-      var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-      var firstInt = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
+      var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); };
+      var ico = function (d) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; };
+      var I = {
+        pin: '<path d="M18 8c0 3.6-3.9 7.4-5.4 8.8a1 1 0 0 1-1.2 0C9.9 15.4 6 11.6 6 8a6 6 0 0 1 12 0"/><circle cx="12" cy="8" r="2"/>',
+        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/>',
+        mtn: '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/>',
+        gauge: '<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
+        sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+        wallet: '<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>',
+        bed: '<path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M2 16h20"/><path d="M6 10V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/>',
+        flag: '<path d="M4 22V4"/><path d="M4 4h10l-1.5 3L14 10H4"/>',
+        crown: '<path d="m3 6 4.5 4L12 4l4.5 6L21 6v12H3z"/>',
+        route: '<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+        leaf: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>',
+        spark: '<path d="M12 3l1.9 6.1L20 11l-6.1 1.9L12 19l-1.9-6.1L4 11l6.1-1.9z"/>',
+        arrow: '<svg viewBox="0 0 18 10" fill="none" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4" stroke="currentColor" stroke-width="1.5"/></svg>'
+      };
+      var num = function (s) { var m = String(s || '').replace(/,/g, '').match(/\d+/); return m ? +m[0] : null; };
+      var DIFF = [[/^easy|gentle/i, 1], [/moderate to challenging|moderate–challenging/i, 3], [/moderate/i, 2], [/strenuous|challenging/i, 4], [/technical|expedition/i, 5]];
+      var diffRank = function (s) {
+        for (var i = 0; i < DIFF.length; i++) if (DIFF[i][0].test(s || '')) return DIFF[i][1];
+        return 3;
+      };
+
       var slugs = ['everest-base-camp', 'annapurna-circuit', 'langtang-valley'].filter(function (s) { return T[s]; });
       var vm = slugs.map(function (s) {
         var t = T[s], st = t.stats || {};
         var pr = (t.cost && t.cost.tiers && t.cost.tiers[0] && t.cost.tiers[0].rangeUSD) || '';
-        var pm = pr.match(/\$[\d,]+/); var pv = pm ? +pm[0].replace(/[$,]/g, '') : null;
+        var pm = pr.match(/\$[\d,]+/);
+        var pv = pm ? +pm[0].replace(/[$,]/g, '') : null;
         var dm = String(st.duration || '').match(/(\d+)(?:\s*[–—-]\s*(\d+))?\s*days?/i);
-        var accNote = (t.accommodationNote || '').toLowerCase();
+        var acc = String(t.hotelsNote || (t.suitability && t.suitability.accommodation) || '').toLowerCase();
         return {
-          slug: s, name: t.name.replace(/ Trek$/, ''), region: t.region || '',
-          dur: dm ? (dm[2] ? dm[1] + '–' + dm[2] + 'd' : dm[1] + 'd') : (st.duration || '').split('(')[0].trim(),
-          alt: (st.maxAltitude || '—').replace(/^[≈~\s]+/, '').split('(')[0].trim(),
-          diff: st.difficulty || '—', season: st.bestSeason || '—',
-          cost: pv == null ? '—' : pv < 1200 ? '$' : pv < 2200 ? '$$' : '$$$',
-          teahouse: !/camping/.test(accNote) || /tea ?house/.test(accNote)
+          slug: s,
+          name: t.name.replace(/ Trek$/, ''),
+          region: t.region || '',
+          image: t.heroImage || '',
+          days: dm ? +(dm[2] || dm[1]) : null,        // compare on the longest version of the itinerary
+          daysLabel: dm ? (dm[2] ? dm[1] + '–' + dm[2] + ' days' : dm[1] + ' days') : (st.duration || '—').split('(')[0].trim(),
+          distance: (st.distanceKm || '—').replace(/^[≈~\s]+/, ''),
+          alt: num(st.maxAltitude),
+          altLabel: (st.maxAltitude || '—').replace(/^[≈~\s]+/, '').split('(')[0].trim(),
+          high: st.maxAltitudePoint || '',
+          diff: (st.difficulty || '—').split('(')[0].trim(),
+          diffRank: diffRank(st.difficulty),
+          season: (st.bestSeason || '—').split('(')[0].trim(),
+          start: (st.startPoint || '—').split('(')[0].trim(),
+          price: pv,
+          priceLabel: pv == null ? 'On request' : 'from $' + pv.toLocaleString('en-GB'),
+          camping: /camp/.test(acc) && !/tea ?house|lodge/.test(acc)
         };
       });
-      var rows = [
-        ['Duration', function (m) { return esc(m.dur); }],
-        ['Max altitude', function (m) { return '<span class="text-accent">' + esc(m.alt) + '</span>'; }],
-        ['Difficulty', function (m) { return esc(m.diff); }],
-        ['Best season', function (m) { return esc(m.season); }],
-        ['Cost', function (m) { return '<span class="text-white">' + esc(m.cost) + '</span>'; }],
-        ['Tea houses', function (m) { return m.teahouse ? '<span class="text-accent">✓</span>' : '✗'; }]
+      if (!vm.length) return;
+
+      var maxAlt = Math.max.apply(null, vm.map(function (m) { return m.alt || 0; })) || 1;
+      var scaleTop = Math.ceil(maxAlt / 500) * 500;
+      var best = {
+        alt: Math.max.apply(null, vm.map(function (m) { return m.alt || 0; })),
+        days: Math.max.apply(null, vm.map(function (m) { return m.days || 0; })),
+        easy: Math.min.apply(null, vm.map(function (m) { return m.diffRank; })),
+        price: Math.min.apply(null, vm.map(function (m) { return m.price == null ? Infinity : m.price; }))
+      };
+      /* one badge per column, one column per badge */
+      var flags = {};
+      [['Highest', I.crown, function (m) { return m.alt === best.alt; }],
+       ['Longest', I.route, function (m) { return m.days === best.days; }],
+       ['Gentlest', I.leaf, function (m) { return m.diffRank === best.easy; }],
+       ['Best value', I.spark, function (m) { return m.price === best.price; }]
+      ].forEach(function (f) {
+        for (var i = 0; i < vm.length; i++) {
+          if (!flags[vm[i].slug] && f[2](vm[i])) { flags[vm[i].slug] = [f[0], f[1]]; return; }
+        }
+      });
+
+      var dots = function (n, label) {
+        var o = '';
+        for (var i = 1; i <= 5; i++) o += '<i class="' + (i <= n ? 'on' : '') + '"></i>';
+        return '<span class="cmp-dots" role="img" aria-label="' + esc(label) + ', ' + n + ' of 5">' + o + '</span><span class="cmp-sub">' + esc(label) + '</span>';
+      };
+      var win = function (word) { return '<span class="cmp-win">' + esc(word) + '</span>'; };
+
+      var ROWS = [
+        ['Duration', I.clock, function (m) { return esc(m.daysLabel) + (m.days === best.days ? win('longest') : ''); }, function (m) { return m.days === best.days; }],
+        ['Distance', I.route, function (m) { return esc(m.distance); }, function () { return false; }],
+        ['Max altitude', I.mtn, function (m) {
+          return '<span class="cmp-alt"><b>' + esc(m.altLabel) + '</b><span class="cmp-track"><i style="--h:' + ((m.alt || 0) / scaleTop).toFixed(3) + '"></i></span></span>' +
+            (m.high ? '<span class="cmp-sub">' + esc(m.high) + '</span>' : '');
+        }, function (m) { return m.alt === best.alt; }],
+        ['Difficulty', I.gauge, function (m) { return dots(m.diffRank, m.diff); }, function (m) { return m.diffRank === best.easy; }],
+        ['Best season', I.sun, function (m) { return esc(m.season); }, function () { return false; }],
+        ['Starting point', I.flag, function (m) { return esc(m.start); }, function () { return false; }],
+        ['Land cost', I.wallet, function (m) { return esc(m.priceLabel) + (m.price === best.price ? win('lowest') : ''); }, function (m) { return m.price === best.price; }],
+        ['Nights', I.bed, function (m) { return m.camping ? 'Camping' : '<span class="cmp-yes">Tea houses</span>'; }, function () { return false; }]
       ];
-      box.innerHTML = '<table class="w-full border-collapse font-mono text-xs bg-[#16181b] border border-border min-w-[520px]">' +
-        '<thead><tr><th class="text-left p-4 border-b border-border"></th>' +
-        vm.map(function (m) { return '<th class="text-left p-4 border-b border-l border-border"><a href="/treks/' + esc(m.slug) + '" class="font-heading text-lg md:text-xl uppercase text-white hover:text-accent transition-colors leading-tight block">' + esc(m.name) + '</a><span class="block text-[9px] uppercase tracking-widest text-muted-foreground mt-1">' + esc(m.region) + '</span></th>'; }).join('') + '</tr></thead><tbody>' +
-        rows.map(function (r, i) {
-          return '<tr class="' + (i % 2 ? 'bg-[#1b1e22]' : '') + '"><td class="p-4 text-[9px] uppercase tracking-[0.2em] text-muted-foreground border-b border-border/50">' + esc(r[0]) + '</td>' +
-            vm.map(function (m) { return '<td class="p-4 text-foreground/90 border-b border-l border-border/50">' + r[1](m) + '</td>'; }).join('') + '</tr>';
+
+      box.innerHTML = '<table class="cmp"><thead><tr><th class="cmp-rowhead" scope="col"><span class="sr-only">Trail</span></th>' +
+        vm.map(function (m) {
+          var f = flags[m.slug];
+          return '<th class="cmp-head" scope="col">' +
+            '<a class="cmp-shot" href="/treks/' + esc(m.slug) + '" tabindex="-1" aria-hidden="true">' +
+              (m.image ? '<img src="' + esc(m.image) + '" alt="" loading="lazy" decoding="async" onerror="this.remove()">' : '') +
+              (f ? '<span class="cmp-flag">' + ico(f[1]) + esc(f[0]) + '</span>' : '') +
+            '</a>' +
+            '<span class="cmp-region">' + esc(m.region) + '</span>' +
+            '<a class="cmp-name" href="/treks/' + esc(m.slug) + '">' + esc(m.name) + '</a>' +
+            '<span class="cmp-btns">' +
+              '<a class="cmp-btn" href="/treks/' + esc(m.slug) + '">View trek' + I.arrow + '</a>' +
+              '<a class="cmp-btn is-primary" href="/contact?trip=' + esc(m.slug) + '" data-book="' + esc(m.slug) + '" data-book-type="trek" aria-label="Plan ' + esc(m.name) + '">Plan</a>' +
+            '</span>' +
+          '</th>';
+        }).join('') + '</tr></thead><tbody>' +
+        ROWS.map(function (r) {
+          return '<tr><th class="cmp-rowhead" scope="row"><span>' + ico(r[1]) + esc(r[0]) + '</span></th>' +
+            vm.map(function (m) {
+              return '<td class="cmp-cell' + (r[3](m) ? ' is-best' : '') + '">' + r[2](m) + '</td>';
+            }).join('') + '</tr>';
         }).join('') + '</tbody></table>';
+
+      /* the altitude bars grow when the table comes on screen */
+      var bars = box.querySelectorAll('.cmp-track i');
+      if (window.IntersectionObserver && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            [].forEach.call(bars, function (b, i) { setTimeout(function () { b.style.setProperty('--grow', '1'); }, 100 + i * 120); });
+            io.disconnect();
+          });
+        }, { threshold: 0.2 });
+        io.observe(box);
+      } else {
+        [].forEach.call(bars, function (b) { b.style.setProperty('--grow', '1'); });
+      }
     })();
     </script>
     <script src="/announce.js?v=2"></script>
 <script src="/backdrop.js?v=2" defer></script>
-<script src="/menu.js?v=10"></script>
-<script src="/back.js?v=1"></script>
+<script src="/menu.js?v=13"></script>
+<script src="/card-fx.js?v=4" defer></script>
+<script src="/back.js?v=2"></script>
 <script src="/altitude.js?v=1" defer></script>
-<script src="/hero-corridor.js?v=2" defer></script>
+<script src="/hero-corridor.js?v=3" defer></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/theme.js?v=2"></script>
 <script src="/booking-client.js?v=1" defer></script>
-<script src="/booking-modal.js?v=2" defer></script>
+<script src="/booking-modal.js?v=3" defer></script>
 </body>
 </html>

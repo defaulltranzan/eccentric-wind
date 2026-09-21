@@ -1290,3 +1290,294 @@ Restore point: tag `pre-polish-v1` (= commit 1bcad7d). `git checkout pre-polish-
   (generated from the 340px originals). Delete the `srcset`/`sizes` attributes to go back to the single PNG.
 - **Spacing**: homepage sections `py-16 md:py-24` → `py-14 md:py-20`; interlude/stats bottom padding reduced.
 - Cache bumps: edit.js v=25.9, menu.js v=10, booking-modal.js v=2.
+
+## § 10 — Tripadvisor reviews: "The Summit Register" (2026-09-18)
+
+Restore point: tag `pre-reviews` (= commit ea72011).
+
+Hybrid approach: the real Tripadvisor rating badge for trust + hand-picked review cards in our own design.
+Everything is real: 10 five-bubble reviews quoted (short excerpts) from the live listing
+(Himalayan Magic Adventures, Kathmandu — 4.9/5 from 52 reviews, checked 18 Sept 2026), each card linking
+to the review it came from.
+
+New content collection `reviews` (4th collection, same row shape as treks/expeditions/stories):
+- `data/content/reviews.json` — 1 row of kind `source` (the rating summary panel) + 10 rows of kind `review`.
+- `contentService.COLLECTIONS.reviews` + a `buildScript` branch emitting `window.REVIEWS` and `window.REVIEW_SOURCE`.
+- `server.js` serves `/data/reviews.js`; `adminRoutes.js` COLLECTION regex now includes `reviews`.
+- Supabase: `public.reviews` table in `supabase/schema.sql` (re-run it), `supabaseDriver` TABLES, `scripts/db-push.js`.
+- Admin: /admin → Reviews (nav, dashboard card, `REVIEW` schema in schemas.js). Sections carry a `kinds`
+  list and `admin.js` only renders the sections matching the record's kind, so the summary record shows
+  only the rating fields. Admin bundle bumped to v=3.
+
+Front end:
+- `public/reviews.js` (v=1) renders three things from the data: the homepage section, the footer pill
+  (`[data-hmr-pill]`, on all 13 footers) and the pill inside the booking popup (`fillTrust()` in booking-modal.js).
+  It injects its own small stylesheet, so no page CSS was touched.
+- Homepage section `#reviews` ("06 — The Summit Register") sits between the Route Console and the Field Journal,
+  which is renumbered to 07 (`sec06Label` in the three i18n blocks of edit.js). Section CSS lives in index.html.
+- Cache bumps: booking-modal.css v=6, booking-modal.js v=3.
+
+Deliberately NOT added: schema.org `aggregateRating` JSON-LD. Google does not allow self-serving aggregate
+ratings collected from another site, and it risks a manual action — the visible badge + links are the safe way.
+
+To revert: `git checkout pre-reviews -- public/index.html public/edit.js public/booking-modal.js public/booking-modal.css src public/admin server.js supabase scripts`,
+delete `public/reviews.js` and `data/content/reviews.json`, and drop the `<script src="/data/reviews.js">` +
+`<script src="/reviews.js">` tags and the `data-hmr-pill` paragraph from the page footers.
+
+## § 11 — Real map, card motion, compare cards, trip reviews (2026-09-18)
+
+Restore point: tag `pre-map` (= commit 8ddf010). Each piece reverts on its own:
+
+**1. Explore Nepal is a real map (MapLibre GL).**
+- `public/vendor/maplibre-gl.{js,css}` — MapLibre GL JS 4.7.1, self-hosted (BSD-3, licence alongside).
+  Self-hosted on purpose: no API key, no third-party request, and our CSP blocks CDNs.
+- `public/data/nepal.geo.json` — country outline, 7 provinces and a world mask, built from
+  mesaugat/geoJSON-Nepal (OCHA / Survey Department) and simplified to ~110 kB.
+- `public/data/places.json` — the towns, trailheads, passes, lakes and parks (real coordinates,
+  nearest few hundred metres). Peaks come from the expeditions database, which already holds coordinates.
+- `public/explore-map.js` — draws the map, the markers and the panel. No tile server: everything is our
+  own vector data, so it costs nothing and works offline once the page is loaded.
+  Decluttering: markers are ranked, then any pin or label that would collide with a more important one
+  is hidden; more appear as you zoom. Hiding uses `visibility`, because MapLibre sets inline `opacity`.
+  It starts on `styledata` rather than `load`, so it still works in a tab that is not painting.
+- CSP: `worker-src`/`child-src` now allow `blob:` (MapLibre's parser worker) — `src/config/security.js`.
+- **Revert:** delete the `<script src="/explore-map.js">` tag from index.html. The old drawn SVG map is
+  still in the page and comes straight back (it is also the automatic fallback if the module fails).
+
+**2. Card motion on every rail — `public/card-fx.js` (all 14 pages).**
+Depth (cards scale/dim away from the middle), photo parallax, drag-to-scroll with momentum, a hairline
+progress bar, and ←/→/Home/End keys. Off automatically for `prefers-reduced-motion`.
+- **Revert (any one):** `<script>window.HMA_CARD_FX = false;</script>` before the tag · delete the
+  `<script src="/card-fx.js">` tags · `HMACardFX.off()` in the console for one page view.
+
+**3. Homepage compare (04) — three route dossiers instead of the table.**
+Photo, superlative badge (Highest / Longest / Gentlest / Best value, one per card), a shared-scale
+altitude bar, Lucide icon rows and a Plan button. Markup + script are inline in index.html; the routes
+shown are the `slugs` array in that script.
+- **Revert:** `git checkout pre-map -- public/index.html` (also reverts the map wiring).
+
+**4. Two reviews on each trek / expedition page.**
+`#trip-reviews` in trek.html and expedition.html, filled by reviews.js: reviews written about that trip
+if there are any, otherwise the strongest recent ones. The review-card CSS moved from index.html's
+`<style>` into reviews.js so both pages share it.
+- **Revert:** delete the `data-hmr-wrap` section from trek.html / expedition.html.
+
+Cache bumps: explore-map.js v=13, card-fx.js v=4, reviews.js v=5.
+
+## § 12 — Region-first map, compare back in table form, plain phone hero (2026-09-18)
+
+Restore point: tag `pre-regions` (= commit a0716ba).
+
+**1. Explore Nepal is region-first now.** The opening view shows only the nine trekking regions
+(the same ones as `exploreGeo` in edit.js) with their trail counts. Tapping one flies the map to that
+region's box, reveals only that region's trailheads, peaks and passes, and fills the panel with
+`renderGeoRegion()` — the trails list (→ /treks/<slug>), the peaks (→ /expeditions/<slug>) and the
+trailheads, exactly as the old drawn map did. "All regions" returns. Category chips are gone.
+- Region boxes/centres live in `REGIONS` at the top of `public/explore-map.js`.
+- `window.exploreGeo` / `window.EXPLORE_GEO_ORDER` are now exported from edit.js (a `const` never
+  reached `window`, so the map fell back to raw keys).
+- Two MapLibre gotchas fixed: a marker element must not be given `position`/`transform` in CSS (it
+  breaks MapLibre's own positioning — the labels now sit inside the pin), and `.hgl-reset[hidden]`
+  needed an explicit `display:none`.
+
+**2. Homepage compare (04) is back to the /compare layout**: a column per trail with the photo on top,
+then labelled rows — but each row label carries a Lucide icon, altitude has a shared-scale bar,
+difficulty is five squares, and the best value in a row is picked out with a small tag.
+Change the three routes in the `slugs` array in the inline script in index.html.
+
+**3. /compare compares peaks too.** Two buttons at the top switch between "Compare treks" and
+"Compare peaks". Peak mode reads window.MOUNTAINS + PEAKS_DATA and compares summit altitude, band,
+expedition length, base camp, normal route, season, technical/altitude/remoteness/weather grades and
+the permit authority, with its own verdict panel. Shareable as `?mode=peaks&p=slug,slug`.
+
+**4. The phone hero is plain.** The telemetry row (coordinates, departure status, film switcher) is
+desktop-only; phones show the eyebrow, the name, one sentence, the buttons and the summit figure, and
+the hero is a little shorter (`min(78svh, 640px)`).
+
+Reverting any one piece: `git checkout pre-regions -- <file>` — the map is public/explore-map.js
+(+ the `#explore` block in index.html), compare is the inline script in index.html, peaks mode is
+public/compare.js + public/compare.html, the phone hero is the `max-width: 767px` block in index.html.
+
+## § 13 — Explore Nepal is plain SVG now; MapLibre is gone (2026-09-18)
+
+Restore point: tag `pre-map-svg`.
+
+Client note: "the map section is lagging… make it simple with only 3 step zoom… must work on
+mobile… lag free and clutter free with no broken links."
+
+**1. MapLibre is deleted.** `public/vendor/` (maplibre-gl.js 4.7.1, 803 kB) is gone. Do not put a
+map library back in this section: free zoom plus 65 DOM markers re-projected on every frame of
+every gesture *was* the lag. There is no WebGL, no canvas, no tiles and no API key any more.
+
+**2. Three steps, no gestures.** `public/explore-map.js` is a new engine that draws the same
+`public/data/nepal.geo.json` as plain SVG, Mercator-projected once at boot into a fixed 1000-wide
+user space. States: `0` Nepal (nine region territories) → `1` one region → `2` one place. Between
+transitions nothing runs at all; during one, only the `<svg viewBox>` and the ~10 visible pins'
+`left`/`top` change, for 520 ms.
+- Region territories are computed, not drawn: eight longitude bands (`BANDS`) cut at the lowland
+  divide, which is read off the country outline itself (`spanAt()`, `TERAI_SHARE`). Moving a
+  region boundary = editing one number in `BANDS`.
+- `glide()` has a `setTimeout` guard: animation frames stop in a tab that is not painting, and
+  without it the map would freeze at the frame the zoom started on.
+- `thin()` must be given the *destination* rectangle, not the current one, or every zoom ends
+  with labels thinned for the previous view.
+- Boot is lazy: IntersectionObserver for the fast path, `requestIdleCallback` as the guarantee
+  (IO never fires for a zero-size or unpainted container).
+
+**3. The layer bar** (`#ne-chips`): Regions · Trails · Peaks · Passes · Expeditions. At step 1 a
+layer shows across the country; inside a region it filters. With Regions selected, a busy region
+shows only the headline set (summit/pass/trailhead/major) and a quiet one shows everything.
+
+**4. Deleted with it:** the drawn SVG fallback map and its CSS, the Regions⇄Provinces lens
+toggle, `buildGeoLayer` / `geoZoom` / `setExploreLens` / `renderExploreRegion` / `highlightGeo`
+in edit.js (~27 kB), the phone sheet (`hme-x-open`, `closeExploreNepal`), and the stale
+light-mode map rules in `build/tw-input.css`. `#explore` is in the page at every width now —
+no more `hidden lg:block`. Provinces still render as faint base geography.
+`exploreGeo` in edit.js lost its viewBox fields; it is pure content.
+
+**5. Data:** four Rolwaling points were added to `public/data/places.json` (Singati & Chetchet,
+Beding, Tsho Rolpa, Tashi Lapcha) because the region opened to an empty frame without them.
+They are published figures, not surveyed — flagged in that file's own `note` for the client to
+check. Point→trail links are derived from the trek records themselves (`passes[].name`,
+`routePoints[].name`, `stats.maxAltitudePoint`) so a pin never offers a link we do not have.
+
+**Gotcha worth remembering:** cutting code out of edit.js by `indexOf(marker)` matched an
+*earlier* duplicate comment header and silently deleted the whole `exploreGeo` block.
+`node --check` passes (syntax only) and hoisted functions still exist, so the only symptom was
+`window.exploreGeo === undefined`. Check marker uniqueness first.
+
+**Revert:** `git checkout pre-map-svg -- public/index.html public/edit.js public/menu.js
+public/data/places.json build/tw-input.css`, restore `public/vendor/` from that tag, and delete
+`public/explore-map.js`'s new contents in favour of the tagged version.
+
+## § 14 — The four doors: hero quick-nav, and a plain phone hero (2026-09-19)
+
+Restore point: tag `pre-hero-nav` (= the map commit, so this reverts the hero and nothing else). Markup + styles as they were: `_docs/hero-quicknav-backup/`.
+
+Client note: the phone hero said too much. It now says four things and *shows* four.
+
+**1. The four doors.** A new band at the bottom of the hero (`.hc-foot` → `.hc-doors`),
+four ways in as Lucide icons in an accent ring: Trekking → /treks, Expeditions → /expeditions,
+Explore Nepal → /#explore, Altitude & Safety → /altitude-safety. Desktop gets a ring, a name,
+one line of description and a link; phones get the ring and one short word (`.hc-door-label b`
+is the long name, `i` the short one). Taken from the reference the client sent — same idea,
+our palette and our type.
+- To change a door: edit the `<a class="hc-door">` block in index.html. Icons are inline Lucide
+  paths, so swapping one means pasting a new `<path>` set.
+
+**2. The phone hero is down to five things**: the eyebrow, the name, one sentence
+("Led by local guides since 1993." — shortened in all three `heroTagline` strings in edit.js),
+one full-width button, and the doors. Everything that was instrumentation rather than
+navigation is desktop-only now: the telemetry strip, the film switcher, the in-frame caption,
+the scroll cue, the second CTA and the "Plan a custom ascent" link.
+
+**3. The summit counter (`.hc-alt`, the animated 8,848.86 M) is gone** on every size — with the
+doors there, two instrument bands under the headline was one too many. hero-corridor.js guards
+for the missing `#hc-alt-num` / `#hc-alt-label`, so its counter simply does not run; the
+altitude motif still runs down the left edge (altitude.js) and the film switcher still names
+the peak in frame. Put it back by restoring the markup and the `.hc-alt*` rules from the backup.
+
+**4. "Plan a custom ascent" moved into the button row** instead of taking a line of its own.
+
+**4b. Second pass (client feedback).** The rings were too quiet and arrived too late — the strip
+faded in on an 0.85s delay, so on a slow load it looked like there were no icons at all. Now
+`.hc-foot` fades with the buttons (.9s/.4s), the rings are 4rem on desktop and 3.4rem on phones,
+and each one is a glass disc inside a dashed survey ring with an accent bearing mark at twelve
+o'clock — the same chart language as the compass and the map. Hover fills the disc accent and
+opens the dashed ring. The phone wordmark also dropped from 15.4vw to 12.2vw so the photograph
+is not buried under three lines of Oswald.
+
+**5. Height tiers.** The hero has to land inside one screen with the doors in it, so there are
+three: `max-height: 960px` tightens the stack, `830px` drops the door descriptions, `760px`
+drops the door links, the custom-ascent link, the caption row and the film switcher. The
+bottom-right corner is reserved (`.hc-ui` padding-bottom) because the floating theme/language
+pill, the compass and the social button all live there.
+
+**Revert:** `git checkout pre-hero-nav -- public/index.html public/edit.js`.
+Doors only: delete the `.hc-foot` block from index.html and restore the old `.hc-rail` markup
+from `_docs/hero-quicknav-backup/hero-markup.html`.
+
+## § 15 — Film mode, a tighter Summit Register, the four pillars two-up (2026-09-19)
+
+Restore point: tag `pre-hero-nav` (= the map commit) for index.html / hero-corridor.js;
+`git checkout pre-hero-nav -- public/altitude-safety.html` for the pillars.
+
+**1. Film mode.** While a film runs, the hero empties to the footage: the name, the lede, the
+buttons, the four doors and the telemetry row all step aside (`#manifesto.is-film` in
+index.html), and the atmosphere layers fade so the video is not veiled. What is left is a
+player band in the doors' place — a slider through the four films (arrows + dots), the peak's
+name and elevation, one text link into the expedition, and "Close film".
+- Built by `hero-corridor.js` into `#hc-player`; Escape, the close button, or re-picking the
+  same film return the hero. ← / → step through the films, and a horizontal swipe does the same
+  on a touch screen.
+- Phones could not reach the film list (it lives in the desktop-only telemetry row), so they get
+  one opener under the buttons: `#hc-films-open`, "Watch the films 04".
+- **Bug fixed here:** `.hc-ui` is a grid, and `#hc-player` and `.hc-foot` both sit in row 3.
+  Without an explicit `grid-column: 1` on every band, auto-placement invents a second column and
+  puts them side by side. Every band now states both its row and its column.
+
+**2. The Summit Register is smaller on a phone.** The rating panel was a 324 px tile before you
+reached a single review; it is now a strip (score, bubbles, count, link — the bar breakdown and
+the small print return at 768 px). Cards went from 19.5 rem to 15.5 rem with tighter padding and
+the quote clamped to five lines, so the next card peeks in and the section dropped from 1,050 px
+to 833 px. The rail already scrolled horizontally at every width — that had not changed.
+- **Bug fixed here:** a declaration block with no selector was sitting in the `#reviews` styles
+  (a leftover from an earlier edit). A stray block like that makes the parser swallow the rule
+  that follows it.
+
+**3. The four pillars are two up and two down on a phone** (`.pillars` in altitude-safety.html):
+399 px instead of 1,160 px of scrolling. Icons are now **inline Lucide** — heart-pulse,
+trending-up, satellite-dish, siren — instead of Font Awesome, so they match the rest of the site.
+- Each card carries two versions of its line: `.pillar-note.is-short` shows on phones, `.is-full`
+  from 768 px up. **Edit both** if you change a claim.
+- Font Awesome is still loaded for 63 other icons across 13 pages; see the note in the session
+  summary about retiring it.
+
+## § 16 — Section ridges, equal map columns, the folded region list, hc-min (2026-09-19)
+
+Restore point: tag `pre-hero-nav` (= the map commit).
+
+**1. Section ridges.** Every homepage boundary is now a drawn horizon instead of a 1px rule:
+`.sec-ridge` inside the lower section, with the upper section's colour spilling down over a
+hairline accent crest. Three profiles (`a` jagged, `b` rolling, `c` sharp) alternate so it never
+reads as a repeat. `--ridge-from` on each one is the colour above the crest; the section above a
+ridge carries `.has-ridge`, which drops its `border-b` so you get the ridge or the line, never
+both. `--ridge-above-reviews` flips at 1024 px because the trek finder is desktop-only.
+- Remove a ridge: delete its `<div class="sec-ridge">` and the `has-ridge` class above it.
+
+**2. The Explore Nepal columns are one height** from 1024 px up. The panel used to run past the
+bottom of the map. Now `.ne-cols` sets a 30 rem floor, `.ne-xpanel` caps at 34 rem and scrolls
+inside, and `.ne-map` drops its aspect ratio and fills what is left — the engine re-fits the
+viewBox to whatever shape the box ends up, so nothing distorts. The map got taller as a result
+(481 px instead of 384 px at 1440). The panel is no longer `sticky`; it does not need to be when
+it is the same height as the map.
+
+**3. The region list is folded behind a button on phones.** `introHtml()` renders
+`.ne-reveal` ("Explore trekking regions · 9") plus the list in `[data-ne-fold]`; the panel
+carries `data-fold="shut|open"` and CSS does the rest **under 1024 px only** — desktop always
+shows the list. The button pulses with two expanding rings (`neBuzz`), which never move the
+layout, and it is off under `prefers-reduced-motion`. Once opened it stays open for the session.
+
+**4. EXPERIMENT — `hc-min`.** The class on `#manifesto` strips the phone hero to the photograph
+and the four doors: no wordmark, no lede, no primary button. The eyebrow and the films opener
+stay (without the latter the films are unreachable on a phone), and the door rings grow to
+3.75 rem. **TO REVERT: delete `hc-min` from the section's class list.** Nothing else changes and
+desktop never reads it.
+
+## § 17 — The floating chrome sits on the header's centre line (2026-09-19)
+
+The Explore button, the back button and the menu close button all had a hard-coded
+`top: 3.9rem`. On arrival that put them 17.6 px below the logo on the homepage, and 45 px below
+it on pages with no announcement bar — they read as misaligned with the header.
+
+They now sit on `--hme-float-mid`, which `alignFloating()` in menu.js measures once at mount
+(and again on load and resize) as `header.offsetTop + header.offsetHeight / 2` — the header's
+centre in document coordinates, which is where it sits on screen before anyone scrolls. The
+buttons stay `position: fixed`, so they keep their place as the page scrolls; only the starting
+line changed. Measured delta against the logo is now 0.5 px on every page, phone and desktop.
+- Files: `public/menu.js` (the variable + both right-hand buttons), `public/back.js` (the left
+  one). CSS fallback `5.35rem` reproduces the old position if the variable is never set.
+- Also in menu.js: the scroll handler for the button used a `ticking` flag that was only cleared
+  inside a `requestAnimationFrame` callback. In a tab that stops painting the flag sticks true
+  and the button never updates again. `updateBtn` is a matchMedia read and one class toggle, so
+  it now runs inline on scroll and the flag is gone.

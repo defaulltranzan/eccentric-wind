@@ -47,6 +47,9 @@
 .hmb-brand img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 4px 12px rgba(0,0,0,.6)); }
 .hmb-brand span { font-family: 'Oswald', sans-serif; font-weight: 500; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; line-height: 1.15; color: #fff; }
 .hmb-brand small { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: .26em; color: var(--hmb-accent); font-weight: 500; }
+.hmb-trust { position: absolute; z-index: 2; left: 24px; top: 76px; }
+.hmb-trust .hmr-pill { background: rgba(10,11,13,.72); backdrop-filter: blur(6px); }
+@media (max-width: 860px) { .hmb-trust { display: none; } }
 .hmb-trip { position: absolute; z-index: 2; left: 28px; right: 28px; bottom: 26px; }
 .hmb-kicker { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--hmb-accent); }
 .hmb-trip-name { margin: 6px 0 0; font-family: 'Oswald', sans-serif; font-weight: 300; font-size: clamp(26px, 3vw, 38px); line-height: .98; letter-spacing: -.01em; text-transform: uppercase; color: #fff; text-shadow: 0 2px 20px rgba(0,0,0,.5); }
