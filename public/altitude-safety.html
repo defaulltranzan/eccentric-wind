@@ -16,6 +16,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* ---- 03.1 the four pillars ------------------------------------------
+           Four across on a desktop, two up / two down on a phone. The short
+           line and the full line are both in the DOM; only one shows at a
+           time (see the markup comment). */
+        .pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+        @media (min-width: 768px) { .pillars { gap: 1.5rem; } }
+        @media (min-width: 1024px) { .pillars { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        .pillar { display: flex; flex-direction: column; gap: .7rem; padding: 1.1rem 1rem 1.15rem;
+            border: 1px solid var(--border); background: var(--card); transition: border-color .3s ease, transform .3s cubic-bezier(.2,.7,.2,1); }
+        @media (min-width: 768px) { .pillar { gap: 1rem; padding: 2rem; } }
+        .pillar:hover { border-color: var(--accent); }
+        @media (min-width: 768px) { .pillar:hover { transform: translateY(-3px); } }
+        .pillar-ico { display: grid; place-items: center; width: 2.5rem; height: 2.5rem;
+            border: 1px solid rgba(240,98,37,.4); color: var(--accent); flex: none; }
+        @media (min-width: 768px) { .pillar-ico { width: 3rem; height: 3rem; } }
+        .pillar-ico svg { width: 1.25rem; height: 1.25rem; }
+        @media (min-width: 768px) { .pillar-ico svg { width: 1.5rem; height: 1.5rem; } }
+        .pillar-title { font-family: 'Oswald', sans-serif; font-weight: 400; text-transform: uppercase;
+            letter-spacing: -.01em; line-height: 1.15; font-size: .9375rem; color: #fff; }
+        @media (min-width: 768px) { .pillar-title { font-size: 1.25rem; } }
+        .pillar-note { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; line-height: 1.6; color: var(--muted-foreground); }
+        @media (min-width: 768px) { .pillar-note { font-size: 12px; line-height: 1.65; } }
+        .pillar-note.is-full { display: none; }
+        @media (min-width: 768px) {
+            .pillar-note.is-short { display: none; }
+            .pillar-note.is-full { display: block; }
+        }
+        body.light-mode .pillar-title { color: #16181b; }
+        @media (prefers-reduced-motion: reduce) { .pillar { transition: none; } .pillar:hover { transform: none; } }
+
         :root {
             --background: #1b1e22;
             --foreground: #f3f4f6;
@@ -236,45 +266,45 @@
                 </h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
-                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Daily Oximeter SpO2 Audits</h3>
-                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
-                        Every morning and evening, your lead Sherpa records your blood oxygen saturation (SpO2) and resting pulse on our medical telemetry log to preempt AMS.
-                    </p>
+            <!-- The four pillars (2026-09-19, REVERT-notes § 15).
+                 Two up and two down on a phone instead of four tall stacked
+                 cards — the section was 1,160 px of scrolling. Icons are inline
+                 Lucide, not Font Awesome, so they match the rest of the site.
+                 Each card carries two versions of its line: the short one shows
+                 on phones, the full one from 768 px up. Edit BOTH if you change
+                 a claim. -->
+            <div class="pillars">
+                <div class="pillar">
+                    <span class="pillar-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
+                    </span>
+                    <h3 class="pillar-title">Daily Oximeter SpO2 Audits</h3>
+                    <p class="pillar-note is-short">SpO2 and resting pulse logged morning and evening.</p>
+                    <p class="pillar-note is-full">Every morning and evening, your lead Sherpa records your blood oxygen saturation (SpO2) and resting pulse on our medical telemetry log to preempt AMS.</p>
                 </div>
-
-                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
-                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
-                        <i class="fa-solid fa-person-hiking"></i>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Paced Acclimatization</h3>
-                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
-                        We strictly enforce the "Climb High, Sleep Low" protocol. Maximum daily sleeping elevation gains are limited to 400m above 3,000 meters with built-in rest days.
-                    </p>
+                <div class="pillar">
+                    <span class="pillar-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>
+                    </span>
+                    <h3 class="pillar-title">Paced Acclimatization</h3>
+                    <p class="pillar-note is-short">Climb high, sleep low — 400 m max gain above 3,000 m.</p>
+                    <p class="pillar-note is-full">We strictly enforce the "Climb High, Sleep Low" protocol. Maximum daily sleeping elevation gains are limited to 400m above 3,000 meters with built-in rest days.</p>
                 </div>
-
-                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
-                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
-                        <i class="fa-solid fa-satellite-dish"></i>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">Garmin Satellite SOS</h3>
-                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
-                        Dual Iridium satellite transceivers accompany every crew. Real-time GPS coordinate tracking connects directly to our Kathmandu emergency dispatch center.
-                    </p>
+                <div class="pillar">
+                    <span class="pillar-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a7.31 7.31 0 0 0 10 10Z"/><path d="m9 15 3-3"/><path d="M17 13a6 6 0 0 0-6-6"/><path d="M21 13A10 10 0 0 0 11 3"/></svg>
+                    </span>
+                    <h3 class="pillar-title">Garmin Satellite SOS</h3>
+                    <p class="pillar-note is-short">Dual satellite transceivers with every crew.</p>
+                    <p class="pillar-note is-full">Dual Iridium satellite transceivers accompany every crew. Real-time GPS coordinate tracking connects directly to our Kathmandu emergency dispatch center.</p>
                 </div>
-
-                <div class="p-8 border border-border bg-card space-y-4 hover:border-accent transition-colors">
-                    <div class="h-12 w-12 border border-accent/40 flex items-center justify-center text-accent text-xl">
-                        <i class="fa-solid fa-helicopter"></i>
-                    </div>
-                    <h3 class="font-heading text-xl uppercase tracking-tight text-white">24/7 Helicopter Evacuation</h3>
-                    <p class="font-mono text-xs text-muted-foreground leading-relaxed">
-                        High-altitude Airbus H125 (Eurocopter AS350 B3e) helicopter standby teams equipped with oxygen baskets capable of landing at 6,000m for immediate airlift.
-                    </p>
+                <div class="pillar">
+                    <span class="pillar-ico">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1z"/><path d="M21 12h1"/><path d="M18.5 4.5 18 5"/><path d="M2 12h1"/><path d="M12 2v1"/><path d="m4.929 4.929.707.707"/></svg>
+                    </span>
+                    <h3 class="pillar-title">24/7 Helicopter Evacuation</h3>
+                    <p class="pillar-note is-short">H125 standby teams, able to land at 6,000 m.</p>
+                    <p class="pillar-note is-full">High-altitude Airbus H125 (Eurocopter AS350 B3e) helicopter standby teams equipped with oxygen baskets capable of landing at 6,000m for immediate airlift.</p>
                 </div>
             </div>
         </div>
@@ -787,11 +817,11 @@
 })();
 </script>
 <script src="/backdrop.js?v=2" defer></script>
-<script src="/menu.js?v=11"></script>
+<script src="/menu.js?v=13"></script>
 <script src="/card-fx.js?v=4" defer></script>
 <script src="/data/reviews.js"></script>
 <script src="/reviews.js?v=5" defer></script>
-<script src="/back.js?v=1"></script>
+<script src="/back.js?v=2"></script>
 <script src="/compass-nav.js?v=2"></script>
 <script src="/social.js?v=2" defer></script>
 <script src="/theme.js?v=2"></script>

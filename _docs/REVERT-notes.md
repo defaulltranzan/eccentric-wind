@@ -1449,3 +1449,135 @@ check. Point→trail links are derived from the trek records themselves (`passes
 **Revert:** `git checkout pre-map-svg -- public/index.html public/edit.js public/menu.js
 public/data/places.json build/tw-input.css`, restore `public/vendor/` from that tag, and delete
 `public/explore-map.js`'s new contents in favour of the tagged version.
+
+## § 14 — The four doors: hero quick-nav, and a plain phone hero (2026-09-19)
+
+Restore point: tag `pre-hero-nav` (= the map commit, so this reverts the hero and nothing else). Markup + styles as they were: `_docs/hero-quicknav-backup/`.
+
+Client note: the phone hero said too much. It now says four things and *shows* four.
+
+**1. The four doors.** A new band at the bottom of the hero (`.hc-foot` → `.hc-doors`),
+four ways in as Lucide icons in an accent ring: Trekking → /treks, Expeditions → /expeditions,
+Explore Nepal → /#explore, Altitude & Safety → /altitude-safety. Desktop gets a ring, a name,
+one line of description and a link; phones get the ring and one short word (`.hc-door-label b`
+is the long name, `i` the short one). Taken from the reference the client sent — same idea,
+our palette and our type.
+- To change a door: edit the `<a class="hc-door">` block in index.html. Icons are inline Lucide
+  paths, so swapping one means pasting a new `<path>` set.
+
+**2. The phone hero is down to five things**: the eyebrow, the name, one sentence
+("Led by local guides since 1993." — shortened in all three `heroTagline` strings in edit.js),
+one full-width button, and the doors. Everything that was instrumentation rather than
+navigation is desktop-only now: the telemetry strip, the film switcher, the in-frame caption,
+the scroll cue, the second CTA and the "Plan a custom ascent" link.
+
+**3. The summit counter (`.hc-alt`, the animated 8,848.86 M) is gone** on every size — with the
+doors there, two instrument bands under the headline was one too many. hero-corridor.js guards
+for the missing `#hc-alt-num` / `#hc-alt-label`, so its counter simply does not run; the
+altitude motif still runs down the left edge (altitude.js) and the film switcher still names
+the peak in frame. Put it back by restoring the markup and the `.hc-alt*` rules from the backup.
+
+**4. "Plan a custom ascent" moved into the button row** instead of taking a line of its own.
+
+**4b. Second pass (client feedback).** The rings were too quiet and arrived too late — the strip
+faded in on an 0.85s delay, so on a slow load it looked like there were no icons at all. Now
+`.hc-foot` fades with the buttons (.9s/.4s), the rings are 4rem on desktop and 3.4rem on phones,
+and each one is a glass disc inside a dashed survey ring with an accent bearing mark at twelve
+o'clock — the same chart language as the compass and the map. Hover fills the disc accent and
+opens the dashed ring. The phone wordmark also dropped from 15.4vw to 12.2vw so the photograph
+is not buried under three lines of Oswald.
+
+**5. Height tiers.** The hero has to land inside one screen with the doors in it, so there are
+three: `max-height: 960px` tightens the stack, `830px` drops the door descriptions, `760px`
+drops the door links, the custom-ascent link, the caption row and the film switcher. The
+bottom-right corner is reserved (`.hc-ui` padding-bottom) because the floating theme/language
+pill, the compass and the social button all live there.
+
+**Revert:** `git checkout pre-hero-nav -- public/index.html public/edit.js`.
+Doors only: delete the `.hc-foot` block from index.html and restore the old `.hc-rail` markup
+from `_docs/hero-quicknav-backup/hero-markup.html`.
+
+## § 15 — Film mode, a tighter Summit Register, the four pillars two-up (2026-09-19)
+
+Restore point: tag `pre-hero-nav` (= the map commit) for index.html / hero-corridor.js;
+`git checkout pre-hero-nav -- public/altitude-safety.html` for the pillars.
+
+**1. Film mode.** While a film runs, the hero empties to the footage: the name, the lede, the
+buttons, the four doors and the telemetry row all step aside (`#manifesto.is-film` in
+index.html), and the atmosphere layers fade so the video is not veiled. What is left is a
+player band in the doors' place — a slider through the four films (arrows + dots), the peak's
+name and elevation, one text link into the expedition, and "Close film".
+- Built by `hero-corridor.js` into `#hc-player`; Escape, the close button, or re-picking the
+  same film return the hero. ← / → step through the films, and a horizontal swipe does the same
+  on a touch screen.
+- Phones could not reach the film list (it lives in the desktop-only telemetry row), so they get
+  one opener under the buttons: `#hc-films-open`, "Watch the films 04".
+- **Bug fixed here:** `.hc-ui` is a grid, and `#hc-player` and `.hc-foot` both sit in row 3.
+  Without an explicit `grid-column: 1` on every band, auto-placement invents a second column and
+  puts them side by side. Every band now states both its row and its column.
+
+**2. The Summit Register is smaller on a phone.** The rating panel was a 324 px tile before you
+reached a single review; it is now a strip (score, bubbles, count, link — the bar breakdown and
+the small print return at 768 px). Cards went from 19.5 rem to 15.5 rem with tighter padding and
+the quote clamped to five lines, so the next card peeks in and the section dropped from 1,050 px
+to 833 px. The rail already scrolled horizontally at every width — that had not changed.
+- **Bug fixed here:** a declaration block with no selector was sitting in the `#reviews` styles
+  (a leftover from an earlier edit). A stray block like that makes the parser swallow the rule
+  that follows it.
+
+**3. The four pillars are two up and two down on a phone** (`.pillars` in altitude-safety.html):
+399 px instead of 1,160 px of scrolling. Icons are now **inline Lucide** — heart-pulse,
+trending-up, satellite-dish, siren — instead of Font Awesome, so they match the rest of the site.
+- Each card carries two versions of its line: `.pillar-note.is-short` shows on phones, `.is-full`
+  from 768 px up. **Edit both** if you change a claim.
+- Font Awesome is still loaded for 63 other icons across 13 pages; see the note in the session
+  summary about retiring it.
+
+## § 16 — Section ridges, equal map columns, the folded region list, hc-min (2026-09-19)
+
+Restore point: tag `pre-hero-nav` (= the map commit).
+
+**1. Section ridges.** Every homepage boundary is now a drawn horizon instead of a 1px rule:
+`.sec-ridge` inside the lower section, with the upper section's colour spilling down over a
+hairline accent crest. Three profiles (`a` jagged, `b` rolling, `c` sharp) alternate so it never
+reads as a repeat. `--ridge-from` on each one is the colour above the crest; the section above a
+ridge carries `.has-ridge`, which drops its `border-b` so you get the ridge or the line, never
+both. `--ridge-above-reviews` flips at 1024 px because the trek finder is desktop-only.
+- Remove a ridge: delete its `<div class="sec-ridge">` and the `has-ridge` class above it.
+
+**2. The Explore Nepal columns are one height** from 1024 px up. The panel used to run past the
+bottom of the map. Now `.ne-cols` sets a 30 rem floor, `.ne-xpanel` caps at 34 rem and scrolls
+inside, and `.ne-map` drops its aspect ratio and fills what is left — the engine re-fits the
+viewBox to whatever shape the box ends up, so nothing distorts. The map got taller as a result
+(481 px instead of 384 px at 1440). The panel is no longer `sticky`; it does not need to be when
+it is the same height as the map.
+
+**3. The region list is folded behind a button on phones.** `introHtml()` renders
+`.ne-reveal` ("Explore trekking regions · 9") plus the list in `[data-ne-fold]`; the panel
+carries `data-fold="shut|open"` and CSS does the rest **under 1024 px only** — desktop always
+shows the list. The button pulses with two expanding rings (`neBuzz`), which never move the
+layout, and it is off under `prefers-reduced-motion`. Once opened it stays open for the session.
+
+**4. EXPERIMENT — `hc-min`.** The class on `#manifesto` strips the phone hero to the photograph
+and the four doors: no wordmark, no lede, no primary button. The eyebrow and the films opener
+stay (without the latter the films are unreachable on a phone), and the door rings grow to
+3.75 rem. **TO REVERT: delete `hc-min` from the section's class list.** Nothing else changes and
+desktop never reads it.
+
+## § 17 — The floating chrome sits on the header's centre line (2026-09-19)
+
+The Explore button, the back button and the menu close button all had a hard-coded
+`top: 3.9rem`. On arrival that put them 17.6 px below the logo on the homepage, and 45 px below
+it on pages with no announcement bar — they read as misaligned with the header.
+
+They now sit on `--hme-float-mid`, which `alignFloating()` in menu.js measures once at mount
+(and again on load and resize) as `header.offsetTop + header.offsetHeight / 2` — the header's
+centre in document coordinates, which is where it sits on screen before anyone scrolls. The
+buttons stay `position: fixed`, so they keep their place as the page scrolls; only the starting
+line changed. Measured delta against the logo is now 0.5 px on every page, phone and desktop.
+- Files: `public/menu.js` (the variable + both right-hand buttons), `public/back.js` (the left
+  one). CSS fallback `5.35rem` reproduces the old position if the variable is never set.
+- Also in menu.js: the scroll handler for the button used a `ticking` flag that was only cleared
+  inside a `requestAnimationFrame` callback. In a tab that stops painting the flag sticks true
+  and the button never updates again. `updateBtn` is a matchMedia read and one class toggle, so
+  it now runs inline on scroll and the flag is gone.

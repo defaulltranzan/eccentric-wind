@@ -203,5 +203,36 @@ module.exports = {
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, filename), buffer, { flag: 'wx' });
     return '/uploads/' + folder + '/' + filename;
+  },
+
+  /* Remove one uploaded file. Only ever touches things this driver wrote:
+     the URL has to look exactly like a /uploads/<folder>/<file> path we
+     produced, and the resolved path has to land inside the upload directory —
+     so a crafted slug or a "../" cannot reach the curated photography in
+     public/images, let alone anything outside it. Returns false rather than
+     throwing when the URL is not ours or the file has already gone. */
+  async deleteMedia(mediaUrl) {
+    if (env.onVercel) return false;
+    const PREFIX = '/uploads/';
+    const raw = String(mediaUrl || '');
+    if (raw.indexOf(PREFIX) !== 0) return false;
+    const parts = raw.slice(PREFIX.length).split('/');
+    if (parts.length !== 2) return false;
+    const folder = parts[0];
+    const file = parts[1];
+    // shapes we produce ourselves in saveMedia(); anything else is not ours
+    if (!/^[a-z0-9-]{1,40}$/.test(folder)) return false;
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$/.test(file)) return false;
+    if (file.indexOf('..') > -1) return false;
+    const root = path.resolve(env.uploadDir);
+    const target = path.resolve(root, folder, file);
+    if (target !== path.join(root, folder, file) || target.indexOf(root + path.sep) !== 0) return false;
+    try {
+      fs.unlinkSync(target);
+      return true;
+    } catch (err) {
+      if (err.code === 'ENOENT') return false;
+      throw err;
+    }
   }
 };

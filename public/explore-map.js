@@ -879,6 +879,7 @@
         }
       } else if (state.layer !== 'regions') p.innerHTML = layerHtml(state.layer);
       else p.innerHTML = introHtml();
+      p.dataset.fold = listOpen ? 'open' : 'shut';
       p.scrollTop = 0;
     }
 
@@ -887,11 +888,21 @@
         icon('back', 'ne-ico') + '<span>' + esc(label) + '</span></button>';
     }
 
+    /* On a phone the nine-region list sat open under the map and pushed the
+       rest of the page down, so it starts folded behind one button there. The
+       button pulses because it is the only thing between a visitor and the
+       list. Desktop is unaffected: the list is always open in the panel, which
+       is now the same height as the map. Once opened it stays open. */
+    var listOpen = false;
+
     function introHtml() {
       return '<div class="ne-panel">' +
         '<span class="ne-p-lbl">Pick a region</span>' +
         '<p class="ne-p-note">Nine regions, each with its own trails, seasons and peaks. Tap one on the map — or pick it from the list — and the map moves to it.</p>' +
-        '<div class="ne-list is-regions">' + order.map(function (k) {
+        '<button type="button" class="ne-reveal" data-ne="reveal">' +
+          icon('map', 'ne-ico') + '<span>Explore trekking regions</span><b>' + order.length + '</b>' +
+        '</button>' +
+        '<div class="ne-list is-regions" data-ne-fold>' + order.map(function (k) {
           var z = zones[k];
           return '<button type="button" class="ne-row" data-ne="region" data-key="' + esc(k) + '">' +
             '<span>' + esc(z.name) + '</span>' + (z.trails ? '<b>' + z.trails + '</b>' : '') + '</button>';
@@ -963,6 +974,12 @@
           var hit = null;
           points.forEach(function (p) { if (p.id === b.dataset.key) hit = p; });
           if (hit) goPoint(hit);
+        } else if (act === 'reveal') {
+          e.preventDefault();
+          listOpen = true;
+          panelEl.dataset.fold = 'open';
+          var first = panelEl.querySelector('[data-ne-fold] .ne-row');
+          if (first) first.focus();
         } else if (act === 'home' || act === 'regions') {
           e.preventDefault();
           if (act === 'regions') setLayer('regions'); else home();

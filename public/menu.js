@@ -111,7 +111,11 @@
     '<path d="M15.5 8.5l-2 5-5 2 2-5 5-2z" fill="currentColor"/></svg>';
 
   var css = '' +
-    '#hme-menu-btn{position:fixed;right:1.1rem;top:3.9rem;z-index:60;display:flex;align-items:center;gap:.5rem;height:2.9rem;padding:0 .9rem;' +
+    /* --hme-float-mid is the header's centre line, measured at load (see
+       alignFloating below). The floating chrome sits on it, so on arrival the
+       Explore button lines up with the logo instead of hanging below it. The
+       fallback keeps the old position if the variable never gets set. */
+    '#hme-menu-btn{position:fixed;right:1.1rem;top:calc(var(--hme-float-mid, 5.35rem) - 1.45rem);z-index:60;display:flex;align-items:center;gap:.5rem;height:2.9rem;padding:0 .9rem;' +
     'border:1px solid rgba(240,98,37,.45);background:rgba(16,18,21,.72);backdrop-filter:blur(8px);color:var(--accent,#f06225);' +
     'font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;' +
     'opacity:0;visibility:hidden;' +
@@ -152,7 +156,7 @@
     '#hme-menu a.hme-nav.hme-nav-sub .hme-dot{width:4px;height:4px;opacity:.55}' +
     '#hme-menu .hme-menu-foot{margin-top:2.6rem;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.2em;' +
     'text-transform:uppercase;color:var(--muted-foreground,#9399a2)}' +
-    '#hme-menu-close{position:fixed;right:1.1rem;top:3.9rem;z-index:61;height:2.9rem;width:2.9rem;display:flex;align-items:center;' +
+    '#hme-menu-close{position:fixed;right:1.1rem;top:calc(var(--hme-float-mid, 5.35rem) - 1.45rem);z-index:61;height:2.9rem;width:2.9rem;display:flex;align-items:center;' +
     'justify-content:center;border:1px solid var(--border,#2b2e34);background:rgba(16,18,21,.9);color:#f3f4f6;cursor:pointer;' +
     'font-size:16px;transition:border-color .2s,color .2s,transform .15s}' +
     '#hme-menu-close:hover{border-color:var(--accent,#f06225);color:var(--accent,#f06225)}' +
@@ -265,14 +269,26 @@
     btn.classList.toggle('hme-show', show);
   }
   if (mqMobile.addEventListener) mqMobile.addEventListener('change', updateBtn);
-  var ticking = false;
-  window.addEventListener('scroll', function () {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { updateBtn(); ticking = false; });
-  }, { passive: true });
+  /* updateBtn is a matchMedia read and one classList.toggle — cheap enough to
+     run inline. It used to be rAF-throttled behind a "ticking" flag that was
+     only cleared inside the frame callback, so in any tab that stopped
+     painting (backgrounded, minimised, power saving) the flag stuck true and
+     the button never updated again. */
+  window.addEventListener('scroll', updateBtn, { passive: true });
   window.addEventListener('resize', updateBtn, { passive: true });
   updateBtn();
+
+  /* The header's centre, in document coordinates — which is where it sits on
+     screen before anyone scrolls. Re-measured on resize because the header is
+     h-20 on phones and h-24 from md up, and the announcement bar can wrap. */
+  function alignFloating() {
+    var hdr = document.querySelector('header');
+    if (!hdr) return;
+    var mid = hdr.offsetTop + hdr.offsetHeight / 2;
+    if (mid > 0) document.documentElement.style.setProperty('--hme-float-mid', mid.toFixed(1) + 'px');
+  }
+  window.addEventListener('resize', alignFloating, { passive: true });
+  window.addEventListener('load', alignFloating);
 
   function mount() {
     if (!document.body) return;
@@ -280,6 +296,7 @@
     document.body.appendChild(btn);
     document.body.appendChild(overlay);
     updateBtn();
+    alignFloating();
   }
   if (document.body) mount();
   else document.addEventListener('DOMContentLoaded', mount);

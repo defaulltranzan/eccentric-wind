@@ -167,6 +167,7 @@
   function goHome() {
     active = null;
     hero.classList.remove('is-film');
+    if (player) player.hidden = true;
     if (video) {
       video.classList.remove('is-ready');
       setTimeout(function () { if (!active) video.pause(); }, 1100);
@@ -202,6 +203,7 @@
 
     video.classList.remove('is-ready');
     hero.classList.add('is-film');
+    if (player) { player.hidden = false; paintPlayer(); }
     var src = f.src;
     if (video.getAttribute('src') !== src) {
       video.setAttribute('src', src);
@@ -216,6 +218,78 @@
     var p = video.play(); if (p && p.catch) p.catch(function () {});
   }
 
+  /* ---------------- the player band ----------------
+     While a film runs the hero clears down to the footage: the name, the lede,
+     the buttons and the four doors all step aside (CSS, on #manifesto.is-film).
+     What is left is a slider through the four films, the peak's name, and one
+     link into the expedition. Escape, the close button or the same film again
+     all return the hero. */
+  var player = document.getElementById('hc-player');
+  var openBtn = document.getElementById('hc-films-open');
+
+  function step(delta) {
+    if (!films.length) return;
+    var i = films.map(function (f) { return f.slug; }).indexOf(active);
+    var next = films[((i < 0 ? 0 : i + delta) % films.length + films.length) % films.length];
+    if (next) playFilm(next.slug);
+  }
+
+  function paintPlayer() {
+    if (!player) return;
+    var m = active ? M[active] : null;
+    if (!m) return;
+    var name = player.querySelector('[data-pl-name]');
+    var el = player.querySelector('[data-pl-el]');
+    var cta = player.querySelector('[data-pl-cta]');
+    if (name) name.textContent = m.name;
+    if (el) el.textContent = m.elevationLabel || '';
+    if (cta) {
+      cta.setAttribute('href', '/expeditions/' + m.slug);
+      cta.firstChild.nodeValue = 'Plan the ' + m.name + ' climb ';
+    }
+    Array.prototype.forEach.call(player.querySelectorAll('[data-pl-dot]'), function (d) {
+      var on = d.dataset.plDot === active;
+      d.setAttribute('aria-current', on ? 'true' : 'false');
+      d.setAttribute('aria-label', (M[d.dataset.plDot] || {}).name || d.dataset.plDot);
+    });
+  }
+
+  if (player && films.length) {
+    player.innerHTML =
+      '<div class="hc-pl-slider">' +
+        '<button type="button" class="hc-pl-arrow" data-pl-step="-1" aria-label="Previous film">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>' +
+        '<span class="hc-pl-dots">' + films.map(function (f) {
+          return '<button type="button" class="hc-pl-dot" data-pl-dot="' + esc(f.slug) + '" aria-current="false"></button>';
+        }).join('') + '</span>' +
+        '<button type="button" class="hc-pl-arrow" data-pl-step="1" aria-label="Next film">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>' +
+      '</div>' +
+      '<p class="hc-pl-name"><span data-pl-name></span><i data-pl-el></i></p>' +
+      '<a class="hc-pl-cta" data-pl-cta href="/expeditions">Plan this climb <svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M0 5h16M12 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a>' +
+      '<button type="button" class="hc-pl-close" data-pl-close>Close film</button>';
+
+    player.addEventListener('click', function (e) {
+      var st = e.target.closest('[data-pl-step]');
+      if (st) { step(Number(st.dataset.plStep)); return; }
+      var dot = e.target.closest('[data-pl-dot]');
+      if (dot) { if (dot.dataset.plDot !== active) playFilm(dot.dataset.plDot); return; }
+      if (e.target.closest('[data-pl-close]')) goHome();
+    });
+
+    /* swipe the footage itself on a touch screen */
+    var x0 = null;
+    hero.addEventListener('touchstart', function (e) {
+      x0 = active && e.touches.length === 1 ? e.touches[0].clientX : null;
+    }, { passive: true });
+    hero.addEventListener('touchend', function (e) {
+      if (x0 == null) return;
+      var dx = (e.changedTouches[0] || {}).clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 48) step(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
   if (filmsEl && films.length && video) {
     filmsEl.innerHTML = '<span class="hc-films-label hidden md:inline">Films</span>' + films.map(function (f, i) {
       return '<button type="button" class="hc-film-btn" data-film="' + esc(f.slug) + '" aria-pressed="false">' +
@@ -227,6 +301,16 @@
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && active) goHome();
+      if (!active) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
     });
+  }
+
+  if (openBtn && films.length && video) {
+    openBtn.hidden = false;
+    var count = document.getElementById('hc-films-count');
+    if (count) count.textContent = '0' + films.length;
+    openBtn.addEventListener('click', function () { playFilm(films[0].slug); });
   }
 })();

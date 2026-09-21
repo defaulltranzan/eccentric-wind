@@ -31,7 +31,8 @@
     'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   var css = '' +
-    '#hme-back-btn{position:fixed;left:1.1rem;top:3.9rem;z-index:60;display:flex;align-items:center;gap:.5rem;' +
+    /* shares the header centre line with the Explore button — menu.js sets it */
+    '#hme-back-btn{position:fixed;left:1.1rem;top:calc(var(--hme-float-mid, 5.35rem) - 1.45rem);z-index:60;display:flex;align-items:center;gap:.5rem;' +
     'height:2.9rem;padding:0 .95rem;border:1px solid rgba(240,98,37,.45);background:rgba(16,18,21,.72);' +
     'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--accent,#f06225);' +
     'font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;' +
