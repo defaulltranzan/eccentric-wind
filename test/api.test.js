@@ -269,6 +269,34 @@ test('popup client and modal assets are served on trip pages', async () => {
   assert.equal((await req('GET', '/booking-modal.js')).status, 200);
 });
 
+/* ------------------------------------------------------------------ Mr Yeti */
+test('assistant: knowledge index is published-only real data', async () => {
+  const r = await req('GET', '/api/assistant/knowledge');
+  assert.equal(r.status, 200);
+  const k = r.json.knowledge;
+  const abc = k.treks.find((t) => t.slug === 'annapurna-base-camp');
+  assert.ok(abc && abc.url === '/treks/annapurna-base-camp' && abc.maxAltitudeM === 4130);
+  assert.ok(abc.pricing.tiers.length > 0 && abc.itinerary.length > 0);
+  const everest = k.peaks.find((p) => p.slug === 'everest');
+  assert.equal(everest.url, '/expeditions/everest');
+  assert.equal(everest.category, '8000');
+  assert.ok(k.guides.visa && k.guides.visa.intro, 'shared trip guidance comes from treks.js defaults');
+  assert.ok(k.treks.every((t) => t.url.startsWith('/treks/')) && k.stories.every((s) => s.url.startsWith('/stories/')));
+});
+
+test('assistant: inquiries are stored with source "assistant"', async () => {
+  const r = await req('POST', '/api/bookings', { body: booking({ source: 'assistant', preferred_date: undefined, preferred_month: future(90).slice(0, 7), details: { channel: 'Mr Yeti chat', asked: 'How much is ABC?' } }) });
+  assert.equal(r.status, 201);
+  assert.equal(r.json.booking.source, 'assistant');
+});
+
+test('assistant widget is served on every main page', async () => {
+  for (const p of ['/', '/treks', '/treks/annapurna-circuit', '/expeditions', '/expeditions/everest', '/stories', '/contact']) {
+    assert.match((await req('GET', p)).text, /yeti-chat\.js/, p);
+  }
+  assert.equal((await req('GET', '/yeti-chat.js')).status, 200);
+});
+
 /* ------------------------------------------------------------------ admin auth */
 test('admin auth: sessions, CSRF header, tampering, bad input', async () => {
   assert.equal((await req('GET', '/api/admin/dashboard')).status, 401);

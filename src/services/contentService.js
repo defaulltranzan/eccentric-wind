@@ -2,6 +2,9 @@
  * A row is { slug, title, published, featured, sort_order, kind, data } where
  * `data` is the exact record shape the existing page renderers already read
  * (TREKS[slug], MOUNTAINS[slug] / PEAKS_DATA[slug], STORIES[slug]). */
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
 const { driver, fileDriver } = require('../data');
 
 const COLLECTIONS = {
@@ -388,6 +391,158 @@ async function trips() {
     .concat(exps.map((r) => ({ type: 'expedition', slug: r.slug, name: r.title, elevation: r.data.elevationLabel || null, region: r.data.range || r.data.region || null })));
 }
 
+/* ------------------------------------------------ Mr Yeti knowledge index
+ * One compact, read-only snapshot of every published trek, peak and story for
+ * the on-site assistant (public/yeti-chat.js). Every value is copied from the
+ * record as the page renderers show it; nothing is derived that the page does
+ * not already state, and missing data stays null so the assistant can say
+ * "I don't know" instead of guessing. */
+const numOrNull = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null);
+function firstMetres(s) {
+  const m = String(s || '').replace(/,/g, '').match(/(\d{3,4})\s*m\b/);
+  return m ? +m[1] : null;
+}
+function dayRange(s) {
+  const m = String(s || '').match(/(\d+)(?:\s*[–-]\s*(\d+))?\s*days?/i);
+  return m ? [+m[1], m[2] ? +m[2] : +m[1]] : null;
+}
+
+/* The shared trip guidance every trek page inherits (visa, insurance, AMS, guides,
+ * tea houses…) lives in the browser defaults file public/treks.js. Evaluate it in
+ * an empty sandbox so the assistant quotes the same words the pages show. */
+const TREK_DEFAULTS_FILE = path.join(__dirname, '../../public/treks.js');
+const GUIDE_TOPICS = ['visa', 'insurance', 'money', 'connectivity', 'water', 'food', 'accommodation', 'guidePorter', 'culture', 'responsible', 'altitudeAms'];
+let guidesCache = null;
+function tripGuides() {
+  try {
+    const mtime = fs.statSync(TREK_DEFAULTS_FILE).mtimeMs;
+    if (guidesCache && guidesCache.mtime === mtime) return guidesCache.value;
+    const sandbox = { window: {} };
+    vm.runInNewContext(fs.readFileSync(TREK_DEFAULTS_FILE, 'utf8'), sandbox, { timeout: 500 });
+    const d = sandbox.window.TREK_DEFAULTS || {};
+    const value = {};
+    GUIDE_TOPICS.forEach((k) => {
+      const t = d[k];
+      if (!t || typeof t !== 'object') return;
+      value[k] = {
+        intro: strOrNull(t.intro),
+        points: listOf(t.points).concat(listOf(t.principles), listOf(t.guide)).slice(0, 6),
+        signs: listOf(t.signs),
+        notes: (Array.isArray(t.amenities) ? t.amenities : Array.isArray(t.scale) ? t.scale : [])
+          .map((a) => a && strOrNull(a.label) && strOrNull(a.note) ? a.label + ' — ' + a.note : null).filter(Boolean).slice(0, 5),
+        verify: !!t.verify,
+        disclaimer: strOrNull(t.disclaimer)
+      };
+    });
+    value.beforeYouGo = listOf(d.beforeYouGo);
+    guidesCache = { mtime, value };
+    return value;
+  } catch (err) {
+    console.error('[assistant] trip guidance unavailable:', err.message);
+    return {};
+  }
+}
+
+let assistantCache = null;
+async function assistantIndex() {
+  const [treks, exps, stories] = await Promise.all([list('treks'), list('expeditions'), list('stories')]);
+  const key = [treks, exps, stories].map((rows) => rows.length + ':' + rows.map((r) => r.updated_at || '').join('|')).join('/');
+  if (assistantCache && assistantCache.key === key) return assistantCache.value;
+
+  const value = {
+    guides: tripGuides(),
+    treks: treks.map((r) => {
+      const d = r.data || {};
+      const st = d.stats || {};
+      const su = d.suitability || {};
+      return {
+        slug: r.slug,
+        name: r.title,
+        tagline: strOrNull(d.tagline),
+        summary: strOrNull(d.summary),
+        region: strOrNull(d.region),
+        province: strOrNull(d.province),
+        image: strOrNull(d.heroImage),
+        url: '/treks/' + r.slug,
+        popular: !!d.popular,
+        featured: !!(d.featured || r.featured),
+        restricted: !!d.restricted,
+        lowland: !!d.lowland,
+        duration: strOrNull(st.duration),
+        days: dayRange(st.duration),
+        difficulty: strOrNull(st.difficulty),
+        maxAltitude: strOrNull(st.maxAltitude),
+        maxAltitudeM: firstMetres(st.maxAltitude),
+        maxAltitudePoint: strOrNull(st.maxAltitudePoint),
+        bestSeason: strOrNull(st.bestSeason),
+        start: strOrNull(st.startPoint),
+        distance: strOrNull(st.distanceKm),
+        walkHours: strOrNull(st.walkHours),
+        suitability: {
+          physical: numOrNull(su.physical), technical: numOrNull(su.technical),
+          altitude: numOrNull(su.altitude), remoteness: numOrNull(su.remoteness),
+          goodFor: listOf(su.goodFor).slice(0, 4), notIdeal: listOf(su.notIdeal).slice(0, 3)
+        },
+        highlights: listOf(d.highlights).slice(0, 5),
+        passes: (Array.isArray(d.passes) ? d.passes : []).map((p) => p && strOrNull(p.name)).filter(Boolean),
+        itinerary: (Array.isArray(d.itinerary) ? d.itinerary : []).map((x) => ({
+          day: x.day, title: strOrNull(x.title), ele: numOrNull(x.endEle), hours: strOrNull(x.walkHours), stay: strOrNull(x.stay)
+        })),
+        permits: (Array.isArray(d.permits) ? d.permits : []).map((p) => ({ name: strOrNull(p && p.name), fee: strOrNull(p && p.feeNote) })).filter((p) => p.name),
+        pricing: { tiers: priceTiers(d.cost), note: strOrNull(d.cost && d.cost.note) },
+        included: listOf(d.included),
+        excluded: listOf(d.excluded),
+        transport: strOrNull(d.transport && d.transport.note),
+        faq: (Array.isArray(d.faq) ? d.faq : []).map((f) => ({ q: strOrNull(f && f.q), a: strOrNull(f && f.a) })).filter((f) => f.q && f.a),
+        related: listOf(d.relatedTreks),
+        destinations: (Array.isArray(d.relatedDestinations) ? d.relatedDestinations : []).map((x) => ({ name: strOrNull(x && x.name), note: strOrNull(x && x.note) })).filter((x) => x.name)
+      };
+    }),
+    peaks: exps.map((r) => {
+      const d = r.data || {};
+      const se = d.season || {};
+      const fa = d.firstAscent || {};
+      const eight = r.kind === 'eight-thousander';
+      return {
+        slug: r.slug,
+        name: r.title,
+        tagline: strOrNull(d.tagline),
+        summary: strOrNull(d.summary),
+        category: eight ? '8000' : strOrNull(d.category),
+        elevationM: numOrNull(d.elevationM) || numOrNull(d.elevation),
+        elevation: strOrNull(d.elevationLabel),
+        range: strOrNull(d.range),
+        region: strOrNull(d.region),
+        countries: strOrNull(d.countryLabel) || (Array.isArray(d.countries) ? d.countries.join(' / ') : strOrNull(d.country)),
+        inNepal: d.inNepal !== false,
+        image: strOrNull(d.heroImage),
+        url: (eight ? '/expeditions/' : '/expeditions/peaks/') + r.slug,
+        peakType: strOrNull(d.peakType),
+        grade: strOrNull(d.peakGrade) || expeditionGrade(d.difficulty),
+        difficulty: strOrNull(d.difficulty && d.difficulty.summary),
+        duration: strOrNull(d.typicalDurationDays),
+        days: dayRange(d.typicalDurationDays),
+        season: { window: strOrNull(se.window), months: se.months && typeof se.months === 'object' ? se.months : null, note: strOrNull(se.note) },
+        firstAscent: fa.year ? { year: fa.year, climbers: strOrNull(fa.climbers) } : null,
+        route: strOrNull(typeof d.normalRoute === 'string' ? d.normalRoute : d.normalRoute && d.normalRoute.name),
+        baseCampM: numOrNull(d.baseCampM),
+        faq: (Array.isArray(d.faq) ? d.faq : []).map((f) => ({ q: strOrNull(f && f.q), a: strOrNull(f && f.a) })).filter((f) => f.q && f.a),
+        related: listOf(d.relatedTreks)
+      };
+    }),
+    stories: stories.map((r) => {
+      const d = r.data || {};
+      return {
+        slug: r.slug, title: r.title, excerpt: strOrNull(d.excerpt), category: strOrNull(d.category),
+        date: strOrNull(d.date), author: strOrNull(d.author), image: strOrNull(d.heroImage),
+        url: '/stories/' + r.slug, topics: listOf(d.topics), destinations: listOf(d.destinations), related: listOf(d.relatedTreks)
+      };
+    })
+  };
+  assistantCache = { key, value };
+  return value;
+}
+
 async function stats() {
   const out = {};
   for (const c of Object.keys(COLLECTIONS)) {
@@ -414,6 +569,7 @@ module.exports = {
   buildScript,
   trips,
   bookingView,
+  assistantIndex,
   stats,
   invalidate,
   httpError

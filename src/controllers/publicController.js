@@ -42,6 +42,12 @@ exports.tripDetail = wrap(async (req, res) => {
   res.json({ status: 'success', trip });
 });
 
+/* GET /api/assistant/knowledge — the published catalogue, trimmed for Mr Yeti (public/yeti-chat.js). */
+exports.assistantKnowledge = wrap(async (req, res) => {
+  res.set('Cache-Control', 'public, max-age=120, s-maxage=120, stale-while-revalidate=600');
+  res.json({ status: 'success', knowledge: await content.assistantIndex() });
+});
+
 /* POST /api/bookings — the booking contract (see _docs/BACKEND.md → "Booking API"). */
 exports.createBooking = wrap(async (req, res) => {
   const b = await bookings.create(req.body, {

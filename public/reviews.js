@@ -96,7 +96,55 @@
     return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  function cardHTML(r) {
+  /* ---- visual layer for the homepage register (2026-09-23) ------------------
+     Photos are the route's own hero image, shown in black and white. Reviews with
+     no linked route get a drawn silhouette instead — never another trek's photo. */
+  function tripImage(r) {
+    if (!r.tripSlug) return '';
+    var rec = r.tripType === 'expedition'
+      ? ((window.MOUNTAINS || {})[r.tripSlug] || (window.PEAKS_DATA || {})[r.tripSlug])
+      : (window.TREKS || {})[r.tripSlug];
+    var img = rec && rec.heroImage;
+    return typeof img === 'string' && /^\/(?!\/)/.test(img) ? img : '';
+  }
+  function initials(name) {
+    var parts = String(name || '').replace(/[^A-Za-z\u00C0-\u024F .'-]/g, '').trim().split(/[\s.]+/).filter(Boolean);
+    if (!parts.length) return 'TA';
+    return (parts[0].charAt(0) + (parts.length > 1 ? parts[parts.length - 1].charAt(0) : parts[0].charAt(1) || '')).toUpperCase();
+  }
+  // Three drawn scenes so neighbouring cards without photos don't repeat.
+  var SCENES = [
+    'M0 150 L0 96 L38 70 L62 84 L104 34 L132 62 L150 50 L196 92 L232 58 L270 86 L320 60 L320 150 Z',
+    'M0 150 L0 88 L46 58 L80 80 L118 44 L150 70 L188 22 L214 52 L250 40 L292 78 L320 64 L320 150 Z',
+    'M0 150 L0 100 L30 80 L74 92 L112 50 L146 76 L176 40 L230 86 L262 66 L320 90 L320 150 Z'
+  ];
+  var FLAG_COLOURS = ['#4b76b8', '#e9e5da', '#c4452f', '#3f8f5a', '#d6a531'];
+  function sceneSVG(i) {
+    var d = SCENES[i % SCENES.length];
+    var flags = '';
+    for (var k = 0; k < 11; k++) {
+      var x = 150 + k * 15, y = 18 + Math.pow(k - 5, 2) * 0.55;
+      flags += '<rect x="' + x + '" y="' + y + '" width="9" height="11" fill="' + FLAG_COLOURS[k % 5] + '" opacity=".55"/>';
+    }
+    return '<svg class="hmr-scene" viewBox="0 0 320 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">' +
+      '<path d="' + SCENES[(i + 1) % SCENES.length] + '" transform="translate(0 -18)" fill="currentColor" opacity=".08"/>' +
+      '<path d="M146 17 Q 225 44 316 17" fill="none" stroke="currentColor" stroke-width=".8" opacity=".35"/>' + flags +
+      '<path d="' + d + '" fill="currentColor" opacity=".16"/></svg>';
+  }
+
+  function mediaHTML(r, i) {
+    var img = tripImage(r);
+    var meta = [r.travelDate, r.party].filter(Boolean).join(' · ');
+    return '<div class="hmr-media' + (img ? '' : ' is-drawn') + '">' +
+      (img ? '<img src="' + esc(img) + '" alt="" loading="lazy" decoding="async">' : sceneSVG(i)) +
+      '<span class="hmr-media-bub">' + bubbles(r.rating || 5, 11) + '</span>' +
+      (meta ? '<span class="hmr-media-when">' + esc(meta) + '</span>' : '') +
+      (r.trip ? '<span class="hmr-media-trip">' + esc(r.trip) + '</span>' : '') +
+    '</div>';
+  }
+
+  function cardHTML(r, i, opts) {
+    if (opts && opts.media) return cardMediaHTML(r, i);
     var meta = [r.travelDate, r.party].filter(Boolean).join(' · ');
     var who = [esc(r.author || 'Tripadvisor traveller'), r.location ? esc(r.location) : ''].filter(Boolean).join(' · ');
     var tripHref = r.tripSlug ? (r.tripType === 'expedition' ? '/expeditions/' : '/treks/') + encodeURIComponent(r.tripSlug) : '';
@@ -115,6 +163,55 @@
         '</div>' +
       '</footer>' +
     '</article>';
+  }
+
+  function cardMediaHTML(r, i) {
+    var tripHref = r.tripSlug ? (r.tripType === 'expedition' ? '/expeditions/' : '/treks/') + encodeURIComponent(r.tripSlug) : '';
+    return '<article class="hmr-card has-media">' + mediaHTML(r, i) +
+      '<div class="hmr-card-body">' +
+        (r.title ? '<h3 class="hmr-title">' + esc(r.title) + '</h3>' : '') +
+        '<blockquote class="hmr-quote">' + esc(r.quote) + '</blockquote>' +
+        (r.guide ? '<p class="hmr-guide"><span>Guide</span>' + esc(r.guide) + '</p>' : '') +
+        '<footer class="hmr-card-foot">' +
+          '<div class="hmr-who-row"><span class="hmr-avatar" aria-hidden="true">' + esc(initials(r.author)) + '</span>' +
+            '<span class="hmr-who">' + esc(r.author || 'Tripadvisor traveller') + (r.location ? '<small>' + esc(r.location) + '</small>' : '') + '</span></div>' +
+          '<div class="hmr-links">' +
+            (tripHref ? '<a class="hmr-trip" href="' + tripHref + '">View the route' + ARROW + '</a>' : '') +
+            (r.url ? '<a class="hmr-verify" href="' + esc(r.url) + '" target="_blank" rel="noopener">' + CHECK + 'Verified on ' + esc(r.sourceName || 'Tripadvisor') + '</a>' : '') +
+          '</div>' +
+        '</footer>' +
+      '</div>' +
+    '</article>';
+  }
+
+  /* Prayer flags strung across the section, and a ridge with a rope team on it. */
+  function flagsSVG() {
+    var W = 1440, out = '', n = 46;
+    var line = function (x) { var t = x / W; return 8 + 34 * 4 * t * (1 - t); };
+    for (var k = 1; k < n; k++) {
+      var x = k * (W / n), y = line(x);
+      out += '<g class="hmr-flag" style="--d:' + ((k * 0.37) % 3).toFixed(2) + 's"><rect x="' + (x - 9).toFixed(1) + '" y="' + y.toFixed(1) +
+        '" width="18" height="24" fill="' + FLAG_COLOURS[k % 5] + '"/></g>';
+    }
+    return '<svg viewBox="0 0 ' + W + ' 72" preserveAspectRatio="xMidYMin slice" focusable="false">' +
+      '<path d="M0 8 Q 720 76 1440 8" fill="none" stroke="currentColor" stroke-width="1" opacity=".5" vector-effect="non-scaling-stroke"/>' + out + '</svg>';
+  }
+  var HIKER = '<g><circle cx="10" cy="4" r="3.3"/><path d="M6.5 8.5h6l1.2 11.5-1.6.3-.8 8.4 3.2 10.3h-3.1l-3-9.3-2.9 9.3H2.4l3.1-10.2-.9-8.6-1.2-.2z"/>' +
+    '<rect x="11.8" y="9" width="5.2" height="9.5" rx="1.6"/><path d="M15.5 13.5 19.8 39" stroke="currentColor" stroke-width="1.3" fill="none"/></g>';
+  function ridgeSVG() {
+    var hikers = [[262, 88, 1], [304, 78, .96], [346, 67, .92]].map(function (h) {
+      return '<g transform="translate(' + h[0] + ' ' + (h[1] - 40 * h[2]) + ') scale(' + h[2] + ')">' + HIKER + '</g>';
+    }).join('');
+    return '<svg viewBox="0 0 1440 160" preserveAspectRatio="xMidYMax slice" focusable="false">' +
+      '<path class="hmr-ridge-back" d="M0 160 L0 92 L120 60 L210 84 L330 30 L420 70 L520 46 L640 88 L760 40 L860 66 L980 24 L1090 62 L1200 38 L1320 76 L1440 52 L1440 160 Z"/>' +
+      '<path class="hmr-ridge-front" d="M0 160 L0 126 L120 112 L210 104 L262 88 L304 78 L346 67 L400 52 L470 84 L600 110 L760 98 L900 118 L1060 102 L1220 120 L1340 104 L1440 116 L1440 160 Z"/>' +
+      '<g class="hmr-ridge-team">' + hikers + '<path d="M400 52 v-22" stroke="currentColor" stroke-width="1.4"/><path d="M400 30 l14 5 -14 5z" fill="#f06225"/></g>' +
+    '</svg>';
+  }
+  function summitSVG() {
+    return '<svg class="hmr-summit" viewBox="0 0 200 90" preserveAspectRatio="xMaxYMax meet" aria-hidden="true" focusable="false">' +
+      '<path d="M0 90 L52 46 L74 60 L118 12 L146 40 L164 30 L200 62 L200 90 Z" fill="currentColor" opacity=".07"/>' +
+      '<path d="M118 12 v-12" stroke="#f06225" stroke-width="1.2"/><path d="M118 0 l10 3.5 -10 3.5z" fill="#f06225"/></svg>';
   }
 
   /* Two reviews on a trek / expedition page: the ones written about this trip
@@ -149,8 +246,12 @@
       if (sec) sec.hidden = true;
       return;
     }
-    if (panel) panel.innerHTML = panelHTML(s);
-    track.innerHTML = rows.map(cardHTML).join('');
+    if (panel) panel.innerHTML = panelHTML(s) + summitSVG();
+    track.innerHTML = rows.map(function (r, i) { return cardHTML(r, i, { media: true }); }).join('');
+    var flags = document.querySelector('[data-hmr-flags]');
+    if (flags && !flags.firstChild) flags.innerHTML = flagsSVG();
+    var ridge = document.querySelector('[data-hmr-ridge]');
+    if (ridge && !ridge.firstChild) ridge.innerHTML = ridgeSVG();
     wireArrows(track);
   }
 
@@ -219,6 +320,32 @@
     '.light-mode .hmr-when,.light-mode .hmr-verify{color:#6b7078;}' +
     '.light-mode .hmr-links{border-top-color:rgba(28,30,33,.1);}' +
     '.light-mode .hmr-guide span{color:#6b7078;}' +
+    /* photo / silhouette header on the homepage register cards */
+    '.hmr-card.has-media{padding:0;overflow:hidden;}' +
+    '.hmr-card.has-media::after{display:none;}' +
+    '.hmr-media{position:relative;height:9.5rem;overflow:hidden;background:#0f1113;color:#e9e5da;flex:none;}' +
+    '.hmr-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08) brightness(.82);transform:scale(1.02);' +
+      'transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .6s ease;}' +
+    '.hmr-card:hover .hmr-media img{transform:scale(1.09);filter:grayscale(1) contrast(1.15) brightness(.95);}' +
+    '.hmr-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(12,13,15,.92) 0%,rgba(12,13,15,.25) 55%,rgba(12,13,15,.45) 100%);pointer-events:none;}' +
+    '.hmr-media.is-drawn{background:linear-gradient(180deg,#23262b,#121417);}' +
+    '.hmr-scene{position:absolute;inset:0;width:100%;height:100%;}' +
+    '.hmr-media-bub{position:absolute;z-index:1;top:.7rem;left:.75rem;display:inline-flex;padding:.3rem .4rem;background:rgba(12,13,15,.6);border:1px solid rgba(255,255,255,.12);}' +
+    '.hmr-media-when{position:absolute;z-index:1;top:.8rem;right:.8rem;font-family:"IBM Plex Mono",monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.75);}' +
+    '.hmr-media-trip{position:absolute;z-index:1;left:.85rem;right:.85rem;bottom:.7rem;font-family:Oswald,sans-serif;font-size:1.05rem;line-height:1.1;letter-spacing:.04em;text-transform:uppercase;color:#fff;}' +
+    '.hmr-media-trip::before{content:"";display:block;width:18px;height:1px;margin-bottom:.45rem;background:#f06225;}' +
+    '.hmr-card-body{display:flex;flex-direction:column;flex:1;padding:1rem 1.1rem 1rem;}' +
+    '.hmr-card.has-media .hmr-title{margin-top:0;}' +
+    '.hmr-who-row{display:flex;align-items:center;gap:.65rem;}' +
+    '.hmr-avatar{flex:none;display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:50%;border:1px solid rgba(240,98,37,.5);' +
+      'background:rgba(240,98,37,.08);font-family:Oswald,sans-serif;font-size:.8rem;letter-spacing:.06em;color:#f06225;}' +
+    '.hmr-who-row .hmr-who{margin-top:0;display:flex;flex-direction:column;gap:.2rem;}' +
+    '.hmr-who small{font-size:8.5px;letter-spacing:.12em;color:var(--muted-foreground);}' +
+    '.light-mode .hmr-card-body .hmr-who small{color:#6b7078;}' +
+    '.light-mode .hmr-media.is-drawn{background:linear-gradient(180deg,#e9e5dc,#d8d3c8);color:#1c1e21;}' +
+    '.light-mode .hmr-media.is-drawn .hmr-media-when{color:rgba(28,30,33,.7);}' +
+    '.light-mode .hmr-media.is-drawn::after{background:linear-gradient(to top,rgba(20,22,25,.78),transparent 70%);}' +
+    '@media (prefers-reduced-motion:reduce){.hmr-media img{transition:none;}.hmr-card:hover .hmr-media img{transform:scale(1.02);}}' +
     /* the block on a trek / expedition page */
     '.hmr-trip-block{display:grid;gap:1rem;}' +
     '@media (min-width:768px){.hmr-trip-block{grid-template-columns:repeat(2,minmax(0,1fr));}}' +

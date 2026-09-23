@@ -76,7 +76,7 @@ alter table public.bookings add constraint bookings_people_check check (people b
 alter table public.bookings drop constraint if exists bookings_status_check;
 alter table public.bookings add constraint bookings_status_check check (status in ('NEW', 'CONTACTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED'));
 alter table public.bookings drop constraint if exists bookings_source_check;
-alter table public.bookings add constraint bookings_source_check check (source in ('contact-form', 'trip-page', 'popup', 'newsletter'));
+alter table public.bookings add constraint bookings_source_check check (source in ('contact-form', 'trip-page', 'popup', 'newsletter', 'assistant'));
 
 create index if not exists bookings_created_idx      on public.bookings (created_at desc);
 create index if not exists bookings_status_idx       on public.bookings (status);
