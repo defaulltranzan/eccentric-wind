@@ -28,10 +28,10 @@
         "lon": 86.925
       },
       "inNepal": true,
-      "heroImage": "/images/peaks/8000ers/everest.png",
+      "heroImage": "/images/peaks/8000ers/everest.jpg",
       "heroVideo": "/videos/hero.mp4",
       "gallery": [
-        "/images/peaks/8000ers/everest.png",
+        "/images/peaks/8000ers/everest.jpg",
         "/images/everest_real.jpg",
         "/images/ebc.png",
         "/images/hero-mountain.jpg"

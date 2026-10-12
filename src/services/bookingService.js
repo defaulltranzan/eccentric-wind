@@ -15,7 +15,7 @@ const content = require('./contentService');
 const notify = require('./notifyService');
 
 const STATUSES = ['NEW', 'CONTACTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED'];
-const SOURCES = ['contact-form', 'trip-page', 'popup', 'newsletter'];
+const SOURCES = ['contact-form', 'trip-page', 'popup', 'newsletter', 'assistant'];
 const EMAIL_RE = /^[^\s@<>()[\]\\,;:"]+@[^\s@<>()[\]\\,;:"]+\.[^\s@<>()[\]\\,;:"]{2,}$/;
 const KEY_RE = /^[A-Za-z0-9_-]{8,100}$/;
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;

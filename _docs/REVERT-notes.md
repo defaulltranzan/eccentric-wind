@@ -1581,3 +1581,60 @@ line changed. Measured delta against the logo is now 0.5 px on every page, phone
   inside a `requestAnimationFrame` callback. In a tab that stops painting the flag sticks true
   and the button never updates again. `updateBtn` is a matchMedia read and one class toggle, so
   it now runs inline on scroll and the flag is gone.
+
+## § 18 — Mr Yeti, the expedition desk assistant (2026-09-23)
+
+Replaces the half-finished `yeti-chat.js` started in Antigravity (emoji bubbles, orange gradients,
+an 8-second auto-open, and a hard-coded answer list with facts not taken from the site). Mr Yeti
+answers only from the content database and hands anything it can't find to the team.
+
+- **Data:** `GET /api/assistant/knowledge` (`publicController.assistantKnowledge` →
+  `contentService.assistantIndex()`): published treks, peaks and stories, trimmed, plus the shared
+  trip guidance (visa, insurance, AMS, guides, tea houses…) read from `public/treks.js`
+  `TREK_DEFAULTS` in a `vm` sandbox. About 88 KB gzipped, fetched when the visitor first hovers or
+  opens the launcher, not on page load.
+- **Widget:** `public/yeti-chat.js?v=2` (self-injecting, already tagged on the 13 main pages).
+  It joins the bottom-right theme/language cluster where one exists, otherwise sits in its own
+  `#mry-dock`, which lifts above the trip-page booking dock. Full-screen under 640 px, and it
+  tracks `visualViewport` so the phone keyboard never covers the input. Conversation kept in
+  `sessionStorage['mry:v2']` as block data, so it survives page changes.
+- **Brain:** a local intent engine. It runs no AI model, and the UI does not claim one.
+  `Brain.respond()` returns `{ blocks, suggest }`; a model-backed brain would only need to
+  return the same block objects.
+- **Inquiries:** in-chat form → `POST /api/bookings` with new source **`assistant`** (added to
+  `bookingService` SOURCES, the admin label "Mr Yeti chat", and the `supabase/schema.sql`
+  constraint — **re-run that `alter table … bookings_source_check` line on Supabase before
+  going live**). `details.asked` carries the visitor's last questions.
+- Avatar: `images/mr-yeti-96/192.webp` (+jpg) cropped from the client's `yeti-avatar.jpg`, which
+  had a checkerboard baked in.
+- Tests: 3 new in `test/api.test.js` (32/32 pass).
+- **TO REVERT:** delete `public/yeti-chat.js` + the `<script src="/yeti-chat.js…">` lines, the
+  `assistant` route/controller/service block, and the `assistant` source entries.
+
+### § 18a — Launcher redesign, Everest card image (2026-09-23)
+- **Launcher (`yeti-chat.js?v=3`):** 58 px pill on desktop (avatar on an orange ring, "Ask Mr Yeti" in
+  Oswald, "Expedition desk · online", arrow disc). Turns fully orange on hover (pointer devices), keyboard
+  focus, press, and while the desk is open. A soft orange halo pulses 3 times after load (off under
+  reduced motion). Phone: a 60 px medallion with an orange ring and an "ASK" tab.
+- **Everest card bug:** the file was `images/peaks/8000ers/Everest.png` (capital E, 4.4 MB) but every
+  reference asked for `everest.png`. Windows ignores letter case, so it worked on localhost; the Linux host
+  (Vercel) doesn't, so the Everest card was blank there. Added `everest.jpg` (630 KB, same photo) and
+  repointed `data/content/expeditions.json` (heroImage + gallery) and `expeditions.html`. `Everest.png`
+  is kept as the source file. A scan of every image reference found no other case mismatch.
+
+### § 18b — A more visual Summit Register; Mr Yeti as a circle (2026-09-23)
+- **Reviews (homepage only, `reviews.js?v=6`):** each card opens with the reviewed route's own hero
+  photo in black and white (`grayscale(1)`, looked up from `TREKS` / `MOUNTAINS` / `PEAKS_DATA` by
+  `tripSlug`). Reviews with no linked route get a drawn mountain + prayer-flag scene, never another
+  trek's photo. The trip name sits on the photo; the author gets an initials badge. `cardHTML(r, i,
+  {media:true})` → `cardMediaHTML`; trip pages still use the classic card.
+- Section decor (`index.html` `#reviews`): B&W `everest_real.jpg` backdrop at 16 % with a fade mask,
+  a prayer-flag garland (`[data-hmr-flags]`, 45 flags swaying — off under reduced motion), a ridge with
+  a three-person rope team and an orange summit flag (`[data-hmr-ridge]`), and a small summit graphic
+  beside the 4.9 score. Section padding now lives in the `#reviews{…}` rule, because new Tailwind classes
+  only compile when the dev server starts.
+- **Mr Yeti (`yeti-chat.js?v=4`):** the launcher is now a 62 px round medallion on every screen
+  (orange ring + "ASK" tab). It fills orange on hover, focus, press and while open; on desktop a
+  label ("Ask Mr Yeti · I've been everywhere") slides out on hover without taking space. The welcome
+  is in Mr Yeti's own voice ("Namaste. I'm Mr Yeti." / "Footprints: everywhere · Photos of me: none").
+- 2026-09-23 follow-up (`yeti-chat.js?v=5`): launcher enlarged for visibility — 74 px on desktop, 72 px on phones (was 62 / 60), bigger "ASK" tab; panel offsets moved up to match.

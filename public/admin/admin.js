@@ -790,7 +790,7 @@
   }
 
   /* ------------------------------------------------------------ bookings */
-  var SOURCE_LABELS = { 'contact-form': 'Contact form', 'trip-page': 'Trip page', popup: 'Booking popup', newsletter: 'Newsletter' };
+  var SOURCE_LABELS = { 'contact-form': 'Contact form', 'trip-page': 'Trip page', popup: 'Booking popup', newsletter: 'Newsletter', assistant: 'Mr Yeti chat' };
 
   function viewBookings() {
     document.title = 'Bookings — Admin';
