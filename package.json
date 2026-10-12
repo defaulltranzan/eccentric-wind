@@ -4,7 +4,7 @@
   "description": "Himalayan Magic Adventure — Premier Nepal Treks & High Passes",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node --env-file-if-exists=.env server.js",
     "dev": "npm run build:css && node --env-file-if-exists=.env server.js",
     "build:css": "tailwindcss -c tailwind.config.js -i ./build/tw-input.css -o ./public/tailwind.css --minify",
     "admin:password": "node scripts/admin-password.js",

@@ -1,4 +1,32 @@
 const crypto = require('crypto');
+const path = require('path');
+const fs = require('fs');
+
+// Automatically load .env file if present
+const ROOT = path.join(__dirname, '../..');
+const envPath = path.join(ROOT, '.env');
+if (fs.existsSync(envPath)) {
+  if (typeof process.loadEnvFile === 'function') {
+    try { process.loadEnvFile(envPath); } catch (_) {}
+  } else {
+    try {
+      const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) continue;
+        const eqIdx = trimmed.indexOf('=');
+        if (eqIdx > 0) {
+          const key = trimmed.slice(0, eqIdx).trim();
+          let val = trimmed.slice(eqIdx + 1).trim();
+          if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+            val = val.slice(1, -1);
+          }
+          if (!(key in process.env)) process.env[key] = val;
+        }
+      }
+    } catch (_) {}
+  }
+}
 
 const onVercel = !!process.env.VERCEL;
 const isProd = process.env.NODE_ENV === 'production' || onVercel;
@@ -16,8 +44,6 @@ if (sessionSecret.length < 32) {
 
 const supabaseUrl = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
 const siteUrl = (process.env.SITE_URL || 'https://himalayanmagic.com').replace(/\/+$/, '');
-const path = require('path');
-const ROOT = path.join(__dirname, '../..');
 
 // Browsers on these origins may call the public booking API cross-site.
 // Same-origin requests never need CORS; the admin API is same-origin only.
